@@ -65,8 +65,6 @@ const ThemeToggle: React.FC = () => {
     switch (themeName) {
       case 'claudeCode':
         return '🌙' // Moon for dark theme
-      case 'claudeLight':
-        return '☀️' // Sun for light theme
       case 'futuristic':
         return '⚡' // Lightning bolt for futuristic theme
       default:
@@ -78,8 +76,6 @@ const ThemeToggle: React.FC = () => {
     switch (themeName) {
       case 'claudeCode':
         return 'Claude Code Dark'
-      case 'claudeLight':
-        return 'Claude Light'
       case 'futuristic':
         return 'Futuristic Monochrome'
       default:

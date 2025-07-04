@@ -8,6 +8,7 @@ import { ExtensionBrowser } from './components/ExtensionBrowser'
 import { MCPBrowser } from './components/MCPBrowser'
 import { NewsPage } from './components/NewsPage'
 import { DocsPage } from './components/DocsPage'
+import { SettingsDocsPage } from './components/SettingsDocsPage'
 import { ThemeToggle } from './components/ThemeToggle'
 import { TerminalHeader } from './components/TerminalHeader'
 
@@ -293,6 +294,9 @@ function AppContent() {
       case '/docs':
         setCurrentPage('docs')
         break
+      case '/settings':
+        setCurrentPage('settings')
+        break
       case '/news':
         setCurrentPage('news')
         break
@@ -427,6 +431,9 @@ function AppContent() {
 
         {/* Docs page */}
         {currentPage === 'docs' && <DocsPage />}
+
+        {/* Settings page */}
+        {currentPage === 'settings' && <SettingsDocsPage />}
       </MainContent>
 
       {/* Login modal */}

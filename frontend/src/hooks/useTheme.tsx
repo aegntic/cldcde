@@ -25,6 +25,9 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const savedTheme = localStorage.getItem('cldcde-theme') as ThemeName
     if (savedTheme && themes[savedTheme]) {
       setThemeName(savedTheme)
+    } else if (savedTheme === 'claudeLight') {
+      // If user had claudeLight saved, default them to claudeCode
+      setThemeName('claudeCode')
     }
   }, [])
 
@@ -38,13 +41,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const toggleTheme = () => {
     setIsTransitioning(true)
     
-    // Cycle through themes: claudeCode -> claudeLight -> futuristic -> claudeCode
+    // Cycle through themes: claudeCode -> futuristic -> claudeCode
     let newTheme: ThemeName
     switch (themeName) {
       case 'claudeCode':
-        newTheme = 'claudeLight'
-        break
-      case 'claudeLight':
         newTheme = 'futuristic'
         break
       case 'futuristic':
