@@ -109,10 +109,15 @@ app.onError((err, c) => {
 // Initialize server
 const start = async () => {
   try {
+    // Load environment variables
+    require('dotenv').config()
+    
     // Initialize database connection
     console.log('🔌 Connecting to Supabase...')
+    console.log('📊 Supabase URL:', process.env.SUPABASE_URL ? 'Configured ✅' : 'Missing ❌')
+    console.log('🔑 Supabase Key:', process.env.SUPABASE_SERVICE_KEY ? 'Configured ✅' : 'Missing ❌')
     
-    const port = Number(process.env.PORT) || 3000
+    const port = Number(process.env.PORT) || 3001
     console.log(`
 ╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║
