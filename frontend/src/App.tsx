@@ -54,21 +54,97 @@ const HeroSection = styled.section`
 
 const ASCIIContainer = styled(motion.div)`
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: clamp(0.4rem, 1.5vw, 0.8rem);
+  font-size: clamp(0.3rem, 1.2vw, 0.7rem);
   line-height: 1;
   color: ${({ theme }) => theme.colors.terminal.blue};
   text-shadow: 0 0 10px currentColor;
   white-space: pre;
   margin-bottom: ${({ theme }) => theme.spacing.xl};
-  filter: ${({ theme }) => 
-    theme.name === 'Futuristic Monochrome' 
-      ? 'drop-shadow(0 0 20px rgba(59, 130, 246, 0.5))' 
+  transition: all ${({ theme }) => theme.animations.duration.normal} ${({ theme }) => theme.animations.easing.default};
+  position: relative;
+  
+  ${({ theme }) => 
+    theme.name === 'Retro Futuristic Hologram' 
+      ? `
+        background: linear-gradient(
+          45deg,
+          ${theme.colors.terminal.blue},
+          ${theme.colors.terminal.cyan},
+          ${theme.colors.terminal.purple}
+        );
+        background-size: 300% 300%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: hologram-shift 4s ease-in-out infinite;
+        filter: drop-shadow(0 0 20px ${theme.colors.terminal.cyan});
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            0deg,
+            transparent 95%,
+            ${theme.colors.terminal.cyan}33 100%
+          );
+          background-size: 100% 2px;
+          animation: scan 0.15s linear infinite;
+          pointer-events: none;
+        }
+        
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(
+            ellipse at center,
+            transparent 60%,
+            ${theme.colors.terminal.blue}11 100%
+          );
+          pointer-events: none;
+        }
+      ` 
+      : theme.name === 'Futuristic Monochrome' 
+      ? 'filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));' 
       : 'none'
   };
-  transition: all ${({ theme }) => theme.animations.duration.normal} ${({ theme }) => theme.animations.easing.default};
+
+  @keyframes hologram-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    25% {
+      background-position: 100% 50%;
+    }
+    50% {
+      background-position: 50% 100%;
+    }
+    75% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 50% 0%;
+    }
+  }
+
+  @keyframes scan {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 0 2px;
+    }
+  }
 
   @media (max-width: 768px) {
-    font-size: clamp(0.25rem, 3vw, 0.5rem);
+    font-size: clamp(0.2rem, 2.5vw, 0.45rem);
   }
 `
 
