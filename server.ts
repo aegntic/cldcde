@@ -1,7 +1,8 @@
 import { Hono } from 'hono'
-import { serveStatic } from 'hono/bun'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
+import { serve } from '@hono/node-server'
+import { serveStatic } from '@hono/node-server/serve-static'
 // Enhanced API imports
 import { enhancedExtensionRoutes } from './src/api/enhanced-extensions'
 import { enhancedNewsRoutes } from './src/api/enhanced-news'
