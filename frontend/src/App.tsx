@@ -285,6 +285,49 @@ const Button = styled(motion.button)<{ variant?: 'primary' | 'secondary' | 'acce
   transition: all ${({ theme }) => theme.animations.duration.fast} ${({ theme }) => theme.animations.easing.default};
   position: relative;
   overflow: hidden;
+  
+  ${({ theme }) => 
+    theme.name === 'Retro Futuristic Hologram' 
+      ? `
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 20px rgba(51, 102, 255, 0.3);
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+          );
+          transition: left 0.6s ease;
+        }
+        
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            45deg,
+            transparent 30%,
+            ${theme.colors.terminal.cyan}11 50%,
+            transparent 70%
+          );
+          background-size: 200% 200%;
+          animation: button-glow 3s ease-in-out infinite;
+          pointer-events: none;
+        }
+      ` 
+      : ''
+  };
 
   &:hover {
     transform: translateY(-2px);
@@ -296,10 +339,31 @@ const Button = styled(motion.button)<{ variant?: 'primary' | 'secondary' | 'acce
         default: return theme.colors.interactive.secondaryHover
       }
     }};
+    
+    ${({ theme }) => 
+      theme.name === 'Retro Futuristic Hologram' 
+        ? `
+          box-shadow: 0 0 30px rgba(51, 102, 255, 0.5);
+          
+          &::before {
+            left: 100%;
+          }
+        ` 
+        : ''
+    };
   }
 
   &:active {
     transform: translateY(0);
+  }
+
+  @keyframes button-glow {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
   }
 `
 
