@@ -381,6 +381,32 @@ const StatusIndicator = styled(motion.div)`
   border-radius: ${({ theme }) => theme.borderRadius.md};
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 0.9rem;
+  
+  ${({ theme }) => 
+    theme.name === 'Retro Futuristic Hologram' 
+      ? `
+        background: rgba(15, 15, 32, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(51, 102, 255, 0.3);
+        box-shadow: 0 0 20px rgba(51, 102, 255, 0.2);
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            ${theme.colors.terminal.cyan}88,
+            transparent
+          );
+        }
+      ` 
+      : ''
+  };
 `
 
 const StatusDot = styled.div<{ connected: boolean }>`
