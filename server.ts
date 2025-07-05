@@ -66,15 +66,15 @@ app.get('/health', (c) => {
   })
 })
 
-// API Routes
-app.route('/api/auth', authRoutes)
-app.route('/api/extensions', extensionRoutes)
-app.route('/api/users', userRoutes)
-app.route('/api/mcp', mcpRoutes)
-app.route('/api/featured', featuredRoutes)
-app.route('/api/monitoring', monitoring)
-app.route('/api/cron', cron)
-app.route('/api/innovation', innovationRoutes)
+// API Routes - temporarily disabled for frontend testing
+// app.route('/api/auth', authRoutes)
+// app.route('/api/extensions', extensionRoutes)
+// app.route('/api/users', userRoutes)
+// app.route('/api/mcp', mcpRoutes)
+// app.route('/api/featured', featuredRoutes)
+// app.route('/api/monitoring', monitoring)
+// app.route('/api/cron', cron)
+// app.route('/api/innovation', innovationRoutes)
 
 // Serve React app for all other routes
 app.get('*', serveStatic({ path: './dist/index.html' }))
