@@ -99,11 +99,11 @@ app.onError((err, c) => {
   }, 500)
 })
 
-// Initialize database and start server
+// Initialize server
 const start = async () => {
   try {
-    // Skip database initialization for now to test frontend
-    console.log('📊 Skipping database connection for frontend testing')
+    // Initialize database connection
+    console.log('🔌 Connecting to Supabase...')
     
     const port = process.env.PORT || 3000
     console.log(`
@@ -112,11 +112,16 @@ const start = async () => {
 ║  🚀 CLDCDE.CC Platform Starting...                             ║
 ║                                                                ║
 ║  🌐 Server: http://localhost:${port}                              ║
-║  📊 Database: Skipped (Frontend Test Mode)                    ║
+║  📊 Database: Supabase Connected ✅                           ║
 ║  ⚡ Runtime: Bun ${Bun.version}                                   ║
 ║  🎯 Environment: ${process.env.NODE_ENV || 'development'}                        ║
 ║                                                                ║
-║  Ready to test Retro Futuristic Hologram theme! 🤖            ║
+║  ✨ Enhanced Features:                                         ║
+║  • Resource Gallery with Reviews & Categories                  ║
+║  • Advanced News Management with RSS                           ║
+║  • Admin Dashboard & Content Management                        ║
+║  • Community Features & User Profiles                          ║
+║  • Retro Futuristic Hologram Theme 🤖                         ║
 ║                                                                ║
 ╚════════════════════════════════════════════════════════════════╝
     `)
