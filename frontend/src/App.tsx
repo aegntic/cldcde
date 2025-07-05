@@ -163,6 +163,83 @@ const Title = styled(motion.h1)`
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%;
   animation: gradient-shift 3s ease infinite;
+  position: relative;
+  
+  ${({ theme }) => 
+    theme.name === 'Retro Futuristic Hologram' 
+      ? `
+        filter: drop-shadow(0 0 30px ${theme.colors.terminal.cyan});
+        text-shadow: 0 0 20px ${theme.colors.terminal.blue};
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            45deg,
+            transparent 30%,
+            ${theme.colors.terminal.cyan}22 50%,
+            transparent 70%
+          );
+          background-size: 200% 200%;
+          animation: shine 2s ease-in-out infinite;
+          pointer-events: none;
+        }
+        
+        &::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            ${theme.colors.terminal.cyan}88,
+            transparent
+          );
+          animation: glow-line 3s ease-in-out infinite;
+          pointer-events: none;
+        }
+      ` 
+      : ''
+  };
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes shine {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes glow-line {
+    0%, 100% {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    50% {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
 `
 
 const Subtitle = styled(motion.p)`
