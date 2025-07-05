@@ -3,20 +3,20 @@ import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { serve } from '@hono/node-server'
 import { serveStatic } from '@hono/node-server/serve-static'
-// Enhanced API imports
-import { enhancedExtensionRoutes } from './src/api/enhanced-extensions'
-import { enhancedNewsRoutes } from './src/api/enhanced-news'
-import { adminRoutes } from './src/api/admin'
-import { communityRoutes } from './src/api/community'
-import { reviewsRoutes } from './src/api/reviews'
-// Original API imports
-import { authRoutes } from './src/api/auth'
-import { extensionRoutes } from './src/api/extensions'
-import { userRoutes } from './src/api/users'
-import { mcpRoutes } from './src/api/mcp'
-import { featuredRoutes } from './src/api/featured'
-import monitoring from './src/api/monitoring'
-import { innovationRoutes } from './src/api/innovation'
+// Enhanced API imports - temporarily disabled for basic testing
+// import { enhancedExtensionRoutes } from './src/api/enhanced-extensions'
+// import { enhancedNewsRoutes } from './src/api/enhanced-news'
+// import { adminRoutes } from './src/api/admin'
+// import { communityRoutes } from './src/api/community'
+// import { reviewsRoutes } from './src/api/reviews'
+// Original API imports - temporarily disabled for basic testing
+// import { authRoutes } from './src/api/auth'
+// import { extensionRoutes } from './src/api/extensions'
+// import { userRoutes } from './src/api/users'
+// import { mcpRoutes } from './src/api/mcp'
+// import { featuredRoutes } from './src/api/featured'
+// import monitoring from './src/api/monitoring'
+// import { innovationRoutes } from './src/api/innovation'
 
 const app = new Hono()
 
