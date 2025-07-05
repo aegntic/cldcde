@@ -91,6 +91,9 @@ app.get('/health', (c) => {
 // app.route('/api/monitoring', monitoring)
 // app.route('/api/innovation', innovationRoutes)
 
+// Test API Routes
+app.route('/api/test', testApiRoutes)
+
 // Serve React app for all other routes
 app.get('*', serveStatic({ path: './public/index.html' }))
 
