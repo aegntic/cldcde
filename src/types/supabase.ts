@@ -1,0 +1,536 @@
+// Basic Supabase types for CLDCDE+ Platform
+export interface Database {
+  public: {
+    Tables: {
+      profiles: {
+        Row: {
+          id: string
+          username: string
+          email: string
+          avatar_url?: string
+          bio?: string
+          website?: string
+          github_username?: string
+          twitter_handle?: string
+          location?: string
+          company?: string
+          reputation: number
+          level: number
+          badges?: string[]
+          preferences?: any
+          last_seen?: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          username: string
+          email: string
+          avatar_url?: string
+          bio?: string
+          website?: string
+          github_username?: string
+          twitter_handle?: string
+          location?: string
+          company?: string
+          reputation?: number
+          level?: number
+          badges?: string[]
+          preferences?: any
+          last_seen?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          username?: string
+          email?: string
+          avatar_url?: string
+          bio?: string
+          website?: string
+          github_username?: string
+          twitter_handle?: string
+          location?: string
+          company?: string
+          reputation?: number
+          level?: number
+          badges?: string[]
+          preferences?: any
+          last_seen?: string
+          updated_at?: string
+        }
+      }
+      enhanced_extensions: {
+        Row: {
+          id: string
+          name: string
+          slug: string
+          description: string
+          long_description?: string
+          category: string
+          subcategory?: string
+          platform: string[]
+          version: string
+          author_id: string
+          downloads: number
+          rating: number
+          rating_count: number
+          featured: boolean
+          verified: boolean
+          status: string
+          install_script?: string
+          repository_url?: string
+          documentation_url?: string
+          demo_url?: string
+          license?: string
+          tags?: string[]
+          screenshots?: string[]
+          file_size?: number
+          requirements?: any
+          changelog?: any
+          created_at: string
+          updated_at: string
+          published_at?: string
+          moderated_at?: string
+          moderator_id?: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          slug: string
+          description: string
+          long_description?: string
+          category: string
+          subcategory?: string
+          platform: string[]
+          version: string
+          author_id: string
+          downloads?: number
+          rating?: number
+          rating_count?: number
+          featured?: boolean
+          verified?: boolean
+          status?: string
+          install_script?: string
+          repository_url?: string
+          documentation_url?: string
+          demo_url?: string
+          license?: string
+          tags?: string[]
+          screenshots?: string[]
+          file_size?: number
+          requirements?: any
+          changelog?: any
+          created_at?: string
+          updated_at?: string
+          published_at?: string
+          moderated_at?: string
+          moderator_id?: string
+        }
+        Update: {
+          name?: string
+          slug?: string
+          description?: string
+          long_description?: string
+          category?: string
+          subcategory?: string
+          platform?: string[]
+          version?: string
+          downloads?: number
+          rating?: number
+          rating_count?: number
+          featured?: boolean
+          verified?: boolean
+          status?: string
+          install_script?: string
+          repository_url?: string
+          documentation_url?: string
+          demo_url?: string
+          license?: string
+          tags?: string[]
+          screenshots?: string[]
+          file_size?: number
+          requirements?: any
+          changelog?: any
+          updated_at?: string
+          published_at?: string
+          moderated_at?: string
+          moderator_id?: string
+        }
+      }
+      enhanced_mcp_servers: {
+        Row: {
+          id: string
+          name: string
+          slug: string
+          description: string
+          long_description?: string
+          category: string
+          subcategory?: string
+          platform: string[]
+          version: string
+          author_id: string
+          downloads: number
+          rating: number
+          rating_count: number
+          featured: boolean
+          verified: boolean
+          status: string
+          install_script?: string
+          repository_url?: string
+          documentation_url?: string
+          config_example?: any
+          capabilities?: string[]
+          port_range?: string
+          dependencies?: string[]
+          screenshots?: string[]
+          created_at: string
+          updated_at: string
+          published_at?: string
+          moderated_at?: string
+          moderator_id?: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          slug: string
+          description: string
+          long_description?: string
+          category: string
+          subcategory?: string
+          platform: string[]
+          version: string
+          author_id: string
+          downloads?: number
+          rating?: number
+          rating_count?: number
+          featured?: boolean
+          verified?: boolean
+          status?: string
+          install_script?: string
+          repository_url?: string
+          documentation_url?: string
+          config_example?: any
+          capabilities?: string[]
+          port_range?: string
+          dependencies?: string[]
+          screenshots?: string[]
+          created_at?: string
+          updated_at?: string
+          published_at?: string
+          moderated_at?: string
+          moderator_id?: string
+        }
+        Update: {
+          name?: string
+          slug?: string
+          description?: string
+          long_description?: string
+          category?: string
+          subcategory?: string
+          platform?: string[]
+          version?: string
+          downloads?: number
+          rating?: number
+          rating_count?: number
+          featured?: boolean
+          verified?: boolean
+          status?: string
+          install_script?: string
+          repository_url?: string
+          documentation_url?: string
+          config_example?: any
+          capabilities?: string[]
+          port_range?: string
+          dependencies?: string[]
+          screenshots?: string[]
+          updated_at?: string
+          published_at?: string
+          moderated_at?: string
+          moderator_id?: string
+        }
+      }
+      enhanced_news: {
+        Row: {
+          id: string
+          title: string
+          slug: string
+          excerpt?: string
+          content: string
+          author_id?: string
+          category: string
+          tags?: string[]
+          featured: boolean
+          pinned: boolean
+          external_url?: string
+          source?: string
+          source_data?: any
+          view_count: number
+          like_count: number
+          comment_count: number
+          status: string
+          scheduled_at?: string
+          published_at?: string
+          created_at: string
+          updated_at: string
+          seo_title?: string
+          seo_description?: string
+          og_image?: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          slug: string
+          excerpt?: string
+          content: string
+          author_id?: string
+          category: string
+          tags?: string[]
+          featured?: boolean
+          pinned?: boolean
+          external_url?: string
+          source?: string
+          source_data?: any
+          view_count?: number
+          like_count?: number
+          comment_count?: number
+          status?: string
+          scheduled_at?: string
+          published_at?: string
+          created_at?: string
+          updated_at?: string
+          seo_title?: string
+          seo_description?: string
+          og_image?: string
+        }
+        Update: {
+          title?: string
+          slug?: string
+          excerpt?: string
+          content?: string
+          category?: string
+          tags?: string[]
+          featured?: boolean
+          pinned?: boolean
+          external_url?: string
+          source?: string
+          source_data?: any
+          view_count?: number
+          like_count?: number
+          comment_count?: number
+          status?: string
+          scheduled_at?: string
+          published_at?: string
+          updated_at?: string
+          seo_title?: string
+          seo_description?: string
+          og_image?: string
+        }
+      }
+      reviews: {
+        Row: {
+          id: string
+          user_id: string
+          extension_id?: string
+          mcp_server_id?: string
+          rating: number
+          title?: string
+          content?: string
+          helpful_count: number
+          verified_purchase: boolean
+          status: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          extension_id?: string
+          mcp_server_id?: string
+          rating: number
+          title?: string
+          content?: string
+          helpful_count?: number
+          verified_purchase?: boolean
+          status?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          rating?: number
+          title?: string
+          content?: string
+          helpful_count?: number
+          verified_purchase?: boolean
+          status?: string
+          updated_at?: string
+        }
+      }
+      resource_categories: {
+        Row: {
+          id: string
+          name: string
+          slug: string
+          description?: string
+          icon?: string
+          color?: string
+          parent_id?: string
+          sort_order: number
+          active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          slug: string
+          description?: string
+          icon?: string
+          color?: string
+          parent_id?: string
+          sort_order?: number
+          active?: boolean
+          created_at?: string
+        }
+        Update: {
+          name?: string
+          slug?: string
+          description?: string
+          icon?: string
+          color?: string
+          parent_id?: string
+          sort_order?: number
+          active?: boolean
+        }
+      }
+      votes: {
+        Row: {
+          id: string
+          user_id: string
+          resource_type: string
+          resource_id: string
+          vote_type: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          resource_type: string
+          resource_id: string
+          vote_type: string
+          created_at?: string
+        }
+        Update: {
+          vote_type?: string
+        }
+      }
+      activity_feed: {
+        Row: {
+          id: string
+          user_id: string
+          activity_type: string
+          resource_type?: string
+          resource_id?: string
+          metadata?: any
+          visibility: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          activity_type: string
+          resource_type?: string
+          resource_id?: string
+          metadata?: any
+          visibility?: string
+          created_at?: string
+        }
+        Update: {
+          visibility?: string
+        }
+      }
+      moderation_queue: {
+        Row: {
+          id: string
+          item_type: string
+          item_id: string
+          user_id?: string
+          reason?: string
+          description?: string
+          priority: number
+          status: string
+          assigned_to?: string
+          moderator_notes?: string
+          resolved_at?: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          item_type: string
+          item_id: string
+          user_id?: string
+          reason?: string
+          description?: string
+          priority?: number
+          status?: string
+          assigned_to?: string
+          moderator_notes?: string
+          resolved_at?: string
+          created_at?: string
+        }
+        Update: {
+          reason?: string
+          description?: string
+          priority?: number
+          status?: string
+          assigned_to?: string
+          moderator_notes?: string
+          resolved_at?: string
+        }
+      }
+      analytics_events: {
+        Row: {
+          id: string
+          event_type: string
+          user_id?: string
+          session_id?: string
+          resource_type?: string
+          resource_id?: string
+          metadata?: any
+          ip_address?: string
+          user_agent?: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_type: string
+          user_id?: string
+          session_id?: string
+          resource_type?: string
+          resource_id?: string
+          metadata?: any
+          ip_address?: string
+          user_agent?: string
+          created_at?: string
+        }
+        Update: {
+          event_type?: string
+          metadata?: any
+        }
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      increment_download_count: {
+        Args: {
+          resource_type: string
+          resource_id: string
+        }
+        Returns: void
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+  }
+}
