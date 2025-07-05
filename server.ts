@@ -90,8 +90,8 @@ app.onError((err, c) => {
 // Initialize database and start server
 const start = async () => {
   try {
-    await initDatabase()
-    console.log('📊 Database connected successfully')
+    // Skip database initialization for now to test frontend
+    console.log('📊 Skipping database connection for frontend testing')
     
     const port = process.env.PORT || 3000
     console.log(`
@@ -100,11 +100,11 @@ const start = async () => {
 ║  🚀 CLDCDE.CC Platform Starting...                             ║
 ║                                                                ║
 ║  🌐 Server: http://localhost:${port}                              ║
-║  📊 Database: Neo4j Connected                                  ║
+║  📊 Database: Skipped (Frontend Test Mode)                    ║
 ║  ⚡ Runtime: Bun ${Bun.version}                                   ║
 ║  🎯 Environment: ${process.env.NODE_ENV || 'development'}                        ║
 ║                                                                ║
-║  Ready to serve Claude Code extensions! 🤖                     ║
+║  Ready to test Retro Futuristic Hologram theme! 🤖            ║
 ║                                                                ║
 ╚════════════════════════════════════════════════════════════════╝
     `)
