@@ -22,8 +22,9 @@ app.use('*', cors({
   credentials: true,
 }))
 
-// Serve static files
+// Serve static files from public directory
 app.use('/static/*', serveStatic({ root: './public' }))
+app.use('/*', serveStatic({ root: './public' }))
 
 // ASCII Art welcome endpoint
 app.get('/ascii', async (c) => {
