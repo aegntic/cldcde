@@ -101,7 +101,7 @@ export const useTheme = (): ThemeContextType => {
   return context
 }
 
-// Global styles and CSS variables
+  /* Global styles and CSS variables */
 export const createGlobalStyles = (theme: Theme) => `
   :root {
     /* Background colors */
@@ -205,6 +205,55 @@ export const createGlobalStyles = (theme: Theme) => `
       background-color var(--duration-normal) var(--easing-default),
       color var(--duration-normal) var(--easing-default);
     overflow-x: hidden;
+    
+    /* Holographic scanlines for retroFuturistic theme */
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      position: relative;
+      
+      &::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          0deg,
+          transparent 98%,
+          rgba(51, 102, 255, 0.03) 100%
+        );
+        background-size: 100% 4px;
+        animation: scan 0.1s linear infinite;
+        pointer-events: none;
+        z-index: 1000;
+      }
+      
+      &::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 70%,
+          rgba(51, 102, 255, 0.05) 100%
+        );
+        pointer-events: none;
+        z-index: 999;
+      }
+    ` : ''}
+  }
+
+  /* Holographic scanline animation */
+  @keyframes scan {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 0 4px;
+    }
   }
 
   /* Scrollbar styling */
@@ -220,22 +269,34 @@ export const createGlobalStyles = (theme: Theme) => `
   ::-webkit-scrollbar-thumb {
     background: var(--border-primary);
     border-radius: var(--radius-full);
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      box-shadow: 0 0 5px var(--terminal-cyan);
+    ` : ''}
   }
 
   ::-webkit-scrollbar-thumb:hover {
     background: var(--border-hover);
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      box-shadow: 0 0 8px var(--terminal-cyan);
+    ` : ''}
   }
 
-  /* Focus styles */
+  /* Focus styles with holographic effect */
   *:focus {
     outline: 2px solid var(--border-focus);
     outline-offset: 2px;
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      box-shadow: 0 0 10px var(--border-focus);
+    ` : ''}
   }
 
   /* Selection styles */
   ::selection {
     background-color: var(--interactive-primary);
     color: var(--text-inverse);
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      text-shadow: 0 0 5px var(--text-inverse);
+    ` : ''}
   }
 
   /* Code and monospace text */
@@ -259,19 +320,46 @@ export const createGlobalStyles = (theme: Theme) => `
     animation: blink 1s infinite;
   }
 
-  /* Glow effects for futuristic theme */
+  /* Enhanced glow effects for holographic theme */
   .glow {
     box-shadow: var(--shadow-glow);
     transition: box-shadow var(--duration-normal) var(--easing-default);
   }
 
-  /* ASCII art styling */
+  /* ASCII art styling with holographic effects */
   .ascii-art {
     font-family: var(--font-mono);
     line-height: 1;
     white-space: pre;
     color: var(--terminal-blue);
     text-shadow: 0 0 10px currentColor;
+    
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      background: linear-gradient(
+        45deg,
+        var(--terminal-blue),
+        var(--terminal-cyan),
+        var(--terminal-purple)
+      );
+      background-size: 200% 200%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: hologram-shift 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px var(--terminal-cyan));
+    ` : ''}
+  }
+
+  @keyframes hologram-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
   /* Theme transition overlay */
@@ -292,7 +380,7 @@ export const createGlobalStyles = (theme: Theme) => `
     opacity: 0.8;
   }
 
-  /* Utility classes */
+  /* Enhanced gradient text utility */
   .text-gradient {
     background: linear-gradient(
       135deg,
@@ -305,6 +393,10 @@ export const createGlobalStyles = (theme: Theme) => `
     -webkit-text-fill-color: transparent;
     background-size: 200% 200%;
     animation: gradient-shift 3s ease infinite;
+    
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      filter: drop-shadow(0 0 10px var(--terminal-cyan));
+    ` : ''}
   }
 
   @keyframes gradient-shift {
@@ -319,7 +411,7 @@ export const createGlobalStyles = (theme: Theme) => `
     }
   }
 
-  /* Button base styles */
+  /* Enhanced button styles with holographic effects */
   .btn {
     font-family: var(--font-sans);
     font-weight: 500;
@@ -334,33 +426,117 @@ export const createGlobalStyles = (theme: Theme) => `
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-sm);
+    position: relative;
+    overflow: hidden;
+    
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      box-shadow: 0 0 10px rgba(51, 102, 255, 0.3);
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+    ` : ''}
   }
 
   .btn:hover {
     background: var(--interactive-secondary-hover);
     border-color: var(--border-hover);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      box-shadow: 0 0 20px rgba(51, 102, 255, 0.5);
+      
+      &::before {
+        left: 100%;
+      }
+    ` : ''}
   }
 
   .btn.primary {
     background: var(--interactive-primary);
     border-color: var(--interactive-primary);
     color: white;
+    
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      box-shadow: 0 0 15px rgba(51, 102, 255, 0.4);
+    ` : ''}
   }
 
   .btn.primary:hover {
     background: var(--interactive-primary-hover);
     border-color: var(--interactive-primary-hover);
+    
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      box-shadow: 0 0 25px rgba(51, 102, 255, 0.6);
+    ` : ''}
   }
 
   .btn.accent {
     background: var(--interactive-accent);
     border-color: var(--interactive-accent);
     color: var(--text-inverse);
+    
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      box-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
+    ` : ''}
   }
 
   .btn.accent:hover {
     background: var(--interactive-accent-hover);
     border-color: var(--interactive-accent-hover);
+    
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      box-shadow: 0 0 25px rgba(255, 107, 53, 0.6);
+    ` : ''}
+  }
+
+  /* Glass morphism cards for holographic theme */
+  .card {
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      background: rgba(26, 26, 46, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(51, 102, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(51, 102, 255, 0.8),
+          transparent
+        );
+      }
+    ` : ''}
+  }
+
+  /* Holographic status indicators */
+  .status-indicator {
+    ${theme.name === 'Retro Futuristic Hologram' ? `
+      background: rgba(15, 15, 32, 0.8);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(51, 102, 255, 0.3);
+      box-shadow: 0 0 20px rgba(51, 102, 255, 0.2);
+    ` : ''}
   }
 `
