@@ -416,12 +416,64 @@ const StatusDot = styled.div<{ connected: boolean }>`
   background: ${({ connected, theme }) => 
     connected ? theme.colors.status.success : theme.colors.status.error
   };
-  animation: ${({ connected }) => connected ? 'pulse 2s infinite' : 'none'};
+  animation: ${({ connected, theme }) => 
+    connected 
+      ? theme.name === 'Retro Futuristic Hologram' 
+        ? 'hologram-pulse 2s infinite' 
+        : 'pulse 2s infinite'
+      : 'none'
+  };
+  
+  ${({ theme, connected }) => 
+    theme.name === 'Retro Futuristic Hologram' && connected
+      ? `
+        box-shadow: 0 0 10px ${theme.colors.status.success};
+        
+        &::before {
+          content: '';
+          position: absolute;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: transparent;
+          border: 1px solid ${theme.colors.status.success}44;
+          animation: hologram-ripple 2s infinite;
+          margin: -2px;
+        }
+      `
+      : ''
+  };
 
   @keyframes pulse {
     0% { opacity: 1; }
     50% { opacity: 0.5; }
     100% { opacity: 1; }
+  }
+
+  @keyframes hologram-pulse {
+    0% { 
+      opacity: 1; 
+      box-shadow: 0 0 5px currentColor;
+    }
+    50% { 
+      opacity: 0.7; 
+      box-shadow: 0 0 20px currentColor;
+    }
+    100% { 
+      opacity: 1; 
+      box-shadow: 0 0 5px currentColor;
+    }
+  }
+
+  @keyframes hologram-ripple {
+    0% {
+      transform: scale(0.8);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
   }
 `
 
