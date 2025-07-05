@@ -106,7 +106,7 @@ const start = async () => {
     // Initialize database connection
     console.log('🔌 Connecting to Supabase...')
     
-    const port = process.env.PORT || 3000
+    const port = Number(process.env.PORT) || 3000
     console.log(`
 ╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║
@@ -114,7 +114,7 @@ const start = async () => {
 ║                                                                ║
 ║  🌐 Server: http://localhost:${port}                              ║
 ║  📊 Database: Supabase Connected ✅                           ║
-║  ⚡ Runtime: Bun ${Bun.version}                                   ║
+║  ⚡ Runtime: Node.js ${process.version}                           ║
 ║  🎯 Environment: ${process.env.NODE_ENV || 'development'}                        ║
 ║                                                                ║
 ║  ✨ Enhanced Features:                                         ║
@@ -127,10 +127,12 @@ const start = async () => {
 ╚════════════════════════════════════════════════════════════════╝
     `)
     
-    Bun.serve({
-      port,
+    serve({
       fetch: app.fetch,
+      port
     })
+    
+    console.log(`✅ Server is running on http://localhost:${port}`)
   } catch (error) {
     console.error('❌ Failed to start server:', error)
     process.exit(1)
