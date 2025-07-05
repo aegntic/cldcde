@@ -296,8 +296,106 @@ export const futuristicTheme: Theme = {
 }
 
 
+// Retro Futuristic Hologram Theme - Merging classic terminal with modern analytics dashboard
+export const retroFuturisticTheme: Theme = {
+  name: 'Retro Futuristic Hologram',
+  colors: {
+    background: {
+      primary: '#0a0a0f',      // Deep dark blue-black
+      secondary: '#1a1a2e',    // Dark blue-purple
+      tertiary: '#16213e',     // Slightly lighter blue
+      modal: 'rgba(10, 10, 15, 0.98)',
+      card: '#151520'
+    },
+    text: {
+      primary: '#e0e6ff',      // Holographic blue-white
+      secondary: '#a0b5ff',    // Bright blue-white
+      tertiary: '#7080c0',     // Muted blue
+      muted: '#505080',        // Very muted blue
+      inverse: '#0a0a0f'       // Deep dark
+    },
+    border: {
+      primary: '#2d3a7a',      // Holographic blue
+      secondary: '#1e2864',    // Darker blue
+      focus: '#00f5ff',        // Bright cyan
+      hover: '#3d4a9a'         // Lighter blue
+    },
+    status: {
+      success: '#00ff88',      // Bright green
+      error: '#ff0066',        // Bright red
+      warning: '#ffaa00',      // Bright orange
+      info: '#00ccff'          // Bright cyan
+    },
+    interactive: {
+      primary: '#3366ff',      // Holographic blue
+      primaryHover: '#2244dd', // Darker blue
+      secondary: '#2a3370',    // Dark blue-purple
+      secondaryHover: '#3a4390', // Lighter blue-purple
+      accent: '#ff6b35',       // Bright orange accent
+      accentHover: '#ff5722'   // Darker orange
+    },
+    terminal: {
+      green: '#00ff88',        // Bright holographic green
+      blue: '#3366ff',         // Holographic blue
+      yellow: '#ffff00',       // Bright yellow
+      orange: '#ff6b35',       // Bright orange
+      purple: '#cc66ff',       // Bright purple
+      cyan: '#00f5ff',         // Bright cyan
+      red: '#ff0066',          // Bright red
+      white: '#ffffff',        // Pure white
+      gray: '#8888cc'          // Blue-gray
+    },
+    syntax: {
+      keyword: '#66aaff',      // Light blue
+      string: '#ffaa66',       // Orange
+      number: '#88ff88',       // Bright green
+      comment: '#8888cc',      // Blue-gray
+      function: '#ffff66',     // Bright yellow
+      variable: '#cc88ff'      // Light purple
+    }
+  },
+  fonts: {
+    mono: '"JetBrains Mono", "Fira Code", "SF Mono", Consolas, monospace',
+    sans: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    serif: '"Crimson Text", Georgia, serif'
+  },
+  spacing: {
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem',
+    xxl: '3rem'
+  },
+  borderRadius: {
+    sm: '0.25rem',
+    md: '0.5rem',
+    lg: '0.75rem',
+    full: '9999px'
+  },
+  shadows: {
+    sm: '0 1px 2px rgba(51, 102, 255, 0.1)',
+    md: '0 4px 6px rgba(51, 102, 255, 0.15), 0 0 20px rgba(51, 102, 255, 0.1)',
+    lg: '0 10px 15px rgba(51, 102, 255, 0.2), 0 0 40px rgba(51, 102, 255, 0.15)',
+    glow: '0 0 30px rgba(51, 102, 255, 0.5), 0 0 60px rgba(0, 245, 255, 0.3), 0 0 100px rgba(255, 107, 53, 0.2)'
+  },
+  animations: {
+    duration: {
+      fast: '150ms',
+      normal: '300ms',
+      slow: '500ms'
+    },
+    easing: {
+      default: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+      sharp: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      smooth: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+    }
+  }
+}
+
 export const themes = {
   claudeCode: claudeCodeTheme,
+  retroFuturistic: retroFuturisticTheme,
   futuristic: futuristicTheme
 }
 
