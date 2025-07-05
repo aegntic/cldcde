@@ -71,15 +71,21 @@ app.get('/health', (c) => {
   })
 })
 
-// API Routes - temporarily disabled for frontend testing
-// app.route('/api/auth', authRoutes)
-// app.route('/api/extensions', extensionRoutes)
-// app.route('/api/users', userRoutes)
-// app.route('/api/mcp', mcpRoutes)
-// app.route('/api/featured', featuredRoutes)
-// app.route('/api/monitoring', monitoring)
-// app.route('/api/cron', cron)
-// app.route('/api/innovation', innovationRoutes)
+// API Routes - Enhanced CLDCDE+ Features
+app.route('/api/enhanced/extensions', enhancedExtensionRoutes)
+app.route('/api/enhanced/news', enhancedNewsRoutes)
+app.route('/api/admin', adminRoutes)
+app.route('/api/community', communityRoutes)
+app.route('/api/reviews', reviewsRoutes)
+
+// Original API Routes
+app.route('/api/auth', authRoutes)
+app.route('/api/extensions', extensionRoutes)
+app.route('/api/users', userRoutes)
+app.route('/api/mcp', mcpRoutes)
+app.route('/api/featured', featuredRoutes)
+app.route('/api/monitoring', monitoring)
+app.route('/api/innovation', innovationRoutes)
 
 // Serve React app for all other routes
 app.get('*', serveStatic({ path: './public/index.html' }))
