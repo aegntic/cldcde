@@ -18,6 +18,9 @@ import { serveStatic } from '@hono/node-server/serve-static'
 // import monitoring from './src/api/monitoring'
 // import { innovationRoutes } from './src/api/innovation'
 
+// Test API for backend verification
+import { testApiRoutes } from './src/api/test'
+
 const app = new Hono()
 
 // Middleware
