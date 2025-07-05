@@ -17,7 +17,7 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [themeName, setThemeName] = useState<ThemeName>('claudeCode') // Default to Claude Code theme
+  const [themeName, setThemeName] = useState<ThemeName>('retroFuturistic') // Default to retroFuturistic theme
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   // Load theme from localStorage on mount
@@ -26,8 +26,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     if (savedTheme && themes[savedTheme]) {
       setThemeName(savedTheme)
     } else if (savedTheme === 'claudeLight') {
-      // If user had claudeLight saved, default them to claudeCode
-      setThemeName('claudeCode')
+      // If user had claudeLight saved, default them to retroFuturistic
+      setThemeName('retroFuturistic')
     }
   }, [])
 
@@ -41,10 +41,13 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const toggleTheme = () => {
     setIsTransitioning(true)
     
-    // Cycle through themes: claudeCode -> futuristic -> claudeCode
+    // Cycle through themes: claudeCode -> retroFuturistic -> futuristic -> claudeCode
     let newTheme: ThemeName
     switch (themeName) {
       case 'claudeCode':
+        newTheme = 'retroFuturistic'
+        break
+      case 'retroFuturistic':
         newTheme = 'futuristic'
         break
       case 'futuristic':
