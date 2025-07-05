@@ -78,7 +78,7 @@ app.get('/health', (c) => {
 // app.route('/api/innovation', innovationRoutes)
 
 // Serve React app for all other routes
-app.get('*', serveStatic({ path: './dist/index.html' }))
+app.get('*', serveStatic({ path: './public/index.html' }))
 
 // Error handling
 app.onError((err, c) => {
