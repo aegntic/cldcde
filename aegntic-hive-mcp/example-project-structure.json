@@ -1,0 +1,118 @@
+{
+  "project": {
+    "id": 1,
+    "name": "Machine Learning Research",
+    "description": "A comprehensive project for tracking machine learning conversations and artifacts",
+    "instructions": "Focus on advanced ML techniques, deep learning, and AI research. Track all code artifacts and maintain conversation history.",
+    "created_at": "2023-01-01T00:00:00.000Z",
+    "updated_at": "2023-12-31T23:59:59.000Z"
+  },
+  "conversations": [
+    {
+      "id": 1,
+      "service": "chatgpt",
+      "project_id": 1,
+      "conversation_id": "conv-123",
+      "title": "Neural Network Architecture Discussion",
+      "created_at": "2023-06-01T10:00:00.000Z",
+      "updated_at": "2023-06-01T11:30:00.000Z",
+      "url": "https://chat.openai.com/c/conv-123",
+      "messages": [
+        {
+          "id": 1,
+          "conversation_id": 1,
+          "service": "chatgpt",
+          "role": "user",
+          "content": "Can you explain the difference between CNNs and RNNs?",
+          "timestamp": "2023-06-01T10:00:00.000Z",
+          "message_order": 1
+        },
+        {
+          "id": 2,
+          "conversation_id": 1,
+          "service": "chatgpt",
+          "role": "assistant",
+          "content": "Convolutional Neural Networks (CNNs) and Recurrent Neural Networks (RNNs) are both important deep learning architectures, but they're designed for different types of data and problems...",
+          "timestamp": "2023-06-01T10:01:00.000Z",
+          "message_order": 2
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "service": "claude",
+      "project_id": 1,
+      "conversation_id": "conv-456",
+      "title": "TensorFlow Implementation Help",
+      "created_at": "2023-06-02T14:00:00.000Z",
+      "updated_at": "2023-06-02T15:45:00.000Z",
+      "url": "https://claude.ai/chat/conv-456",
+      "messages": [
+        {
+          "id": 3,
+          "conversation_id": 2,
+          "service": "claude",
+          "role": "user",
+          "content": "I need help implementing a custom layer in TensorFlow",
+          "timestamp": "2023-06-02T14:00:00.000Z",
+          "message_order": 1
+        },
+        {
+          "id": 4,
+          "conversation_id": 2,
+          "service": "claude",
+          "role": "assistant",
+          "content": "I'll help you create a custom layer in TensorFlow. Here's a step-by-step approach...",
+          "timestamp": "2023-06-02T14:01:00.000Z",
+          "message_order": 2
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 1,
+      "project_id": 1,
+      "name": "neural_network.py",
+      "type": "code",
+      "content": "import tensorflow as tf\n\nclass CustomNeuralNetwork(tf.keras.Model):\n    def __init__(self, num_classes):\n        super().__init__()\n        self.dense1 = tf.keras.layers.Dense(128, activation='relu')\n        self.dense2 = tf.keras.layers.Dense(64, activation='relu')\n        self.dense3 = tf.keras.layers.Dense(num_classes, activation='softmax')\n        \n    def call(self, inputs):\n        x = self.dense1(inputs)\n        x = self.dense2(x)\n        return self.dense3(x)",
+      "metadata": "{\"language\": \"python\", \"framework\": \"tensorflow\", \"purpose\": \"custom neural network implementation\"}",
+      "version": 1,
+      "created_at": "2023-06-01T12:00:00.000Z",
+      "updated_at": "2023-06-01T12:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "project_id": 1,
+      "name": "neural_network.py",
+      "type": "code",
+      "content": "import tensorflow as tf\n\nclass CustomNeuralNetwork(tf.keras.Model):\n    def __init__(self, num_classes, dropout_rate=0.3):\n        super().__init__()\n        self.dense1 = tf.keras.layers.Dense(128, activation='relu')\n        self.dropout1 = tf.keras.layers.Dropout(dropout_rate)\n        self.dense2 = tf.keras.layers.Dense(64, activation='relu')\n        self.dropout2 = tf.keras.layers.Dropout(dropout_rate)\n        self.dense3 = tf.keras.layers.Dense(num_classes, activation='softmax')\n        \n    def call(self, inputs, training=None):\n        x = self.dense1(inputs)\n        x = self.dropout1(x, training=training)\n        x = self.dense2(x)\n        x = self.dropout2(x, training=training)\n        return self.dense3(x)",
+      "metadata": "{\"language\": \"python\", \"framework\": \"tensorflow\", \"purpose\": \"custom neural network with dropout\", \"changes\": \"Added dropout layers for regularization\"}",
+      "version": 2,
+      "created_at": "2023-06-01T16:00:00.000Z",
+      "updated_at": "2023-06-01T16:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "project_id": 1,
+      "name": "training_script.py",
+      "type": "code",
+      "content": "import tensorflow as tf\nfrom neural_network import CustomNeuralNetwork\n\n# Load and preprocess data\n(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()\nx_train = x_train.reshape(-1, 784).astype('float32') / 255.0\nx_test = x_test.reshape(-1, 784).astype('float32') / 255.0\n\n# Create model\nmodel = CustomNeuralNetwork(num_classes=10)\n\n# Compile model\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])\n\n# Train model\nhistory = model.fit(x_train, y_train,\n                    validation_data=(x_test, y_test),\n                    epochs=10,\n                    batch_size=32)\n\n# Evaluate model\ntest_loss, test_accuracy = model.evaluate(x_test, y_test, verbose=0)\nprint(f'Test accuracy: {test_accuracy:.4f}')",
+      "metadata": "{\"language\": \"python\", \"framework\": \"tensorflow\", \"purpose\": \"training script for custom neural network\", \"dataset\": \"MNIST\"}",
+      "version": 1,
+      "created_at": "2023-06-02T10:00:00.000Z",
+      "updated_at": "2023-06-02T10:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "project_id": 1,
+      "name": "research_notes.md",
+      "type": "document",
+      "content": "# Machine Learning Research Notes\n\n## Project Overview\nThis project focuses on developing custom neural network architectures for image classification tasks.\n\n## Key Findings\n- Custom neural networks with dropout perform better than vanilla implementations\n- Regularization is crucial for preventing overfitting\n- TensorFlow 2.x provides flexible tools for custom layer implementation\n\n## Next Steps\n1. Experiment with different activation functions\n2. Implement batch normalization\n3. Try different optimizers\n4. Test on more complex datasets\n\n## Resources\n- TensorFlow Documentation: https://tensorflow.org/guide\n- Deep Learning Book: https://deeplearningbook.org\n- Papers: [list of relevant papers]",
+      "metadata": "{\"type\": \"markdown\", \"purpose\": \"project documentation\", \"status\": \"active\"}",
+      "version": 1,
+      "created_at": "2023-06-03T09:00:00.000Z",
+      "updated_at": "2023-06-03T09:00:00.000Z"
+    }
+  ]
+}
