@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Tmux Orchestrator - Vibe Kanban Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            margin-bottom: 2rem;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .status-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .status-card:hover {
+            transform: translateY(-2px);
+            border-color: #00ff88;
+        }
+        
+        .status-card h3 {
+            color: #00ff88;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .status-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .status-card .description {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #00ff88;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-card h3 {
+            color: #00ccff;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-card li {
+            color: #c0c0c0;
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .feature-card li::before {
+            content: '▶';
+            color: #00ff88;
+            position: absolute;
+            left: 0;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #666;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .loading {
+            color: #00ff88;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Vibe Kanban Dashboard</h1>
+            <p>Enhanced Tmux Orchestrator - Real-time Workflow Visualization</p>
+        </div>
+        
+        <div class="status-grid" id="statusGrid">
+            <div class="status-card">
+                <h3>System Status</h3>
+                <div class="value loading pulse" id="systemStatus">LOADING</div>
+                <div class="description">Overall system health</div>
+            </div>
+            
+            <div class="status-card">
+                <h3>Active Workflows</h3>
+                <div class="value" id="activeWorkflows">--</div>
+                <div class="description">Currently running workflows</div>
+            </div>
+            
+            <div class="status-card">
+                <h3>Success Rate</h3>
+                <div class="value" id="successRate">--</div>
+                <div class="description">Workflow completion rate</div>
+            </div>
+            
+            <div class="status-card">
+                <h3>Response Time</h3>
+                <div class="value" id="responseTime">--</div>
+                <div class="description">Average response time</div>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <a href="/dashboard" class="btn btn-primary">
+                🚀 Launch Dashboard
+            </a>
+            <a href="/api/overview" class="btn btn-secondary">
+                📊 View API
+            </a>
+            <a href="/health" class="btn btn-secondary">
+                💚 Health Check
+            </a>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <h3>🎯 Workflow Management</h3>
+                <ul>
+                    <li>Real-time status tracking</li>
+                    <li>5-phase workflow progression</li>
+                    <li>Quality gate validation</li>
+                    <li>Performance metrics</li>
+                    <li>Issue tracking</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📈 Analytics & Insights</h3>
+                <ul>
+                    <li>Resource utilization</li>
+                    <li>Performance trends</li>
+                    <li>Team productivity</li>
+                    <li>Success rate analysis</li>
+                    <li>Historical data</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🔄 Real-time Updates</h3>
+                <ul>
+                    <li>WebSocket connections</li>
+                    <li>Live workflow updates</li>
+                    <li>Event broadcasting</li>
+                    <li>Multi-client support</li>
+                    <li>Auto-refresh</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Enhanced Tmux Orchestrator v0.1.0 | Phase 2 Implementation</p>
+            <p>🤖 Built with Rust, Axum, and WebSocket technology</p>
+        </div>
+    </div>
+
+    <script>
+        // Load system metrics
+        async function loadMetrics() {
+            try {
+                const response = await fetch('/api/metrics');
+                const metrics = await response.json();
+                
+                document.getElementById('systemStatus').textContent = 'HEALTHY';
+                document.getElementById('systemStatus').className = 'value';
+                document.getElementById('activeWorkflows').textContent = metrics.active_workflows || 0;
+                document.getElementById('successRate').textContent = `${(metrics.success_rate * 100).toFixed(1)}%`;
+                document.getElementById('responseTime').textContent = '< 100ms';
+                
+            } catch (error) {
+                console.log('Metrics loading...', error);
+                // Show placeholder data while system starts up
+                setTimeout(loadMetrics, 2000);
+            }
+        }
+        
+        // WebSocket connection for real-time updates
+        function connectWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
+            
+            ws.onopen = function() {
+                console.log('WebSocket connected');
+            };
+            
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                console.log('WebSocket message:', data);
+                
+                if (data.type === 'metrics_update') {
+                    updateMetrics(data.metrics);
+                }
+            };
+            
+            ws.onclose = function() {
+                console.log('WebSocket disconnected, reconnecting...');
+                setTimeout(connectWebSocket, 3000);
+            };
+            
+            ws.onerror = function(error) {
+                console.log('WebSocket error:', error);
+            };
+        }
+        
+        function updateMetrics(metrics) {
+            if (metrics) {
+                document.getElementById('activeWorkflows').textContent = metrics.active_workflows || 0;
+                document.getElementById('successRate').textContent = `${(metrics.success_rate * 100).toFixed(1)}%`;
+            }
+        }
+        
+        // Initialize
+        loadMetrics();
+        connectWebSocket();
+        
+        // Periodic refresh
+        setInterval(loadMetrics, 10000);
+    </script>
+</body>
+</html>

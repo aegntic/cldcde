@@ -29,4 +29,3 @@ clap.workspace = true
 workflow-coordinator = { path = "../workflow-coordinator" }
 config-manager = { path = "../config-manager" }
 github-integration = { path = "../github-integration" }
-vibe-kanban = { path = "../vibe-kanban" }

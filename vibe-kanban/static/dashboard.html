@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Kanban Dashboard - Workflow Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            height: 100vh;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.5rem;
+            color: #00ff88;
+        }
+        
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+            animation: pulse 2s infinite;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .kanban-board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .kanban-column {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .column-header {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .column-title {
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .column-count {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+        }
+        
+        .column-content {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        
+        .workflow-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .workflow-card:hover {
+            transform: translateY(-2px);
+            border-color: #00ff88;
+        }
+        
+        .workflow-card.priority-critical {
+            border-left: 4px solid #ff4757;
+        }
+        
+        .workflow-card.priority-high {
+            border-left: 4px solid #ffa726;
+        }
+        
+        .workflow-card.priority-medium {
+            border-left: 4px solid #66bb6a;
+        }
+        
+        .workflow-card.priority-low {
+            border-left: 4px solid #42a5f5;
+        }
+        
+        .workflow-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+        
+        .workflow-type {
+            font-size: 0.8rem;
+            color: #00ccff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .workflow-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .workflow-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            transition: width 0.3s ease;
+        }
+        
+        .workflow-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: #a0a0a0;
+        }
+        
+        .sidebar {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .sidebar-section {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-header {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: bold;
+            color: #00ff88;
+        }
+        
+        .sidebar-content {
+            padding: 1rem;
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        
+        .metric-label {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+            margin-bottom: 0.25rem;
+        }
+        
+        .metric-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        
+        .activity-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.8rem;
+        }
+        
+        .activity-time {
+            color: #a0a0a0;
+        }
+        
+        .activity-description {
+            color: #e0e0e0;
+            margin-top: 0.25rem;
+        }
+        
+        .column-planning { background: rgba(66, 165, 245, 0.1); }
+        .column-requirements { background: rgba(255, 167, 38, 0.1); }
+        .column-design { background: rgba(102, 187, 106, 0.1); }
+        .column-tasks { background: rgba(156, 39, 176, 0.1); }
+        .column-execute { background: rgba(0, 255, 136, 0.1); }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .kanban-board {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <h1>🎯 Vibe Kanban Dashboard</h1>
+            <div class="header-controls">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>Live</span>
+                </div>
+                <div id="workflowCount">0 Workflows</div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="kanban-board">
+                <div class="kanban-column column-planning">
+                    <div class="column-header">
+                        <div class="column-title">📋 Planning</div>
+                        <div class="column-count" id="planningCount">0 workflows</div>
+                    </div>
+                    <div class="column-content" id="planningColumn"></div>
+                </div>
+                
+                <div class="kanban-column column-requirements">
+                    <div class="column-header">
+                        <div class="column-title">📝 Requirements</div>
+                        <div class="column-count" id="requirementsCount">0 workflows</div>
+                    </div>
+                    <div class="column-content" id="requirementsColumn"></div>
+                </div>
+                
+                <div class="kanban-column column-design">
+                    <div class="column-header">
+                        <div class="column-title">🎨 Design</div>
+                        <div class="column-count" id="designCount">0 workflows</div>
+                    </div>
+                    <div class="column-content" id="designColumn"></div>
+                </div>
+                
+                <div class="kanban-column column-tasks">
+                    <div class="column-header">
+                        <div class="column-title">📋 Tasks</div>
+                        <div class="column-count" id="tasksCount">0 workflows</div>
+                    </div>
+                    <div class="column-content" id="tasksColumn"></div>
+                </div>
+                
+                <div class="kanban-column column-execute">
+                    <div class="column-header">
+                        <div class="column-title">⚡ Execute</div>
+                        <div class="column-count" id="executeCount">0 workflows</div>
+                    </div>
+                    <div class="column-content" id="executeColumn"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-header">📊 System Metrics</div>
+                    <div class="sidebar-content">
+                        <div class="metric-card">
+                            <div class="metric-label">Active Workflows</div>
+                            <div class="metric-value" id="activeWorkflowsMetric">0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Success Rate</div>
+                            <div class="metric-value" id="successRateMetric">0%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">System Health</div>
+                            <div class="metric-value" id="systemHealthMetric">100%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">CPU Usage</div>
+                            <div class="metric-value" id="cpuUsageMetric">0%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <div class="sidebar-header">📈 Recent Activity</div>
+                    <div class="sidebar-content" id="recentActivity">
+                        <div class="activity-item">
+                            <div class="activity-time">Loading...</div>
+                            <div class="activity-description">Fetching recent activity...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let workflows = {};
+        let ws = null;
+        
+        // Column mappings
+        const phaseColumns = {
+            'Planning': 'planningColumn',
+            'Requirements': 'requirementsColumn', 
+            'Design': 'designColumn',
+            'Tasks': 'tasksColumn',
+            'Execute': 'executeColumn'
+        };
+        
+        // Load workflows
+        async function loadWorkflows() {
+            try {
+                const response = await fetch('/api/workflows');
+                const workflowList = await response.json();
+                
+                workflows = {};
+                workflowList.forEach(workflow => {
+                    workflows[workflow.id] = workflow;
+                });
+                
+                renderKanbanBoard();
+                updateWorkflowCount();
+                
+            } catch (error) {
+                console.error('Failed to load workflows:', error);
+            }
+        }
+        
+        // Load system metrics
+        async function loadMetrics() {
+            try {
+                const response = await fetch('/api/metrics');
+                const metrics = await response.json();
+                
+                document.getElementById('activeWorkflowsMetric').textContent = metrics.active_workflows;
+                document.getElementById('successRateMetric').textContent = `${(metrics.success_rate * 100).toFixed(1)}%`;
+                document.getElementById('systemHealthMetric').textContent = `${metrics.system_health_score.toFixed(1)}%`;
+                document.getElementById('cpuUsageMetric').textContent = `${metrics.resource_utilization.cpu_percent.toFixed(1)}%`;
+                
+            } catch (error) {
+                console.error('Failed to load metrics:', error);
+            }
+        }
+        
+        // Load recent activity
+        async function loadActivity() {
+            try {
+                const response = await fetch('/api/history');
+                const history = await response.json();
+                
+                const activityContainer = document.getElementById('recentActivity');
+                activityContainer.innerHTML = '';
+                
+                history.slice(0, 10).forEach(item => {
+                    const activityItem = document.createElement('div');
+                    activityItem.className = 'activity-item';
+                    
+                    const time = new Date(item.timestamp).toLocaleTimeString();
+                    activityItem.innerHTML = `
+                        <div class="activity-time">${time}</div>
+                        <div class="activity-description">${item.description}</div>
+                    `;
+                    
+                    activityContainer.appendChild(activityItem);
+                });
+                
+            } catch (error) {
+                console.error('Failed to load activity:', error);
+            }
+        }
+        
+        // Render Kanban board
+        function renderKanbanBoard() {
+            // Clear all columns
+            Object.values(phaseColumns).forEach(columnId => {
+                document.getElementById(columnId).innerHTML = '';
+            });
+            
+            // Count workflows by phase
+            const phaseCounts = {
+                'Planning': 0,
+                'Requirements': 0,
+                'Design': 0,
+                'Tasks': 0,
+                'Execute': 0
+            };
+            
+            // Render workflows in appropriate columns
+            Object.values(workflows).forEach(workflow => {
+                const phase = workflow.phase;
+                const columnId = phaseColumns[phase];
+                
+                if (columnId) {
+                    phaseCounts[phase]++;
+                    const column = document.getElementById(columnId);
+                    column.appendChild(createWorkflowCard(workflow));
+                }
+            });
+            
+            // Update column counts
+            Object.entries(phaseCounts).forEach(([phase, count]) => {
+                const countId = phase.toLowerCase() + 'Count';
+                const element = document.getElementById(countId);
+                if (element) {
+                    element.textContent = `${count} workflow${count !== 1 ? 's' : ''}`;
+                }
+            });
+        }
+        
+        // Create workflow card element
+        function createWorkflowCard(workflow) {
+            const card = document.createElement('div');
+            card.className = `workflow-card priority-${workflow.priority.toLowerCase()}`;
+            card.setAttribute('data-workflow-id', workflow.id);
+            
+            const priorityColor = {
+                'Critical': '#ff4757',
+                'High': '#ffa726', 
+                'Medium': '#66bb6a',
+                'Low': '#42a5f5'
+            }[workflow.priority] || '#666';
+            
+            card.innerHTML = `
+                <div class="workflow-title">${workflow.name}</div>
+                <div class="workflow-type">${workflow.workflow_type}</div>
+                <div class="workflow-progress">
+                    <div class="workflow-progress-bar" style="width: ${workflow.progress_percentage}%"></div>
+                </div>
+                <div class="workflow-meta">
+                    <span>${workflow.priority}</span>
+                    <span>${workflow.team_size} agents</span>
+                </div>
+            `;
+            
+            card.addEventListener('click', () => showWorkflowDetails(workflow));
+            
+            return card;
+        }
+        
+        // Show workflow details (placeholder)
+        function showWorkflowDetails(workflow) {
+            alert(`Workflow: ${workflow.name}\nType: ${workflow.workflow_type}\nPhase: ${workflow.phase}\nProgress: ${workflow.progress_percentage}%`);
+        }
+        
+        // Update workflow count in header
+        function updateWorkflowCount() {
+            const count = Object.keys(workflows).length;
+            document.getElementById('workflowCount').textContent = `${count} Workflow${count !== 1 ? 's' : ''}`;
+        }
+        
+        // WebSocket connection
+        function connectWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
+            
+            ws.onopen = function() {
+                console.log('WebSocket connected');
+            };
+            
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                handleWebSocketMessage(data);
+            };
+            
+            ws.onclose = function() {
+                console.log('WebSocket disconnected, reconnecting...');
+                setTimeout(connectWebSocket, 3000);
+            };
+            
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+        }
+        
+        // Handle WebSocket messages
+        function handleWebSocketMessage(data) {
+            switch (data.type) {
+                case 'workflow_created':
+                    workflows[data.workflow.id] = data.workflow;
+                    renderKanbanBoard();
+                    updateWorkflowCount();
+                    break;
+                    
+                case 'workflow_updated':
+                    if (workflows[data.workflow_id]) {
+                        Object.assign(workflows[data.workflow_id], data.changes);
+                        renderKanbanBoard();
+                    }
+                    break;
+                    
+                case 'phase_transition':
+                    if (workflows[data.workflow_id]) {
+                        workflows[data.workflow_id].phase = data.to_phase;
+                        renderKanbanBoard();
+                    }
+                    break;
+                    
+                case 'metrics_update':
+                    updateMetricsFromData(data.metrics);
+                    break;
+                    
+                case 'heartbeat':
+                    // Connection is alive
+                    break;
+                    
+                default:
+                    console.log('Unknown message type:', data.type);
+            }
+        }
+        
+        // Update metrics from WebSocket data
+        function updateMetricsFromData(metrics) {
+            if (metrics) {
+                document.getElementById('activeWorkflowsMetric').textContent = metrics.active_workflows;
+                document.getElementById('successRateMetric').textContent = `${(metrics.success_rate * 100).toFixed(1)}%`;
+                document.getElementById('systemHealthMetric').textContent = `${metrics.system_health_score.toFixed(1)}%`;
+                document.getElementById('cpuUsageMetric').textContent = `${metrics.resource_utilization.cpu_percent.toFixed(1)}%`;
+            }
+        }
+        
+        // Initialize dashboard
+        async function initializeDashboard() {
+            await loadWorkflows();
+            await loadMetrics();
+            await loadActivity();
+            connectWebSocket();
+            
+            // Periodic refresh
+            setInterval(loadWorkflows, 30000);
+            setInterval(loadMetrics, 10000);
+            setInterval(loadActivity, 60000);
+        }
+        
+        // Start the dashboard
+        initializeDashboard();
+    </script>
+</body>
+</html>
