@@ -1,0 +1,61 @@
+[workspace]
+members = [
+    "orchestrator",
+    "workflow-coordinator", 
+    "master-orchestrator",
+    "vibe-kanban",
+    "github-integration",
+    "config-manager",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Enhanced Tmux Orchestrator Team"]
+license = "MIT"
+repository = "https://github.com/chajus1/enhanced-tmux-orchestrator"
+
+[workspace.dependencies]
+# Core Dependencies
+tokio = { version = "1.35", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+clap = { version = "4.4", features = ["derive"] }
+anyhow = "1.0"
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Async and HTTP
+reqwest = { version = "0.11", features = ["json", "stream"] }
+hyper = { version = "1.0", features = ["full"] }
+axum = "0.7"
+tower = "0.4"
+
+# Database and Persistence
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "sqlite", "json", "chrono", "uuid"] }
+uuid = { version = "1.6", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Configuration and Serialization
+config = "0.14"
+toml = "0.8"
+yaml-rust = "0.4"
+
+# GitHub Integration
+octocrab = "0.32"
+
+# Process Management
+nix = "0.27"
+libc = "0.2"
+
+# Tmux Integration
+tmux_interface = "0.3"
+
+# Utilities
+dashmap = "5.5"
+parking_lot = "0.12"
+futures = "0.3"
+crossbeam = "0.8"
+num_cpus = "1.16"

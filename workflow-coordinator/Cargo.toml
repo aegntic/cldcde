@@ -1,0 +1,25 @@
+[package]
+name = "workflow-coordinator"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+# Workspace dependencies
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+dashmap.workspace = true
+parking_lot.workspace = true
+futures.workspace = true
+tmux_interface.workspace = true
+
+# Local dependencies
+config-manager = { path = "../config-manager" }

@@ -1,0 +1,32 @@
+[package]
+name = "master-orchestrator"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+# Workspace dependencies
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+dashmap.workspace = true
+parking_lot.workspace = true
+futures.workspace = true
+crossbeam.workspace = true
+tmux_interface.workspace = true
+num_cpus.workspace = true
+clap.workspace = true
+
+# Local workspace dependencies
+workflow-coordinator = { path = "../workflow-coordinator" }
+config-manager = { path = "../config-manager" }
+github-integration = { path = "../github-integration" }
+vibe-kanban = { path = "../vibe-kanban" }
