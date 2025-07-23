@@ -7,6 +7,17 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
+# Workspace dependencies
 serde.workspace = true
+serde_json.workspace = true
 anyhow.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+
+# Web and OAuth
+reqwest.workspace = true
 octocrab.workspace = true
+urlencoding = "2.1"
+rand = "0.8"

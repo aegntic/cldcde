@@ -25,6 +25,7 @@ use uuid::Uuid;
 // Re-export types from orchestrator components
 pub use master_orchestrator::{WorkflowInfo, WorkflowStatus, WorkflowPriority};
 pub use workflow_coordinator::{WorkflowPhase, CoordinatorEvent};
+pub use github_integration::{GitHubIntegration, GitHubConfig, GitHubUser};
 
 // Local WorkflowMetrics for dashboard
 #[derive(Debug, Clone, Serialize, Deserialize)]
