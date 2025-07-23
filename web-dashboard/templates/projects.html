@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Enhanced Tmux Orchestrator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+               background: #f8f9fa; color: #333; }
+        .header { background: #fff; border-bottom: 1px solid #e9ecef; padding: 1rem 2rem; 
+                 display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { color: #007bff; font-size: 1.5rem; }
+        .sidebar { position: fixed; left: 0; top: 80px; width: 250px; height: calc(100vh - 80px);
+                  background: #fff; border-right: 1px solid #e9ecef; padding: 1rem 0; }
+        .sidebar nav a { display: block; padding: 0.75rem 1.5rem; color: #666; text-decoration: none;
+                        transition: all 0.2s; }
+        .sidebar nav a:hover, .sidebar nav a.active { background: #f8f9fa; color: #007bff; }
+        .main-content { margin-left: 250px; padding: 2rem; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .projects-grid { display: grid; gap: 1.5rem; }
+        .project-card { background: #fff; border-radius: 8px; padding: 1.5rem; 
+                       box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .project-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; }
+        .project-title { font-size: 1.25rem; font-weight: 600; color: #333; }
+        .project-status { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+        .status-active { background: #d4edda; color: #155724; }
+        .status-archived { background: #f8d7da; color: #721c24; }
+        .github-link { color: #007bff; text-decoration: none; font-family: 'Courier New', monospace; }
+        .team-members { display: flex; gap: 0.5rem; margin: 1rem 0; }
+        .member-avatar { width: 32px; height: 32px; border-radius: 50%; }
+        .btn { padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; 
+              text-decoration: none; display: inline-block; transition: all 0.2s; font-size: 0.9rem; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🚀 Enhanced Tmux Orchestrator</h1>
+        <div class="user-info">
+            {% if user %}
+                <span>{{ user.username }}</span>
+            {% endif %}
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <nav>
+            <a href="/dashboard">📊 Dashboard</a>
+            <a href="/workflows">⚡ Workflows</a>
+            <a href="/projects" class="active">📁 Projects</a>
+            <a href="/settings">⚙️ Settings</a>
+            <a href="/logout">🚪 Logout</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h2>Project Management</h2>
+            <button class="btn btn-primary" onclick="showCreateProject()">+ New Project</button>
+        </div>
+
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card">
+                <div class="project-header">
+                    <div>
+                        <div class="project-title">{{ project.name }}</div>
+                        {% if project.description %}
+                        <p style="color: #666; margin-top: 0.5rem;">{{ project.description }}</p>
+                        {% endif %}
+                    </div>
+                    <span class="project-status status-{{ project.status }}">{{ project.status }}</span>
+                </div>
+                
+                {% if project.github_repo %}
+                <div style="margin-bottom: 1rem;">
+                    <strong>Repository:</strong> 
+                    <a href="https://github.com/{{ project.github_repo }}" class="github-link" target="_blank">
+                        {{ project.github_repo }}
+                    </a>
+                </div>
+                {% endif %}
+                
+                <div style="margin-bottom: 1rem;">
+                    <strong>Workflows:</strong> {{ project.workflows | length }} active
+                </div>
+                
+                {% if project.team_members %}
+                <div>
+                    <strong>Team:</strong>
+                    <div class="team-members">
+                        {% for member in project.team_members %}
+                        <img src="{{ member.avatar_url }}" alt="{{ member.username }}" 
+                             class="member-avatar" title="{{ member.username }} ({{ member.role }})">
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div style="font-size: 0.9rem; color: #666; margin: 1rem 0;">
+                    Created: {{ project.created_at }}<br>
+                    Last Activity: {{ project.last_activity }}
+                </div>
+                
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-primary" onclick="viewProject('{{ project.id }}')">View</button>
+                    <button class="btn btn-success" onclick="syncProject('{{ project.id }}')">Sync</button>
+                    <button class="btn btn-secondary" onclick="editProject('{{ project.id }}')">Edit</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if github_repos %}
+        <div style="margin-top: 3rem;">
+            <h3>Available GitHub Repositories</h3>
+            <div style="background: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                {% for repo in github_repos %}
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #f0f0f0;">
+                    <div>
+                        <strong>{{ repo.name }}</strong><br>
+                        <small style="color: #666;">{{ repo.description }}</small><br>
+                        <span style="font-size: 0.8rem; color: #007bff;">{{ repo.open_issues }} issues • {{ repo.open_prs }} PRs</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="createProjectFromRepo('{{ repo.full_name }}')">
+                        Import Project
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </main>
+
+    <script>
+        function viewProject(id) {
+            window.location.href = `/projects/${id}`;
+        }
+        
+        function syncProject(id) {
+            fetch(`/api/projects/${id}/sync`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Project sync initiated');
+                    } else {
+                        alert('Sync failed: ' + data.error);
+                    }
+                });
+        }
+        
+        function editProject(id) {
+            window.location.href = `/projects/${id}/edit`;
+        }
+        
+        function showCreateProject() {
+            const name = prompt('Project Name:');
+            if (name) {
+                const description = prompt('Project Description (optional):');
+                const github_repo = prompt('GitHub Repository (optional, format: owner/repo):');
+                
+                const project = {
+                    name: name,
+                    description: description || null,
+                    github_repo: github_repo || null
+                };
+                
+                fetch('/api/projects', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(project)
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Failed to create project');
+                    }
+                });
+            }
+        }
+        
+        function createProjectFromRepo(repoFullName) {
+            const name = prompt('Project Name:', repoFullName.split('/')[1]);
+            if (name) {
+                const project = {
+                    name: name,
+                    github_repo: repoFullName,
+                    description: `Imported from ${repoFullName}`
+                };
+                
+                fetch('/api/projects', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(project)
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Failed to create project');
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

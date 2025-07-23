@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Enhanced Tmux Orchestrator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+               background: #f8f9fa; color: #333; }
+        
+        .header { background: #fff; border-bottom: 1px solid #e9ecef; padding: 1rem 2rem; 
+                 display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { color: #007bff; font-size: 1.5rem; }
+        .user-info { display: flex; align-items: center; gap: 1rem; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; }
+        
+        .sidebar { position: fixed; left: 0; top: 80px; width: 250px; height: calc(100vh - 80px);
+                  background: #fff; border-right: 1px solid #e9ecef; padding: 1rem 0; }
+        .sidebar nav a { display: block; padding: 0.75rem 1.5rem; color: #666; text-decoration: none;
+                        transition: all 0.2s; }
+        .sidebar nav a:hover, .sidebar nav a.active { background: #f8f9fa; color: #007bff; }
+        
+        .main-content { margin-left: 250px; padding: 2rem; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+                         gap: 1.5rem; margin-bottom: 2rem; }
+        
+        .card { background: #fff; border-radius: 8px; padding: 1.5rem; 
+               box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .card h3 { margin-bottom: 1rem; color: #333; }
+        
+        .metric { text-align: center; }
+        .metric-value { font-size: 2rem; font-weight: bold; color: #007bff; }
+        .metric-label { color: #666; font-size: 0.9rem; }
+        
+        .workflow-list { list-style: none; }
+        .workflow-item { display: flex; justify-content: space-between; align-items: center;
+                        padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; }
+        .workflow-item:last-child { border-bottom: none; }
+        .workflow-status { padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; }
+        .status-active { background: #d4edda; color: #155724; }
+        .status-paused { background: #fff3cd; color: #856404; }
+        .status-completed { background: #d1ecf1; color: #0c5460; }
+        
+        .progress-bar { width: 100%; height: 8px; background: #e9ecef; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #007bff; transition: width 0.3s; }
+        
+        .btn { display: inline-block; padding: 0.5rem 1rem; background: #007bff; color: white;
+              text-decoration: none; border-radius: 4px; border: none; cursor: pointer;
+              transition: background 0.2s; }
+        .btn:hover { background: #0056b3; }
+        .btn-sm { padding: 0.375rem 0.75rem; font-size: 0.875rem; }
+        
+        .real-time-indicator { width: 8px; height: 8px; background: #28a745; border-radius: 50%;
+                              animation: pulse 2s infinite; margin-right: 0.5rem; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🚀 Enhanced Tmux Orchestrator</h1>
+        <div class="user-info">
+            <span class="real-time-indicator"></span>
+            <span>Live Dashboard</span>
+            {% if user %}
+                <span>{{ user.username }}</span>
+                {% if user.avatar_url %}
+                    <img src="{{ user.avatar_url }}" alt="Avatar" class="user-avatar">
+                {% endif %}
+            {% endif %}
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <nav>
+            <a href="/dashboard" class="active">📊 Dashboard</a>
+            <a href="/workflows">⚡ Workflows</a>
+            <a href="/projects">📁 Projects</a>
+            <a href="/settings">⚙️ Settings</a>
+            <a href="/logout" onclick="return confirm('Logout?')">🚪 Logout</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="dashboard-grid">
+            <div class="card metric">
+                <h3>Active Workflows</h3>
+                <div class="metric-value">{{ workflows | length }}</div>
+                <div class="metric-label">Currently Running</div>
+            </div>
+            
+            <div class="card metric">
+                <h3>Projects</h3>
+                <div class="metric-value">{{ projects | length }}</div>
+                <div class="metric-label">Total Projects</div>
+            </div>
+            
+            <div class="card metric">
+                <h3>System Status</h3>
+                <div class="metric-value">{{ system_status.status }}</div>
+                <div class="metric-label">{{ system_status.uptime }}</div>
+            </div>
+            
+            <div class="card metric">
+                <h3>Connected Users</h3>
+                <div class="metric-value">{{ system_status.connected_users }}</div>
+                <div class="metric-label">Active Sessions</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>Recent Workflows</h3>
+                <ul class="workflow-list">
+                    {% for workflow in workflows %}
+                    <li class="workflow-item">
+                        <div>
+                            <strong>{{ workflow.name }}</strong><br>
+                            <small>{{ workflow.phase }}</small>
+                        </div>
+                        <div>
+                            <span class="workflow-status status-{{ workflow.status }}">
+                                {{ workflow.status }}
+                            </span>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <a href="/workflows" class="btn btn-sm">View All</a>
+            </div>
+            
+            <div class="card">
+                <h3>Project Progress</h3>
+                {% for project in projects %}
+                <div style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>{{ project.name }}</span>
+                        <span>{{ project.status }}</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+                {% endfor %}
+                <a href="/projects" class="btn btn-sm">Manage Projects</a>
+            </div>
+        </div>
+
+        {% if system_status.github_rate_limit %}
+        <div class="card">
+            <h3>GitHub API Status</h3>
+            <p>Rate Limit: {{ system_status.github_rate_limit.remaining }}/{{ system_status.github_rate_limit.total }}</p>
+            <p>Resets at: {{ system_status.github_rate_limit.reset_at }}</p>
+        </div>
+        {% endif %}
+    </main>
+
+    <script>
+        // WebSocket connection for real-time updates
+        const ws = new WebSocket(`ws://${window.location.host}/ws`);
+        
+        ws.onopen = function() {
+            console.log('WebSocket connected');
+            // Subscribe to relevant channels
+            ws.send(JSON.stringify({
+                type: 'Subscribe',
+                channels: ['workflows', 'projects', 'system']
+            }));
+        };
+        
+        ws.onmessage = function(event) {
+            const message = JSON.parse(event.data);
+            handleWebSocketMessage(message);
+        };
+        
+        function handleWebSocketMessage(message) {
+            switch(message.type) {
+                case 'WorkflowStatusUpdate':
+                    updateWorkflowStatus(message.workflow_id, message.status, message.progress);
+                    break;
+                case 'ProjectSync':
+                    updateProjectStatus(message.project_id, message.status);
+                    break;
+                case 'SystemNotification':
+                    showNotification(message.level, message.message);
+                    break;
+            }
+        }
+        
+        function updateWorkflowStatus(workflowId, status, progress) {
+            // Update workflow status in the UI
+            console.log(`Workflow ${workflowId}: ${status} (${progress}%)`);
+        }
+        
+        function updateProjectStatus(projectId, status) {
+            // Update project status in the UI
+            console.log(`Project ${projectId}: ${status}`);
+        }
+        
+        function showNotification(level, message) {
+            // Show notification to user
+            console.log(`${level.toUpperCase()}: ${message}`);
+        }
+        
+        // Ping to keep connection alive
+        setInterval(() => {
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ type: 'Ping' }));
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

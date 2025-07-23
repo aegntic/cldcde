@@ -1,0 +1,46 @@
+[package]
+name = "web-dashboard"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+# Workspace dependencies
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+
+# Web framework dependencies
+axum = "0.7"
+tower = "0.4"
+tower-http = { version = "0.5", features = ["fs", "cors"] }
+hyper = "1.0"
+
+# Static files
+tower-serve-static = "0.1"
+
+# WebSocket support  
+axum-extra = { version = "0.9", features = ["typed-header"] }
+futures = "0.3"
+
+# Authentication and security
+jsonwebtoken = "9.2"
+argon2 = "0.5"
+base64 = "0.22"
+rand = "0.8"
+
+# Logging and observability
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+# GitHub integration
+github-integration = { path = "../github-integration" }
+workflow-coordinator = { path = "../workflow-coordinator" }
+master-orchestrator = { path = "../master-orchestrator" }
+vibe-kanban = { path = "../vibe-kanban" }

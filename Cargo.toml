@@ -6,6 +6,7 @@ members = [
     "vibe-kanban",
     "github-integration",
     "config-manager",
+    "web-dashboard",
 ]
 resolver = "2"
 
@@ -63,3 +64,11 @@ num_cpus = "1.16"
 tokio-tungstenite = "0.24"
 urlencoding = "2.1"
 rand = "0.8"
+
+# Web Dashboard Dependencies
+tower-http = "0.5"
+tower-serve-static = "0.1"
+axum-extra = { version = "0.9", features = ["typed-header"] }
+jsonwebtoken = "9.2"
+argon2 = "0.5"
+base64 = "0.22"

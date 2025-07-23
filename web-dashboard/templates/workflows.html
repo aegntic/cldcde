@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workflows - Enhanced Tmux Orchestrator</title>
+    <style>
+        /* Include the same base styles as dashboard */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+               background: #f8f9fa; color: #333; }
+        
+        .header { background: #fff; border-bottom: 1px solid #e9ecef; padding: 1rem 2rem; 
+                 display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { color: #007bff; font-size: 1.5rem; }
+        
+        .sidebar { position: fixed; left: 0; top: 80px; width: 250px; height: calc(100vh - 80px);
+                  background: #fff; border-right: 1px solid #e9ecef; padding: 1rem 0; }
+        .sidebar nav a { display: block; padding: 0.75rem 1.5rem; color: #666; text-decoration: none;
+                        transition: all 0.2s; }
+        .sidebar nav a:hover, .sidebar nav a.active { background: #f8f9fa; color: #007bff; }
+        
+        .main-content { margin-left: 250px; padding: 2rem; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        
+        .workflow-grid { display: grid; gap: 1.5rem; }
+        .workflow-card { background: #fff; border-radius: 8px; padding: 1.5rem; 
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        
+        .workflow-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; }
+        .workflow-title { font-size: 1.25rem; font-weight: 600; color: #333; }
+        .workflow-status { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+        
+        .status-active { background: #d4edda; color: #155724; }
+        .status-paused { background: #fff3cd; color: #856404; }
+        .status-completed { background: #d1ecf1; color: #0c5460; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        
+        .workflow-meta { display: flex; gap: 2rem; margin-bottom: 1rem; font-size: 0.9rem; color: #666; }
+        .workflow-description { margin-bottom: 1rem; color: #666; }
+        
+        .phases-container { margin-bottom: 1rem; }
+        .phases-list { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .phase-badge { padding: 0.25rem 0.5rem; background: #f8f9fa; border-radius: 4px; 
+                      font-size: 0.8rem; border: 1px solid #e9ecef; }
+        .phase-current { background: #007bff; color: white; border-color: #007bff; }
+        .phase-completed { background: #28a745; color: white; border-color: #28a745; }
+        
+        .progress-section { margin-bottom: 1rem; }
+        .progress-bar { width: 100%; height: 8px; background: #e9ecef; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #007bff; transition: width 0.3s; }
+        .progress-text { font-size: 0.9rem; color: #666; margin-top: 0.5rem; }
+        
+        .workflow-actions { display: flex; gap: 0.5rem; }
+        .btn { padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; 
+              text-decoration: none; display: inline-block; transition: all 0.2s; font-size: 0.9rem; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-primary:hover { background: #0056b3; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #545b62; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #1e7e34; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-danger:hover { background: #c82333; }
+        
+        .create-workflow { background: #fff; border-radius: 8px; padding: 1.5rem; 
+                          box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-control { width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 4px; }
+        .form-control:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
+        
+        .github-integration { border: 1px solid #e9ecef; border-radius: 4px; padding: 1rem; 
+                             background: #f8f9fa; margin-top: 1rem; }
+        .github-repo { font-family: 'Courier New', monospace; color: #007bff; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🚀 Enhanced Tmux Orchestrator</h1>
+        <div class="user-info">
+            {% if user %}
+                <span>{{ user.username }}</span>
+            {% endif %}
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <nav>
+            <a href="/dashboard">📊 Dashboard</a>
+            <a href="/workflows" class="active">⚡ Workflows</a>
+            <a href="/projects">📁 Projects</a>
+            <a href="/settings">⚙️ Settings</a>
+            <a href="/logout">🚪 Logout</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h2>Workflow Management</h2>
+            <button class="btn btn-primary" onclick="toggleCreateForm()">+ Create Workflow</button>
+        </div>
+
+        <div id="create-form" class="create-workflow" style="display: none;">
+            <h3>Create New Workflow</h3>
+            <form id="workflow-form">
+                <div class="form-group">
+                    <label for="workflow-name">Workflow Name</label>
+                    <input type="text" id="workflow-name" class="form-control" placeholder="e.g., Feature Development Workflow" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="workflow-description">Description</label>
+                    <textarea id="workflow-description" class="form-control" rows="3" 
+                             placeholder="Describe the workflow purpose and goals"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="workflow-type">Workflow Type</label>
+                    <select id="workflow-type" class="form-control">
+                        {% for type in workflow_types %}
+                        <option value="{{ type }}">{{ type }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="github-repo">GitHub Repository (Optional)</label>
+                    <input type="text" id="github-repo" class="form-control" 
+                           placeholder="owner/repository-name">
+                </div>
+                
+                <div class="workflow-actions">
+                    <button type="submit" class="btn btn-success">Create Workflow</button>
+                    <button type="button" class="btn btn-secondary" onclick="toggleCreateForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="workflow-grid">
+            {% for workflow in workflows %}
+            <div class="workflow-card" data-workflow-id="{{ workflow.id }}">
+                <div class="workflow-header">
+                    <div>
+                        <div class="workflow-title">{{ workflow.name }}</div>
+                        {% if workflow.description %}
+                        <div class="workflow-description">{{ workflow.description }}</div>
+                        {% endif %}
+                    </div>
+                    <span class="workflow-status status-{{ workflow.status }}">{{ workflow.status }}</span>
+                </div>
+                
+                <div class="workflow-meta">
+                    <span>Created: {{ workflow.created_at }}</span>
+                    <span>Updated: {{ workflow.updated_at }}</span>
+                    <span>By: {{ workflow.created_by }}</span>
+                </div>
+                
+                <div class="phases-container">
+                    <strong>Phases:</strong>
+                    <div class="phases-list">
+                        {% for phase in workflow.phases %}
+                        <span class="phase-badge {% if phase.name == workflow.current_phase %}phase-current{% elif phase.status == 'completed' %}phase-completed{% endif %}">
+                            {{ phase.name }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ workflow.progress }}%;"></div>
+                    </div>
+                    <div class="progress-text">{{ workflow.progress }}% Complete</div>
+                </div>
+                
+                {% if workflow.github_integration %}
+                <div class="github-integration">
+                    <strong>🔗 GitHub Integration</strong><br>
+                    <span class="github-repo">{{ workflow.github_integration.repository }}</span> 
+                    ({{ workflow.github_integration.branch }})<br>
+                    <small>Last sync: {{ workflow.github_integration.last_sync }} - 
+                          {{ workflow.github_integration.issues_synced }} issues, 
+                          {{ workflow.github_integration.prs_synced }} PRs</small>
+                </div>
+                {% endif %}
+                
+                <div class="workflow-actions">
+                    {% if workflow.status == 'active' %}
+                    <button class="btn btn-secondary" onclick="pauseWorkflow('{{ workflow.id }}')">⏸️ Pause</button>
+                    {% elif workflow.status == 'paused' %}
+                    <button class="btn btn-success" onclick="resumeWorkflow('{{ workflow.id }}')">▶️ Resume</button>
+                    {% endif %}
+                    
+                    <button class="btn btn-primary" onclick="viewWorkflow('{{ workflow.id }}')">👁️ View</button>
+                    <button class="btn btn-secondary" onclick="editWorkflow('{{ workflow.id }}')">✏️ Edit</button>
+                    
+                    {% if workflow.status != 'active' %}
+                    <button class="btn btn-danger" onclick="deleteWorkflow('{{ workflow.id }}')">🗑️ Delete</button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script>
+        // WebSocket connection for real-time updates
+        const ws = new WebSocket(`ws://${window.location.host}/ws`);
+        
+        ws.onopen = function() {
+            ws.send(JSON.stringify({
+                type: 'Subscribe',
+                channels: ['workflows']
+            }));
+        };
+        
+        ws.onmessage = function(event) {
+            const message = JSON.parse(event.data);
+            if (message.type === 'WorkflowStatusUpdate') {
+                updateWorkflowCard(message.workflow_id, message.status, message.progress);
+            }
+        };
+        
+        function updateWorkflowCard(workflowId, status, progress) {
+            const card = document.querySelector(`[data-workflow-id="${workflowId}"]`);
+            if (card) {
+                const statusElement = card.querySelector('.workflow-status');
+                const progressFill = card.querySelector('.progress-fill');
+                const progressText = card.querySelector('.progress-text');
+                
+                statusElement.className = `workflow-status status-${status}`;
+                statusElement.textContent = status;
+                progressFill.style.width = `${progress}%`;
+                progressText.textContent = `${progress}% Complete`;
+            }
+        }
+        
+        function toggleCreateForm() {
+            const form = document.getElementById('create-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        function pauseWorkflow(id) {
+            fetch(`/api/workflows/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'paused' })
+            }).then(() => location.reload());
+        }
+        
+        function resumeWorkflow(id) {
+            fetch(`/api/workflows/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'active' })
+            }).then(() => location.reload());
+        }
+        
+        function viewWorkflow(id) {
+            window.location.href = `/workflows/${id}`;
+        }
+        
+        function editWorkflow(id) {
+            window.location.href = `/workflows/${id}/edit`;
+        }
+        
+        function deleteWorkflow(id) {
+            if (confirm('Are you sure you want to delete this workflow?')) {
+                fetch(`/api/workflows/${id}`, { method: 'DELETE' })
+                    .then(() => location.reload());
+            }
+        }
+        
+        // Handle form submission
+        document.getElementById('workflow-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('workflow-name').value,
+                description: document.getElementById('workflow-description').value,
+                type: document.getElementById('workflow-type').value,
+                github_repo: document.getElementById('github-repo').value
+            };
+            
+            fetch('/api/workflows', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            }).then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Failed to create workflow');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

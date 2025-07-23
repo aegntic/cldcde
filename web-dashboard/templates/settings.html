@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Enhanced Tmux Orchestrator</title>
+    <style>
+        /* Include base styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+               background: #f8f9fa; color: #333; }
+        .header { background: #fff; border-bottom: 1px solid #e9ecef; padding: 1rem 2rem; 
+                 display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { color: #007bff; font-size: 1.5rem; }
+        .sidebar { position: fixed; left: 0; top: 80px; width: 250px; height: calc(100vh - 80px);
+                  background: #fff; border-right: 1px solid #e9ecef; padding: 1rem 0; }
+        .sidebar nav a { display: block; padding: 0.75rem 1.5rem; color: #666; text-decoration: none;
+                        transition: all 0.2s; }
+        .sidebar nav a:hover, .sidebar nav a.active { background: #f8f9fa; color: #007bff; }
+        .main-content { margin-left: 250px; padding: 2rem; }
+        .settings-section { background: #fff; border-radius: 8px; padding: 1.5rem; 
+                           box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; 
+                        padding-bottom: 0.5rem; border-bottom: 1px solid #e9ecef; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-control { width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 4px; }
+        .form-control:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
+        .form-check { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+        .form-check input[type="checkbox"] { width: auto; }
+        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; 
+              font-size: 1rem; transition: all 0.2s; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-primary:hover { background: #0056b3; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #1e7e34; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-danger:hover { background: #c82333; }
+        .status-indicator { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+        .status-connected { background: #d4edda; color: #155724; }
+        .status-disconnected { background: #f8d7da; color: #721c24; }
+        .github-repos { max-height: 300px; overflow-y: auto; border: 1px solid #e9ecef; 
+                       border-radius: 4px; padding: 1rem; }
+        .repo-item { display: flex; justify-content: space-between; align-items: center; 
+                    padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; }
+        .repo-item:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🚀 Enhanced Tmux Orchestrator</h1>
+        <div class="user-info">
+            {% if user %}
+                <span>{{ user.username }}</span>
+            {% endif %}
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <nav>
+            <a href="/dashboard">📊 Dashboard</a>
+            <a href="/workflows">⚡ Workflows</a>
+            <a href="/projects">📁 Projects</a>
+            <a href="/settings" class="active">⚙️ Settings</a>
+            <a href="/logout">🚪 Logout</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <h2>Settings</h2>
+        
+        <!-- GitHub Integration Settings -->
+        <div class="settings-section">
+            <h3 class="section-title">🔗 GitHub Integration</h3>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div>
+                    <strong>Connection Status:</strong>
+                    {% if github_settings.connected %}
+                        <span class="status-indicator status-connected">Connected</span>
+                        {% if github_settings.username %}
+                            <span style="margin-left: 0.5rem;">as {{ github_settings.username }}</span>
+                        {% endif %}
+                    {% else %}
+                        <span class="status-indicator status-disconnected">Not Connected</span>
+                    {% endif %}
+                </div>
+                
+                {% if github_settings.connected %}
+                    <button class="btn btn-danger" onclick="disconnectGitHub()">Disconnect</button>
+                {% else %}
+                    <a href="/auth/github" class="btn btn-primary">Connect GitHub</a>
+                {% endif %}
+            </div>
+            
+            {% if github_settings.connected %}
+            <div class="form-group">
+                <label for="sync-interval">Sync Interval (minutes)</label>
+                <input type="number" id="sync-interval" class="form-control" 
+                       value="{{ github_settings.sync_interval }}" min="5" max="1440">
+            </div>
+            
+            <div class="form-group">
+                <label for="webhook-url">Webhook URL (for real-time updates)</label>
+                <input type="url" id="webhook-url" class="form-control" 
+                       value="{{ github_settings.webhook_url or '' }}" 
+                       placeholder="https://your-domain.com/webhook/github">
+            </div>
+            
+            {% if github_settings.repositories %}
+            <div class="form-group">
+                <label>Connected Repositories</label>
+                <div class="github-repos">
+                    {% for repo in github_settings.repositories %}
+                    <div class="repo-item">
+                        <span>{{ repo }}</span>
+                        <button class="btn btn-sm btn-danger" onclick="removeRepo('{{ repo }}')">Remove</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <button class="btn btn-success" onclick="saveGitHubSettings()">Save GitHub Settings</button>
+            {% endif %}
+        </div>
+        
+        <!-- Workflow Settings -->
+        <div class="settings-section">
+            <h3 class="section-title">⚡ Workflow Settings</h3>
+            
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" id="auto-start" {% if workflow_settings.auto_start %}checked{% endif %}>
+                    <label for="auto-start">Auto-start workflows</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phase-timeout">Phase Timeout (minutes)</label>
+                <input type="number" id="phase-timeout" class="form-control" 
+                       value="{{ workflow_settings.phase_timeout }}" min="1" max="1440">
+            </div>
+            
+            <div class="form-group">
+                <label for="retry-count">Retry Count for failed phases</label>
+                <input type="number" id="retry-count" class="form-control" 
+                       value="{{ workflow_settings.retry_count }}" min="0" max="10">
+            </div>
+            
+            <div class="form-group">
+                <label for="notification-level">Notification Level</label>
+                <select id="notification-level" class="form-control">
+                    <option value="all" {% if workflow_settings.notification_level == 'all' %}selected{% endif %}>All Events</option>
+                    <option value="important" {% if workflow_settings.notification_level == 'important' %}selected{% endif %}>Important Only</option>
+                    <option value="errors" {% if workflow_settings.notification_level == 'errors' %}selected{% endif %}>Errors Only</option>
+                    <option value="none" {% if workflow_settings.notification_level == 'none' %}selected{% endif %}>None</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Allowed Workflow Types</label>
+                {% for workflow_type in workflow_settings.allowed_workflow_types %}
+                <div class="form-check">
+                    <input type="checkbox" id="workflow-type-{{ workflow_type }}" checked>
+                    <label for="workflow-type-{{ workflow_type }}">{{ workflow_type }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <button class="btn btn-success" onclick="saveWorkflowSettings()">Save Workflow Settings</button>
+        </div>
+        
+        <!-- Notification Settings -->
+        <div class="settings-section">
+            <h3 class="section-title">🔔 Notification Settings</h3>
+            
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" id="email-enabled" {% if notification_settings.email_enabled %}checked{% endif %}>
+                    <label for="email-enabled">Email Notifications</label>
+                </div>
+                
+                <div class="form-check">
+                    <input type="checkbox" id="slack-enabled" {% if notification_settings.slack_enabled %}checked{% endif %}>
+                    <label for="slack-enabled">Slack Notifications</label>
+                </div>
+                
+                <div class="form-check">
+                    <input type="checkbox" id="webhook-enabled" {% if notification_settings.webhook_enabled %}checked{% endif %}>
+                    <label for="webhook-enabled">Webhook Notifications</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Notification Types</label>
+                {% for notification_type in notification_settings.notification_types %}
+                <div class="form-check">
+                    <input type="checkbox" id="notif-type-{{ notification_type }}" checked>
+                    <label for="notif-type-{{ notification_type }}">{{ notification_type }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <button class="btn btn-success" onclick="saveNotificationSettings()">Save Notification Settings</button>
+        </div>
+        
+        <!-- User Settings -->
+        <div class="settings-section">
+            <h3 class="section-title">👤 User Settings</h3>
+            
+            {% if user %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" class="form-control" value="{{ user.username }}" readonly>
+            </div>
+            
+            {% if user.email %}
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" value="{{ user.email }}">
+            </div>
+            {% endif %}
+            
+            <div class="form-group">
+                <label for="new-password">New Password</label>
+                <input type="password" id="new-password" class="form-control" placeholder="Leave blank to keep current password">
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm-password">Confirm New Password</label>
+                <input type="password" id="confirm-password" class="form-control">
+            </div>
+            
+            <button class="btn btn-success" onclick="saveUserSettings()">Save User Settings</button>
+            {% endif %}
+        </div>
+        
+        <!-- System Settings -->
+        <div class="settings-section">
+            <h3 class="section-title">🔧 System Settings</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #007bff;">{{ system_status.uptime }}</div>
+                    <div style="color: #666;">System Uptime</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #28a745;">{{ system_status.active_workflows }}</div>
+                    <div style="color: #666;">Active Workflows</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #ffc107;">{{ system_status.connected_users }}</div>
+                    <div style="color: #666;">Connected Users</div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-primary" onclick="exportSettings()">Export Settings</button>
+                <button class="btn btn-primary" onclick="importSettings()">Import Settings</button>
+                <button class="btn btn-danger" onclick="resetSettings()">Reset to Defaults</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function saveGitHubSettings() {
+            const settings = {
+                sync_interval: parseInt(document.getElementById('sync-interval').value),
+                webhook_url: document.getElementById('webhook-url').value
+            };
+            
+            fetch('/api/settings/github', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(settings)
+            }).then(response => {
+                if (response.ok) {
+                    alert('GitHub settings saved successfully');
+                } else {
+                    alert('Failed to save settings');
+                }
+            });
+        }
+        
+        function saveWorkflowSettings() {
+            const settings = {
+                auto_start: document.getElementById('auto-start').checked,
+                phase_timeout: parseInt(document.getElementById('phase-timeout').value),
+                retry_count: parseInt(document.getElementById('retry-count').value),
+                notification_level: document.getElementById('notification-level').value
+            };
+            
+            fetch('/api/settings/workflow', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(settings)
+            }).then(response => {
+                if (response.ok) {
+                    alert('Workflow settings saved successfully');
+                } else {
+                    alert('Failed to save settings');
+                }
+            });
+        }
+        
+        function saveNotificationSettings() {
+            const settings = {
+                email_enabled: document.getElementById('email-enabled').checked,
+                slack_enabled: document.getElementById('slack-enabled').checked,
+                webhook_enabled: document.getElementById('webhook-enabled').checked
+            };
+            
+            fetch('/api/settings/notifications', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(settings)
+            }).then(response => {
+                if (response.ok) {
+                    alert('Notification settings saved successfully');
+                } else {
+                    alert('Failed to save settings');
+                }
+            });
+        }
+        
+        function saveUserSettings() {
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (newPassword && newPassword !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            const settings = {
+                email: document.getElementById('email')?.value,
+                password: newPassword || undefined
+            };
+            
+            fetch('/api/settings/user', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(settings)
+            }).then(response => {
+                if (response.ok) {
+                    alert('User settings saved successfully');
+                    document.getElementById('new-password').value = '';
+                    document.getElementById('confirm-password').value = '';
+                } else {
+                    alert('Failed to save settings');
+                }
+            });
+        }
+        
+        function disconnectGitHub() {
+            if (confirm('Are you sure you want to disconnect GitHub? This will stop all GitHub integrations.')) {
+                fetch('/api/auth/github/disconnect', { method: 'POST' })
+                    .then(() => location.reload());
+            }
+        }
+        
+        function removeRepo(repo) {
+            if (confirm(`Remove repository ${repo}?`)) {
+                fetch('/api/github/repos/remove', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ repository: repo })
+                }).then(() => location.reload());
+            }
+        }
+        
+        function exportSettings() {
+            fetch('/api/settings/export')
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'orchestrator-settings.json';
+                    a.click();
+                });
+        }
+        
+        function importSettings() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('settings', file);
+                    
+                    fetch('/api/settings/import', {
+                        method: 'POST',
+                        body: formData
+                    }).then(response => {
+                        if (response.ok) {
+                            alert('Settings imported successfully');
+                            location.reload();
+                        } else {
+                            alert('Failed to import settings');
+                        }
+                    });
+                }
+            };
+            input.click();
+        }
+        
+        function resetSettings() {
+            if (confirm('Are you sure you want to reset all settings to defaults? This cannot be undone.')) {
+                fetch('/api/settings/reset', { method: 'POST' })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Settings reset successfully');
+                            location.reload();
+                        } else {
+                            alert('Failed to reset settings');
+                        }
+                    });
+            }
+        }
+    </script>
+</body>
+</html>
