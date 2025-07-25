@@ -1,0 +1,56 @@
+[package]
+name = "cldcde-api"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "cldcde-api"
+path = "src/main.rs"
+
+[dependencies]
+# Workspace dependencies
+anyhow = "1.0"
+thiserror = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.35", features = ["full"] }
+uuid = { version = "1.6", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Web framework
+axum = "0.7"
+axum-extra = { version = "0.9", features = ["typed-header"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace", "timeout"] }
+hyper = "1.0"
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "sqlite", "postgres", "json", "chrono", "uuid"] }
+
+# Authentication and security
+jsonwebtoken = "9.2"
+argon2 = "0.5"
+base64 = "0.22"
+rand = "0.8"
+
+# Environment and configuration
+dotenvy = "0.15"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# HTTP client for GitHub API
+reqwest = { version = "0.11", features = ["json"] }
+octocrab = "0.32"
+
+# WebSocket
+tokio-tungstenite = "0.24"
+futures-util = "0.3"
+
+# Rate limiting and security
+dashmap = "5.5"
+parking_lot = "0.12"
+
+# URL encoding
+urlencoding = "2.1"

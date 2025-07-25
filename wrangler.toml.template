@@ -1,0 +1,22 @@
+# Cloudflare Workers/Pages Configuration Template
+# Copy this to wrangler.toml and fill in your actual values
+# NEVER commit wrangler.toml with real secrets to the repository!
+
+name = "your-app-name"
+compatibility_date = "2024-07-01"
+account_id = "your_cloudflare_account_id"
+
+[env.production]
+name = "your-app-name-production"
+compatibility_date = "2024-07-01"
+
+# Environment variables for production
+[env.production.vars]
+NODE_ENV = "production"
+SUPABASE_URL = "https://your-project.supabase.co"
+SUPABASE_ANON_KEY = "your_supabase_anon_key"
+
+# Custom domain configuration
+[[env.production.routes]]
+pattern = "your-domain.com/*"
+custom_domain = true

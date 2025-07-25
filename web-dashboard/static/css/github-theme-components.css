@@ -1,0 +1,710 @@
+/* GitHub Dark Theme Components - CLDCDE Pro - By DesignMaestro 🎨 */
+
+/* ===== Workflow Components ===== */
+.workflow-container {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.workflow-card {
+    background: var(--color-canvas-subtle);
+    border: 1px solid var(--color-border-default);
+    border-radius: 6px;
+    padding: 20px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.workflow-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--color-border-default);
+    transition: background 0.2s ease;
+}
+
+.workflow-card.active::before {
+    background: var(--color-success-emphasis);
+    box-shadow: 0 0 8px var(--color-success-emphasis);
+}
+
+.workflow-card.paused::before {
+    background: var(--color-attention-emphasis);
+}
+
+.workflow-card.error::before {
+    background: var(--color-danger-emphasis);
+}
+
+.workflow-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.workflow-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-fg-default);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.workflow-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.workflow-status.active {
+    background: var(--color-success-subtle);
+    color: var(--color-success-fg);
+    border: 1px solid var(--color-success-muted);
+}
+
+.workflow-status.paused {
+    background: var(--color-attention-subtle);
+    color: var(--color-attention-fg);
+    border: 1px solid var(--color-attention-muted);
+}
+
+.workflow-status.completed {
+    background: var(--color-done-subtle);
+    color: var(--color-done-fg);
+    border: 1px solid var(--color-done-muted);
+}
+
+.workflow-status.error {
+    background: var(--color-danger-subtle);
+    color: var(--color-danger-fg);
+    border: 1px solid var(--color-danger-muted);
+}
+
+/* Workflow Progress */
+.workflow-progress {
+    margin: 16px 0;
+}
+
+.workflow-progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--color-fg-muted);
+}
+
+.workflow-progress-bar {
+    height: 8px;
+    background: var(--color-border-default);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.workflow-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent-emphasis) 0%, var(--color-done-emphasis) 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.workflow-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: progressShimmer 2s linear infinite;
+}
+
+/* Workflow Nodes */
+.workflow-nodes {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 20px;
+    padding: 16px;
+    background: var(--color-canvas-inset);
+    border-radius: 6px;
+    overflow-x: auto;
+}
+
+.workflow-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 80px;
+}
+
+.workflow-node-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-canvas-subtle);
+    border: 2px solid var(--color-border-default);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.workflow-node.active .workflow-node-icon {
+    border-color: var(--color-accent-emphasis);
+    background: var(--color-accent-subtle);
+    box-shadow: 0 0 12px rgba(88, 166, 255, 0.3);
+}
+
+.workflow-node.completed .workflow-node-icon {
+    border-color: var(--color-success-emphasis);
+    background: var(--color-success-subtle);
+}
+
+.workflow-node-label {
+    font-size: 12px;
+    color: var(--color-fg-muted);
+    text-align: center;
+}
+
+.workflow-node-connector {
+    position: absolute;
+    right: -24px;
+    top: 50%;
+    width: 24px;
+    height: 2px;
+    background: var(--color-border-default);
+    transform: translateY(-50%);
+}
+
+.workflow-node.completed .workflow-node-connector {
+    background: var(--color-success-emphasis);
+}
+
+/* ===== Project Cards ===== */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    background: var(--color-canvas-subtle);
+    border: 1px solid var(--color-border-default);
+    border-radius: 6px;
+    padding: 20px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card:hover {
+    border-color: var(--color-accent-muted);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(1, 4, 9, 0.15);
+}
+
+.project-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.project-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-fg-default);
+    margin-bottom: 4px;
+}
+
+.project-description {
+    font-size: 14px;
+    color: var(--color-fg-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.project-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--color-border-muted);
+}
+
+.project-stat {
+    text-align: center;
+}
+
+.project-stat-value {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-fg-default);
+}
+
+.project-stat-label {
+    font-size: 12px;
+    color: var(--color-fg-muted);
+    margin-top: 2px;
+}
+
+.project-members {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.project-member-avatars {
+    display: flex;
+    margin-right: 8px;
+}
+
+.project-member-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--color-canvas-subtle);
+    margin-right: -8px;
+    position: relative;
+    z-index: 1;
+}
+
+.project-member-avatar:hover {
+    z-index: 2;
+    transform: scale(1.1);
+}
+
+.project-member-count {
+    font-size: 12px;
+    color: var(--color-fg-muted);
+    margin-left: 8px;
+}
+
+/* ===== Activity Timeline ===== */
+.activity-timeline {
+    position: relative;
+    padding-left: 32px;
+}
+
+.activity-timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-border-default);
+}
+
+.activity-item {
+    position: relative;
+    padding-bottom: 24px;
+}
+
+.activity-item:last-child {
+    padding-bottom: 0;
+}
+
+.activity-icon {
+    position: absolute;
+    left: -24px;
+    width: 16px;
+    height: 16px;
+    background: var(--color-canvas-default);
+    border: 2px solid var(--color-border-default);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.activity-icon.commit {
+    background: var(--color-success-subtle);
+    border-color: var(--color-success-emphasis);
+}
+
+.activity-icon.pr {
+    background: var(--color-accent-subtle);
+    border-color: var(--color-accent-emphasis);
+}
+
+.activity-icon.issue {
+    background: var(--color-attention-subtle);
+    border-color: var(--color-attention-emphasis);
+}
+
+.activity-content {
+    background: var(--color-canvas-inset);
+    border: 1px solid var(--color-border-muted);
+    border-radius: 6px;
+    padding: 12px 16px;
+}
+
+.activity-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.activity-user {
+    font-weight: 600;
+    color: var(--color-fg-default);
+}
+
+.activity-action {
+    color: var(--color-fg-muted);
+    font-size: 14px;
+}
+
+.activity-time {
+    color: var(--color-fg-muted);
+    font-size: 12px;
+    margin-left: auto;
+}
+
+.activity-body {
+    font-size: 14px;
+    color: var(--color-fg-default);
+    margin-top: 8px;
+}
+
+/* ===== Enhanced Buttons ===== */
+.btn-group {
+    display: inline-flex;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--color-border-default);
+}
+
+.btn-group .btn {
+    border-radius: 0;
+    border: none;
+    border-right: 1px solid var(--color-border-default);
+}
+
+.btn-group .btn:last-child {
+    border-right: none;
+}
+
+.btn-group .btn:hover {
+    z-index: 1;
+}
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 6px;
+}
+
+.btn-icon.sm {
+    width: 28px;
+    height: 28px;
+}
+
+.btn-icon.lg {
+    width: 44px;
+    height: 44px;
+}
+
+/* ===== Dropdown Menus ===== */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    min-width: 200px;
+    background: var(--color-canvas-overlay);
+    border: 1px solid var(--color-border-default);
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(1, 4, 9, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+.dropdown.open .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: block;
+    padding: 8px 16px;
+    color: var(--color-fg-default);
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.1s ease;
+}
+
+.dropdown-item:hover {
+    background: var(--color-accent-subtle);
+    color: var(--color-accent-fg);
+}
+
+.dropdown-divider {
+    height: 1px;
+    margin: 4px 0;
+    background: var(--color-border-muted);
+}
+
+/* ===== Modal Dialogs ===== */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(1, 4, 9, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 1040;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+}
+
+.modal-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    background: var(--color-canvas-overlay);
+    border: 1px solid var(--color-border-default);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(1, 4, 9, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1050;
+}
+
+.modal.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--color-border-muted);
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-fg-default);
+}
+
+.modal-body {
+    padding: 24px;
+    max-height: calc(90vh - 140px);
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--color-border-muted);
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+/* ===== Loading Animations ===== */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-canvas-subtle) 25%,
+        var(--color-border-default) 50%,
+        var(--color-canvas-subtle) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.skeleton-text {
+    height: 16px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.skeleton-text.short {
+    width: 40%;
+}
+
+.skeleton-text.medium {
+    width: 70%;
+}
+
+.skeleton-text.long {
+    width: 100%;
+}
+
+/* ===== Tooltips ===== */
+.tooltip {
+    position: relative;
+}
+
+.tooltip-content {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    padding: 6px 12px;
+    background: var(--color-canvas-default);
+    border: 1px solid var(--color-border-default);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--color-fg-default);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1070;
+    pointer-events: none;
+}
+
+.tooltip:hover .tooltip-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-8px);
+}
+
+.tooltip-content::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-top-color: var(--color-border-default);
+}
+
+/* ===== Responsive Utilities ===== */
+@media (max-width: 768px) {
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .workflow-nodes {
+        padding: 12px;
+    }
+    
+    .modal {
+        width: 95%;
+        margin: 10px;
+    }
+}
+
+/* ===== Animation Utilities ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes progressShimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(200%);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slideInUp {
+    animation: slideInUp 0.3s ease-out;
+}
+
+/* ===== Focus States ===== */
+.btn:focus-visible,
+.dropdown-item:focus-visible,
+.project-card:focus-visible {
+    outline: 2px solid var(--color-accent-fg);
+    outline-offset: 2px;
+}
+
+/* ===== High Contrast Mode ===== */
+@media (prefers-contrast: high) {
+    .workflow-card,
+    .project-card,
+    .modal {
+        border-width: 2px;
+    }
+    
+    .btn {
+        border-width: 2px;
+        font-weight: 600;
+    }
+}

@@ -1,0 +1,284 @@
+/* CLDCDE Pro Components - GitHub Dark Theme - By DesignMaestro 🎨 */
+
+/* Loading Components */
+.loader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-sm { width: 16px; height: 16px; }
+.loader-md { width: 24px; height: 24px; }
+.loader-lg { width: 32px; height: 32px; }
+
+.loader-spinner svg {
+  width: 100%;
+  height: 100%;
+  color: var(--color-accent-fg);
+}
+
+/* Repository Cards */
+.repo-card {
+  background: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.repo-card:hover {
+  border-color: var(--color-border-muted);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(1, 4, 9, 0.15);
+}
+
+.repo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.repo-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-accent-fg);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.repo-name:hover {
+  text-decoration: underline;
+}
+
+.repo-icon {
+  flex-shrink: 0;
+}
+
+.repo-badge {
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.repo-badge.private {
+  background: var(--color-attention-subtle);
+  color: var(--color-attention-fg);
+}
+
+.repo-badge.public {
+  background: var(--color-success-subtle);
+  color: var(--color-success-fg);
+}
+
+.repo-description {
+  color: var(--color-fg-muted);
+  margin: 8px 0;
+  line-height: 1.4;
+}
+
+.repo-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--color-fg-muted);
+}
+
+.repo-language {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.language-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  max-width: 400px;
+}
+
+.toast {
+  background: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  box-shadow: 0 8px 24px rgba(1, 4, 9, 0.15);
+  animation: slideIn 0.3s ease-out;
+}
+
+.toast-success { border-left: 4px solid var(--color-success-fg); }
+.toast-error { border-left: 4px solid var(--color-danger-fg); }
+.toast-warning { border-left: 4px solid var(--color-attention-fg); }
+.toast-info { border-left: 4px solid var(--color-accent-fg); }
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 12px;
+}
+
+.toast-icon {
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.toast-message {
+  flex: 1;
+  color: var(--color-fg-default);
+  font-size: 14px;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: var(--color-fg-muted);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-close:hover {
+  color: var(--color-fg-default);
+}
+
+/* Enhanced Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Button Variants */
+.btn.primary {
+  background: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  border-color: var(--color-btn-primary-border);
+}
+
+.btn.primary:hover:not(:disabled) {
+  background: var(--color-btn-primary-hover-bg);
+}
+
+.btn.secondary {
+  background: var(--color-btn-bg);
+  color: var(--color-btn-text);
+  border-color: var(--color-btn-border);
+}
+
+.btn.secondary:hover:not(:disabled) {
+  background: var(--color-btn-hover-bg);
+}
+
+.btn.danger {
+  background: var(--color-danger-emphasis);
+  color: var(--color-fg-on-emphasis);
+  border-color: var(--color-danger-emphasis);
+}
+
+/* Button Sizes */
+.btn.sm {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.btn.lg {
+  padding: 12px 24px;
+  font-size: 16px;
+}
+
+/* Button Loading State */
+.btn-loader {
+  width: 14px;
+  height: 14px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .repo-stats {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .toast-container {
+    left: 20px;
+    right: 20px;
+    max-width: none;
+  }
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Focus states for accessibility */
+.btn:focus-visible,
+.repo-name:focus-visible {
+  outline: 2px solid var(--color-accent-fg);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .repo-card {
+    border-width: 2px;
+  }
+  
+  .btn {
+    border-width: 2px;
+  }
+}

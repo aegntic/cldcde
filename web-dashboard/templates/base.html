@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CLDCDE Pro{% endblock %}</title>
+    
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GitHub Dark Theme CSS -->
+    <link rel="stylesheet" href="/static/css/github-dark.css">
+    <link rel="stylesheet" href="/static/css/glassmorphic.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/design-system.css">
+    <link rel="stylesheet" href="/static/css/github-theme-components.css">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% block content %}{% endblock %}
+    
+    <!-- Core JavaScript -->
+    <script>
+        // Global WebSocket connection
+        let ws = null;
+        
+        function connectWebSocket() {
+            ws = new WebSocket(`ws://${window.location.host}/ws`);
+            
+            ws.onopen = function() {
+                console.log('WebSocket connected');
+                document.querySelector('.real-time-indicator')?.classList.add('connected');
+            };
+            
+            ws.onclose = function() {
+                console.log('WebSocket disconnected');
+                document.querySelector('.real-time-indicator')?.classList.remove('connected');
+                // Reconnect after 5 seconds
+                setTimeout(connectWebSocket, 5000);
+            };
+            
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+            
+            ws.onmessage = function(event) {
+                const message = JSON.parse(event.data);
+                handleWebSocketMessage(message);
+            };
+        }
+        
+        function handleWebSocketMessage(message) {
+            // Override in individual pages
+            console.log('WebSocket message:', message);
+        }
+        
+        // Connect on page load
+        document.addEventListener('DOMContentLoaded', connectWebSocket);
+        
+        // Keep connection alive
+        setInterval(() => {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ type: 'Ping' }));
+            }
+        }, 30000);
+    </script>
+    
+    <!-- Enhanced Components -->
+    <script src="/static/js/components.js"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

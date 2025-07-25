@@ -1,0 +1,441 @@
+{% extends "base.html" %}
+
+{% block title %}Workflows - CLDCDE Pro{% endblock %}
+
+{% block extra_css %}
+<style>
+    .workflow-canvas {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        background: var(--color-canvas-inset);
+        border: 1px solid var(--color-border-default);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .workflow-svg {
+        cursor: grab;
+    }
+
+    .workflow-controls {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+    }
+
+    .workflow-detail-panel {
+        background: var(--color-canvas-subtle);
+        border: 1px solid var(--color-border-default);
+        border-radius: 6px;
+        padding: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <header class="header glass">
+        <h1>🚀 CLDCDE Pro</h1>
+        <div class="user-info">
+            {% if user %}
+                <div class="user-profile">
+                    {% if user.avatar_url %}
+                        <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="user-avatar">
+                    {% endif %}
+                    <span class="user-name">{{ user.username }}</span>
+                </div>
+                <a href="/logout" class="btn btn-sm secondary">Sign out</a>
+            {% else %}
+                <a href="/login" class="btn btn-primary btn-sm">Sign in</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar glass">
+        <nav>
+            <a href="/dashboard">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M6.906.664a1.749 1.749 0 012.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0113.25 15h-10.5A1.75 1.75 0 011 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2zM7.5 1.836L2.25 6.033v7.217c0 .138.112.25.25.25h3.75v-4.75a.75.75 0 01.75-.75h2a.75.75 0 01.75.75v4.75h3.75a.25.25 0 00.25-.25V6.033L8.5 1.836z"/>
+                </svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="/repositories">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"/>
+                </svg>
+                <span>Repositories</span>
+            </a>
+            <a href="/workflows" class="active">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M1.5 3.25a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zm5.677-.177L9.573.677A.25.25 0 0110 .854v2.792a.25.25 0 01-.427.177L7.177 6.22a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm0 9.5a.75.75 0 100 1.5.75.75 0 000-1.5zm8.25.75a.75.75 0 101.5 0 .75.75 0 00-1.5 0zm3-8.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                </svg>
+                <span>Workflows</span>
+            </a>
+            <a href="/projects">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M1.75 0A1.75 1.75 0 000 1.75v12.5C0 15.216.784 16 1.75 16h12.5A1.75 1.75 0 0016 14.25V1.75A1.75 1.75 0 0014.25 0H1.75zM1.5 1.75a.25.25 0 01.25-.25h12.5a.25.25 0 01.25.25v12.5a.25.25 0 01-.25.25H1.75a.25.25 0 01-.25-.25V1.75zM11.75 3a.75.75 0 00-.75.75v7.5a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75zm-8.25.75a.75.75 0 011.5 0v5.5a.75.75 0 01-1.5 0v-5.5zM8 3a.75.75 0 00-.75.75v3.5a.75.75 0 001.5 0v-3.5A.75.75 0 008 3z"/>
+                </svg>
+                <span>Projects</span>
+            </a>
+            <a href="/settings">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M7.429 1.525a6.593 6.593 0 011.142 0c.036.003.108.036.137.146l.289 1.105c.147.56.55.967.997 1.189.174.086.341.183.501.29.417.278.97.423 1.53.27l1.102-.303c.11-.03.175.016.195.046.219.31.41.641.573.989.014.031.022.11-.059.19l-.815.806c-.411.406-.562.957-.53 1.456a4.588 4.588 0 010 .582c-.032.499.119 1.05.53 1.456l.815.806c.08.08.073.159.059.19a6.494 6.494 0 01-.573.99c-.02.029-.086.074-.195.045l-1.103-.303c-.559-.153-1.112-.008-1.529.27-.16.107-.327.204-.5.29-.449.222-.851.628-.998 1.189l-.289 1.105c-.029.11-.101.143-.137.146a6.613 6.613 0 01-1.142 0c-.036-.003-.108-.037-.137-.146l-.289-1.105c-.147-.56-.55-.967-.997-1.189a4.502 4.502 0 01-.501-.29c-.417-.278-.97-.423-1.53-.27l-1.102.303c-.11.03-.175-.016-.195-.046a6.492 6.492 0 01-.573-.989c-.014-.031-.022-.11.059-.19l.815-.806c.411-.406.562-.957.53-1.456a4.587 4.587 0 010-.582c.032-.499-.119-1.05-.53-1.456l-.815-.806c-.08-.08-.073-.159-.059-.19a6.44 6.44 0 01.573-.99c.02-.029.086-.075.195-.045l1.103.303c.559.153 1.112.008 1.529-.27.16-.107.327-.204.5-.29.449-.222.851-.628.998-1.189l.289-1.105c.029-.11.101-.143.137-.146zM8 0c-.236 0-.47.01-.701.03-.743.065-1.29.615-1.458 1.261l-.29 1.106c-.017.066-.078.158-.211.224a5.994 5.994 0 00-.668.386c-.123.082-.233.09-.3.071L3.27 2.776c-.644-.177-1.392.02-1.82.63a7.977 7.977 0 00-.704 1.217c-.315.675-.111 1.422.363 1.891l.815.806c.05.048.098.147.088.294a6.084 6.084 0 000 .772c.01.147-.038.246-.088.294l-.815.806c-.474.469-.678 1.216-.363 1.891.2.428.436.835.704 1.218.428.609 1.176.806 1.82.63l1.103-.303c.066-.019.176-.011.299.071.213.143.436.272.668.386.133.066.194.158.212.224l.289 1.106c.169.646.715 1.196 1.458 1.26a8.094 8.094 0 001.402 0c.743-.064 1.29-.614 1.458-1.26l.29-1.106c.017-.066.078-.158.211-.224a5.98 5.98 0 00.668-.386c.123-.082.233-.09.3-.071l1.102.302c.644.177 1.392-.02 1.82-.63.268-.382.505-.789.704-1.217.315-.675.111-1.422-.364-1.891l-.814-.806c-.05-.048-.098-.147-.088-.294a6.1 6.1 0 000-.772c-.01-.147.039-.246.088-.294l.814-.806c.475-.469.679-1.216.364-1.891a7.992 7.992 0 00-.704-1.218c-.428-.609-1.176-.806-1.82-.63l-1.103.303c-.066.019-.176.011-.299-.071a5.991 5.991 0 00-.668-.386c-.133-.066-.194-.158-.212-.224L10.16 1.29C9.99.645 9.444.095 8.701.031A8.094 8.094 0 008 0zm1.5 8a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM11 8a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h2>Workflows</h2>
+                <p>Visualize and manage your development workflows</p>
+            </div>
+            <div class="page-actions">
+                <button class="btn primary" onclick="createNewWorkflow()">
+                    <svg width="16" height="16" fill="currentColor">
+                        <path d="M7.75 2a.75.75 0 01.75.75V7h4.25a.75.75 0 010 1.5H8.5v4.25a.75.75 0 01-1.5 0V8.5H2.75a.75.75 0 010-1.5H7V2.75A.75.75 0 017.75 2z"/>
+                    </svg>
+                    New Workflow
+                </button>
+            </div>
+        </div>
+
+        <!-- Active Workflows -->
+        <div class="workflow-container">
+            {% for workflow in workflows %}
+            <div class="workflow-card {{ workflow.status }}" data-workflow-id="{{ workflow.id }}">
+                <div class="workflow-header">
+                    <div class="workflow-title">
+                        <svg width="20" height="20" fill="currentColor">
+                            <path d="M1.5 3.25a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zm5.677-.177L9.573.677A.25.25 0 0110 .854v2.792a.25.25 0 01-.427.177L7.177 6.22a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm0 9.5a.75.75 0 100 1.5.75.75 0 000-1.5zm8.25.75a.75.75 0 101.5 0 .75.75 0 00-1.5 0zm3-8.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                        </svg>
+                        {{ workflow.name }}
+                    </div>
+                    <div class="workflow-status {{ workflow.status }}">
+                        <span class="status-indicator"></span>
+                        {{ workflow.status | capitalize }}
+                    </div>
+                </div>
+
+                <div class="workflow-progress">
+                    <div class="workflow-progress-header">
+                        <span>{{ workflow.phase }}</span>
+                        <span>{{ workflow.progress }}%</span>
+                    </div>
+                    <div class="workflow-progress-bar">
+                        <div class="workflow-progress-fill" style="width: {{ workflow.progress }}%"></div>
+                    </div>
+                </div>
+
+                <div class="workflow-nodes">
+                    {% for node in workflow.nodes %}
+                    <div class="workflow-node {{ node.status }}">
+                        <div class="workflow-node-icon">
+                            <svg width="24" height="24" fill="currentColor">
+                                {% if node.type == "start" %}
+                                <path d="M12 2a10 10 0 110 20 10 10 0 010-20zm0 2a8 8 0 100 16 8 8 0 000-16zm-1 4.5l5 3.5-5 3.5v-7z"/>
+                                {% elif node.type == "process" %}
+                                <path d="M3.5 2a.5.5 0 01.5.5V3h8V2.5a.5.5 0 011 0V3h1a2 2 0 012 2v11a2 2 0 01-2 2H2a2 2 0 01-2-2V5a2 2 0 012-2h1V2.5a.5.5 0 01.5-.5zM2 5v11h12V5H2z"/>
+                                {% elif node.type == "complete" %}
+                                <path d="M12 2a10 10 0 110 20 10 10 0 010-20zm0 2a8 8 0 100 16 8 8 0 000-16zm4.28 5.22l-6.5 6.5L5.72 11.66a.75.75 0 00-1.06 1.06l4.59 4.59a.75.75 0 001.06 0l7.03-7.03a.75.75 0 00-1.06-1.06z"/>
+                                {% endif %}
+                            </svg>
+                        </div>
+                        <span class="workflow-node-label">{{ node.label }}</span>
+                        {% if not loop.last %}
+                        <div class="workflow-node-connector"></div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="workflow-actions">
+                    <button class="btn sm" onclick="viewWorkflowDetails('{{ workflow.id }}')">
+                        View Details
+                    </button>
+                    <button class="btn sm secondary" onclick="pauseWorkflow('{{ workflow.id }}')">
+                        {% if workflow.status == "active" %}Pause{% else %}Resume{% endif %}
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Workflow Visualizer -->
+        <div class="card" style="margin-top: 24px;">
+            <div class="card-header">
+                <h3>Workflow Visualization</h3>
+                <div class="btn-group">
+                    <button class="btn sm" onclick="loadSampleWorkflow()">Load Sample</button>
+                    <button class="btn sm" onclick="clearVisualization()">Clear</button>
+                </div>
+            </div>
+            <div id="workflow-visualizer"></div>
+        </div>
+
+        <!-- Workflow Details Panel -->
+        <div id="workflow-detail-panel" class="workflow-detail-panel" style="display: none; margin-top: 24px;">
+            <div class="detail-header">
+                <h3 id="detail-title">Workflow Details</h3>
+                <button class="btn-icon sm" onclick="closeDetailPanel()">
+                    <svg width="16" height="16" fill="currentColor">
+                        <path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="detail-content">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Workflow Modal -->
+    <div id="create-workflow-modal" class="modal-backdrop">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Workflow</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Workflow Name</label>
+                    <input type="text" class="form-input" id="workflow-name" placeholder="My Awesome Workflow">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Workflow Type</label>
+                    <select class="form-input" id="workflow-type">
+                        <option value="feature">Feature Development</option>
+                        <option value="bugfix">Bug Fix</option>
+                        <option value="refactor">Code Refactoring</option>
+                        <option value="infrastructure">Infrastructure</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-input" id="workflow-description" rows="3" 
+                              placeholder="Describe what this workflow will accomplish..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn primary" onclick="submitWorkflow()">Create Workflow</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/workflow-visualizer.js"></script>
+<script>
+    let visualizer;
+    
+    // Initialize workflow visualizer
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('workflow-visualizer');
+        visualizer = new WorkflowVisualizer(container);
+        
+        // Listen for node selection
+        container.addEventListener('nodeSelected', (e) => {
+            showNodeDetails(e.detail.node);
+        });
+    });
+
+    // Workflow management functions
+    function createNewWorkflow() {
+        document.getElementById('create-workflow-modal').classList.add('open');
+    }
+
+    function closeModal() {
+        document.getElementById('create-workflow-modal').classList.remove('open');
+    }
+
+    function submitWorkflow() {
+        const name = document.getElementById('workflow-name').value;
+        const type = document.getElementById('workflow-type').value;
+        const description = document.getElementById('workflow-description').value;
+
+        if (!name) {
+            showNotification('error', 'Please enter a workflow name');
+            return;
+        }
+
+        fetch('/api/workflows', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, type, description })
+        })
+        .then(response => response.json())
+        .then(data => {
+            showNotification('success', 'Workflow created successfully');
+            closeModal();
+            location.reload();
+        })
+        .catch(error => {
+            showNotification('error', 'Failed to create workflow');
+        });
+    }
+
+    function viewWorkflowDetails(workflowId) {
+        fetch(`/api/workflows/${workflowId}`)
+            .then(response => response.json())
+            .then(workflow => {
+                // Load workflow into visualizer
+                visualizer.loadWorkflow(workflow);
+                
+                // Show details panel
+                document.getElementById('workflow-detail-panel').style.display = 'block';
+                document.getElementById('detail-title').textContent = workflow.name;
+                document.getElementById('detail-content').innerHTML = `
+                    <div class="detail-section">
+                        <h4>Overview</h4>
+                        <p>${workflow.description}</p>
+                    </div>
+                    <div class="detail-section">
+                        <h4>Statistics</h4>
+                        <div class="detail-stats">
+                            <div class="stat">
+                                <span class="stat-label">Total Nodes</span>
+                                <span class="stat-value">${workflow.nodes.length}</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Completed</span>
+                                <span class="stat-value">${workflow.completedNodes}</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Duration</span>
+                                <span class="stat-value">${workflow.duration}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+    }
+
+    function pauseWorkflow(workflowId) {
+        fetch(`/api/workflows/${workflowId}/pause`, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            showNotification('success', 'Workflow status updated');
+            location.reload();
+        });
+    }
+
+    function closeDetailPanel() {
+        document.getElementById('workflow-detail-panel').style.display = 'none';
+    }
+
+    function loadSampleWorkflow() {
+        const sampleWorkflow = {
+            nodes: [
+                { id: 'start', label: 'Start', type: 'start', status: 'completed' },
+                { id: 'plan', label: 'Planning', type: 'process', status: 'completed' },
+                { id: 'design', label: 'Design', type: 'process', status: 'active' },
+                { id: 'implement', label: 'Implementation', type: 'process', status: 'pending' },
+                { id: 'test', label: 'Testing', type: 'process', status: 'pending' },
+                { id: 'deploy', label: 'Deploy', type: 'process', status: 'pending' },
+                { id: 'end', label: 'Complete', type: 'end', status: 'pending' }
+            ],
+            connections: [
+                { from: 'start', to: 'plan' },
+                { from: 'plan', to: 'design' },
+                { from: 'design', to: 'implement' },
+                { from: 'implement', to: 'test' },
+                { from: 'test', to: 'deploy' },
+                { from: 'deploy', to: 'end' }
+            ]
+        };
+
+        visualizer.loadWorkflow(sampleWorkflow);
+        
+        // Animate through nodes
+        let currentIndex = 2; // Start from 'design' which is active
+        setInterval(() => {
+            if (currentIndex < sampleWorkflow.nodes.length - 1) {
+                visualizer.updateNodeStatus(sampleWorkflow.nodes[currentIndex].id, 'completed');
+                currentIndex++;
+                visualizer.updateNodeStatus(sampleWorkflow.nodes[currentIndex].id, 'active');
+            }
+        }, 3000);
+    }
+
+    function clearVisualization() {
+        visualizer.loadWorkflow({ nodes: [], connections: [] });
+    }
+
+    function showNodeDetails(node) {
+        console.log('Node selected:', node);
+        // Could show additional node details in a panel
+    }
+
+    function showNotification(level, message) {
+        // Create toast notification
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${level} animate-slideInDown`;
+        toast.innerHTML = `
+            <div class="toast-content">
+                <div class="toast-icon">
+                    ${level === 'success' ? '✓' : level === 'error' ? '✗' : 'ℹ'}
+                </div>
+                <div class="toast-message">${message}</div>
+                <button class="toast-close" onclick="this.parentElement.parentElement.remove()">×</button>
+            </div>
+        `;
+
+        let container = document.querySelector('.toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+
+        container.appendChild(toast);
+
+        // Auto-remove after 5 seconds
+        setTimeout(() => toast.remove(), 5000);
+    }
+
+    // WebSocket handlers for real-time updates
+    function handleWebSocketMessage(message) {
+        switch(message.type) {
+            case 'WorkflowUpdate':
+                updateWorkflowCard(message.workflow);
+                if (visualizer && message.workflow.id === currentWorkflowId) {
+                    visualizer.updateNodeStatus(message.nodeId, message.status);
+                }
+                break;
+            case 'WorkflowCreated':
+                location.reload(); // Simple reload for new workflows
+                break;
+        }
+    }
+
+    function updateWorkflowCard(workflow) {
+        const card = document.querySelector(`[data-workflow-id="${workflow.id}"]`);
+        if (card) {
+            // Update status
+            const statusEl = card.querySelector('.workflow-status');
+            statusEl.className = `workflow-status ${workflow.status}`;
+            statusEl.innerHTML = `<span class="status-indicator"></span>${workflow.status}`;
+
+            // Update progress
+            const progressFill = card.querySelector('.workflow-progress-fill');
+            progressFill.style.width = `${workflow.progress}%`;
+
+            const progressText = card.querySelector('.workflow-progress-header span:last-child');
+            progressText.textContent = `${workflow.progress}%`;
+        }
+    }
+</script>
+{% endblock %}

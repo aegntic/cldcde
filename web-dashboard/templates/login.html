@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Login - CLDCDE Pro{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="glass-card login-box card-3d">
+        <div class="login-header">
+            <h2>🚀 CLDCDE Pro</h2>
+            <p style="color: var(--text-secondary);">Sign in to continue</p>
+        </div>
+        
+        {% if error_message %}
+        <div class="alert alert-error glass" style="margin-bottom: 1.5rem; padding: 1rem; border-radius: 8px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: var(--status-error);">
+            {{ error_message }}
+        </div>
+        {% endif %}
+        
+        <form method="POST" action="/login" class="login-form">
+            <div class="form-group">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" 
+                       id="username" 
+                       name="username" 
+                       class="form-input" 
+                       required 
+                       autofocus
+                       placeholder="Enter your username">
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" 
+                       id="password" 
+                       name="password" 
+                       class="form-input" 
+                       required
+                       placeholder="Enter your password">
+            </div>
+            
+            <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                <input type="checkbox" id="remember_me" name="remember_me" style="width: auto;">
+                <label for="remember_me" class="form-label" style="margin: 0; cursor: pointer;">Remember me</label>
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">
+                Sign In
+            </button>
+        </form>
+        
+        <div class="divider">
+            <span>OR</span>
+        </div>
+        
+        <a href="/auth/github" class="btn btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            Continue with GitHub
+        </a>
+        
+        <p style="text-align: center; margin-top: 2rem; color: var(--text-tertiary); font-size: 0.875rem;">
+            Default credentials: admin / admin123
+        </p>
+    </div>
+</div>
+
+<style>
+/* Login page specific animations */
+.login-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle at center, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.login-box {
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-input:focus {
+    animation: inputGlow 0.3s ease-out;
+}
+
+@keyframes inputGlow {
+    0% { box-shadow: 0 0 0 rgba(0, 212, 255, 0); }
+    100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.2); }
+}
+</style>
+{% endblock %}

@@ -22,7 +22,9 @@ pub mod auth;
 pub mod handlers;
 pub mod middleware;
 pub mod templates;
+pub mod template_engine;
 pub mod websocket;
+pub mod api;
 
 pub use auth::*;
 pub use handlers::*;
@@ -109,6 +111,7 @@ impl WebDashboard {
             .route("/dashboard", get(dashboard_main))
             .route("/workflows", get(workflows_page))
             .route("/projects", get(projects_page))
+            .route("/repositories", get(repositories_page))
             .route("/settings", get(settings_page))
             
             // Authentication routes
@@ -116,15 +119,10 @@ impl WebDashboard {
             .route("/logout", post(logout))
             .route("/auth/github", get(github_oauth_start))
             .route("/auth/github/callback", get(github_oauth_callback))
+            .route("/setup/github", get(github_setup_page))
             
-            // API routes
-            .route("/api/status", get(api_status))
-            .route("/api/workflows", get(api_workflows_list).post(api_workflows_create))
-            .route("/api/workflows/:id", get(api_workflow_get).put(api_workflow_update))
-            .route("/api/projects", get(api_projects_list))
-            .route("/api/projects/:id/sync", post(api_project_sync))
-            .route("/api/github/repos", get(api_github_repos))
-            .route("/api/github/issues/:owner/:repo", get(api_github_issues))
+            // API routes - Enhanced modular structure by BackendArchitect 🏗️
+            .nest("/api", api::api_router())
             
             // WebSocket route
             .route("/ws", get(websocket_handler))

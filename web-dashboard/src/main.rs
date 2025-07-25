@@ -7,10 +7,15 @@ use web_dashboard::{WebDashboard, DashboardConfig};
 async fn main() -> Result<()> {
     // Initialize logging
     tracing_subscriber::fmt()
-        .with_env_filter("web_dashboard=debug,axum=debug")
+        .with_env_filter("web_dashboard=debug,axum=debug,tera=debug")
         .init();
 
-    info!("Starting Enhanced Tmux Orchestrator Web Dashboard");
+    info!("Starting CLDCDE Pro Web Dashboard");
+    
+    // Initialize templates
+    if let Err(e) = web_dashboard::template_engine::init_templates() {
+        error!("Failed to initialize templates: {}", e);
+    }
 
     // Load configuration
     let config = load_config().await?;

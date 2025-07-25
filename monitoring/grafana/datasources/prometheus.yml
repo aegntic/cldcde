@@ -1,0 +1,21 @@
+# CLDCDE Pro Grafana Datasource Configuration
+# By CloudOracle - Production Ready
+
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: true
+    basicAuth: false
+    jsonData:
+      httpMethod: POST
+      prometheusType: Prometheus
+      prometheusVersion: 2.40.0
+      cacheLevel: 'High'
+      disableMetricsLookup: false
+      incrementalQuerying: true
+      incrementalQueryOverlapWindow: 10m

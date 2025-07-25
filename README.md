@@ -1,4 +1,4 @@
-# Enhanced Tmux-Orchestrator
+# CLDCDE Pro
 
 **Autonomous AI Development Orchestration with Leadership Hierarchy**
 
@@ -36,7 +36,7 @@ Vibe Kanban Dashboard (Progress Monitoring)
 ├── Multi-Agent Task Tracking
 └── Real-time Progress Updates
 
-Enhanced Tmux-Orchestrator (Agent Management)
+CLDCDE Pro (Agent Management)
 ├── Spec-Driven 5-Phase Workflows
 ├── 20 Specialized Workflow Types
 ├── Dynamic Agent Teams with Leadership
@@ -164,7 +164,7 @@ GitHub Issue: "Generate comprehensive API documentation"
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd enhanced-tmux-orchestrator
+cd cldcde-pro
 
 # Install Vibe Kanban
 npx vibe-kanban

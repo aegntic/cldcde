@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLDCDE Pro - GitHub Integration Demo</title>
+    <link rel="stylesheet" href="/static/css/github-dark.css">
+    <style>
+        body {
+            background: var(--color-canvas-default);
+            color: var(--color-fg-default);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .demo-section {
+            background: var(--color-canvas-subtle);
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .demo-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .demo-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--color-accent-emphasis);
+        }
+        .demo-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+        .demo-repos {
+            display: grid;
+            gap: 16px;
+        }
+        .demo-repo {
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            padding: 16px;
+            background: var(--color-canvas-default);
+        }
+        .demo-repo-name {
+            color: var(--color-accent-fg);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .demo-repo-stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--color-fg-muted);
+        }
+        .demo-button {
+            background: var(--color-btn-bg);
+            color: var(--color-btn-text);
+            border: 1px solid var(--color-btn-border);
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 500;
+        }
+        .demo-button:hover {
+            background: var(--color-btn-hover-bg);
+        }
+        .oauth-flow {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .flow-step {
+            background: var(--color-canvas-subtle);
+            padding: 12px 20px;
+            border-radius: 6px;
+            border: 1px solid var(--color-border-default);
+        }
+        .flow-arrow {
+            color: var(--color-fg-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-section">
+            <h1 style="margin-bottom: 16px;">CLDCDE Pro - GitHub Integration</h1>
+            <p style="color: var(--color-fg-muted); margin-bottom: 24px;">
+                Follow these steps to integrate GitHub with CLDCDE Pro
+            </p>
+        </div>
+
+        <div class="demo-section">
+            <h2>Step 1: GitHub OAuth Setup</h2>
+            <div class="oauth-flow">
+                <div class="flow-step">
+                    <strong>1.</strong> Create OAuth App
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">
+                    <strong>2.</strong> Get Client ID & Secret
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">
+                    <strong>3.</strong> Configure .env
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">
+                    <strong>4.</strong> Login with GitHub
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Step 2: What You'll See</h2>
+            
+            <div class="demo-header">
+                <div class="demo-avatar"></div>
+                <div>
+                    <div class="demo-title">Your GitHub Profile</div>
+                    <div style="color: var(--color-fg-muted);">your-username</div>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 16px;">Your Repositories</h3>
+            <div class="demo-repos">
+                <div class="demo-repo">
+                    <a href="#" class="demo-repo-name">awesome-project</a>
+                    <p style="color: var(--color-fg-muted); margin: 8px 0;">
+                        A really cool project with lots of features
+                    </p>
+                    <div class="demo-repo-stats">
+                        <span>⭐ 42</span>
+                        <span>🔀 7</span>
+                        <span>JavaScript</span>
+                        <span>Updated 2 days ago</span>
+                    </div>
+                </div>
+                <div class="demo-repo">
+                    <a href="#" class="demo-repo-name">another-project</a>
+                    <p style="color: var(--color-fg-muted); margin: 8px 0;">
+                        Another amazing repository
+                    </p>
+                    <div class="demo-repo-stats">
+                        <span>⭐ 15</span>
+                        <span>🔀 3</span>
+                        <span>Python</span>
+                        <span>Updated 1 week ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Step 3: Access URLs</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 8px;">
+                    <strong>Login Page:</strong> 
+                    <a href="http://localhost:8083/login" class="demo-button">
+                        http://localhost:8083/login
+                    </a>
+                </li>
+                <li style="margin-bottom: 8px;">
+                    <strong>GitHub OAuth:</strong> 
+                    <a href="http://localhost:8083/auth/github" class="demo-button">
+                        http://localhost:8083/auth/github
+                    </a>
+                </li>
+                <li style="margin-bottom: 8px;">
+                    <strong>Dashboard:</strong> 
+                    <a href="http://localhost:8083/dashboard" class="demo-button">
+                        http://localhost:8083/dashboard
+                    </a>
+                </li>
+                <li>
+                    <strong>Repositories:</strong> 
+                    <a href="http://localhost:8083/repositories" class="demo-button">
+                        http://localhost:8083/repositories
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <h2>Features Available</h2>
+            <ul>
+                <li>✅ GitHub dark theme UI</li>
+                <li>✅ OAuth authentication</li>
+                <li>✅ User profile with avatar</li>
+                <li>✅ Repository listing with stats</li>
+                <li>✅ Language detection and colors</li>
+                <li>✅ Stars and forks display</li>
+                <li>✅ Last updated timestamps</li>
+                <li>✅ Private/public repo badges</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

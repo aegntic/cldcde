@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# CLDCDE Pro Production Deployment Script Template
+# Copy this to deploy.sh and customize for your domain
+# Make sure to set your actual environment variables
+
+set -e  # Exit on any error
+
+echo "🚀 Starting deployment to your domain..."
+
+# Load production environment (customize these values)
+export NODE_ENV=production
+export VITE_API_URL=https://your-domain.com/api/v1
+export VITE_SUPABASE_URL=https://your-project.supabase.co
+export VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+echo "📦 Installing dependencies..."
+npm install
+
+echo "🏗️  Building frontend for production..."
+npm run build
+
+echo "✅ Frontend build complete!"
+echo "📁 Build artifacts ready in dist/"
+
+echo "🌐 Build info:"
+echo "   - Environment: $NODE_ENV"
+echo "   - API URL: $VITE_API_URL"
+echo "   - Domain: your-domain.com"
+
+echo ""
+echo "🎯 Next steps:"
+echo "   1. Deploy dist/ folder to Cloudflare Pages"
+echo "   2. Configure custom domain"
+echo "   3. Set up GitHub OAuth for production"
+echo "   4. Test the deployment"
+
+echo ""
+echo "✨ Build is ready for deployment!"

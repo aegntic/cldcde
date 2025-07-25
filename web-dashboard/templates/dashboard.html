@@ -1,213 +1,231 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Enhanced Tmux Orchestrator</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-               background: #f8f9fa; color: #333; }
-        
-        .header { background: #fff; border-bottom: 1px solid #e9ecef; padding: 1rem 2rem; 
-                 display: flex; justify-content: space-between; align-items: center; }
-        .header h1 { color: #007bff; font-size: 1.5rem; }
-        .user-info { display: flex; align-items: center; gap: 1rem; }
-        .user-avatar { width: 32px; height: 32px; border-radius: 50%; }
-        
-        .sidebar { position: fixed; left: 0; top: 80px; width: 250px; height: calc(100vh - 80px);
-                  background: #fff; border-right: 1px solid #e9ecef; padding: 1rem 0; }
-        .sidebar nav a { display: block; padding: 0.75rem 1.5rem; color: #666; text-decoration: none;
-                        transition: all 0.2s; }
-        .sidebar nav a:hover, .sidebar nav a.active { background: #f8f9fa; color: #007bff; }
-        
-        .main-content { margin-left: 250px; padding: 2rem; }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-                         gap: 1.5rem; margin-bottom: 2rem; }
-        
-        .card { background: #fff; border-radius: 8px; padding: 1.5rem; 
-               box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .card h3 { margin-bottom: 1rem; color: #333; }
-        
-        .metric { text-align: center; }
-        .metric-value { font-size: 2rem; font-weight: bold; color: #007bff; }
-        .metric-label { color: #666; font-size: 0.9rem; }
-        
-        .workflow-list { list-style: none; }
-        .workflow-item { display: flex; justify-content: space-between; align-items: center;
-                        padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; }
-        .workflow-item:last-child { border-bottom: none; }
-        .workflow-status { padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; }
-        .status-active { background: #d4edda; color: #155724; }
-        .status-paused { background: #fff3cd; color: #856404; }
-        .status-completed { background: #d1ecf1; color: #0c5460; }
-        
-        .progress-bar { width: 100%; height: 8px; background: #e9ecef; border-radius: 4px; overflow: hidden; }
-        .progress-fill { height: 100%; background: #007bff; transition: width 0.3s; }
-        
-        .btn { display: inline-block; padding: 0.5rem 1rem; background: #007bff; color: white;
-              text-decoration: none; border-radius: 4px; border: none; cursor: pointer;
-              transition: background 0.2s; }
-        .btn:hover { background: #0056b3; }
-        .btn-sm { padding: 0.375rem 0.75rem; font-size: 0.875rem; }
-        
-        .real-time-indicator { width: 8px; height: 8px; background: #28a745; border-radius: 50%;
-                              animation: pulse 2s infinite; margin-right: 0.5rem; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-    </style>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Dashboard - CLDCDE Pro{% endblock %}
+
+{% block content %}
+    <!-- Header -->
     <header class="header">
-        <h1>🚀 Enhanced Tmux Orchestrator</h1>
+        <h1>🚀 CLDCDE Pro</h1>
         <div class="user-info">
-            <span class="real-time-indicator"></span>
-            <span>Live Dashboard</span>
             {% if user %}
-                <span>{{ user.username }}</span>
-                {% if user.avatar_url %}
-                    <img src="{{ user.avatar_url }}" alt="Avatar" class="user-avatar">
-                {% endif %}
+                <div class="user-profile">
+                    {% if user.avatar_url %}
+                        <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="user-avatar">
+                    {% endif %}
+                    <span class="user-name">{{ user.username }}</span>
+                </div>
+                <a href="/logout" class="btn btn-sm">Sign out</a>
+            {% else %}
+                <a href="/login" class="btn btn-primary btn-sm">Sign in</a>
             {% endif %}
         </div>
     </header>
 
+    <!-- Sidebar -->
     <aside class="sidebar">
         <nav>
-            <a href="/dashboard" class="active">📊 Dashboard</a>
-            <a href="/workflows">⚡ Workflows</a>
-            <a href="/projects">📁 Projects</a>
-            <a href="/settings">⚙️ Settings</a>
-            <a href="/logout" onclick="return confirm('Logout?')">🚪 Logout</a>
+            <a href="/dashboard" class="active">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M7.429 1.525a6.593 6.593 0 011.142 0c.036.003.108.036.137.146l.289 1.105c.147.56.55.967.997 1.189.174.086.341.183.501.29.417.278.97.423 1.53.27l1.102-.303c.11-.03.175.016.195.046.219.31.41.641.573.989.014.031.022.11-.059.19l-.815.806c-.411.406-.562.957-.53 1.456a4.588 4.588 0 010 .582c-.032.499.119 1.05.53 1.456l.815.806c.08.08.073.159.059.19a6.494 6.494 0 01-.573.99c-.02.029-.086.074-.195.045l-1.103-.303c-.559-.153-1.112-.008-1.529.27-.16.107-.327.204-.5.29-.449.222-.851.628-.998 1.189l-.289 1.105c-.029.11-.101.143-.137.146a6.613 6.613 0 01-1.142 0c-.036-.003-.108-.037-.137-.146l-.289-1.105c-.147-.56-.55-.967-.997-1.189a4.502 4.502 0 01-.501-.29c-.417-.278-.97-.423-1.53-.27l-1.102.303c-.11.03-.175-.016-.195-.046a6.492 6.492 0 01-.573-.989c-.014-.031-.022-.11.059-.19l.815-.806c.411-.406.562-.957.53-1.456a4.587 4.587 0 010-.582c.032-.499-.119-1.05-.53-1.456l-.815-.806c-.08-.08-.073-.159-.059-.19a6.44 6.44 0 01.573-.99c.02-.029.086-.075.195-.045l1.103.303c.559.153 1.112.008 1.529-.27.16-.107.327-.204.5-.29.449-.222.851-.628.998-1.189l.289-1.105c.029-.11.101-.143.137-.146zM8 0c-.236 0-.47.01-.701.03-.743.065-1.29.615-1.458 1.261l-.29 1.106c-.017.066-.078.158-.211.224a5.994 5.994 0 00-.668.386c-.123.082-.233.09-.3.071L3.27 2.776c-.644-.177-1.392.02-1.82.63a7.977 7.977 0 00-.704 1.217c-.315.675-.111 1.422.363 1.891l.815.806c.05.048.098.147.088.294a6.084 6.084 0 000 .772c.01.147-.038.246-.088.294l-.815.806c-.474.469-.678 1.216-.363 1.891.2.428.436.835.704 1.218.428.609 1.176.806 1.82.63l1.103-.303c.066-.019.176-.011.299.071.213.143.436.272.668.386.133.066.194.158.212.224l.289 1.106c.169.646.715 1.196 1.458 1.26a8.094 8.094 0 001.402 0c.743-.064 1.29-.614 1.458-1.26l.29-1.106c.017-.066.078-.158.211-.224a5.98 5.98 0 00.668-.386c.123-.082.233-.09.3-.071l1.102.302c.644.177 1.392-.02 1.82-.63.268-.382.505-.789.704-1.217.315-.675.111-1.422-.364-1.891l-.814-.806c-.05-.048-.098-.147-.088-.294a6.1 6.1 0 000-.772c-.01-.147.039-.246.088-.294l.814-.806c.475-.469.679-1.216.364-1.891a7.992 7.992 0 00-.704-1.218c-.428-.609-1.176-.806-1.82-.63l-1.103.303c-.066.019-.176.011-.299-.071a5.991 5.991 0 00-.668-.386c-.133-.066-.194-.158-.212-.224L10.16 1.29C9.99.645 9.444.095 8.701.031A8.094 8.094 0 008 0zm1.5 8a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM11 8a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="/repositories">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"/>
+                </svg>
+                <span>Repositories</span>
+            </a>
+            <a href="/workflows">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M1.5 3.25a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zm5.677-.177L9.573.677A.25.25 0 0110 .854v2.792a.25.25 0 01-.427.177L7.177 6.22a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm0 9.5a.75.75 0 100 1.5.75.75 0 000-1.5zm8.25.75a.75.75 0 101.5 0 .75.75 0 00-1.5 0zm3-8.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                </svg>
+                <span>Workflows</span>
+            </a>
+            <a href="/projects">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M1.75 0A1.75 1.75 0 000 1.75v12.5C0 15.216.784 16 1.75 16h12.5A1.75 1.75 0 0016 14.25V1.75A1.75 1.75 0 0014.25 0H1.75zM1.5 1.75a.25.25 0 01.25-.25h12.5a.25.25 0 01.25.25v12.5a.25.25 0 01-.25.25H1.75a.25.25 0 01-.25-.25V1.75zM11.75 3a.75.75 0 00-.75.75v7.5a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75zm-8.25.75a.75.75 0 011.5 0v5.5a.75.75 0 01-1.5 0v-5.5zM8 3a.75.75 0 00-.75.75v3.5a.75.75 0 001.5 0v-3.5A.75.75 0 008 3z"/>
+                </svg>
+                <span>Projects</span>
+            </a>
+            <a href="/settings">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M7.429 1.525a6.593 6.593 0 011.142 0c.036.003.108.036.137.146l.289 1.105c.147.56.55.967.997 1.189.174.086.341.183.501.29.417.278.97.423 1.53.27l1.102-.303c.11-.03.175.016.195.046.219.31.41.641.573.989.014.031.022.11-.059.19l-.815.806c-.411.406-.562.957-.53 1.456a4.588 4.588 0 010 .582c-.032.499.119 1.05.53 1.456l.815.806c.08.08.073.159.059.19a6.494 6.494 0 01-.573.99c-.02.029-.086.074-.195.045l-1.103-.303c-.559-.153-1.112-.008-1.529.27-.16.107-.327.204-.5.29-.449.222-.851.628-.998 1.189l-.289 1.105c-.029.11-.101.143-.137.146a6.613 6.613 0 01-1.142 0c-.036-.003-.108-.037-.137-.146l-.289-1.105c-.147-.56-.55-.967-.997-1.189a4.502 4.502 0 01-.501-.29c-.417-.278-.97-.423-1.53-.27l-1.102.303c-.11.03-.175-.016-.195-.046a6.492 6.492 0 01-.573-.989c-.014-.031-.022-.11.059-.19l.815-.806c.411-.406.562-.957.53-1.456a4.587 4.587 0 010-.582c.032-.499-.119-1.05-.53-1.456l-.815-.806c-.08-.08-.073-.159-.059-.19a6.44 6.44 0 01.573-.99c.02-.029.086-.075.195-.045l1.103.303c.559.153 1.112.008 1.529-.27.16-.107.327-.204.5-.29.449-.222.851-.628.998-1.189l.289-1.105c.029-.11.101-.143.137-.146zM8 0c-.236 0-.47.01-.701.03-.743.065-1.29.615-1.458 1.261l-.29 1.106c-.017.066-.078.158-.211.224a5.994 5.994 0 00-.668.386c-.123.082-.233.09-.3.071L3.27 2.776c-.644-.177-1.392.02-1.82.63a7.977 7.977 0 00-.704 1.217c-.315.675-.111 1.422.363 1.891l.815.806c.05.048.098.147.088.294a6.084 6.084 0 000 .772c.01.147-.038.246-.088.294l-.815.806c-.474.469-.678 1.216-.363 1.891.2.428.436.835.704 1.218.428.609 1.176.806 1.82.63l1.103-.303c.066-.019.176-.011.299.071.213.143.436.272.668.386.133.066.194.158.212.224l.289 1.106c.169.646.715 1.196 1.458 1.26a8.094 8.094 0 001.402 0c.743-.064 1.29-.614 1.458-1.26l.29-1.106c.017-.066.078-.158.211-.224a5.98 5.98 0 00.668-.386c.123-.082.233-.09.3-.071l1.102.302c.644.177 1.392-.02 1.82-.63.268-.382.505-.789.704-1.217.315-.675.111-1.422-.364-1.891l-.814-.806c-.05-.048-.098-.147-.088-.294a6.1 6.1 0 000-.772c-.01-.147.039-.246.088-.294l.814-.806c.475-.469.679-1.216.364-1.891a7.992 7.992 0 00-.704-1.218c-.428-.609-1.176-.806-1.82-.63l-1.103.303c-.066.019-.176.011-.299-.071a5.991 5.991 0 00-.668-.386c-.133-.066-.194-.158-.212-.224L10.16 1.29C9.99.645 9.444.095 8.701.031A8.094 8.094 0 008 0zm1.5 8a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM11 8a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span>Settings</span>
+            </a>
         </nav>
     </aside>
 
+    <!-- Main Content -->
     <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h2>Dashboard</h2>
+            <p>Monitor your CLDCDE Pro development workflows and GitHub repositories</p>
+        </div>
+
+        <!-- Metrics Grid -->
         <div class="dashboard-grid">
-            <div class="card metric">
+            <div class="metric-card">
                 <h3>Active Workflows</h3>
                 <div class="metric-value">{{ workflows | length }}</div>
                 <div class="metric-label">Currently Running</div>
             </div>
             
-            <div class="card metric">
-                <h3>Projects</h3>
-                <div class="metric-value">{{ projects | length }}</div>
-                <div class="metric-label">Total Projects</div>
+            <div class="metric-card">
+                <h3>Repositories</h3>
+                <div class="metric-value">{{ repositories | length }}</div>
+                <div class="metric-label">Total Repos</div>
             </div>
             
-            <div class="card metric">
+            <div class="metric-card">
                 <h3>System Status</h3>
                 <div class="metric-value">{{ system_status.status }}</div>
                 <div class="metric-label">{{ system_status.uptime }}</div>
             </div>
             
-            <div class="card metric">
-                <h3>Connected Users</h3>
+            <div class="metric-card">
+                <h3>Connected Sessions</h3>
                 <div class="metric-value">{{ system_status.connected_users }}</div>
-                <div class="metric-label">Active Sessions</div>
+                <div class="metric-label">Active Users</div>
             </div>
         </div>
 
-        <div class="dashboard-grid">
-            <div class="card">
-                <h3>Recent Workflows</h3>
-                <ul class="workflow-list">
-                    {% for workflow in workflows %}
-                    <li class="workflow-item">
-                        <div>
-                            <strong>{{ workflow.name }}</strong><br>
-                            <small>{{ workflow.phase }}</small>
-                        </div>
-                        <div>
-                            <span class="workflow-status status-{{ workflow.status }}">
-                                {{ workflow.status }}
-                            </span>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-                <a href="/workflows" class="btn btn-sm">View All</a>
+        <!-- Recent Repositories -->
+        <div class="card">
+            <div class="page-header" style="border: none; padding-bottom: 0; margin-bottom: 16px;">
+                <h3 style="font-size: 16px; font-weight: 600;">Recent Repositories</h3>
             </div>
             
-            <div class="card">
-                <h3>Project Progress</h3>
-                {% for project in projects %}
-                <div style="margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span>{{ project.name }}</span>
-                        <span>{{ project.status }}</span>
+            {% if repositories %}
+                <div class="repo-list">
+                    {% for repo in repositories %}
+                        {% if loop.index <= 5 %}
+                    <div class="repo-item">
+                        <div class="repo-info">
+                            <div class="repo-header">
+                                <a href="{{ repo.html_url }}" class="repo-name" target="_blank">{{ repo.name }}</a>
+                                {% if repo.private %}
+                                    <span class="repo-visibility">Private</span>
+                                {% else %}
+                                    <span class="repo-visibility">Public</span>
+                                {% endif %}
+                            </div>
+                            {% if repo.description %}
+                                <p class="repo-description">{{ repo.description }}</p>
+                            {% endif %}
+                            <div class="repo-stats">
+                                {% if repo.language %}
+                                <span class="repo-language">
+                                    <span class="repo-language-color" style="background-color: {{ repo.language_color }}"></span>
+                                    {{ repo.language }}
+                                </span>
+                                {% endif %}
+                                <span class="repo-stat">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
+                                    </svg>
+                                    {{ repo.stargazers_count }}
+                                </span>
+                                <span class="repo-stat">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"/>
+                                    </svg>
+                                    {{ repo.forks_count }}
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 75%;"></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div style="margin-top: 16px;">
+                    <a href="/repositories" class="btn">View all repositories</a>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">📦</div>
+                    <h3>No repositories yet</h3>
+                    <p>Connect your GitHub account to see your repositories here</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Recent Workflows -->
+        <div class="card" style="margin-top: 16px;">
+            <div class="page-header" style="border: none; padding-bottom: 0; margin-bottom: 16px;">
+                <h3 style="font-size: 16px; font-weight: 600;">Recent Workflows</h3>
+            </div>
+            
+            {% if workflows %}
+                {% for workflow in workflows %}
+                <div class="repo-item">
+                    <div class="repo-info">
+                        <div class="repo-header">
+                            <span style="font-weight: 600;">{{ workflow.name }}</span>
+                            <span class="status-badge status-{{ workflow.status }}">{{ workflow.status }}</span>
+                        </div>
+                        <p class="repo-description">{{ workflow.phase }}</p>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: {{ workflow.progress }}%"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
-                <a href="/projects" class="btn btn-sm">Manage Projects</a>
-            </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">⚡</div>
+                    <h3>No active workflows</h3>
+                    <p>Start a new workflow to see it here</p>
+                </div>
+            {% endif %}
         </div>
-
-        {% if system_status.github_rate_limit %}
-        <div class="card">
-            <h3>GitHub API Status</h3>
-            <p>Rate Limit: {{ system_status.github_rate_limit.remaining }}/{{ system_status.github_rate_limit.total }}</p>
-            <p>Resets at: {{ system_status.github_rate_limit.reset_at }}</p>
-        </div>
-        {% endif %}
     </main>
+{% endblock %}
 
-    <script>
-        // WebSocket connection for real-time updates
-        const ws = new WebSocket(`ws://${window.location.host}/ws`);
-        
-        ws.onopen = function() {
-            console.log('WebSocket connected');
-            // Subscribe to relevant channels
-            ws.send(JSON.stringify({
-                type: 'Subscribe',
-                channels: ['workflows', 'projects', 'system']
-            }));
-        };
-        
-        ws.onmessage = function(event) {
-            const message = JSON.parse(event.data);
-            handleWebSocketMessage(message);
-        };
-        
-        function handleWebSocketMessage(message) {
-            switch(message.type) {
-                case 'WorkflowStatusUpdate':
-                    updateWorkflowStatus(message.workflow_id, message.status, message.progress);
-                    break;
-                case 'ProjectSync':
-                    updateProjectStatus(message.project_id, message.status);
-                    break;
-                case 'SystemNotification':
-                    showNotification(message.level, message.message);
-                    break;
-            }
+{% block extra_js %}
+<script>
+    // Dashboard-specific WebSocket handling
+    function handleWebSocketMessage(message) {
+        switch(message.type) {
+            case 'WorkflowStatusUpdate':
+                updateWorkflowStatus(message.workflow_id, message.status, message.progress);
+                break;
+            case 'RepositoryUpdate':
+                updateRepositoryInfo(message.repository);
+                break;
+            case 'SystemNotification':
+                showNotification(message.level, message.message);
+                break;
+            case 'MetricUpdate':
+                updateMetric(message.metric, message.value);
+                break;
         }
-        
-        function updateWorkflowStatus(workflowId, status, progress) {
-            // Update workflow status in the UI
-            console.log(`Workflow ${workflowId}: ${status} (${progress}%)`);
+    }
+    
+    function updateWorkflowStatus(workflowId, status, progress) {
+        console.log(`Workflow ${workflowId}: ${status} (${progress}%)`);
+        // TODO: Update UI elements
+    }
+    
+    function updateRepositoryInfo(repository) {
+        console.log(`Repository update:`, repository);
+        // TODO: Update repository list
+    }
+    
+    function updateMetric(metric, value) {
+        const metricElement = document.querySelector(`[data-metric="${metric}"]`);
+        if (metricElement) {
+            metricElement.textContent = value;
         }
-        
-        function updateProjectStatus(projectId, status) {
-            // Update project status in the UI
-            console.log(`Project ${projectId}: ${status}`);
-        }
-        
-        function showNotification(level, message) {
-            // Show notification to user
-            console.log(`${level.toUpperCase()}: ${message}`);
-        }
-        
-        // Ping to keep connection alive
-        setInterval(() => {
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.send(JSON.stringify({ type: 'Ping' }));
-            }
-        }, 30000);
-    </script>
-</body>
-</html>
+    }
+    
+    function showNotification(level, message) {
+        console.log(`${level.toUpperCase()}: ${message}`);
+        // TODO: Implement toast notifications
+    }
+</script>
+{% endblock %}

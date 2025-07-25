@@ -1,0 +1,15 @@
+# CLDCDE Pro Grafana Dashboard Configuration
+# By CloudOracle - Production Ready
+
+apiVersion: 1
+
+providers:
+  - name: 'CLDCDE Pro Dashboards'
+    orgId: 1
+    folder: ''
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: true
+    options:
+      path: /etc/grafana/provisioning/dashboards

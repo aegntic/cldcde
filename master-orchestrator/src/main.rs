@@ -13,9 +13,9 @@ async fn main() -> Result<()> {
         .with_max_level(Level::INFO)
         .init();
 
-    let matches = Command::new("Enhanced Tmux Orchestrator - Master Orchestrator")
+    let matches = Command::new("CLDCDE Pro - Master Orchestrator")
         .version("0.1.0")
-        .author("Enhanced Tmux Orchestrator Team")
+        .author("CLDCDE Pro Team")
         .about("Master Orchestrator for autonomous AI development workflows")
         .arg(
             Arg::new("interactive")

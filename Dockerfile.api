@@ -1,0 +1,58 @@
+# CLDCDE Pro API Server Dockerfile
+# By CloudOracle - Production Ready
+
+# Build stage
+FROM rust:1.85-alpine AS builder
+
+# Install build dependencies
+RUN apk add --no-cache musl-dev openssl-dev pkgconfig
+
+WORKDIR /app
+
+# Copy API Cargo files for dependency caching
+COPY api/Cargo.toml ./api/
+
+# Create dummy source file to cache dependencies
+RUN mkdir -p api/src && echo "fn main() {}" > api/src/main.rs
+
+# Build dependencies
+RUN cd api && cargo build --release
+RUN rm -rf api/src
+
+# Copy actual API source code
+COPY api/src ./api/src
+
+# Build the application
+RUN touch api/src/main.rs
+RUN cd api && cargo build --release
+
+# Runtime stage
+FROM alpine:latest
+
+# Install runtime dependencies
+RUN apk add --no-cache ca-certificates openssl
+
+# Create app user for security
+RUN addgroup -g 1000 appgroup && \
+    adduser -D -s /bin/sh -u 1000 -G appgroup appuser
+
+WORKDIR /app
+
+# Copy binary from builder stage
+COPY --from=builder /app/api/target/release/cldcde-api ./cldcde-api
+
+# Create logs directory
+RUN mkdir -p logs && chown -R appuser:appgroup /app
+
+# Switch to non-root user
+USER appuser
+
+# Expose port
+EXPOSE 3001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:3001/health || exit 1
+
+# Run the application
+CMD ["./cldcde-api"]

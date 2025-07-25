@@ -18,3 +18,22 @@ Thumbs.db
 # Environment
 .env
 .env.local
+.env.production
+.env.development
+
+# Deployment Configuration
+wrangler.toml
+deploy.sh
+
+# Build artifacts
+/frontend/dist/
+/frontend/node_modules/
+/api/target/
+
+# Database
+*.db
+*.sqlite
+
+# Security
+api-keys.txt
+credentials.json
