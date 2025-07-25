@@ -1,8 +1,9 @@
-# CLDCDE.CC - Claude Code Extensions Hub
+# 🚀 cldcde.cc - Community Extensions for Claude Code
 
-The unofficial community platform for Claude Code extensions, MCP (Model Context Protocol) servers, and development tools.
+A modern platform for discovering, sharing, and managing Claude Code extensions and MCP servers. Built with a serverless-first architecture on Cloudflare Workers and Supabase.
 
 🌐 **Live Site**: [https://cldcde.cc](https://cldcde.cc)
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/aegntic/cldcde)
 
 ## 🚀 Overview
 

@@ -1,0 +1,37 @@
+# Cloudflare Workers Configuration Template
+# Copy this to wrangler.toml and fill in your actual values
+# NEVER commit wrangler.toml with real secrets!
+
+name = "cldcde-api"
+main = "src/worker.ts"
+compatibility_date = "2024-01-01"
+account_id = "your_cloudflare_account_id"
+
+[site]
+bucket = "./frontend/dist"
+
+# Environment variables for production
+[vars]
+ENVIRONMENT = "production"
+SUPABASE_URL = "https://your-project.supabase.co"
+
+# Secrets (set via: wrangler secret put SECRET_NAME)
+# Run these commands after editing wrangler.toml:
+# wrangler secret put SUPABASE_ANON_KEY
+# wrangler secret put JWT_SECRET
+# wrangler secret put GITHUB_CLIENT_SECRET
+
+# Uncomment and configure these services as needed:
+
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = "your_kv_namespace_id"
+
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "cldcde-content"
+# database_id = "your_d1_database_id"
+
+# [[r2_buckets]]
+# binding = "STORAGE"
+# bucket_name = "cldcde-assets"

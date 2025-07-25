@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "aegntic-hive": {
-      "command": "node",
-      "args": ["/Users/iamcatface/cldcde-cc-dev/cldcde/aegntic-hive-mcp/server.js"]
-    }
-  }
-}
