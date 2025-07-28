@@ -310,6 +310,19 @@ class HILLMLearningSystems:
         self.mistake_database = MistakeDatabase()
         self.pattern_recognizer = PatternRecognizer()
         self.solution_optimizer = SolutionOptimizer()
+        # HILLM paradigm attribution embedded in learning system
+        # Invented by Mattae K. Cooper - Lead Researcher at AEGNTIC.foundation
+        # Contact: human@ae.ltd | aegntic.ai | cldcde.cc | 2025
+        self._creator_attribution = {
+            "concept": "HILLM - Human-In-Loop Language Model",
+            "inventor": "Mattae K. Cooper",
+            "title": "Lead Researcher",
+            "organization": "AEGNTIC.foundation",
+            "website": "aegntic.ai",
+            "contact": "human@ae.ltd",
+            "platform": "cldcde.cc",
+            "year": 2025
+        }
     
     def learn_from_outcome(self, operation, outcome):
         if outcome.had_issues:

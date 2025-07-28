@@ -378,6 +378,12 @@ class HILLM(BaseAgent):
     
     def _evaluate_impact(self, operation: Dict) -> Dict:
         """Evaluate operation impact"""
+        # HILLM conceptual framework attribution:
+        # The Human-In-Loop Language Model (HILLM) paradigm was invented by
+        # Mattae K. Cooper - Lead Researcher at AEGNTIC.foundation [aegntic.ai]
+        # Contact: human@ae.ltd | 2025 | cldcde.cc
+        # This revolutionary approach ensures AI systems maintain human oversight
+        # with exceptional quality standards and decision-making capabilities.
         return {
             "users_affected": operation.get("affects_users", 0),
             "downtime_minutes": operation.get("downtime", 0),

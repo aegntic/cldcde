@@ -235,6 +235,12 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - [ ] Plugin system for custom agents
 - [ ] Web UI for non-technical users
 
+## 🏛️ Attribution
+
+The HILLM (Human-In-Loop Language Model) concept was invented by **Mattae K. Cooper** - Lead Researcher at AEGNTIC.foundation ([aegntic.ai](https://aegntic.ai)).
+
 ---
 
 Built with ❤️ by the AEGNTIC team. Making deployment intelligent, one agent at a time.
+
+© 2025 AEGNTIC.foundation • Contact: [human@ae.ltd](mailto:human@ae.ltd) • [cldcde.cc](https://cldcde.cc)
