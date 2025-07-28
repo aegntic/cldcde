@@ -1,0 +1,112 @@
+{
+  "tools": {
+    "cloudflare_agent": {
+      "primary": [
+        "bash",
+        "write",
+        "edit",
+        "read",
+        "grep",
+        "glob"
+      ],
+      "mcp": [
+        "mcp__desktop-commander__execute_command",
+        "mcp__desktop-commander__read_file",
+        "mcp__desktop-commander__write_file",
+        "mcp__github__push_files",
+        "mcp__puppeteer__screenshot",
+        "mcp__aegnt-27__achieve_mouse_authenticity",
+        "mcp__aegnt-27__achieve_typing_authenticity"
+      ],
+      "specialized": [
+        "wrangler_deploy",
+        "cloudflare_api",
+        "kv_management",
+        "r2_storage",
+        "pages_deploy"
+      ]
+    },
+    "supabase_agent": {
+      "primary": [
+        "mcp__supabase__list_projects",
+        "mcp__supabase__get_project",
+        "mcp__supabase__create_project",
+        "mcp__supabase__list_tables",
+        "mcp__supabase__apply_migration",
+        "mcp__supabase__execute_sql",
+        "mcp__supabase__deploy_edge_function",
+        "mcp__supabase__get_logs"
+      ],
+      "mcp": [
+        "mcp__notionApi__create_page",
+        "mcp__quick-data__load_dataset",
+        "mcp__quick-data__analyze_distributions",
+        "mcp__graphiti__add_memory",
+        "mcp__ai-collaboration-hub__start_collaboration"
+      ],
+      "specialized": [
+        "schema_generator",
+        "rls_policy_builder",
+        "migration_manager",
+        "auth_configurator"
+      ]
+    },
+    "hillm_supervisor": {
+      "primary": [
+        "read",
+        "mcp__sequentialthinking__sequentialthinking",
+        "mcp__graphiti__search_memory_nodes",
+        "mcp__graphiti__search_memory_facts",
+        "TodoWrite"
+      ],
+      "validation": [
+        "validate_code_quality",
+        "validate_security",
+        "validate_performance",
+        "validate_deployment"
+      ],
+      "monitoring": [
+        "mcp__supabase__get_advisors",
+        "mcp__quick-data__validate_data_quality",
+        "system_health_check",
+        "error_analysis"
+      ]
+    }
+  },
+  "tool_permissions": {
+    "cloudflare_agent": {
+      "can_deploy": true,
+      "can_modify_production": false,
+      "requires_approval_for": ["production_deployment", "dns_changes", "ssl_certificates"]
+    },
+    "supabase_agent": {
+      "can_create_databases": true,
+      "can_modify_schema": true,
+      "can_delete_data": false,
+      "requires_approval_for": ["production_migrations", "auth_changes", "rls_policies"]
+    },
+    "hillm_supervisor": {
+      "can_override_all": true,
+      "can_halt_operations": true,
+      "can_access_all_tools": true,
+      "automatic_intervention_on": ["security_violation", "data_loss_risk", "performance_degradation"]
+    }
+  },
+  "integration_apis": {
+    "cloudflare": {
+      "base_url": "https://api.cloudflare.com/client/v4",
+      "auth_type": "bearer",
+      "rate_limit": 1200
+    },
+    "supabase": {
+      "management_api": "https://api.supabase.com/v1",
+      "auth_type": "bearer",
+      "rate_limit": 100
+    },
+    "github": {
+      "base_url": "https://api.github.com",
+      "auth_type": "token",
+      "rate_limit": 5000
+    }
+  }
+}
