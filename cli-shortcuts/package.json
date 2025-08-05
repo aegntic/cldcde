@@ -1,0 +1,60 @@
+{
+  "name": "@aegntic/cldcde-cli-shortcuts",
+  "version": "1.0.0",
+  "description": "A comprehensive collection of 40+ Claude Code CLI shortcuts for improved productivity and ease of use",
+  "main": "lib/cli-shortcuts.js",
+  "type": "module",
+  "bin": {
+    "cldcde-cli-shortcuts": "bin/install.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "shortcuts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "install-shortcuts": "node bin/install.js",
+    "uninstall-shortcuts": "node bin/uninstall.js",
+    "postinstall": "node bin/install.js",
+    "preuninstall": "node bin/uninstall.js",
+    "test": "node test/test-shortcuts.js"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "cli-shortcuts",
+    "productivity",
+    "bash-aliases",
+    "terminal",
+    "ai",
+    "anthropic",
+    "workflow",
+    "automation",
+    "developer-tools"
+  ],
+  "author": {
+    "name": "AEGNTIC",
+    "url": "https://github.com/aegntic"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aegntic/cldcde.git",
+    "directory": "cli-shortcuts"
+  },
+  "bugs": {
+    "url": "https://github.com/aegntic/cldcde/issues"
+  },
+  "homepage": "https://github.com/aegntic/cldcde/tree/main/cli-shortcuts#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}

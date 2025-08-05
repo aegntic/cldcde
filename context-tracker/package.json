@@ -1,0 +1,57 @@
+{
+  "name": "@aegntic/cldcde-context-tracker",
+  "version": "1.0.1",
+  "description": "A persistent context window monitor addon for Claude Code CLI that shows real-time token usage with visual indicators",
+  "main": "lib/context-monitor.js",
+  "type": "module",
+  "bin": {
+    "cldcde-context-tracker": "bin/install.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "install-addon": "node bin/install.js",
+    "uninstall-addon": "node bin/uninstall.js",
+    "postinstall": "node bin/install.js",
+    "preuninstall": "node bin/uninstall.js"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "context-window",
+    "token-counter",
+    "cli-addon",
+    "ai",
+    "anthropic",
+    "monitoring",
+    "terminal",
+    "productivity"
+  ],
+  "author": {
+    "name": "AEGNTIC",
+    "url": "https://github.com/aegntic"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/cldcde.git",
+    "directory": "context-tracker"
+  },
+  "bugs": {
+    "url": "https://github.com/aegntic/cldcde/issues"
+  },
+  "homepage": "https://github.com/aegntic/cldcde/tree/main/context-tracker#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}
