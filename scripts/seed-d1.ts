@@ -104,8 +104,8 @@ const seedData: SeedData = {
     {
       forum_slug: 'bug-reports',
       user_id: 'user-5',
-      title: 'Issue with experimental-dev extension on Windows',
-      content: 'The experimental-dev extension seems to have issues on Windows 11. The parallel processing feature doesn\'t work correctly. Anyone else experiencing this?'
+      title: 'Issue with cldism extension on Windows',
+      content: 'The cldism extension seems to have issues on Windows 11. The parallel processing feature doesn\'t work correctly. Anyone else experiencing this?'
     }
   ],
   comments: [
@@ -156,7 +156,7 @@ const seedData: SeedData = {
     {
       title: 'Community Spotlight: Top Extensions of the Month',
       slug: 'top-extensions-january-2024',
-      content: 'Let\'s celebrate the amazing work from our community! Here are the top extensions for this month:\n\n## 1. Claude CLI Shortcuts\nDeveloped by @iamcatface, this extension has revolutionized how developers interact with Claude CLI.\n\n## 2. Experimental Development System\nAn innovative approach to parallel development that\'s changing how we think about AI-assisted coding.\n\n## 3. AI Video Recording Tools\nPerfect for content creators documenting their development process.\n\nCongratulations to all developers!',
+      content: 'Let\'s celebrate the amazing work from our community! Here are the top extensions for this month:\n\n## 1. Claude CLI Shortcuts\nDeveloped by @iamcatface, this extension has revolutionized how developers interact with Claude CLI.\n\n## 2. Cldism Development System\nAn innovative approach to parallel development that\'s changing how we think about AI-assisted coding. Use cldism, cldism-list, and cldism-show commands.\n\n## 3. AI Video Recording Tools\nPerfect for content creators documenting their development process.\n\nCongratulations to all developers!',
       excerpt: 'Highlighting the most popular and innovative extensions from our community.',
       author_id: 'admin',
       tags: ['community', 'spotlight', 'extensions']
@@ -176,7 +176,7 @@ const seedData: SeedData = {
       content: 'Great extension overall. Would love to see more customization options for the shortcuts.'
     },
     {
-      extension_id: 'experimental-dev',
+      extension_id: 'cldism',
       user_id: 'user-1',
       rating: 5,
       content: 'Mind-blowing approach to development. The parallel processing really helps explore different solutions quickly.'

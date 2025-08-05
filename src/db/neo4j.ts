@@ -107,9 +107,9 @@ const createSampleData = async (session: Session): Promise<void> => {
     })
     
     MERGE (ext2:Extension {
-      id: 'experimental-dev',
-      name: 'Experimental Development System',
-      description: 'AI-driven parallel development workflow that creates 3 approaches and synthesizes optimal solutions',
+      id: 'cldism',
+      name: 'Cldism Development System',
+      description: 'AI-driven parallel development workflow that creates 3 approaches and synthesizes optimal solutions using cldism, cldism-list, and cldism-show commands',
       category: 'development',
       platform: ['macos', 'linux', 'windows'],
       version: '1.0.0',
@@ -118,9 +118,9 @@ const createSampleData = async (session: Session): Promise<void> => {
       rating: 4.9,
       createdAt: datetime(),
       updatedAt: datetime(),
-      installScript: 'curl -fsSL https://cldcde.cc/install/experimental-dev | bash',
-      repository: 'https://github.com/iamcatface/experimental-dev',
-      tags: ['development', 'ai', 'automation', 'experimental']
+      installScript: 'curl -fsSL https://cldcde.cc/install/cldism | bash',
+      repository: 'https://github.com/iamcatface/cldism',
+      tags: ['development', 'ai', 'automation', 'cldism']
     })
     
     MERGE (ext3:Extension {
@@ -159,9 +159,9 @@ const createSampleData = async (session: Session): Promise<void> => {
     })
     
     MERGE (mcp2:MCPServer {
-      id: 'claude-mcp-database',
+      id: 'cldism-database',
       name: 'Multi-Database MCP',
-      description: 'Connect Claude to PostgreSQL, MySQL, MongoDB, and Neo4j databases',
+      description: 'Connect Claude to PostgreSQL, MySQL, MongoDB, and Neo4j databases using cldism commands',
       category: 'database',
       platform: ['macos', 'linux', 'windows'],
       version: '1.3.0',

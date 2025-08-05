@@ -343,4 +343,25 @@ EOF
 
 echo "📄 Quick reference saved to: ~/.claude-gh-reference.md"
 echo ""
+echo "🔧 Setting up shell aliases for deprecated commands..."
+
+# Migration aliases for deprecated commands
+# TODO: Remove these after one major release
+echo "# Migration aliases for deprecated cldcde commands" >> ~/.bashrc
+echo "# TODO: Remove these after one major release" >> ~/.bashrc
+echo "alias cldex='echo \"⚠️ cldex is deprecated ⇒ use cldism\" && cldism \"\$@\"'" >> ~/.bashrc
+echo "alias cldlist='echo \"⚠️ cldlist is deprecated ⇒ use cldism-list\" && cldism-list \"\$@\"'" >> ~/.bashrc
+echo "alias cldshow='echo \"⚠️ cldshow is deprecated ⇒ use cldism-show\" && cldism-show \"\$@\"'" >> ~/.bashrc
+
+# Also add to zshrc if it exists
+if [ -f ~/.zshrc ]; then
+    echo "# Migration aliases for deprecated cldcde commands" >> ~/.zshrc
+    echo "# TODO: Remove these after one major release" >> ~/.zshrc
+    echo "alias cldex='echo \"⚠️ cldex is deprecated ⇒ use cldism\" && cldism \"\$@\"'" >> ~/.zshrc
+    echo "alias cldlist='echo \"⚠️ cldlist is deprecated ⇒ use cldism-list\" && cldism-list \"\$@\"'" >> ~/.zshrc
+    echo "alias cldshow='echo \"⚠️ cldshow is deprecated ⇒ use cldism-show\" && cldism-show \"\$@\"'" >> ~/.zshrc
+fi
+
+echo "Migration aliases added to shell configuration files."
+echo ""
 echo "🎉 Setup complete! Happy coding with Claude! 🤖"

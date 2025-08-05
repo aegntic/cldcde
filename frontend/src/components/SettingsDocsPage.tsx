@@ -188,9 +188,9 @@ cldae "analyze this directory"    # claude "analyze this directory" --auto-execu
 cldaep "review this PR"          # claude "review this PR" --auto-execute --project
 
 # Experimental system
-cldex "implement user auth"       # Starts experimental development workflow
-cldlist                          # Lists active experiments
-cldshow experiment_123           # Shows experiment details`
+cldism "implement user auth"       # Starts experimental development workflow
+cldism-list                       # Lists active experiments
+cldism-show experiment_123        # Shows experiment details`
 
   const envSetup = `# Create .env file in your project root
 # Database Configuration
@@ -264,7 +264,7 @@ OPENROUTER_API_KEY=your_openrouter_key`
         'Basic commands: cld, cldp, cldc, cldr',
         'Model shortcuts: clds (Sonnet), cldo (Opus)', 
         'Auto-execute: cldae, cldaep, cldaec',
-        'Experiment commands: cldex, cldlist, cldshow'
+        'Experiment commands: cldism, cldism-list, cldism-show'
       ]
     },
     {

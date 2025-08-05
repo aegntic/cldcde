@@ -79,14 +79,22 @@ chmod +x install-claude-shortcuts.sh
 | `cld-auto` | Smart auto-execute with safety warnings |
 | `cld-help` | Show comprehensive help |
 
-## Experimental Development
+## Experimental Development (now 'claude-ism')
 
 | Shortcut | Full Command | Description |
 |----------|--------------|-------------|
-| `cldex` | `cld-experiment` | Start multi-approach experiment |
-| `cldlist` | `cld-list-experiments` | List all experiments |
-| `cldshow` | `cld-show-experiment` | Show experiment report |
+| `cldism` | `cldism()` | Start multi-approach experiment |
+| `cldism-list` | `cldism-list()` | List all experiments |
+| `cldism-show` | `cldism-show()` | Show experiment report |
 | `cldexhelp` | - | Experiment system help |
+
+### Deprecated Aliases (for backward compatibility)
+
+| Shortcut | New Command | Status |
+|----------|-------------|--------|
+| `cldex` | `cldism` | ⚠️ Deprecated - shows warning |
+| `cldlist` | `cldism-list` | ⚠️ Deprecated - shows warning |
+| `cldshow` | `cldism-show` | ⚠️ Deprecated - shows warning |
 
 ## Usage Examples
 
@@ -119,13 +127,18 @@ cld-auto "Explain the architecture of this project"
 
 ### Experimental Development
 ```bash
-# Start a new experiment
+# Start a new experiment (new syntax)
+cldism "add user authentication system" auth-experiment
+
+# List all experiments (new syntax)
+cldism-list
+
+# Show experiment report (new syntax)
+cldism-show auth-experiment
+
+# Deprecated syntax (still works with warnings)
 cldex "add user authentication system" auth-experiment
-
-# List all experiments
 cldlist
-
-# Show experiment report
 cldshow auth-experiment
 ```
 

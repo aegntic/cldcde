@@ -130,4 +130,25 @@ echo "2. Configure custom domain in Cloudflare dashboard"
 echo "3. Warm cache: bun run scripts/warm-cache.ts"
 echo "4. Check health: curl https://your-worker.workers.dev/health"
 echo ""
+echo "🔧 Setting up shell aliases for deprecated commands..."
+
+# Migration aliases for deprecated commands
+# TODO: Remove these after one major release
+echo "# Migration aliases for deprecated cldcde commands" >> ~/.bashrc
+echo "# TODO: Remove these after one major release" >> ~/.bashrc
+echo "alias cldex='echo \"⚠️ cldex is deprecated ⇒ use cldism\" && cldism \"\$@\"'" >> ~/.bashrc
+echo "alias cldlist='echo \"⚠️ cldlist is deprecated ⇒ use cldism-list\" && cldism-list \"\$@\"'" >> ~/.bashrc
+echo "alias cldshow='echo \"⚠️ cldshow is deprecated ⇒ use cldism-show\" && cldism-show \"\$@\"'" >> ~/.bashrc
+
+# Also add to zshrc if it exists
+if [ -f ~/.zshrc ]; then
+    echo "# Migration aliases for deprecated cldcde commands" >> ~/.zshrc
+    echo "# TODO: Remove these after one major release" >> ~/.zshrc
+    echo "alias cldex='echo \"⚠️ cldex is deprecated ⇒ use cldism\" && cldism \"\$@\"'" >> ~/.zshrc
+    echo "alias cldlist='echo \"⚠️ cldlist is deprecated ⇒ use cldism-list\" && cldism-list \"\$@\"'" >> ~/.zshrc
+    echo "alias cldshow='echo \"⚠️ cldshow is deprecated ⇒ use cldism-show\" && cldism-show \"\$@\"'" >> ~/.zshrc
+fi
+
+echo "Migration aliases added to shell configuration files."
+echo ""
 echo "🎉 Your cldcde.cc platform is ready!"

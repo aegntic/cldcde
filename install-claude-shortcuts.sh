@@ -44,6 +44,12 @@ define_alias "cldaec" "claude --dangerously-skip-permissions --continue"
 define_alias "cldjson" "claude --print --output-format json"
 define_alias "cldstream" "claude --print --output-format stream-json"
 
+# Migration aliases for deprecated commands
+# TODO: Remove these after one major release
+define_alias "cldex" "echo '⚠️ cldex is deprecated ⇒ use cldism' && cldism \"\$@\""
+define_alias "cldlist" "echo '⚠️ cldlist is deprecated ⇒ use cldism-list' && cldism-list \"\$@\""
+define_alias "cldshow" "echo '⚠️ cldshow is deprecated ⇒ use cldism-show' && cldism-show \"\$@\""
+
 # Claude CLI Functions
 echo "Adding interactive functions to $CONFIG_FILE"
 cat << 'EOF' >> "$CONFIG_FILE"
@@ -73,8 +79,123 @@ cld-auto() {
 
 # Show Claude CLI Shortcuts help
 cld-help() {
-    cat "$HOME/cldcde-cc-dev/cldcde/CLAUDE_CLI_SHORTCUTS.md"
+    echo -e "\e[36mClaude CLI Shortcuts:\e[0m"
+    echo "  cld              - Start Claude (main command)"
+    echo "  cldp             - Print mode (non-interactive)"
+    echo "  cldc             - Continue conversation"
+    echo "  cldr             - Resume a session"
+    echo "  cldv             - Verbose mode"
+    echo "  cldd             - Debug mode"
+    echo "  clds             - Use Sonnet model"
+    echo "  cldo             - Use Opus model"
+    echo "  cldconf          - Configuration management"
+    echo "  cldmcp           - MCP server management"
+    echo "  cldup            - Update Claude"
+    echo "  clddoc           - Health check"
+    echo "  cld-quick \"...\"  - Quick one-liner query"
+    echo "  cld-auto \"...\"   - Auto-execute with safety checks"
+    echo "  cld-help         - Show this help"
+    echo ""
+    echo -e "\e[33mExperimental Development (now 'claude-ism'):\e[0m"
+    echo "  cldism           - Start multi-approach experiment"
+    echo "  cldism-list      - List all experiments"
+    echo "  cldism-show      - Show experiment report"
+    echo "  cldexhelp        - Experiment system help"
+    echo ""
+    echo -e "\e[31mDeprecated (backward compatibility):\e[0m"
+    echo "  cldex            - ⚠️ Use 'cldism' instead"
+    echo "  cldlist          - ⚠️ Use 'cldism-list' instead"
+    echo "  cldshow          - ⚠️ Use 'cldism-show' instead"
+    echo ""
+    echo -e "\e[34mEnhanced Menu:\e[0m"
+    echo "  cldisms          - Enhanced launcher menu"
+    echo "  ism              - Enhanced launcher menu (alias)"
+    echo ""
+    echo "For detailed help, see: https://github.com/aegntic/cldcde/blob/main/CLAUDE_CLI_SHORTCUTS.md"
 }
+
+# Experimental/Development Functions (renamed from cldex to cldism)
+cldism() {
+    echo -e "\e[34m🔬 Starting Claude multi-approach experiment: $1\e[0m"
+    if [[ -z "$1" ]]; then
+        echo "Usage: cldism <experiment-name> [description]"
+        return 1
+    fi
+    
+    local exp_name="$1"
+    local exp_dir="$HOME/.claude-experiments/$exp_name"
+    
+    # Create experiment directory
+    mkdir -p "$exp_dir"
+    
+    # Create experiment log
+    echo "Experiment: $exp_name" > "$exp_dir/experiment.log"
+    echo "Started: $(date)" >> "$exp_dir/experiment.log"
+    echo "Description: ${2:-'No description provided'}" >> "$exp_dir/experiment.log"
+    
+    # Start Claude with experiment context
+    claude --print "Start a multi-approach experiment for: $exp_name. ${2:-''}" | tee "$exp_dir/output.txt"
+}
+
+cldism-list() {
+    echo -e "\e[36m📋 Available Claude experiments:\e[0m"
+    if [[ -d "$HOME/.claude-experiments" ]]; then
+        ls -la "$HOME/.claude-experiments/" | grep "^d" | awk '{print $9}' | grep -v "^\.$\|^\.\.$" | while read exp; do
+            echo -e "  \e[32m→\e[0m $exp"
+        done
+    else
+        echo -e "  \e[33m⚠️  No experiments directory found\e[0m"
+    fi
+}
+
+cldism-show() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: cldism-show <experiment-name>"
+        return 1
+    fi
+    
+    local exp_dir="$HOME/.claude-experiments/$1"
+    
+    if [[ -d "$exp_dir" ]]; then
+        echo -e "\e[34m🔬 Experiment Report: $1\e[0m"
+        echo -e "\e[36m===================\e[0m"
+        
+        if [[ -f "$exp_dir/experiment.log" ]]; then
+            cat "$exp_dir/experiment.log"
+        fi
+        
+        echo -e "\e[36m\nOutput:\e[0m"
+        if [[ -f "$exp_dir/output.txt" ]]; then
+            cat "$exp_dir/output.txt"
+        fi
+    else
+        echo -e "\e[31m❌ Experiment '$1' not found\e[0m"
+    fi
+}
+
+# Backward compatibility with deprecation warnings
+cldex() {
+    echo -e "\e[33m⚠️  DEPRECATION WARNING: 'cldex' is deprecated. Use 'cldism' instead.\e[0m"
+    echo -e "\e[34m💡 This alias will be removed in a future version.\e[0m"
+    cldism "$@"
+}
+
+cldlist() {
+    echo -e "\e[33m⚠️  DEPRECATION WARNING: 'cldlist' is deprecated. Use 'cldism-list' instead.\e[0m"
+    echo -e "\e[34m💡 This alias will be removed in a future version.\e[0m"
+    cldism-list "$@"
+}
+
+cldshow() {
+    echo -e "\e[33m⚠️  DEPRECATION WARNING: 'cldshow' is deprecated. Use 'cldism-show' instead.\e[0m"
+    echo -e "\e[34m💡 This alias will be removed in a future version.\e[0m"
+    cldism-show "$@"
+}
+
+# Enhanced Menu Aliases
+alias cldisms='$HOME/claudeism/claude-launcher.sh'
+alias ism='$HOME/claudeism/claude-launcher.sh'
+
 EOF
 
 # Apply changes
