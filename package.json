@@ -1,11 +1,11 @@
 {
-  "name": "@aegntic/claude-context-monitor",
+  "name": "@aegntic/cldcde-context-tracker",
   "version": "1.0.0",
   "description": "A persistent context window monitor addon for Claude Code CLI that shows real-time token usage with visual indicators",
   "main": "lib/context-monitor.js",
   "type": "module",
   "bin": {
-    "claude-context-monitor": "bin/install.js"
+    "cldcde-context-tracker": "bin/install.js"
   },
   "files": [
     "bin/",

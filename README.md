@@ -1,4 +1,4 @@
-# Claude Context Monitor
+# CLDCDE Context Tracker
 
 A tiny, persistent context window monitor that lives just below the text input in Claude Code CLI. Shows real-time token usage with color-coded visual indicators.
 
@@ -22,15 +22,15 @@ Your input appears here...
 ### Install via npm
 
 ```bash
-npm install -g claude-context-monitor
-claude-context-monitor
+npm install -g @aegntic/cldcde-context-tracker
+cldcde-context-tracker
 ```
 
 ### Install from GitHub
 
 ```bash
-git clone https://github.com/your-username/claude-context-monitor.git
-cd claude-context-monitor
+git clone -b context-win https://github.com/aegntic/cldcde.git
+cd cldcde
 npm install
 npm run install-addon
 ```
@@ -50,14 +50,14 @@ npm run install-addon
 
 ## Usage
 
-### With Context Monitor
+### With Context Tracker
 ```bash
-claude-monitor  # Start Claude with context monitor enabled
+claude-monitor  # Start Claude with context tracker enabled
 ```
 
-### Without Context Monitor
+### Without Context Tracker
 ```bash
-claude  # Regular Claude Code CLI (monitor disabled)
+claude  # Regular Claude Code CLI (tracker disabled)
 ```
 
 ## Features
