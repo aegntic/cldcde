@@ -6,12 +6,68 @@ import chalk from 'chalk';
 
 class ContextMonitor {
   constructor() {
-    this.maxTokens = 200000; // Claude 3.5 Sonnet context window
-    this.claude4MaxTokens = 200000; // Claude 4 context window (same as 3.5 Sonnet)
+    this.maxTokens = 200000; // Claude's context window
     this.currentTokens = 0;
-    this.enabled = true;
+    this.enabled = false; // Start disabled, enable via slash command
     this.lastUpdate = performance.now();
-    this.modelVersion = 'Claude 4'; // Updated for current model
+    this.slashCommands = {
+      '/context-tracker': this.handleContextTracker.bind(this),
+      '/ct': this.handleContextTracker.bind(this) // Short alias
+    };
+  }
+
+  // Handle context tracker slash commands
+  handleContextTracker(args) {
+    const command = args[0]?.toLowerCase();
+    
+    switch (command) {
+      case 'on':
+      case 'enable':
+      case 'start':
+        this.enabled = true;
+        console.log(chalk.green('✓ Context tracker enabled'));
+        break;
+      case 'off':
+      case 'disable':
+      case 'stop':
+        this.enabled = false;
+        process.stdout.write('\r\x1b[K'); // Clear monitor line
+        console.log(chalk.yellow('✓ Context tracker disabled'));
+        break;
+      case 'toggle':
+        this.toggle();
+        console.log(this.enabled ? 
+          chalk.green('✓ Context tracker enabled') : 
+          chalk.yellow('✓ Context tracker disabled'));
+        break;
+      case 'status':
+        console.log(this.enabled ? 
+          chalk.green('Context tracker is ON') : 
+          chalk.gray('Context tracker is OFF'));
+        break;
+      default:
+        console.log(chalk.blue(`
+Context Tracker Commands:
+  /context-tracker on     - Enable context tracking
+  /context-tracker off    - Disable context tracking  
+  /context-tracker toggle - Toggle on/off
+  /context-tracker status - Show current status
+  /ct                     - Short alias for above commands
+        `));
+    }
+    return true; // Command handled
+  }
+
+  // Check if input is a slash command
+  processSlashCommand(input) {
+    const trimmed = input.trim();
+    for (const [command, handler] of Object.entries(this.slashCommands)) {
+      if (trimmed.startsWith(command)) {
+        const args = trimmed.slice(command.length).trim().split(/\s+/).filter(Boolean);
+        return handler(args);
+      }
+    }
+    return false; // Not a slash command
   }
 
   // Estimate tokens from text (roughly 3.5 chars per token)
@@ -106,6 +162,15 @@ class ContextMonitor {
     // Monitor each keypress
     process.stdin.on('keypress', (str, key) => {
       if (key && key.name === 'return') {
+        // Check if it's a slash command before clearing buffer
+        if (inputBuffer.trim().startsWith('/')) {
+          const handled = this.processSlashCommand(inputBuffer);
+          if (handled) {
+            inputBuffer = '';
+            process.stdout.write('\n'); // New line after command
+            return; // Don't pass to Claude
+          }
+        }
         inputBuffer = '';
         this.display('');
       } else if (key && key.name === 'backspace') {
