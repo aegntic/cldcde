@@ -1,0 +1,27 @@
+# Cloudflare Pages redirects and rewrites
+
+# Main routes
+/install           /install.sh                    200
+/terminal          /index.html                    200  
+/demo              /index.html                    200
+/chrome            /chrome_compatible.html        200
+/compat            /chrome_compatible.html        200
+/full              /complete.html                 200
+/fullscreen        /complete.html                 200
+
+# External redirects
+/github            https://github.com/aegntic/cldcde                302
+/docs              https://github.com/aegntic/cldcde/blob/main/README.md  302
+/issues            https://github.com/aegntic/cldcde/issues          302
+/releases          https://github.com/aegntic/cldcde/releases        302
+
+# Legacy redirects
+/memre             /index.html                    301
+/claudeism         /index.html                    301
+/animation         /index.html                    301
+
+# API routes (for future)
+/api/*             https://api.cldcde.cc/:splat   200
+
+# 404 fallback
+/*                 /index.html                    404
