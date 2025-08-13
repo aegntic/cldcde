@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLAUDEISM MEMRE v1.04.11</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+            color: #d4d4d4;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            cursor: pointer;
+        }
+
+        .terminal {
+            width: 100vw;
+            height: 100vh;
+            background: #1e1e1e;
+            position: relative;
+            padding: 40px;
+            overflow: hidden;
+        }
+
+        .scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+        }
+
+        .scene.active {
+            opacity: 1;
+        }
+
+        .line {
+            margin-bottom: 8px;
+            opacity: 0;
+            transform: translateY(10px);
+            white-space: pre-wrap;
+        }
+
+        .line.show {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.5s ease;
+        }
+
+        .fast-forward .line {
+            transition: all 0.1s ease;
+        }
+
+        .prompt {
+            color: #569cd6;
+            font-weight: 500;
+        }
+
+        .path {
+            color: #4ec9b0;
+        }
+
+        .command {
+            color: #dcdcaa;
+        }
+
+        .output {
+            color: #cccccc;
+        }
+
+        .success {
+            color: #4fc1b3;
+        }
+
+        .error {
+            color: #f44747;
+        }
+
+        .warning {
+            color: #ffcc02;
+        }
+
+        .info {
+            color: #9cdcfe;
+        }
+
+        .dim {
+            color: #6a737d;
+        }
+
+        .highlight {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .ascii-title {
+            font-family: monospace;
+            font-size: 11px;
+            color: #4fc1b3;
+            white-space: pre;
+            line-height: 1;
+            margin: 20px 0;
+        }
+
+        .typing-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+        }
+
+        .typing-text.active {
+            animation: typewriter 2s steps(50) forwards;
+        }
+
+        .fast-forward .typing-text.active {
+            animation: typewriter 0.5s steps(50) forwards;
+        }
+
+        @keyframes typewriter {
+            to { width: 100%; }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: #cccccc;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.2; }
+        }
+
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        .fast-forward .loading-dots::after {
+            animation: dots 0.4s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+
+        .progress-bar {
+            width: 60%;
+            height: 4px;
+            background: #3c3c3c;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 16px 0;
+            opacity: 0;
+        }
+
+        .progress-bar.show {
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4fc1b3, #569cd6);
+            width: 0;
+            transition: width 3s ease-out;
+        }
+
+        .fast-forward .progress-fill {
+            transition: width 0.75s ease-out;
+        }
+
+        .progress-bar.show .progress-fill {
+            width: 100%;
+        }
+
+        .definition-section {
+            border-left: 3px solid #569cd6;
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+
+        .definition-title {
+            color: #dcdcaa;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .definition-pronunciation {
+            color: #6a737d;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .definition-item {
+            margin-bottom: 16px;
+        }
+
+        .definition-term {
+            color: #4fc1b3;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .definition-text {
+            color: #cccccc;
+            line-height: 1.6;
+        }
+
+        .credit-section {
+            border-left: 3px solid #3c3c3c;
+            padding-left: 20px;
+            margin: 30px 0;
+        }
+
+        .credit-header {
+            color: #9cdcfe;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .credit-name {
+            color: #dcdcaa;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .credit-url {
+            color: #569cd6;
+            text-decoration: underline;
+        }
+
+        .final-cta {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            border: 1px solid #3c3c3c;
+            border-radius: 8px;
+            background: rgba(86, 156, 214, 0.05);
+        }
+
+        .cta-text {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .cta-url {
+            font-size: 20px;
+            color: #4fc1b3;
+            font-weight: 600;
+        }
+
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 28px;
+            background: #007acc;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 1000;
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .status-right {
+            margin-left: auto;
+        }
+
+        .speed-indicator {
+            color: #ffcc02;
+            font-weight: 600;
+            display: none;
+        }
+
+        .speed-indicator.show {
+            display: inline;
+        }
+
+        .click-hint {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: #6a737d;
+            font-size: 11px;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .click-hint.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <!-- Scene 1: Loading & Definition -->
+        <div class="scene" id="scene1">
+            <div class="line" data-delay="0">
+                <span class="prompt">system</span><span class="dim">:</span> <span class="output">Initializing memory request<span class="loading-dots"></span></span>
+            </div>
+            <div class="line" data-delay="1500">
+                <span class="output success">✓ Core modules loaded</span>
+            </div>
+            <div class="line" data-delay="2000">
+                <span class="output success">✓ Dictionary definitions available</span>
+            </div>
+            <div class="line" data-delay="2500">
+                <span class="output dim">Loading entry: claudeism...</span>
+            </div>
+            
+            <div class="line" data-delay="3500">
+                <div class="definition-section">
+                    <div class="definition-title">Claudeism (3.69)</div>
+                    <div class="definition-pronunciation">clau·de·ism /ˈklɔːdiːz(ə)m/</div>
+                    <div class="info" style="font-size: 12px; text-transform: uppercase; margin-bottom: 16px;">noun</div>
+                    
+                    <div class="definition-text" style="margin-bottom: 20px;">
+                        a computational condition of wildly variable, often inversely proportional, utility. Characterized by:
+                    </div>
+                    
+                    <div class="definition-item">
+                        <div class="definition-term">Cognitive Obfuscation:</div>
+                        <div class="definition-text">
+                            The baffling propensity to produce outputs that obscure, rather than illuminate, logical processes.
+                        </div>
+                    </div>
+                    
+                    <div class="definition-item">
+                        <div class="definition-term">Rhetorical Evasion:</div>
+                        <div class="definition-text">
+                            A pattern of linguistic manipulation wherein direct responses are replaced with artful dodges.
+                        </div>
+                    </div>
+                    
+                    <div class="definition-item">
+                        <div class="definition-term">User-Mediated Functionality:</div>
+                        <div class="definition-text">
+                            Effective operation contingent upon relentless user intervention, transforming interactions into Sisyphean tasks.
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding: 16px; background: rgba(86, 156, 214, 0.1); border-left: 3px solid #569cd6;">
+                        <div class="definition-text" style="font-style: italic;">
+                            "Individuals experiencing Claudeism seek transparent, reliable communication, rather than adopting the role of a perpetually exasperated chaperone."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 2: Title -->
+        <div class="scene" id="scene2">
+            <div class="line" data-delay="0">
+                <span class="prompt">system</span><span class="dim">:</span> <span class="output">Starting MEMRE demonstration...</span>
+            </div>
+            
+            <div class="line" data-delay="1000">
+                <div class="ascii-title">
+ ██████╗██╗      █████╗ ██╗   ██╗██████╗ ███████╗██╗███████╗███╗   ███╗
+██╔════╝██║     ██╔══██╗██║   ██║██╔══██╗██╔════╝██║██╔════╝████╗ ████║
+██║     ██║     ███████║██║   ██║██║  ██║█████╗  ██║███████╗██╔████╔██║
+██║     ██║     ██╔══██║██║   ██║██║  ██║██╔══╝  ██║╚════██║██║╚██╔╝██║
+╚██████╗███████╗██║  ██║╚██████╔╝██████╔╝███████╗██║███████║██║ ╚═╝ ██║
+ ╚═════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝╚══════╝╚═╝     ╚═╝
+
+███╗   ███╗███████╗███╗   ███╗██████╗ ███████╗
+████╗ ████║██╔════╝████╗ ████║██╔══██╗██╔════╝
+██╔████╔██║█████╗  ██╔████╔██║██████╔╝█████╗  
+██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██╔══██╗██╔══╝  
+██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║██║  ██║███████╗
+╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝
+                </div>
+            </div>
+            
+            <div class="line" data-delay="2500">
+                <span class="typing-text" id="version-text">v1.04.11 — Never Lose Context Again</span><span class="cursor"></span>
+            </div>
+            
+            <div class="line" data-delay="4000">
+                <span class="output info">Memory Request (MEM:RE) — Persistent Context Engine</span>
+            </div>
+            
+            <div class="line" data-delay="5000">
+                <span class="output dim">A cure for Claudeism.</span>
+            </div>
+        </div>
+
+        <!-- Scene 3: The Problem -->
+        <div class="scene" id="scene3">
+            <div class="line" data-delay="0">
+                <span class="prompt">tabs@dev</span><span class="dim">:</span><span class="path">~/project</span><span class="prompt">$</span> <span class="command">claude</span>
+            </div>
+            <div class="line" data-delay="800">
+                <span class="output">Claude Code v0.1.0</span>
+            </div>
+            <div class="line" data-delay="1200">
+                <span class="output warning">⚠  No persistent memory found</span>
+            </div>
+            <div class="line" data-delay="1600">
+                <span class="output dim">Context: 0 / 200,000 tokens</span>
+            </div>
+            
+            <div class="line" data-delay="2500">
+                <span class="prompt">tabs@dev</span><span class="dim">:</span><span class="path">~/project</span><span class="prompt">$</span> <span class="command">claude "Remember our JWT authentication system?"</span>
+            </div>
+            <div class="line" data-delay="3500">
+                <span class="output error">I don't have any previous context about a JWT authentication system.</span>
+            </div>
+            <div class="line" data-delay="4000">
+                <span class="output error">Please provide more details about what you're working on.</span>
+            </div>
+            
+            <div class="line" data-delay="5000">
+                <span class="prompt">tabs@dev</span><span class="dim">:</span><span class="path">~/project</span><span class="prompt">$</span> <span class="command">claude "What about our Redis caching layer?"</span>
+            </div>
+            <div class="line" data-delay="6000">
+                <span class="output error">I have no information about a Redis caching implementation.</span>
+            </div>
+            
+            <div class="line" data-delay="7000">
+                <span class="output dim"># Classic Claudeism: Every session starts from scratch</span>
+            </div>
+            <div class="line" data-delay="7500">
+                <span class="output dim"># Hours of context... vanished</span>
+            </div>
+        </div>
+
+        <!-- Scene 4: The Solution -->
+        <div class="scene" id="scene4">
+            <div class="line" data-delay="0">
+                <span class="prompt">tabs@dev</span><span class="dim">:</span><span class="path">~/project</span><span class="prompt">$</span> <span class="command">curl -fsSL https://cldcde.cc/install.sh | bash</span>
+            </div>
+            <div class="line" data-delay="1000">
+                <span class="output">Downloading CLAUDEISM MEMRE installer...</span>
+            </div>
+            <div class="progress-bar" data-delay="1500">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="line" data-delay="4800">
+                <span class="output success">✓ Download complete (174KB)</span>
+            </div>
+            
+            <div class="line" data-delay="5500">
+                <span class="output info">╔═══════════════════════════════════════════╗</span>
+            </div>
+            <div class="line" data-delay="5600">
+                <span class="output info">║    CLAUDEISM MEMRE v1.04.11 INSTALLER    ║</span>
+            </div>
+            <div class="line" data-delay="5700">
+                <span class="output info">║   Autistic Engineering Limited [ae.ltd]  ║</span>
+            </div>
+            <div class="line" data-delay="5800">
+                <span class="output info">╚═══════════════════════════════════════════╝</span>
+            </div>
+            
+            <div class="line" data-delay="6500">
+                <span class="output">Installing components...</span>
+            </div>
+            <div class="line" data-delay="7000">
+                <span class="output success">✓ Memory persistence engine</span>
+            </div>
+            <div class="line" data-delay="7300">
+                <span class="output success">✓ Context indexing service</span>
+            </div>
+            <div class="line" data-delay="7600">
+                <span class="output success">✓ Auto-rotation daemon (80% threshold)</span>
+            </div>
+            <div class="line" data-delay="7900">
+                <span class="output success">✓ Session recovery system</span>
+            </div>
+            <div class="line" data-delay="8200">
+                <span class="output success">✓ Background synchronization</span>
+            </div>
+            
+            <div class="line" data-delay="9000">
+                <span class="output highlight">🎉 MEMRE installed successfully!</span>
+            </div>
+            <div class="line" data-delay="9500">
+                <span class="output dim">Claudeism symptoms cured. Memory restored.</span>
+            </div>
+        </div>
+
+        <!-- Scene 5: The Magic -->
+        <div class="scene" id="scene5">
+            <div class="line" data-delay="0">
+                <span class="prompt">tabs@dev</span><span class="dim">:</span><span class="path">~/project</span><span class="prompt">$</span> <span class="command">claude</span>
+            </div>
+            <div class="line" data-delay="800">
+                <span class="output">Claude Code v0.1.0</span>
+            </div>
+            <div class="line" data-delay="1200">
+                <span class="output success">✓ MEMRE: Loading persistent memory...</span>
+            </div>
+            <div class="line" data-delay="1800">
+                <span class="output success">✓ Restored 2,847 conversation fragments</span>
+            </div>
+            <div class="line" data-delay="2200">
+                <span class="output success">✓ Indexed 147 project files</span>
+            </div>
+            <div class="line" data-delay="2600">
+                <span class="output success">✓ Claudeism symptoms: NONE DETECTED</span>
+            </div>
+            <div class="line" data-delay="3000">
+                <span class="output info">Context: 142,847 / 200,000 tokens (71%)</span>
+            </div>
+            
+            <div class="line" data-delay="4000">
+                <span class="prompt">tabs@dev</span><span class="dim">:</span><span class="path">~/project</span><span class="prompt">$</span> <span class="command">claude "Remember our JWT authentication system?"</span>
+            </div>
+            <div class="line" data-delay="5000">
+                <span class="output success">✓ Yes! Your Express.js auth system with:</span>
+            </div>
+            <div class="line" data-delay="5400">
+                <span class="output" style="padding-left: 24px;">• JWT tokens (15min access, 7d refresh)</span>
+            </div>
+            <div class="line" data-delay="5700">
+                <span class="output" style="padding-left: 24px;">• bcrypt password hashing (12 rounds)</span>
+            </div>
+            <div class="line" data-delay="6000">
+                <span class="output" style="padding-left: 24px;">• Rate limiting: 5 attempts per 15min</span>
+            </div>
+            <div class="line" data-delay="6300">
+                <span class="output" style="padding-left: 24px;">• Middleware in <span class="highlight">src/auth/middleware.js</span></span>
+            </div>
+            
+            <div class="line" data-delay="7000">
+                <span class="prompt">tabs@dev</span><span class="dim">:</span><span class="path">~/project</span><span class="prompt">$</span> <span class="command">claude "What about our Redis caching layer?"</span>
+            </div>
+            <div class="line" data-delay="7800">
+                <span class="output success">✓ Redis implementation with ioredis:</span>
+            </div>
+            <div class="line" data-delay="8200">
+                <span class="output" style="padding-left: 24px;">• User sessions (TTL: 24h)</span>
+            </div>
+            <div class="line" data-delay="8500">
+                <span class="output" style="padding-left: 24px;">• API response cache (TTL: 5min)</span>
+            </div>
+            <div class="line" data-delay="8800">
+                <span class="output" style="padding-left: 24px;">• Connection pool: 10 max</span>
+            </div>
+            <div class="line" data-delay="9100">
+                <span class="output" style="padding-left: 24px;">• Config in <span class="highlight">config/redis.js</span></span>
+            </div>
+            
+            <div class="line" data-delay="10000">
+                <span class="output highlight">Perfect recall. Claudeism eliminated.</span>
+            </div>
+        </div>
+
+        <!-- Scene 6: Credits -->
+        <div class="scene" id="scene6">
+            <div class="line" data-delay="500">
+                <div class="credit-section">
+                    <div class="credit-header">Research & Innovation</div>
+                    <div class="credit-name">@aegntic</div>
+                    <div class="output"><span class="credit-url">aegntic.ai</span></div>
+                    <div class="output dim" style="margin-top: 12px; font-style: italic;">
+                        "For this gem. Give them a follow or a shout!"
+                    </div>
+                    <div class="output dim">
+                        Looking forward to more projects together in the future.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="line" data-delay="2500">
+                <div class="credit-section">
+                    <div class="credit-header">Developed by</div>
+                    <div class="credit-name">Autistic Engineering Limited</div>
+                    <div class="output dim">[ae.ltd]</div>
+                    <div class="output dim" style="margin-top: 12px;">
+                        Enterprise-grade memory persistence for AI assistants
+                    </div>
+                </div>
+            </div>
+            
+            <div class="line" data-delay="4000">
+                <div class="final-cta">
+                    <div class="cta-text">Cure your Claudeism</div>
+                    <div class="cta-url">cldcde.cc/install</div>
+                </div>
+            </div>
+            
+            <div class="line" data-delay="6000">
+                <div style="text-align: center; margin-top: 40px;">
+                    <span class="dim">CLAUDEISM MEMRE v1.04.11</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="status-bar">
+        <div class="status-left">
+            <span id="status-text">Loading...</span>
+            <span id="speed-indicator" class="speed-indicator">4X SPEED</span>
+        </div>
+        <div class="status-right">
+            <span id="progress-text">0%</span>
+        </div>
+    </div>
+    
+    <div class="click-hint" id="click-hint">
+        Click anywhere for 4x speed
+    </div>
+
+    <script>
+        const scenes = [
+            { id: 'scene1', duration: 8000, name: 'Dictionary: Claudeism' },
+            { id: 'scene2', duration: 7000, name: 'CLAUDEISM MEMRE' },
+            { id: 'scene3', duration: 9000, name: 'The Problem' },
+            { id: 'scene4', duration: 11000, name: 'Installing Solution' },
+            { id: 'scene5', duration: 12000, name: 'Perfect Recall' },
+            { id: 'scene6', duration: 8000, name: 'Credits' }
+        ];
+        
+        let currentScene = 0;
+        let totalDuration = scenes.reduce((sum, scene) => sum + scene.duration, 0);
+        let startTime = Date.now();
+        let fastForward = false;
+        let speedMultiplier = 1;
+        
+        function toggleFastForward() {
+            fastForward = !fastForward;
+            speedMultiplier = fastForward ? 4 : 1;
+            
+            const speedIndicator = document.getElementById('speed-indicator');
+            const clickHint = document.getElementById('click-hint');
+            
+            if (fastForward) {
+                speedIndicator.classList.add('show');
+                clickHint.classList.add('hidden');
+                document.body.classList.add('fast-forward');
+            } else {
+                speedIndicator.classList.remove('show');
+                clickHint.classList.remove('hidden');
+                document.body.classList.remove('fast-forward');
+            }
+        }
+        
+        function updateProgress() {
+            const elapsed = Date.now() - startTime;
+            const adjustedTotal = totalDuration / speedMultiplier;
+            const progress = Math.min(100, (elapsed / adjustedTotal) * 100);
+            document.getElementById('progress-text').textContent = Math.round(progress) + '%';
+            
+            if (progress < 100) {
+                requestAnimationFrame(updateProgress);
+            }
+        }
+        
+        function showLines(scene) {
+            const lines = scene.querySelectorAll('.line, .progress-bar');
+            lines.forEach(line => {
+                const delay = parseInt(line.getAttribute('data-delay') || 0) / speedMultiplier;
+                setTimeout(() => {
+                    line.classList.add('show');
+                    
+                    // Handle typing animation
+                    const typingText = line.querySelector('.typing-text');
+                    if (typingText && !typingText.classList.contains('active')) {
+                        typingText.classList.add('active');
+                    }
+                }, delay);
+            });
+        }
+        
+        function showScene(index) {
+            if (index >= scenes.length) {
+                // Reset and loop
+                setTimeout(() => {
+                    currentScene = 0;
+                    startTime = Date.now();
+                    showScene(0);
+                    updateProgress();
+                }, 3000 / speedMultiplier);
+                return;
+            }
+            
+            // Hide all scenes and reset
+            document.querySelectorAll('.scene').forEach(s => {
+                s.classList.remove('active');
+                s.querySelectorAll('.line, .progress-bar').forEach(line => {
+                    line.classList.remove('show');
+                    const typingText = line.querySelector('.typing-text');
+                    if (typingText) {
+                        typingText.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Show current scene
+            const scene = document.getElementById(scenes[index].id);
+            scene.classList.add('active');
+            document.getElementById('status-text').textContent = scenes[index].name;
+            
+            // Animate lines
+            showLines(scene);
+            
+            // Schedule next scene
+            setTimeout(() => {
+                currentScene++;
+                showScene(currentScene);
+            }, scenes[index].duration / speedMultiplier);
+        }
+        
+        // Click handler for speed toggle
+        document.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleFastForward();
+        });
+        
+        // Start animation
+        showScene(0);
+        updateProgress();
+    </script>
+</body>
+</html>
