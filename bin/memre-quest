@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# MEMre.quest - Advanced LLM Memory & Context Window Management
+# Rebranded claude-context-manager with enhanced 80% auto-save/clear functionality
+
+VERSION="1.0.0-memre-quest"
+ORIGINAL_TOOL="/home/tabs/ai-dev-suite/bin/claude-context-manager"
+
+# Colors for branding
+MEMRE_BLUE='\033[0;34m'
+MEMRE_GREEN='\033[0;32m'
+MEMRE_YELLOW='\033[1;33m'
+MEMRE_CYAN='\033[0;36m'
+NC='\033[0m'
+
+# MEMre.quest banner
+show_banner() {
+    echo -e "${MEMRE_BLUE}"
+    echo "  ███╗   ███╗███████╗███╗   ███╗██████╗ ███████╗   ██████╗ ██╗   ██╗███████╗███████╗████████╗"
+    echo "  ████╗ ████║██╔════╝████╗ ████║██╔══██╗██╔════╝   ██╔═══██╗██║   ██║██╔════╝██╔════╝╚══██╔══╝"  
+    echo "  ██╔████╔██║█████╗  ██╔████╔██║██████╔╝█████╗     ██║   ██║██║   ██║█████╗  ███████╗   ██║"
+    echo "  ██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██╔══██╗██╔══╝     ██║▄▄ ██║██║   ██║██╔══╝  ╚════██║   ██║"
+    echo "  ██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║██║  ██║███████╗██╗╚██████╔╝╚██████╔╝███████╗███████║   ██║"
+    echo "  ╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝ ╚══▀▀═╝  ╚═════╝ ╚══════╝╚══════╝   ╚═╝"
+    echo -e "${NC}"
+    echo -e "${MEMRE_CYAN}🧠 Advanced LLM Memory & Context Window Management${NC}"
+    echo -e "${MEMRE_GREEN}📊 80% Context Auto-Save/Clear • 🔄 Conversation Persistence • 💾 Memory Updates${NC}"
+    echo ""
+}
+
+# Check if original tool exists
+if [ ! -f "$ORIGINAL_TOOL" ]; then
+    echo -e "${MEMRE_YELLOW}❌ MEMre.quest: claude-context-manager not found at $ORIGINAL_TOOL${NC}"
+    echo -e "${MEMRE_CYAN}💡 Please ensure AI Dev Suite is properly installed${NC}"
+    exit 1
+fi
+
+# Handle help and version specially
+case "${1:-}" in
+    --version|-v)
+        show_banner
+        echo -e "MEMre.quest version: ${MEMRE_GREEN}$VERSION${NC}"
+        echo -e "Based on: claude-context-manager v3.0.0"
+        echo ""
+        echo -e "${MEMRE_BLUE}Key Features:${NC}"
+        echo "• 🎯 80% context window threshold monitoring"  
+        echo "• 💾 Automatic conversation save before rotation"
+        echo "• 🔄 Intelligent context window clearing" 
+        echo "• 📝 Memory updates with conversation persistence"
+        echo "• 🤖 Multi-AI service conversation tracking"
+        echo "• 🔍 Advanced search and retrieval capabilities"
+        exit 0
+        ;;
+    --help|-h|help)
+        show_banner
+        echo -e "${MEMRE_BLUE}MEMre.quest - Advanced LLM Memory Management${NC}"
+        echo ""
+        echo -e "${MEMRE_GREEN}Usage:${NC} memre-quest [COMMAND]"
+        echo ""
+        echo -e "${MEMRE_BLUE}Memory Management Commands:${NC}"
+        echo "  start       🚀 Start automatic 80% context monitoring"
+        echo "  stop        🛑 Stop the memory management daemon"
+        echo "  status      📊 Show context usage and memory stats"
+        echo "  rotate      🔄 Force context window rotation with save"
+        echo "  prune       🧹 Clean old memory while preserving critical data"
+        echo "  logs        📋 View memory management activity logs"
+        echo ""
+        echo -e "${MEMRE_BLUE}Advanced Features:${NC}"
+        echo "• Monitors context window usage in real-time"
+        echo "• Automatically saves conversations at 80% capacity"
+        echo "• Intelligently clears context while preserving critical memory"
+        echo "• Updates conversation memory across AI services"
+        echo "• Provides seamless conversation continuation"
+        echo ""
+        echo -e "${MEMRE_CYAN}Examples:${NC}"
+        echo "  memre-quest start     # Begin monitoring with 80% auto-save"
+        echo "  memre-quest status    # Check current memory usage"
+        echo "  memre-quest rotate    # Force save & clear now"
+        echo ""
+        exit 0
+        ;;
+    "")
+        show_banner
+        echo -e "${MEMRE_GREEN}Use 'memre-quest --help' for usage information${NC}"
+        echo -e "${MEMRE_CYAN}Quick start: 'memre-quest start' to begin 80% auto-monitoring${NC}"
+        exit 0
+        ;;
+esac
+
+# Pass all other commands to the original claude-context-manager
+echo -e "${MEMRE_CYAN}🧠 MEMre.quest executing: $@${NC}"
+exec "$ORIGINAL_TOOL" "$@"

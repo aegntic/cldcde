@@ -1,0 +1,47 @@
+{
+  "name": "@aegntic/memre-quest",
+  "version": "1.0.0",
+  "description": "MEMre.quest - Advanced LLM Memory & Context Window Management with 80% auto-save/clear functionality",
+  "main": "bin/memre-quest",
+  "type": "module",
+  "bin": {
+    "memre-quest": "./bin/memre-quest"
+  },
+  "scripts": {
+    "install": "chmod +x bin/memre-quest && echo 'MEMre.quest installed successfully!'",
+    "start": "bin/memre-quest start",
+    "status": "bin/memre-quest status",
+    "stop": "bin/memre-quest stop"
+  },
+  "keywords": [
+    "llm",
+    "memory-management", 
+    "context-window",
+    "auto-save",
+    "auto-clear",
+    "conversation-persistence",
+    "claude",
+    "chatgpt",
+    "ai-memory",
+    "80-percent-threshold",
+    "memre-quest",
+    "cldcde"
+  ],
+  "author": "aegntic",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/cldcde.git",
+    "directory": "memre/download"
+  },
+  "homepage": "https://cldcde.cc",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0"
+  }
+}

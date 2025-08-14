@@ -1,0 +1,5 @@
+*.db
+**/metrics/*.json
+**/.swarm/
+**/.claude-flow/
+**/.claude/
