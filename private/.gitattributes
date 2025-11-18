@@ -1,0 +1,36 @@
+# Git-crypt configuration for encrypted files
+
+# Secrets and sensitive configuration
+secrets/** filter=git-crypt diff=git-crypt
+keys/** filter=git-crypt diff=git-crypt
+
+# Alpha-stage plugins (not yet public)
+alpha-plugins/** filter=git-crypt diff=git-crypt
+
+# Internal development tools with sensitive logic
+dev-tools/** filter=git-crypt diff=git-crypt
+
+# Research and proprietary data
+research/** filter=git-crypt diff=git-crypt
+
+# Configuration files with sensitive data
+**/*.env filter=git-crypt diff=git-crypt
+**/config/secrets.json filter=git-crypt diff=git-crypt
+**/credentials/*.json filter=git-crypt diff=git-crypt
+
+# Database configuration
+**/database/*.sql filter=git-crypt diff=git-crypt
+**/migrations/*secret* filter=git-crypt diff=git-crypt
+
+# API keys and tokens
+**/api-keys.txt filter=git-crypt diff=git-crypt
+**/tokens.json filter=git-crypt diff=git-crypt
+
+# Private keys and certificates
+**/*.pem filter=git-crypt diff=git-crypt
+**/*.key filter=git-crypt diff=git-crypt
+**/*.crt filter=git-crypt diff=git-crypt
+
+# Internal documentation with sensitive information
+**/internal-docs/** filter=git-crypt diff=git-crypt
+**/roadmap-secret.md filter=git-crypt diff=git-crypt

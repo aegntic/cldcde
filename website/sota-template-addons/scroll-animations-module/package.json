@@ -1,0 +1,33 @@
+{
+  "name": "@sota/scroll-animations-module",
+  "version": "1.0.0",
+  "description": "Advanced scroll-triggered animations with performance optimization and sophisticated easing",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "demo": "npm run build && python -m http.server 8080 -d examples"
+  },
+  "keywords": [
+    "scroll-animations",
+    "scroll-triggered",
+    "parallax",
+    "scrollmagic",
+    "gsap-scrolltrigger",
+    "intersection-observer",
+    "performance",
+    "animations"
+  ],
+  "author": "ae.ltd",
+  "license": "MIT",
+  "dependencies": {
+    "gsap": "^3.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^0.34.0"
+  }
+}

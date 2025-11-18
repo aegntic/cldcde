@@ -1,0 +1,100 @@
+{
+  "name": "@cldcde/youtube-creator-pro",
+  "version": "1.0.0",
+  "description": "Advanced YouTube Creator Plugin with AI-Powered Workflows",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --target node",
+    "dev": "bun run src/index.ts",
+    "test": "bun test",
+    "lint": "bun x eslint src/**/*.ts",
+    "format": "bun x prettier --write src/**/*.ts"
+  },
+  "keywords": [
+    "youtube",
+    "ai",
+    "analytics",
+    "automation",
+    "optimization",
+    "creator-pro",
+    "cldcde"
+  ],
+  "author": "AEGNTIC AI Ecosystems",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/cldcde-plugins.git",
+    "directory": "plugins/youtube-creator-pro"
+  },
+  "dependencies": {
+    "@claude-code/tool-access": "^1.0.0",
+    "@cldcde/youtube-creator": "^1.0.0",
+    "anthropic": "^0.25.0",
+    "openai": "^4.20.0",
+    "googleapis": "^128.0.0",
+    "node-fetch": "^3.3.2",
+    "form-data": "^4.0.0",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/form-data": "^4.0.0",
+    "typescript": "^5.2.2",
+    "eslint": "^8.50.0",
+    "prettier": "^3.0.3"
+  },
+  "peerDependencies": {
+    "bun": ">=1.0.0",
+    "@cldcde/youtube-creator": ">=1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  },
+  "cldcde": {
+    "type": "plugin",
+    "tier": "pro",
+    "category": "content-creation",
+    "capabilities": [
+      "ai-content-optimization",
+      "advanced-analytics",
+      "competitor-intelligence",
+      "trend-forecasting",
+      "workflow-automation",
+      "team-collaboration",
+      "revenue-optimization"
+    ],
+    "compatibility": {
+      "youtube-api": "v3",
+      "cldcde": ">=1.0.0",
+      "@cldcde/youtube-creator": ">=1.0.0"
+    },
+    "permissions": [
+      "network:youtube-api",
+      "storage:secure-credentials",
+      "ui:interactive-wizard",
+      "ai:content-generation",
+      "ai:data-analysis",
+      "system:notifications",
+      "team:collaboration"
+    ],
+    "security": {
+      "credential-encryption": "AES-256",
+      "oauth2-flows": ["authorization-code"],
+      "secure-storage": true,
+      "privacy-controls": true,
+      "audit-logging": true
+    },
+    "ai": {
+      "providers": ["anthropic", "openai", "google"],
+      "local-processing": true,
+      "privacy-modes": ["strict", "balanced", "performance"]
+    },
+    "pricing": {
+      "tier": "pro",
+      "subscription": true,
+      "ai-credits": true
+    }
+  }
+}

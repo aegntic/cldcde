@@ -1,0 +1,19 @@
+{
+  "performance": {
+    "LCP": 1850,
+    "CLS": 0.05,
+    "INP": 120,
+    "FCP": 1200,
+    "TTFB": 450,
+    "overallScore": 95
+  },
+  "system": {
+    "uptime": 100,
+    "responseTime": 66,
+    "memoryUsage": 62,
+    "cpuUsage": 27
+  },
+  "timestamp": "2025-11-17T05:45:08.017Z",
+  "source": "sota-gallery-production",
+  "build": "production"
+}

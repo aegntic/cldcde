@@ -1,0 +1,38 @@
+{
+  "name": "@sota/animation-module",
+  "version": "1.0.0",
+  "description": "Movie-quality animations using CSS Houdini, Web Animations API, and advanced physics simulations",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc && npm run build-houdini",
+    "build-houdini": "npm run build-paint-worklet && npm run build-layout-worklet",
+    "build-paint-worklet": "webpack --config webpack.paint.config.js",
+    "build-layout-worklet": "webpack --config webpack.layout.config.js",
+    "dev": "tsc --watch",
+    "test": "vitest"
+  },
+  "keywords": [
+    "animation",
+    "houdini",
+    "css-houdini",
+    "physics",
+    "web-animations-api",
+    "particle-systems",
+    "fluid-dynamics"
+  ],
+  "author": "ae.ltd",
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.157.0",
+    "gsap": "^3.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/three": "^0.157.0",
+    "typescript": "^5.0.0",
+    "webpack": "^5.88.0",
+    "ts-loader": "^9.4.0",
+    "vitest": "^0.34.0"
+  }
+}

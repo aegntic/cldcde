@@ -1,0 +1,18 @@
+# Cloudflare Headers Configuration for SOTA Gallery
+
+# Security Headers
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-XSS-Protection: "1; mode=block"
+Referrer-Policy: "strict-origin-when-cross-origin"
+
+# Performance Headers
+Cache-Control: "public, max-age=31536000, immutable"
+
+# CORS Headers
+Access-Control-Allow-Origin: "https://sota.gallery"
+Access-Control-Allow-Methods: "GET, POST, PUT, DELETE, OPTIONS"
+Access-Control-Allow-Headers: "Content-Type, Authorization"
+
+# Browser Features
+Permissions-Policy: "geolocation=(), microphone=(), camera=(), payment=(), usb=()"

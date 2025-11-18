@@ -1,0 +1,68 @@
+{
+  "name": "@cldcde/obs-studio-control",
+  "version": "1.0.0",
+  "description": "Professional OBS Studio Control and Stream Management Plugin",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --target node",
+    "dev": "bun run src/index.ts",
+    "test": "bun test",
+    "lint": "bun x eslint src/**/*.ts",
+    "format": "bun x prettier --write src/**/*.ts"
+  },
+  "keywords": [
+    "obs",
+    "streaming",
+    "twitch",
+    "youtube",
+    "control",
+    "automation",
+    "cldcde"
+  ],
+  "author": "AEGNTIC AI Ecosystems",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/cldcde-plugins.git",
+    "directory": "plugins/obs-studio-control"
+  },
+  "dependencies": {
+    "ws": "^8.14.2",
+    "@claude-code/tool-access": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.8",
+    "@types/node": "^20.8.0",
+    "typescript": "^5.2.2",
+    "eslint": "^8.50.0",
+    "prettier": "^3.0.3"
+  },
+  "peerDependencies": {
+    "bun": ">=1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  },
+  "cldcde": {
+    "type": "plugin",
+    "category": "streaming",
+    "capabilities": [
+      "obs-control",
+      "scene-management",
+      "stream-monitoring",
+      "automation",
+      "interactive-menu"
+    ],
+    "compatibility": {
+      "obs-studio": ">=28.0",
+      "cldcde": ">=1.0.0"
+    },
+    "permissions": [
+      "network:obs-websocket",
+      "ui:interactive-menu",
+      "system:notifications"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Important pages
+Sitemap: https://sota.gallery/sitemap.xml
+
+# Admin and system pages
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_headers
+Disallow: /_redirects
+
+# Performance optimization
+Allow: /*.css
+Allow: /*.js
+Allow: /*.json

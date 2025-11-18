@@ -1,0 +1,78 @@
+# Cloudflare Pages Configuration for SOTA Gallery
+# Production-ready deployment configuration
+
+# Main Site Configuration
+site_name: "SOTA Gallery - Live Demos"
+description: "State-of-the-Art Web Templates with Real Performance Optimization"
+url: "https://sota.gallery"
+
+# Build Configuration
+build_command: "bun run build:production"
+build_output: "build"
+root_dir: "/"
+
+# Environment Variables
+environment_variables:
+  NODE_ENV: "production"
+  SOTA_ENV: "production"
+  PERFORMANCE_MONITORING: "true"
+
+# Advanced Configuration
+compatibility_date: "2022-07-01"
+compatibility_flags:
+  - "nodejs_compat"
+  - "webimage_optimization"
+
+# Performance Settings
+minify: true
+asset_optimization: true
+cache_max_age: 31536000  # 1 year for static assets
+
+# Domain Configuration
+custom_domains:
+  - domain: "sota.gallery"
+    type: "custom"
+    ssl: true
+    www: false
+
+# SEO Optimization
+meta_description: "Experience web templates with real performance optimization. 45-70% faster Core Web Vitals, AI-enhanced generation, solid design principles."
+meta_keywords: "web templates, performance optimization, Core Web Vitals, AI templates, solid design, web performance"
+og_title: "SOTA Gallery - State-of-the-Art Web Templates"
+og_description: "Real performance optimization with measurable business impact"
+og_image: "/og-image.jpg"
+twitter_card: "summary_large_image"
+
+# Analytics and Monitoring
+analytics:
+  google_analytics: "G-AEGNTIC-SOTA"
+  cloudflare_analytics: true
+
+# Security Headers
+security_headers:
+  X-Frame-Options: "SAMEORIGIN"
+  X-Content-Type-Options: "nosniff"
+  X-XSS-Protection: "1; mode=block"
+  Strict-Transport-Security: "max-age=31536000; includeSubDomains; preload"
+  Content-Security-Policy: "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: fonts.googleapis.com https: fonts.gstatic.com"
+
+# Caching Strategy
+cache_rules:
+  - pattern: "/*.css"
+    cache_ttl: 31536000
+  - pattern: "/*.js"
+    cache_ttl: 31536000
+  - pattern: "/*.json"
+    cache_ttl: 3600
+  - pattern: "/api/*"
+    cache_ttl: 0
+    bypass_cache: true
+
+# Redirects
+redirects:
+  - from: "/demo"
+    to: "/index.html"
+  - from: "/generator"
+    to: "/ai-demo.html"
+  - from: "/animations"
+    to: "/scroll-demo.html"

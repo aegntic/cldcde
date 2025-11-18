@@ -1,0 +1,44 @@
+{
+  "deployment": {
+    "environment": "production",
+    "timestamp": "2025-11-17T03:20:35.703Z",
+    "version": "1.0.0",
+    "cloudflareConfig": {
+      "zoneId": "b549a7b1e320833b31d01f7b702f054d",
+      "accountId": "548a933e3812ca9cd840b787ca7e1eb1"
+    }
+  },
+  "files": {
+    "html": [
+      "index.html",
+      "ai-demo.html",
+      "scroll-demo.html"
+    ],
+    "css": [
+      "styles.css"
+    ],
+    "xml": [
+      "sitemap.xml"
+    ],
+    "api": [
+      "metrics.json",
+      "health.json"
+    ]
+  },
+  "optimization": {
+    "minification": true,
+    "compression": true,
+    "caching": "production-optimized"
+  },
+  "performance": {
+    "targetLCP": 2000,
+    "targetCLS": 0.05,
+    "targetINP": 150,
+    "targetFCP": 1200
+  },
+  "security": {
+    "headers": "CSP-compliant",
+    "ssl": "strict",
+    "firewall": "enabled"
+  }
+}

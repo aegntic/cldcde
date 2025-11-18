@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAssembly Image Processing Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .demo-section {
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            padding: 0.75rem 1.5rem;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .button:disabled {
+            background: #374151;
+            cursor: not-allowed;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .image-container {
+            background: #111;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .image-label {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .metrics {
+            background: #111;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        .status {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .status.loading {
+            background: #1e40af;
+            color: white;
+        }
+
+        .status.success {
+            background: #065f46;
+            color: white;
+        }
+
+        .status.error {
+            background: #991b1b;
+            color: white;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .file-input {
+            margin-bottom: 1rem;
+        }
+
+        .file-input input[type="file"] {
+            display: none;
+        }
+
+        .file-input label {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #374151;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .file-input label:hover {
+            background: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WebAssembly Image Processing Demo</h1>
+        <p>High-performance image processing using WebAssembly</p>
+
+        <div class="demo-section">
+            <h2>Image Processing</h2>
+            <div id="status" class="status">Ready to process images</div>
+
+            <div class="file-input">
+                <label for="imageFile">Choose Image File</label>
+                <input type="file" id="imageFile" accept="image/*">
+            </div>
+
+            <div class="controls">
+                <button class="button" id="loadBtn" disabled>Load Image</button>
+                <button class="button" id="blurBtn" disabled>Apply Blur</button>
+                <button class="button" id="sharpenBtn" disabled>Apply Sharpen</button>
+                <button class="button" id="edgeBtn" disabled>Edge Detection</button>
+                <button class="button" id="resizeBtn" disabled>Resize (50%)</button>
+                <button class="button" id="compressBtn" disabled>Compress (WebP)</button>
+                <button class="button" id="histogramBtn" disabled>Generate Histogram</button>
+            </div>
+
+            <div class="image-grid">
+                <div class="image-container">
+                    <canvas id="originalCanvas"></canvas>
+                    <div class="image-label">Original Image</div>
+                </div>
+                <div class="image-container">
+                    <canvas id="processedCanvas"></canvas>
+                    <div class="image-label">Processed Image</div>
+                </div>
+            </div>
+
+            <div class="metrics" id="metrics">
+                Performance metrics will appear here...
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Video Processing</h2>
+            <div class="file-input">
+                <label for="videoFile">Choose Video File</label>
+                <input type="file" id="videoFile" accept="video/*">
+            </div>
+
+            <div class="controls">
+                <button class="button" id="loadVideoBtn" disabled>Load Video</button>
+                <button class="button" id="extractFrameBtn" disabled>Extract Frame</button>
+                <button class="button" id="encodeBtn" disabled>Encode (H.264)</button>
+                <button class="button" id="thumbsBtn" disabled>Generate Thumbnails</button>
+            </div>
+
+            <div class="image-grid">
+                <div class="image-container">
+                    <video id="videoPreview" controls style="width: 100%; border-radius: 4px;"></video>
+                    <div class="image-label">Video Preview</div>
+                </div>
+                <div class="image-container">
+                    <canvas id="frameCanvas"></canvas>
+                    <div class="image-label">Extracted Frame</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { WebAssemblyModule, detectWebAssemblyFeatures } from './src/index.js';
+
+        // Initialize WebAssembly module
+        const wasmModule = new WebAssemblyModule();
+        let imageProcessor = null;
+        let videoProcessor = null;
+        let currentImageData = null;
+
+        // DOM Elements
+        const status = document.getElementById('status');
+        const metrics = document.getElementById('metrics');
+        const imageFile = document.getElementById('imageFile');
+        const videoFile = document.getElementById('videoFile');
+
+        // Canvas elements
+        const originalCanvas = document.getElementById('originalCanvas');
+        const processedCanvas = document.getElementById('processedCanvas');
+        const frameCanvas = document.getElementById('frameCanvas');
+        const videoPreview = document.getElementById('videoPreview');
+
+        const originalCtx = originalCanvas.getContext('2d');
+        const processedCtx = processedCanvas.getContext('2d');
+        const frameCtx = frameCanvas.getContext('2d');
+
+        // Initialize
+        async function initialize() {
+            try {
+                updateStatus('Initializing WebAssembly module...', 'loading');
+
+                // Check WebAssembly support
+                const features = detectWebAssemblyFeatures();
+                console.log('WebAssembly Features:', features);
+
+                // Initialize module
+                await wasmModule.initialize();
+
+                // Create processors
+                imageProcessor = wasmModule.createImageProcessor();
+                videoProcessor = wasmModule.createVideoProcessor();
+
+                updateStatus('WebAssembly module initialized successfully', 'success');
+                updateMetrics(wasmModule.getPerformanceMetrics());
+
+                // Enable buttons
+                document.getElementById('loadBtn').disabled = false;
+                document.getElementById('loadVideoBtn').disabled = false;
+
+            } catch (error) {
+                console.error('Initialization failed:', error);
+                updateStatus(`Failed to initialize: ${error.message}`, 'error');
+            }
+        }
+
+        // Image processing functions
+        async function loadImage() {
+            const file = imageFile.files[0];
+            if (!file) return;
+
+            try {
+                updateStatus('Loading image...', 'loading');
+
+                const arrayBuffer = await file.arrayBuffer();
+                await imageProcessor.loadImage(arrayBuffer);
+
+                // Display original image
+                const img = new Image();
+                img.onload = () => {
+                    originalCanvas.width = img.width;
+                    originalCanvas.height = img.height;
+                    originalCtx.drawImage(img, 0, 0);
+
+                    // Store image data
+                    currentImageData = originalCtx.getImageData(0, 0, img.width, img.height);
+                };
+                img.src = URL.createObjectURL(file);
+
+                // Enable processing buttons
+                document.getElementById('blurBtn').disabled = false;
+                document.getElementById('sharpenBtn').disabled = false;
+                document.getElementById('edgeBtn').disabled = false;
+                document.getElementById('resizeBtn').disabled = false;
+                document.getElementById('compressBtn').disabled = false;
+                document.getElementById('histogramBtn').disabled = false;
+
+                updateStatus('Image loaded successfully', 'success');
+
+            } catch (error) {
+                console.error('Failed to load image:', error);
+                updateStatus(`Failed to load image: ${error.message}`, 'error');
+            }
+        }
+
+        async function applyFilter(filter) {
+            if (!currentImageData) return;
+
+            try {
+                updateStatus(`Applying ${filter} filter...`, 'loading');
+                const startTime = performance.now();
+
+                const result = await imageProcessor.applyFilter(filter);
+
+                processedCanvas.width = result.width;
+                processedCanvas.height = result.height;
+                processedCtx.putImageData(result, 0, 0);
+
+                const endTime = performance.now();
+                updateStatus(`${filter} filter applied in ${(endTime - startTime).toFixed(2)}ms`, 'success');
+
+            } catch (error) {
+                console.error('Failed to apply filter:', error);
+                updateStatus(`Failed to apply filter: ${error.message}`, 'error');
+            }
+        }
+
+        async function resizeImage() {
+            if (!currentImageData) return;
+
+            try {
+                updateStatus('Resizing image...', 'loading');
+                const startTime = performance.now();
+
+                const newWidth = Math.floor(originalCanvas.width * 0.5);
+                const newHeight = Math.floor(originalCanvas.height * 0.5);
+
+                const result = await imageProcessor.resize(newWidth, newHeight);
+
+                processedCanvas.width = newWidth;
+                processedCanvas.height = newHeight;
+                processedCtx.putImageData(result, 0, 0);
+
+                const endTime = performance.now();
+                updateStatus(`Image resized in ${(endTime - startTime).toFixed(2)}ms`, 'success');
+
+            } catch (error) {
+                console.error('Failed to resize image:', error);
+                updateStatus(`Failed to resize image: ${error.message}`, 'error');
+            }
+        }
+
+        async function compressImage() {
+            if (!currentImageData) return;
+
+            try {
+                updateStatus('Compressing image...', 'loading');
+                const startTime = performance.now();
+
+                const result = await imageProcessor.compress('webp');
+
+                const endTime = performance.now();
+                const compressionRatio = ((result.byteLength / currentImageData.data.byteLength) * 100).toFixed(1);
+
+                updateStatus(`Image compressed to WebP in ${(endTime - startTime).toFixed(2)}ms (${compressionRatio}% of original)`, 'success');
+
+            } catch (error) {
+                console.error('Failed to compress image:', error);
+                updateStatus(`Failed to compress image: ${error.message}`, 'error');
+            }
+        }
+
+        async function generateHistogram() {
+            if (!currentImageData) return;
+
+            try {
+                updateStatus('Generating histogram...', 'loading');
+                const startTime = performance.now();
+
+                const histogram = await imageProcessor.getHistogram();
+
+                // Draw histogram on canvas
+                const histCanvas = document.createElement('canvas');
+                histCanvas.width = 256;
+                histCanvas.height = 100;
+                const histCtx = histCanvas.getContext('2d');
+
+                const maxValue = Math.max(...histogram);
+                histogram.forEach((value, index) => {
+                    const height = (value / maxValue) * 100;
+                    histCtx.fillStyle = '#4ade80';
+                    histCtx.fillRect(index, 100 - height, 1, height);
+                });
+
+                processedCanvas.width = 256;
+                processedCanvas.height = 100;
+                processedCtx.drawImage(histCanvas, 0, 0);
+
+                const endTime = performance.now();
+                updateStatus(`Histogram generated in ${(endTime - startTime).toFixed(2)}ms`, 'success');
+
+            } catch (error) {
+                console.error('Failed to generate histogram:', error);
+                updateStatus(`Failed to generate histogram: ${error.message}`, 'error');
+            }
+        }
+
+        // Video processing functions
+        async function loadVideo() {
+            const file = videoFile.files[0];
+            if (!file) return;
+
+            try {
+                updateStatus('Loading video...', 'loading');
+
+                const arrayBuffer = await file.arrayBuffer();
+                await videoProcessor.loadVideo(arrayBuffer);
+
+                // Display video
+                videoPreview.src = URL.createObjectURL(file);
+
+                // Enable processing buttons
+                document.getElementById('extractFrameBtn').disabled = false;
+                document.getElementById('encodeBtn').disabled = false;
+                document.getElementById('thumbsBtn').disabled = false;
+
+                updateStatus('Video loaded successfully', 'success');
+
+            } catch (error) {
+                console.error('Failed to load video:', error);
+                updateStatus(`Failed to load video: ${error.message}`, 'error');
+            }
+        }
+
+        async function extractFrame() {
+            try {
+                updateStatus('Extracting frame...', 'loading');
+                const startTime = performance.now();
+
+                const result = await videoProcessor.extractFrame(0.5); // Extract frame at 50% duration
+
+                frameCanvas.width = result.width;
+                frameCanvas.height = result.height;
+                frameCtx.putImageData(result, 0, 0);
+
+                const endTime = performance.now();
+                updateStatus(`Frame extracted in ${(endTime - startTime).toFixed(2)}ms`, 'success');
+
+            } catch (error) {
+                console.error('Failed to extract frame:', error);
+                updateStatus(`Failed to extract frame: ${error.message}`, 'error');
+            }
+        }
+
+        async function encodeVideo() {
+            try {
+                updateStatus('Encoding video...', 'loading');
+                const startTime = performance.now();
+
+                const result = await videoProcessor.encode('h264');
+
+                const endTime = performance.now();
+                const sizeMB = (result.byteLength / (1024 * 1024)).toFixed(2);
+
+                updateStatus(`Video encoded to H.264 in ${(endTime - startTime).toFixed(2)}ms (${sizeMB}MB)`, 'success');
+
+            } catch (error) {
+                console.error('Failed to encode video:', error);
+                updateStatus(`Failed to encode video: ${error.message}`, 'error');
+            }
+        }
+
+        async function generateThumbnails() {
+            try {
+                updateStatus('Generating thumbnails...', 'loading');
+                const startTime = performance.now();
+
+                const thumbnails = await videoProcessor.generateThumbnails(4);
+
+                // Display first thumbnail
+                if (thumbnails.length > 0) {
+                    frameCanvas.width = thumbnails[0].width;
+                    frameCanvas.height = thumbnails[0].height;
+                    frameCtx.putImageData(thumbnails[0], 0, 0);
+                }
+
+                const endTime = performance.now();
+                updateStatus(`${thumbnails.length} thumbnails generated in ${(endTime - startTime).toFixed(2)}ms`, 'success');
+
+            } catch (error) {
+                console.error('Failed to generate thumbnails:', error);
+                updateStatus(`Failed to generate thumbnails: ${error.message}`, 'error');
+            }
+        }
+
+        // Utility functions
+        function updateStatus(message, type = '') {
+            status.textContent = message;
+            status.className = `status ${type}`;
+            console.log(`[Status] ${message}`);
+        }
+
+        function updateMetrics(metrics) {
+            const metricsHtml = `
+                <strong>Performance Metrics:</strong><br>
+                Initialization Time: ${metrics.initializationTime.toFixed(2)}ms<br>
+                Memory Usage: ${(metrics.memoryUsage / 1024 / 1024).toFixed(2)}MB<br>
+                Execution Time: ${metrics.executionTime.toFixed(2)}ms<br>
+                Throughput: ${metrics.throughput.toFixed(2)} ops/s
+            `;
+            metrics.innerHTML = metricsHtml;
+        }
+
+        // Event listeners
+        document.getElementById('loadBtn').addEventListener('click', loadImage);
+        document.getElementById('blurBtn').addEventListener('click', () => applyFilter('blur'));
+        document.getElementById('sharpenBtn').addEventListener('click', () => applyFilter('sharpen'));
+        document.getElementById('edgeBtn').addEventListener('click', () => applyFilter('edge-detect'));
+        document.getElementById('resizeBtn').addEventListener('click', resizeImage);
+        document.getElementById('compressBtn').addEventListener('click', compressImage);
+        document.getElementById('histogramBtn').addEventListener('click', generateHistogram);
+
+        document.getElementById('loadVideoBtn').addEventListener('click', loadVideo);
+        document.getElementById('extractFrameBtn').addEventListener('click', extractFrame);
+        document.getElementById('encodeBtn').addEventListener('click', encodeVideo);
+        document.getElementById('thumbsBtn').addEventListener('click', generateThumbnails);
+
+        // Initialize on load
+        initialize();
+    </script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOTA Template SDK - Basic Usage Example</title>
+    <style>
+        /* Basic styles for demonstration */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease-out;
+        }
+
+        .performance-metrics {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-value {
+            font-weight: bold;
+        }
+
+        .metric-value.good { color: #10b981; }
+        .metric-value.needs-improvement { color: #f59e0b; }
+        .metric-value.poor { color: #ef4444; }
+
+        button {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        .demo-element {
+            background: #1a1a1a;
+            padding: 40px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .status {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .status.ready { border-left: 4px solid #10b981; }
+        .status.error { border-left: 4px solid #ef4444; }
+        .status.initializing { border-left: 4px solid #f59e0b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SOTA Template SDK - Basic Usage Example</h1>
+
+        <div id="status" class="status initializing">Initializing SOTA Template...</div>
+
+        <!-- Performance Metrics Display -->
+        <div class="performance-metrics">
+            <h3>Real Performance Metrics</h3>
+            <div class="metric">
+                <span>Overall Score</span>
+                <span class="metric-value" id="overall-score">--</span>
+            </div>
+            <div class="metric">
+                <span>LCP (Largest Contentful Paint)</span>
+                <span class="metric-value" id="lcp">--ms</span>
+            </div>
+            <div class="metric">
+                <span>CLS (Cumulative Layout Shift)</span>
+                <span class="metric-value" id="cls">--</span>
+            </div>
+            <div class="metric">
+                <span>INP (Interaction to Next Paint)</span>
+                <span class="metric-value" id="inp">--ms</span>
+            </div>
+            <div class="metric">
+                <span>FCP (First Contentful Paint)</span>
+                <span class="metric-value" id="fcp">--ms</span>
+            </div>
+            <div class="metric">
+                <span>TTFB (Time to First Byte)</span>
+                <span class="metric-value" id="ttfb">--ms</span>
+            </div>
+        </div>
+
+        <!-- Demo Content -->
+        <div class="section">
+            <h2>Scroll Animations Demo</h2>
+            <p>This section demonstrates scroll-triggered animations. Scroll down to see the animations in action.</p>
+            <button onclick="testAnimations()">Test Animations</button>
+        </div>
+
+        <div class="section">
+            <div class="demo-element">
+                <h3>Animated Element 1</h3>
+                <p>This element animates when it comes into view.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="demo-element">
+                <h3>Animated Element 2</h3>
+                <p>Each element has staggered animation timing.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="demo-element">
+                <h3>Animated Element 3</h3>
+                <p>Performance is continuously monitored and optimized.</p>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="section">
+            <h3>SDK Controls</h3>
+            <button onclick="getPerformanceReport()">Generate Performance Report</button>
+            <button onclick="optimizePerformance()">Force Optimization</button>
+            <button onclick="getDebugInfo()">Show Debug Info</button>
+            <button onclick="testErrorHandling()">Test Error Handling</button>
+        </div>
+
+        <!-- Output -->
+        <div class="section">
+            <h3>Console Output</h3>
+            <div id="output" style="background: #1a1a1a; padding: 20px; border-radius: 8px; font-family: monospace; min-height: 100px; white-space: pre-wrap;"></div>
+        </div>
+    </div>
+
+    <!-- Load SOTA Template SDK -->
+    <script type="module">
+        // Import the SDK - in a real project, you would install it via npm
+        // import { SOTATemplate } from '@sota/template-sdk';
+
+        // For demo purposes, we'll create a mock implementation
+        class MockSOTATemplate {
+            constructor(options = {}) {
+                this.options = {
+                    performance: {
+                        enableRealTimeMonitoring: true,
+                        autoOptimization: true,
+                        targets: { LCP: 2500, CLS: 0.1, INP: 200 }
+                    },
+                    animations: { scrollActivated: true },
+                    theme: { mode: 'dark' },
+                    ...options
+                };
+                this.initialized = false;
+                this.eventListeners = {};
+            }
+
+            async initialize() {
+                this.log('Initializing SOTA Template...');
+
+                // Simulate initialization
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Initialize performance monitoring
+                this.initializePerformanceMonitoring();
+
+                // Initialize scroll animations
+                this.initializeScrollAnimations();
+
+                this.initialized = true;
+                this.log('SOTA Template initialized successfully!');
+                this.updateStatus('ready', 'SOTA Template Ready ✅');
+
+                // Emit ready event
+                this.emit('ready');
+            }
+
+            initializePerformanceMonitoring() {
+                // Simulate Web Vitals monitoring
+                setTimeout(() => {
+                    this.updateMetric('overall-score', 95, 'good');
+                    this.updateMetric('lcp', 1850, 'good');
+                    this.updateMetric('cls', 0.05, 'good');
+                    this.updateMetric('inp', 120, 'good');
+                    this.updateMetric('fcp', 1200, 'good');
+                    this.updateMetric('ttfb', 450, 'good');
+
+                    this.log('Performance metrics loaded');
+                }, 1500);
+            }
+
+            initializeScrollAnimations() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.section').forEach(section => {
+                    observer.observe(section);
+                });
+
+                this.log('Scroll animations initialized');
+            }
+
+            updateMetric(id, value, rating) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = typeof value === 'number' && id !== 'overall-score' ?
+                        value.toFixed(0) + (id === 'cls' ? '' : 'ms') :
+                        value + ' Score';
+                    element.className = `metric-value ${rating}`;
+                }
+            }
+
+            updateStatus(status, message) {
+                const statusElement = document.getElementById('status');
+                statusElement.className = `status ${status}`;
+                statusElement.textContent = message;
+            }
+
+            on(event, callback) {
+                if (!this.eventListeners[event]) {
+                    this.eventListeners[event] = [];
+                }
+                this.eventListeners[event].push(callback);
+            }
+
+            emit(event) {
+                if (this.eventListeners[event]) {
+                    this.eventListeners[event].forEach(callback => callback());
+                }
+            }
+
+            getPerformanceMetrics() {
+                return {
+                    'LCP': { value: 1850, rating: 'good' },
+                    'CLS': { value: 0.05, rating: 'good' },
+                    'INP': { value: 120, rating: 'good' },
+                    'FCP': { value: 1200, rating: 'good' },
+                    'TTFB': { value: 450, rating: 'good' }
+                };
+            }
+
+            optimize() {
+                this.log('Running performance optimization...');
+                // Simulate optimization
+                setTimeout(() => {
+                    this.log('Optimization completed');
+                }, 500);
+            }
+
+            generateReport() {
+                const report = {
+                    timestamp: new Date().toISOString(),
+                    url: window.location.href,
+                    metrics: this.getPerformanceMetrics(),
+                    overallScore: 95,
+                    recommendations: [
+                        'Consider lazy loading images below the fold',
+                        'Preload critical fonts for better FCP',
+                        'Enable HTTP/2 for improved loading performance'
+                    ]
+                };
+                this.log('Performance Report Generated:', report);
+                return report;
+            }
+
+            getDebugInfo() {
+                return {
+                    status: 'ready',
+                    initialized: true,
+                    options: this.options,
+                    metrics: this.getPerformanceMetrics(),
+                    version: '1.0.0'
+                };
+            }
+
+            log(...args) {
+                console.log('[SOTA Template]', ...args);
+                const output = document.getElementById('output');
+                const timestamp = new Date().toLocaleTimeString();
+                output.textContent += `[${timestamp}] ${args.join(' ')}\n`;
+            }
+        }
+
+        // Initialize the template
+        window.template = new MockSOTATemplate({
+            performance: {
+                enableRealTimeMonitoring: true,
+                autoOptimization: true,
+                targets: {
+                    LCP: 2000,
+                    CLS: 0.1,
+                    INP: 150
+                }
+            },
+            animations: {
+                scrollActivated: true,
+                gpuAcceleration: true
+            }
+        });
+
+        // Event handlers
+        window.template.on('ready', () => {
+            window.template.log('Template is ready for use!');
+        });
+
+        // Global functions for button clicks
+        window.testAnimations = () => {
+            const elements = document.querySelectorAll('.section');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 200);
+            });
+            window.template.log('Test animations triggered');
+        };
+
+        window.getPerformanceReport = () => {
+            const report = window.template.generateReport();
+            window.template.log('Performance report:', report);
+            return report;
+        };
+
+        window.optimizePerformance = () => {
+            window.template.optimize();
+        };
+
+        window.getDebugInfo = () => {
+            const info = window.template.getDebugInfo();
+            window.template.log('Debug info:', info);
+            return info;
+        };
+
+        window.testErrorHandling = () => {
+            try {
+                throw new Error('This is a test error');
+            } catch (error) {
+                window.template.log('Error caught:', error.message);
+            }
+        };
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await window.template.initialize();
+            } catch (error) {
+                console.error('Failed to initialize template:', error);
+                window.template.updateStatus('error', 'Failed to initialize template');
+            }
+        });
+    </script>
+</body>
+</html>

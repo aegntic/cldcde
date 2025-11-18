@@ -1,0 +1,317 @@
+{
+  "marketplace": {
+    "version": "1.0.0",
+    "name": "CLDCDE Plugin Marketplace",
+    "description": "Central marketplace for CLDCDE ecosystem plugins",
+    "baseUrl": "https://marketplace.cldcde.cc",
+    "apiVersion": "v1"
+  },
+  "registry": {
+    "type": "git",
+    "url": "https://github.com/aegntic/cldcde-plugins.git",
+    "branch": "main"
+  },
+  "categories": [
+    {
+      "id": "streaming",
+      "name": "Streaming & Broadcasting",
+      "description": "Tools for live streaming and content broadcasting",
+      "icon": "broadcast"
+    },
+    {
+      "id": "content-creation",
+      "name": "Content Creation",
+      "description": "Video editing, content planning, and creation tools",
+      "icon": "video"
+    },
+    {
+      "id": "analytics",
+      "name": "Analytics & Insights",
+      "description": "Performance tracking and data analysis tools",
+      "icon": "chart"
+    },
+    {
+      "id": "automation",
+      "name": "Automation & Workflows",
+      "description": "Automated workflows and productivity tools",
+      "icon": "robot"
+    },
+    {
+      "id": "social-media",
+      "name": "Social Media",
+      "description": "Multi-platform social media management tools",
+      "icon": "share"
+    },
+    {
+      "id": "monetization",
+      "name": "Monetization",
+      "description": "Revenue generation and sponsorship tools",
+      "icon": "dollar"
+    }
+  ],
+  "plugins": [
+    {
+      "id": "obs-studio-control",
+      "name": "OBS Studio Control",
+      "version": "1.0.0",
+      "description": "Professional OBS Studio control and stream management plugin",
+      "author": "AEGNTIC AI Ecosystems",
+      "category": "streaming",
+      "tags": ["obs", "streaming", "control", "automation"],
+      "repository": "https://github.com/aegntic/cldcde-plugins/tree/main/plugins/obs-studio-control",
+      "package": "@cldcde/obs-studio-control",
+      "license": "MIT",
+      "tier": "free",
+      "compatibility": {
+        "obs-studio": ">=28.0",
+        "cldcde": ">=1.0.0",
+        "platforms": ["windows", "macos", "linux"]
+      },
+      "features": [
+        "Interactive scene management",
+        "Real-time stream monitoring",
+        "Automated transitions",
+        "Chat integration",
+        "Stream health monitoring",
+        "Setup wizard with guided configuration"
+      ],
+      "permissions": [
+        "network:obs-websocket",
+        "ui:interactive-menu",
+        "system:notifications"
+      ],
+      "requirements": [
+        "OBS Studio 28.0 or higher",
+        "WebSocket plugin enabled in OBS",
+        "Local network access to OBS"
+      ],
+      "screenshots": [
+        "https://marketplace.cldcde.cc/screenshots/obs-control-1.png",
+        "https://marketplace.cldcde.cc/screenshots/obs-control-2.png"
+      ],
+      "documentation": "https://docs.cldcde.cc/obs-studio-control",
+      "changelog": "https://github.com/aegntic/cldcde-plugins/blob/main/plugins/obs-studio-control/CHANGELOG.md",
+      "issues": "https://github.com/aegntic/cldcde-plugins/issues",
+      "download": {
+        "npm": "https://www.npmjs.com/package/@cldcde/obs-studio-control",
+        "github": "https://github.com/aegntic/cldcde-plugins/archive/main.zip"
+      },
+      "stats": {
+        "downloads": 1250,
+        "rating": 4.8,
+        "reviews": 42
+      },
+      "lastUpdated": "2024-11-19T00:00:00Z"
+    },
+    {
+      "id": "youtube-creator",
+      "name": "YouTube Creator",
+      "version": "1.0.0",
+      "description": "YouTube channel management and video upload plugin",
+      "author": "AEGNTIC AI Ecosystems",
+      "category": "content-creation",
+      "tags": ["youtube", "video", "upload", "analytics"],
+      "repository": "https://github.com/aegntic/cldcde-plugins/tree/main/plugins/youtube-creator",
+      "package": "@cldcde/youtube-creator",
+      "license": "MIT",
+      "tier": "free",
+      "compatibility": {
+        "youtube-api": "v3",
+        "cldcde": ">=1.0.0",
+        "platforms": ["windows", "macos", "linux"]
+      },
+      "features": [
+        "Secure API integration",
+        "Video upload automation",
+        "Metadata optimization",
+        "Analytics dashboard",
+        "Comment management",
+        "Interactive setup wizard",
+        "Encrypted credential storage"
+      ],
+      "permissions": [
+        "network:youtube-api",
+        "storage:secure-credentials",
+        "ui:interactive-wizard",
+        "system:notifications"
+      ],
+      "requirements": [
+        "YouTube channel with access",
+        "Google Cloud Project with YouTube Data API v3 enabled",
+        "OAuth2 credentials"
+      ],
+      "screenshots": [
+        "https://marketplace.cldcde.cc/screenshots/youtube-creator-1.png",
+        "https://marketplace.cldcde.cc/screenshots/youtube-creator-2.png"
+      ],
+      "documentation": "https://docs.cldcde.cc/youtube-creator",
+      "changelog": "https://github.com/aegntic/cldcde-plugins/blob/main/plugins/youtube-creator/CHANGELOG.md",
+      "issues": "https://github.com/aegntic/cldcde-plugins/issues",
+      "download": {
+        "npm": "https://www.npmjs.com/package/@cldcde/youtube-creator",
+        "github": "https://github.com/aegntic/cldcde-plugins/archive/main.zip"
+      },
+      "stats": {
+        "downloads": 2100,
+        "rating": 4.6,
+        "reviews": 78
+      },
+      "lastUpdated": "2024-11-19T00:00:00Z"
+    },
+    {
+      "id": "youtube-creator-pro",
+      "name": "YouTube Creator Pro",
+      "version": "1.0.0",
+      "description": "Advanced YouTube creator plugin with AI-powered workflows and professional features",
+      "author": "AEGNTIC AI Ecosystems",
+      "category": "content-creation",
+      "tags": ["youtube", "ai", "analytics", "automation", "pro"],
+      "repository": "https://github.com/aegntic/cldcde-plugins/tree/main/plugins/youtube-creator-pro",
+      "package": "@cldcde/youtube-creator-pro",
+      "license": "MIT",
+      "tier": "pro",
+      "compatibility": {
+        "youtube-api": "v3",
+        "cldcde": ">=1.0.0",
+        "@cldcde/youtube-creator": ">=1.0.0",
+        "platforms": ["windows", "macos", "linux"]
+      },
+      "features": [
+        "AI-powered content optimization",
+        "Advanced analytics & insights",
+        "Competitor analysis",
+        "Trend forecasting",
+        "Workflow automation",
+        "Team collaboration",
+        "Revenue optimization",
+        "Content strategy generation",
+        "Thumbnail A/B testing"
+      ],
+      "permissions": [
+        "network:youtube-api",
+        "storage:secure-credentials",
+        "ui:interactive-wizard",
+        "ai:content-generation",
+        "ai:data-analysis",
+        "system:notifications",
+        "team:collaboration"
+      ],
+      "requirements": [
+        "YouTube Creator Plugin (base version) installed",
+        "CLDCDE Pro subscription",
+        "AI provider credentials (Anthropic, OpenAI, or Google)",
+        "Sufficient API quota for advanced features"
+      ],
+      "screenshots": [
+        "https://marketplace.cldcde.cc/screenshots/youtube-pro-1.png",
+        "https://marketplace.cldcde.cc/screenshots/youtube-pro-2.png",
+        "https://marketplace.cldcde.cc/screenshots/youtube-pro-3.png"
+      ],
+      "documentation": "https://docs.cldcde.cc/youtube-creator-pro",
+      "changelog": "https://github.com/aegntic/cldcde-plugins/blob/main/plugins/youtube-creator-pro/CHANGELOG.md",
+      "issues": "https://github.com/aegntic/cldcde-plugins/issues",
+      "download": {
+        "npm": "https://www.npmjs.com/package/@cldcde/youtube-creator-pro",
+        "github": "https://github.com/aegntic/cldcde-plugins/archive/main.zip"
+      },
+      "pricing": {
+        "subscription": {
+          "monthly": 79,
+          "yearly": 790
+        },
+        "features": {
+          "aiCredits": true,
+          "teamCollaboration": true,
+          "advancedAnalytics": true,
+          "prioritySupport": true
+        }
+      },
+      "stats": {
+        "downloads": 450,
+        "rating": 4.9,
+        "reviews": 23
+      },
+      "lastUpdated": "2024-11-19T00:00:00Z"
+    }
+  ],
+  "featured": [
+    {
+      "pluginId": "obs-studio-control",
+      "reason": "Essential for streamers with advanced OBS control features",
+      "category": "editors-choice"
+    },
+    {
+      "pluginId": "youtube-creator-pro",
+      "reason": "AI-powered content optimization and advanced analytics",
+      "category": "ai-powered"
+    },
+    {
+      "pluginId": "youtube-creator",
+      "reason": "Complete YouTube management solution",
+      "category": "most-popular"
+    }
+  ],
+  "installation": {
+    "cli": {
+      "install": "cldcde plugin install <plugin-name>",
+      "list": "cldcde plugin list",
+      "remove": "cldcde plugin remove <plugin-name>",
+      "update": "cldcde plugin update <plugin-name>",
+      "search": "cldcde plugin search <query>"
+    },
+    "web": {
+      "baseUrl": "https://marketplace.cldcde.cc",
+      "installPath": "/install/{plugin-id}",
+      "browsePath": "/browse",
+      "searchPath": "/search"
+    }
+  },
+  "security": {
+    "verifiedDevelopers": [
+      "aegntic-ai-ecosystems"
+    ],
+    "securityScanning": true,
+    "signatureVerification": true,
+    "dependencyCheck": true,
+    "codeReview": "required",
+    "sandboxing": "isolated"
+  },
+  "api": {
+    "endpoints": {
+      "listPlugins": "/api/v1/plugins",
+      "getPlugin": "/api/v1/plugins/{id}",
+      "searchPlugins": "/api/v1/search",
+      "getCategories": "/api/v1/categories",
+      "downloadPlugin": "/api/v1/download/{id}",
+      "getStats": "/api/v1/stats/{id}",
+      "submitReview": "/api/v1/reviews"
+    },
+    "authentication": "api-key",
+    "rateLimiting": {
+      "requests": 100,
+      "window": "15m"
+    }
+  },
+  "community": {
+    "reviewSystem": true,
+    "qnaSection": true,
+    "featureRequests": true,
+    "bugReports": true,
+    "documentation": true,
+    "tutorials": true
+  },
+  "monetization": {
+    "freePlugins": true,
+    "paidPlugins": true,
+    "subscriptionPlugins": true,
+    "donations": true,
+    "sponsorships": true
+  },
+  "maintenance": {
+    "autoUpdates": true,
+    "securityPatches": true,
+    "compatibilityChecks": true,
+    "dependencyUpdates": true,
+    "performanceMonitoring": true
+  }
+}

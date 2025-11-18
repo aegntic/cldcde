@@ -1,0 +1,79 @@
+
+/* SOTA Gallery Production Styles */
+:root {
+  --color-primary: #0a0a0a;
+  --color-secondary: #1a1a1a;
+  --color-tertiary: #2a2a2a;
+  --color-accent: #ffffff;
+  --color-text: #e0e0e0;
+  --color-text-secondary: #999999;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Critical CSS inlined for performance */
+h1, h2, h3 {
+  font-family: 'SF Mono', 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: var(--color-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  background: var(--color-tertiary);
+  border-color: var(--color-border);
+  transform: translateY(-1px);
+}
+
+/* Performance optimizations */
+img {
+  max-width: 100%;
+  height: auto;
+  loading: lazy;
+  decoding: async;
+}
+
+/* Critical above-the-fold styles */
+.hero { min-height: 60vh; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+.metric {
+  background: var(--color-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 1rem; }
+  .hero { min-height: 50vh; }
+  .metrics { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+}

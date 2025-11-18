@@ -1,0 +1,34 @@
+{
+  "name": "@sota/ai-features-module",
+  "version": "1.0.0",
+  "description": "AI-powered adaptive web experiences with privacy-first personalization and intelligent optimization",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "train": "node scripts/train-models.js"
+  },
+  "keywords": [
+    "ai",
+    "machine-learning",
+    "personalization",
+    "adaptive-ui",
+    "behavior-analytics",
+    "privacy-first"
+  ],
+  "author": "ae.ltd",
+  "license": "MIT",
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.10.0",
+    "@tensorflow/tfjs-backend-webgl": "^4.10.0",
+    "ml-matrix": "^6.10.0",
+    "tiny-emitter": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^0.34.0"
+  }
+}

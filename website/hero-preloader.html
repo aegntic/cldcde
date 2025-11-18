@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aegntic.ai | Entry Point</title>
+    <meta name="description" content="AI Systems Integrity Research Platform - Build at the Speed of Thought">
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== CORE DESIGN SYSTEM ===== */
+        :root {
+            /* Brand Colors */
+            --black: #0A0A0A;
+            --dark: #141414;
+            --medium: #1A1A1A;
+            --light: #262626;
+            --cyan: #00D4FF;
+            --cyan-dark: #00A8CC;
+            --red: #ef4444;
+            --red-dark: #cc0000;
+            --white: #FFFFFF;
+            --gray: #808080;
+            --gray-light: #B3B3B3;
+
+            /* Typography */
+            --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", Monaco, Consolas, monospace;
+
+            /* Timing */
+            --phase-duration: 2s;
+            --total-duration: 8s;
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--black);
+            color: var(--white);
+            overflow: hidden;
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .preloader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--black);
+            z-index: 10000;
+        }
+
+        /* ===== CANVAS LAYER ===== */
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* ===== CONTENT LAYERS ===== */
+        .content-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* ===== LOGO CRYSTALLIZATION ===== */
+        .logo-container {
+            position: relative;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: logoCrystallize var(--total-duration) var(--transition-smooth) forwards;
+        }
+
+        .logo-crystal {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: crystalRotate 4s ease-in-out infinite;
+        }
+
+        .logo-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--cyan);
+            background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(239, 68, 68, 0.1));
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 2rem;
+            color: var(--cyan);
+            text-shadow: 0 0 20px var(--cyan);
+        }
+
+        .logo-face:nth-child(1) { transform: rotateY(0deg) translateZ(60px); }
+        .logo-face:nth-child(2) { transform: rotateY(90deg) translateZ(60px); }
+        .logo-face:nth-child(3) { transform: rotateY(180deg) translateZ(60px); }
+        .logo-face:nth-child(4) { transform: rotateY(-90deg) translateZ(60px); }
+        .logo-face:nth-child(5) { transform: rotateX(90deg) translateZ(60px); }
+        .logo-face:nth-child(6) { transform: rotateX(-90deg) translateZ(60px); }
+
+        /* ===== MISSION TEXT ===== */
+        .mission-container {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: missionReveal var(--total-duration) var(--transition-smooth) forwards;
+        }
+
+        .mission-title {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            text-shadow:
+                0 0 10px rgba(0, 212, 255, 0.5),
+                1px 1px 0px rgba(255, 255, 255, 0.1),
+                -1px -1px 0px rgba(0, 0, 0, 0.8);
+            letter-spacing: -0.02em;
+        }
+
+        .mission-subtitle {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray-light);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== LOADING INDICATOR ===== */
+        .loading-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: loadingFadeIn var(--total-duration) var(--transition-smooth) forwards;
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 2px;
+            background: var(--light);
+            border-radius: 1px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--cyan), var(--red));
+            width: 0%;
+            animation: loadingProgress var(--total-duration) var(--transition-smooth) forwards;
+        }
+
+        .loading-text {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        /* ===== WATERMARK ===== */
+        .watermark {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 0.65rem;
+            color: var(--gray);
+            opacity: 0.4;
+            font-family: var(--font-mono);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .github-link {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--cyan);
+            opacity: 0.6;
+            text-decoration: none;
+            z-index: 3;
+            transition: opacity 0.3s ease;
+        }
+
+        .github-link:hover {
+            opacity: 1;
+        }
+
+        /* ===== SKIP BUTTON ===== */
+        .skip-button {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--light);
+            border: 1px solid var(--gray);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 3;
+            transition: all 0.3s ease;
+            pointer-events: all;
+        }
+
+        .skip-button:hover {
+            background: var(--cyan);
+            color: var(--black);
+            border-color: var(--cyan);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes logoCrystallize {
+            0%, 50% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            75% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes missionReveal {
+            0%, 60% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes loadingFadeIn {
+            0%, 70% {
+                opacity: 0;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes loadingProgress {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        @keyframes crystalRotate {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(360deg);
+            }
+        }
+
+        /* ===== PHASE ANIMATIONS ===== */
+        .phase-1-active .logo-container { animation-delay: 0s; }
+        .phase-2-active .logo-container { animation-delay: 0s; }
+        .phase-3-active .logo-container { animation-delay: 0s; }
+        .phase-4-active .logo-container { animation-delay: 0s; }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .logo-crystal {
+                width: 80px;
+                height: 80px;
+            }
+
+            .logo-face {
+                font-size: 1.5rem;
+            }
+
+            .logo-face:nth-child(1) { transform: rotateY(0deg) translateZ(40px); }
+            .logo-face:nth-child(2) { transform: rotateY(90deg) translateZ(40px); }
+            .logo-face:nth-child(3) { transform: rotateY(180deg) translateZ(40px); }
+            .logo-face:nth-child(4) { transform: rotateY(-90deg) translateZ(40px); }
+            .logo-face:nth-child(5) { transform: rotateX(90deg) translateZ(40px); }
+            .logo-face:nth-child(6) { transform: rotateX(-90deg) translateZ(40px); }
+
+            .mission-title {
+                font-size: 1.25rem;
+            }
+
+            .mission-subtitle {
+                font-size: 0.875rem;
+            }
+
+            .loading-bar {
+                width: 150px;
+            }
+        }
+
+        /* ===== ACCESSIBILITY ===== */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ===== FADE OUT FOR TRANSITION ===== */
+        .fade-out {
+            animation: fadeOut 0.8s var(--transition-smooth) forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Preloader Container -->
+    <div class="preloader-container" id="preloader">
+        <!-- Particle Canvas -->
+        <canvas id="particle-canvas"></canvas>
+
+        <!-- Content Layers -->
+        <div class="content-layer">
+            <!-- Logo Crystallization -->
+            <div class="logo-container">
+                <div class="logo-crystal">
+                    <div class="logo-face">AE</div>
+                    <div class="logo-face">GN</div>
+                    <div class="logo-face">TI</div>
+                    <div class="logo-face">C</div>
+                    <div class="logo-face">AI</div>
+                    <div class="logo-face">.IO</div>
+                </div>
+            </div>
+
+            <!-- Mission Statement -->
+            <div class="mission-container">
+                <h1 class="mission-title">AEGNTIC.AI</h1>
+                <p class="mission-subtitle">AI Systems Integrity Research Platform</p>
+                <p class="mission-subtitle">Build at the Speed of Thought</p>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div class="loading-indicator">
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+                <div class="loading-text">Initializing Research Environment</div>
+            </div>
+        </div>
+
+        <!-- GitHub Link -->
+        <a href="https://github.com/aegntic" target="_blank" class="github-link">github.com/aegntic</a>
+
+        <!-- Skip Button -->
+        <button class="skip-button" id="skipButton">Skip →</button>
+
+        <!-- Watermark -->
+        <div class="watermark">
+            ᵖᵒʷᵉʳᵉᵈ ᵇʸ ᵃᵉᵍⁿᵗᶦᶜ ᵉᶜᵒˢʸˢᵗᵉᵐˢ - ʳᵘᵗʰˡᵉˢˢˡʸ ᵈᵉᵛᵉˡᵒᵖᵉᵈ ᵇʸ ae.ˡᵗᵈ
+        </div>
+    </div>
+
+    <!-- Particle Physics Engine -->
+    <script>
+        class ParticleSystem {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.particles = [];
+                this.connections = [];
+                this.phase = 1;
+                this.time = 0;
+
+                this.resize();
+                this.init();
+
+                window.addEventListener('resize', () => this.resize());
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.centerX = this.canvas.width / 2;
+                this.centerY = this.canvas.height / 2;
+            }
+
+            init() {
+                // Phase 1: Quantum particle emergence
+                for (let i = 0; i < 50; i++) {
+                    this.particles.push(this.createQuantumParticle());
+                }
+            }
+
+            createQuantumParticle() {
+                return {
+                    x: this.centerX + (Math.random() - 0.5) * 100,
+                    y: this.centerY + (Math.random() - 0.5) * 100,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2,
+                    radius: Math.random() * 2 + 1,
+                    color: Math.random() > 0.5 ? '#00D4FF' : '#ef4444',
+                    alpha: Math.random() * 0.5 + 0.5,
+                    life: 1,
+                    maxLife: 1,
+                    type: 'quantum'
+                };
+            }
+
+            createNeuralParticle() {
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 200 + 100;
+                return {
+                    x: this.centerX + Math.cos(angle) * distance,
+                    y: this.centerY + Math.sin(angle) * distance,
+                    vx: (Math.random() - 0.5) * 1,
+                    vy: (Math.random() - 0.5) * 1,
+                    radius: Math.random() * 1.5 + 0.5,
+                    color: '#00D4FF',
+                    alpha: 0.8,
+                    life: 1,
+                    maxLife: 1,
+                    type: 'neural',
+                    connections: []
+                };
+            }
+
+            update(deltaTime) {
+                this.time += deltaTime;
+
+                // Phase transitions
+                if (this.time > 2000 && this.phase === 1) {
+                    this.phase = 2;
+                    this.initNeuralNetwork();
+                } else if (this.time > 4000 && this.phase === 2) {
+                    this.phase = 3;
+                    this.initCrystallization();
+                } else if (this.time > 6000 && this.phase === 3) {
+                    this.phase = 4;
+                }
+
+                // Update particles
+                this.particles.forEach((particle, index) => {
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+
+                    // Physics based on phase
+                    if (particle.type === 'quantum') {
+                        // Quantum uncertainty
+                        particle.vx += (Math.random() - 0.5) * 0.2;
+                        particle.vy += (Math.random() - 0.5) * 0.2;
+                    } else if (particle.type === 'neural') {
+                        // Neural network attraction
+                        const dx = this.centerX - particle.x;
+                        const dy = this.centerY - particle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance > 150) {
+                            particle.vx += dx * 0.0001;
+                            particle.vy += dy * 0.0001;
+                        }
+                    } else if (particle.type === 'crystal') {
+                        // Crystallization pattern
+                        const targetAngle = (index / this.particles.length) * Math.PI * 2;
+                        const targetRadius = 100 + Math.sin(this.time * 0.001) * 20;
+                        const targetX = this.centerX + Math.cos(targetAngle) * targetRadius;
+                        const targetY = this.centerY + Math.sin(targetAngle) * targetRadius;
+
+                        particle.vx += (targetX - particle.x) * 0.01;
+                        particle.vy += (targetY - particle.y) * 0.01;
+                        particle.vx *= 0.95;
+                        particle.vy *= 0.95;
+                    }
+
+                    // Damping
+                    particle.vx *= 0.99;
+                    particle.vy *= 0.99;
+
+                    // Boundary check
+                    if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
+                    if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+                });
+
+                // Update connections for neural network
+                if (this.phase >= 2) {
+                    this.updateConnections();
+                }
+            }
+
+            initNeuralNetwork() {
+                // Add neural particles
+                for (let i = 0; i < 30; i++) {
+                    this.particles.push(this.createNeuralParticle());
+                }
+            }
+
+            initCrystallization() {
+                // Transform particles to crystal formation
+                this.particles.forEach(particle => {
+                    particle.type = 'crystal';
+                    particle.color = '#00D4FF';
+                });
+            }
+
+            updateConnections() {
+                this.connections = [];
+                const maxDistance = 150;
+
+                for (let i = 0; i < this.particles.length; i++) {
+                    for (let j = i + 1; j < this.particles.length; j++) {
+                        const p1 = this.particles[i];
+                        const p2 = this.particles[j];
+
+                        const dx = p2.x - p1.x;
+                        const dy = p2.y - p1.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < maxDistance) {
+                            this.connections.push({
+                                from: p1,
+                                to: p2,
+                                alpha: 1 - (distance / maxDistance)
+                            });
+                        }
+                    }
+                }
+            }
+
+            render() {
+                // Clear canvas
+                this.ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+                // Render connections
+                this.connections.forEach(connection => {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(connection.from.x, connection.from.y);
+                    this.ctx.lineTo(connection.to.x, connection.to.y);
+                    this.ctx.strokeStyle = `rgba(0, 212, 255, ${connection.alpha * 0.3})`;
+                    this.ctx.lineWidth = 1;
+                    this.ctx.stroke();
+                });
+
+                // Render particles
+                this.particles.forEach(particle => {
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                    this.ctx.fillStyle = particle.color;
+                    this.ctx.globalAlpha = particle.alpha;
+                    this.ctx.fill();
+
+                    // Glow effect
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.radius * 3, 0, Math.PI * 2);
+                    this.ctx.fillStyle = particle.color;
+                    this.ctx.globalAlpha = particle.alpha * 0.1;
+                    this.ctx.fill();
+                });
+
+                this.ctx.globalAlpha = 1;
+            }
+
+            animate() {
+                let lastTime = 0;
+
+                const frame = (currentTime) => {
+                    const deltaTime = currentTime - lastTime;
+                    lastTime = currentTime;
+
+                    this.update(deltaTime);
+                    this.render();
+
+                    requestAnimationFrame(frame);
+                };
+
+                requestAnimationFrame(frame);
+            }
+        }
+
+        // Initialize particle system
+        const canvas = document.getElementById('particle-canvas');
+        const particleSystem = new ParticleSystem(canvas);
+        particleSystem.animate();
+
+        // Preloader controller
+        class PreloaderController {
+            constructor() {
+                this.preloader = document.getElementById('preloader');
+                this.skipButton = document.getElementById('skipButton');
+                this.loadingText = document.querySelector('.loading-text');
+                this.totalDuration = 8000;
+                this.startTime = Date.now();
+
+                this.init();
+            }
+
+            init() {
+                // Skip button functionality
+                this.skipButton.addEventListener('click', () => {
+                    this.redirectToMain();
+                });
+
+                // Phase-based loading text updates
+                this.updateLoadingText();
+
+                // Auto-redirect after completion
+                setTimeout(() => {
+                    this.redirectToMain();
+                }, this.totalDuration);
+            }
+
+            updateLoadingText() {
+                const phases = [
+                    { time: 0, text: "Initializing Research Environment" },
+                    { time: 2000, text: "Establishing Neural Connections" },
+                    { time: 4000, text: "Crystallizing Core Systems" },
+                    { time: 6000, text: "Optimizing Thought Algorithms" },
+                    { time: 7500, text: "Launch Sequence Complete" }
+                ];
+
+                const update = () => {
+                    const elapsed = Date.now() - this.startTime;
+                    const currentPhase = phases.reduce((prev, curr) =>
+                        elapsed >= curr.time ? curr : prev
+                    );
+
+                    this.loadingText.textContent = currentPhase.text;
+
+                    if (elapsed < this.totalDuration) {
+                        requestAnimationFrame(update);
+                    }
+                };
+
+                update();
+            }
+
+            redirectToMain() {
+                this.preloader.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = '/index.html';
+                }, 800);
+            }
+        }
+
+        // Initialize preloader controller
+        const preloaderController = new PreloaderController();
+
+        // Add phase classes for CSS animations
+        const preloaderContainer = document.querySelector('.preloader-container');
+        setTimeout(() => preloaderContainer.classList.add('phase-2-active'), 2000);
+        setTimeout(() => preloaderContainer.classList.add('phase-3-active'), 4000);
+        setTimeout(() => preloaderContainer.classList.add('phase-4-active'), 6000);
+
+        // Performance monitoring
+        if (window.performance && window.performance.memory) {
+            setInterval(() => {
+                const memoryUsage = window.performance.memory.usedJSHeapSize / 1048576;
+                if (memoryUsage > 100) {
+                    console.warn(`Memory usage: ${memoryUsage.toFixed(2)} MB`);
+                }
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

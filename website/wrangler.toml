@@ -1,0 +1,18 @@
+name = "sota-gallery"
+main = "build/serve.js" 
+compatibility_date = "2023-12-01"
+
+[env.production]
+name = "sota-gallery"
+routes = [
+  { pattern = "sota.gallery/*", zone_name = "sota.gallery" }
+]
+
+[[env.production.kv_namespaces]]
+binding = "SOTA_CACHE"
+id = "sota-gallery-cache"
+preview_id = "sota-gallery-cache-preview"
+
+[env.production.vars]
+ENVIRONMENT = "production"
+DOMAIN = "sota.gallery"
