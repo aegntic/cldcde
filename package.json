@@ -1,0 +1,59 @@
+{
+  "name": "cldcde-platform",
+  "version": "1.0.0",
+  "description": "Community platform for Claude Code extensions and MCP servers - cldcde.cc",
+  "scripts": {
+    "dev": "bun run --watch server.ts",
+    "dev:worker": "wrangler dev",
+    "build": "bun build --minify --target browser --format esm --splitting --outdir ./dist ./frontend/src/index.tsx",
+    "build:worker": "bun build ./src/worker.ts --outdir ./dist --target=browser --format=esm",
+    "start": "bun server.ts",
+    "test": "bun test",
+    "db:init": "bun scripts/init-db.ts",
+    "db:migrate": "wrangler d1 execute cldcde-content --file=./migrations/001_initial_schema.sql",
+    "search:index": "bun scripts/index-search.ts",
+    "search:health": "curl -s $MEILISEARCH_HOST/health | jq",
+    "preflight": "bun scripts/preflight-check.ts",
+    "setup": "./scripts/setup-quick.sh",
+    "setup:wizard": "bun scripts/setup-assistant-ultra.ts",
+    "supabase:setup": "bun scripts/supabase-setup.ts",
+    "deploy": "bun run build && wrangler deploy",
+    "deploy:pages": "bun run build && wrangler pages deploy dist --project-name=cldcde",
+    "secrets:set": "bun run scripts/set-secrets.ts"
+  },
+  "dependencies": {
+    "@octokit/rest": "^20.0.2",
+    "@supabase/supabase-js": "^2.39.7",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/styled-components": "^5.1.34",
+    "ascii-art": "^2.8.5",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^17.0.0",
+    "framer-motion": "^11.0.0",
+    "hono": "^4.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rss-parser": "^3.13.0",
+    "styled-components": "^6.1.8",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240129.0",
+    "@types/bun": "latest",
+    "puppeteer": "^24.11.1",
+    "typescript": "^5.3.0",
+    "wrangler": "^4.22.0"
+  },
+  "keywords": ["claude", "ai", "mcp", "extensions", "community", "terminal"],
+  "author": "iamcatface",
+  "license": "MIT",
+  "homepage": "https://cldcde.cc",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamcatface/cldcde-platform.git"
+  }
+}

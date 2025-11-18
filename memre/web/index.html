@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CLAUDE CODE — ASCII Attitude</title>
+<style>
+  :root {
+    --bg: #0b0e11;
+    --fg: #e8e6e3;
+    --accent: #f18d5e;
+    --shadow-accent: #b85e36;
+    --muted: #9aa0a6;
+    --term: #101317;
+    --btn: #f18d5e;
+    --btnText: #0b0e11;
+  }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: radial-gradient(1200px 600px at 50% -200px, #1a1f25 0%, var(--bg) 40%, #060708 100%);
+    color: var(--fg);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    display: grid;
+    place-items: center;
+  }
+  .frame {
+    width: min(1100px, 95vw);
+    max-width: 95vw;
+    background: linear-gradient(#262a30, #1e2329);
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), inset 0 2px 0 rgba(255,255,255,.04);
+    padding: 12px 12px 18px;
+  }
+  @media (max-width: 768px) {
+    .frame {
+      width: 98vw;
+      padding: 8px 8px 12px;
+      border-radius: 12px;
+    }
+  }
+  .traffic { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f56; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #27c93f; }
+  .terminal {
+    background: var(--term);
+    border-radius: 12px;
+    padding: 18px 18px 16px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .terminal::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 2px, transparent 4px);
+    mix-blend-mode: overlay; pointer-events: none;
+  }
+  .welcome { 
+    color: #c9d1d9; 
+    background:#0e1116; 
+    border:1px solid rgba(255,255,255,.08); 
+    padding:10px 12px; 
+    border-radius:8px; 
+    display:inline-block; 
+    margin-bottom:14px; 
+    white-space: pre-wrap; 
+    word-break: break-word;
+    max-width: 100%;
+  }
+  @media (max-width: 768px) {
+    .welcome {
+      font-size: 14px;
+      padding: 8px 10px;
+      white-space: normal;
+      word-wrap: break-word;
+      line-height: 1.3;
+    }
+  }
+  pre.banner {
+    margin: 0 0 10px 0; line-height: .9; letter-spacing: 1px;
+    font-size: clamp(8px, 1.5vw, 20px);
+    color: var(--accent);
+    text-shadow: 2px 2px var(--shadow-accent);
+    white-space: pre;
+    overflow-x: auto;
+  }
+  @media (max-width: 768px) {
+    pre.banner {
+      font-size: clamp(6px, 2.2vw, 12px);
+      line-height: .8;
+      letter-spacing: 0.5px;
+    }
+  }
+  .speak { margin-top: 8px; color: #c3c7cc; }
+  .prompt::before { content: "› "; color: #7bd88f; }
+  .cursor { display:inline-block; width: .6ch; background: #7bd88f; animation: blink 1s steps(1) infinite; vertical-align: -2px; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Screen 2 */
+  .hidden { display: none; }
+  .ascii-large { 
+    font-size: clamp(8px, 1.5vw, 20px); 
+    text-shadow: 2px 2px var(--shadow-accent); 
+    color: var(--accent); 
+    line-height: .9; 
+    letter-spacing: 1px; 
+    overflow-x: auto;
+  }
+  @media (max-width: 768px) {
+    .ascii-large {
+      font-size: clamp(5px, 1.8vw, 10px);
+      line-height: .7;
+      letter-spacing: 0.3px;
+    }
+  }
+  .ascii-small { font-size: 10%; display: inline-block; vertical-align: baseline; }
+  .explain { 
+    color:#c9cdd2; 
+    margin: 14px 0 18px; 
+    max-width: 72ch; 
+    word-wrap: break-word; 
+    line-height: 1.4;
+  }
+  @media (max-width: 768px) {
+    .explain {
+      font-size: 13px;
+      margin: 10px 0 14px;
+      max-width: 100%;
+    }
+  }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { 
+    display: inline-block; 
+    padding: 12px 18px; 
+    border-radius: 10px; 
+    background: var(--btn); 
+    color: var(--btnText); 
+    text-decoration: none; 
+    font-weight: 700; 
+    box-shadow: 0 6px 20px rgba(241,141,94,.35); 
+  }
+  @media (max-width: 768px) {
+    .btn {
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+    .cta {
+      gap: 8px;
+    }
+  }
+  .btn.ghost { background: transparent; color: var(--fg); border:1px solid rgba(255,255,255,.15); box-shadow:none; }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <div class="traffic" aria-hidden="true">
+      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+    </div>
+    <div class="terminal" id="screen1">
+      <div class="welcome">✶ Welcome back, Claube, forgot your context again?</div>
+<pre class="banner" aria-label="ASCII title">
+ ██████╗██╗      █████╗ ██╗   ██╗██████╗ ███████╗
+██╔════╝██║     ██╔══██╗██║   ██║██╔══██╗██╔════╝
+██║     ██║     ███████║██║   ██║██║  ██║█████╗  
+██║     ██║     ██╔══██║██║   ██║██║  ██║██╔══╝  
+╚██████╗███████╗██║  ██║╚██████╔╝██████╔╝███████╗
+ ╚═════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+                
+ ██████╗ ██████╗ ██████╗ ███████╗
+██╔════╝██╔═══██╗██╔══██╗██╔════╝
+██║     ██║   ██║██║  ██║█████╗  
+██║     ██║   ██║██║  ██║██╔══╝  
+╚██████╗╚██████╔╝██████╔╝███████╗
+ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
+</pre>
+      <div class="speak"><span class="prompt" id="prompt1">memory request? hit <span id="enterBtn" style="color: var(--accent); cursor: pointer; text-decoration: underline;">enter</span> to continue</span><span class="cursor"></span></div>
+    </div>
+
+    <div class="terminal hidden" id="screen2">
+<pre class="banner ascii-large" id="brandBlock">
+ ██████╗██╗     ██████╗  ██████╗██████╗ ███████╗.cc
+██╔════╝██║     ██╔══██╗██╔════╝██╔══██╗██╔════╝
+██║     ██║     ██║  ██║██║     ██║  ██║█████╗  
+██║     ██║     ██║  ██║██║     ██║  ██║██╔══╝  
+╚██████╗███████╗██████╔╝╚██████╗██████╔╝███████╗
+ ╚═════╝╚══════╝╚═════╝  ╚═════╝ ╚═════╝ ╚══════╝
+
+██████╗ ███████╗    ██████╗ ██╗   ██╗███████╗███████╗████████╗
+██╔══██╗██╔════╝   ██╔═══██╗██║   ██║██╔════╝██╔════╝╚══██╔══╝
+██████╔╝█████╗     ██║   ██║██║   ██║█████╗  ███████╗   ██║   
+██╔══██╗██╔══╝     ██║▄▄ ██║██║   ██║██╔══╝  ╚════██║   ██║   
+██║  ██║███████╗██╗╚██████╔╝╚██████╔╝███████╗███████║   ██║   
+╚═╝  ╚═╝╚══════╝╚═╝ ╚══▀▀═╝  ╚═════╝ ╚══════╝╚══════╝   ╚═╝   <span class="ascii-small">re.quest</span>
+</pre>
+      <div class="explain" id="explain">CLDCDE + MEMre.quest is a tiny, no‑nonsense memory kit for your agents. One CLI, zero drama: capture, recall, and sync task context across runs. Works offline, plays nice with MCP, exports clean JSONL.</div>
+      <div class="cta">
+        <a class="btn" id="download" href="https://github.com/aegntic/cldcde/releases/latest/download/memre.zip" target="_blank" rel="noopener">⬇ Download (zip)</a>
+        <a class="btn ghost" id="github" href="https://github.com/aegntic/cldcde/tree/main/memre" target="_blank" rel="noopener">GitHub Repo</a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const s1 = document.getElementById('screen1');
+  const s2 = document.getElementById('screen2');
+  const enterBtn = document.getElementById('enterBtn');
+  
+  function startSequence() {
+    if (s1 && !s1.classList.contains('hidden')) {
+      s1.classList.add('hidden');
+      s2.classList.remove('hidden');
+    }
+  }
+  
+  // Keyboard listener
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      startSequence();
+    }
+  });
+  
+  // Click/tap listener for "enter" word
+  if (enterBtn) {
+    enterBtn.addEventListener('click', startSequence);
+    enterBtn.addEventListener('touchstart', startSequence);
+  }
+</script>
+</body>
+</html>

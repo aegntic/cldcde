@@ -1,0 +1,249 @@
+# Alert Configuration for cldcde.cc
+# Prometheus AlertManager compatible format
+
+global:
+  # How long to initially wait to send a notification
+  group_wait: 30s
+  # How long to wait before sending a notification about new alerts
+  group_interval: 5m
+  # How long to wait before sending a notification again if it has already been sent
+  repeat_interval: 12h
+  # Default receiver
+  receiver: 'cldcde-oncall'
+
+# Routing tree
+route:
+  group_by: ['alertname', 'cluster', 'service']
+  receiver: 'cldcde-oncall'
+  routes:
+    # Critical alerts go to PagerDuty
+    - match:
+        severity: critical
+      receiver: 'pagerduty-critical'
+      repeat_interval: 15m
+    
+    # Warning alerts go to Slack
+    - match:
+        severity: warning
+      receiver: 'slack-warnings'
+      repeat_interval: 4h
+    
+    # Info alerts go to email
+    - match:
+        severity: info
+      receiver: 'email-info'
+      repeat_interval: 24h
+
+# Receivers
+receivers:
+  - name: 'cldcde-oncall'
+    webhook_configs:
+      - url: 'https://cldcde.cc/webhooks/alerts'
+        send_resolved: true
+    
+  - name: 'pagerduty-critical'
+    pagerduty_configs:
+      - service_key: '${PAGERDUTY_SERVICE_KEY}'
+        description: 'cldcde.cc Critical Alert'
+    
+  - name: 'slack-warnings'
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#cldcde-alerts'
+        title: 'cldcde.cc Warning'
+        text: '{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}'
+    
+  - name: 'email-info'
+    email_configs:
+      - to: 'alerts@cldcde.cc'
+        from: 'monitoring@cldcde.cc'
+        smarthost: 'smtp.sendgrid.net:587'
+        auth_username: 'apikey'
+        auth_password: '${SENDGRID_API_KEY}'
+        headers:
+          Subject: 'cldcde.cc Alert: {{ .GroupLabels.alertname }}'
+
+# Alert Rules
+groups:
+  - name: availability
+    interval: 30s
+    rules:
+      # Site down alert
+      - alert: SiteDown
+        expr: up{job="cldcde-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: api
+        annotations:
+          summary: "cldcde.cc API is down"
+          description: "The main API endpoint has been unreachable for more than 1 minute."
+          runbook: "https://docs.cldcde.cc/runbooks/site-down"
+
+      # High error rate
+      - alert: HighErrorRate
+        expr: |
+          (
+            sum(rate(app_error_total[5m])) /
+            sum(rate(api_response_time_count[5m]))
+          ) > 0.01
+        for: 5m
+        labels:
+          severity: critical
+          service: api
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is above 1% (current: {{ $value | humanizePercentage }})"
+          runbook: "https://docs.cldcde.cc/runbooks/high-error-rate"
+
+  - name: performance
+    interval: 30s
+    rules:
+      # High response time
+      - alert: HighResponseTime
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(api_response_time_bucket[5m])) by (le)
+          ) > 0.2
+        for: 5m
+        labels:
+          severity: warning
+          service: api
+        annotations:
+          summary: "High API response time"
+          description: "95th percentile response time is above 200ms (current: {{ $value | humanizeDuration }})"
+          runbook: "https://docs.cldcde.cc/runbooks/high-response-time"
+
+      # Very high response time
+      - alert: VeryHighResponseTime
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(api_response_time_bucket[5m])) by (le)
+          ) > 0.5
+        for: 3m
+        labels:
+          severity: critical
+          service: api
+        annotations:
+          summary: "Very high API response time"
+          description: "95th percentile response time is above 500ms (current: {{ $value | humanizeDuration }})"
+          runbook: "https://docs.cldcde.cc/runbooks/high-response-time"
+
+  - name: cache
+    interval: 30s
+    rules:
+      # Low cache hit rate
+      - alert: LowCacheHitRate
+        expr: |
+          (
+            sum(rate(cache_access_total{result="hit"}[5m])) /
+            sum(rate(cache_access_total[5m]))
+          ) < 0.7
+        for: 10m
+        labels:
+          severity: warning
+          service: cache
+        annotations:
+          summary: "Low cache hit rate"
+          description: "Cache hit rate is below 70% (current: {{ $value | humanizePercentage }})"
+          runbook: "https://docs.cldcde.cc/runbooks/low-cache-hit-rate"
+
+  - name: database
+    interval: 30s
+    rules:
+      # Database connection issues
+      - alert: DatabaseDown
+        expr: up{job="cldcde-neo4j"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: database
+        annotations:
+          summary: "Neo4j database is down"
+          description: "Cannot connect to Neo4j database for more than 2 minutes"
+          runbook: "https://docs.cldcde.cc/runbooks/database-down"
+
+      # Slow database queries
+      - alert: SlowDatabaseQueries
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(db_query_time_bucket[5m])) by (operation, le)
+          ) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          service: database
+        annotations:
+          summary: "Slow database queries detected"
+          description: "95th percentile query time for {{ $labels.operation }} is above 100ms"
+          runbook: "https://docs.cldcde.cc/runbooks/slow-queries"
+
+  - name: business
+    interval: 1m
+    rules:
+      # No user activity
+      - alert: NoUserActivity
+        expr: |
+          sum(increase(user_activity_total[1h])) == 0
+        for: 2h
+        labels:
+          severity: warning
+          service: business
+        annotations:
+          summary: "No user activity detected"
+          description: "No user activity recorded in the last 2 hours"
+          runbook: "https://docs.cldcde.cc/runbooks/no-activity"
+
+      # Sudden traffic spike
+      - alert: TrafficSpike
+        expr: |
+          (
+            sum(rate(api_response_time_count[5m])) /
+            sum(rate(api_response_time_count[5m] offset 1h))
+          ) > 5
+        for: 5m
+        labels:
+          severity: info
+          service: api
+        annotations:
+          summary: "Sudden traffic spike detected"
+          description: "Traffic is 5x higher than 1 hour ago"
+          runbook: "https://docs.cldcde.cc/runbooks/traffic-spike"
+
+  - name: security
+    interval: 30s
+    rules:
+      # High rate of authentication failures
+      - alert: HighAuthFailureRate
+        expr: |
+          sum(rate(api_response_time_count{endpoint="/api/auth/login",status="401"}[5m])) > 10
+        for: 5m
+        labels:
+          severity: warning
+          service: security
+        annotations:
+          summary: "High authentication failure rate"
+          description: "More than 10 failed login attempts per second"
+          runbook: "https://docs.cldcde.cc/runbooks/auth-failures"
+
+      # Potential DDoS
+      - alert: PotentialDDoS
+        expr: |
+          sum(rate(api_response_time_count[1m])) > 1000
+        for: 2m
+        labels:
+          severity: critical
+          service: security
+        annotations:
+          summary: "Potential DDoS attack"
+          description: "Request rate exceeds 1000 req/s for 2 minutes"
+          runbook: "https://docs.cldcde.cc/runbooks/ddos-response"
+
+# Inhibition rules
+inhibit_rules:
+  # If the entire site is down, don't alert on individual services
+  - source_match:
+      alertname: 'SiteDown'
+    target_match_re:
+      alertname: '.+'
+    equal: ['service']

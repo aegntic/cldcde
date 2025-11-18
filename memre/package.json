@@ -1,0 +1,20 @@
+{
+  "name": "@aegntic/memre",
+  "version": "1.0.0",
+  "description": "MEMre.quest - Terminal animation for CLDCDE memory kit",
+  "main": "web/index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000 -d web",
+    "build": "zip -r memre.zip web/ README.md package.json",
+    "deploy": "wrangler pages deploy web --project-name claudeism-memre"
+  },
+  "keywords": ["ai", "memory", "agents", "terminal", "animation", "cldcde"],
+  "author": "aegntic",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/cldcde.git",
+    "directory": "memre"
+  },
+  "homepage": "https://cldcde.cc"
+}

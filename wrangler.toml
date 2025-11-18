@@ -1,0 +1,32 @@
+name = "cldcde-api"
+main = "src/worker-ultra.ts"
+compatibility_date = "2024-01-01"
+
+[site]
+bucket = "./dist"
+
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = "YOUR_KV_NAMESPACE_ID"
+# preview_id = "YOUR_KV_PREVIEW_ID"
+
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "cldcde-content"
+# database_id = "YOUR_D1_DATABASE_ID"
+
+# [[r2_buckets]]
+# binding = "STORAGE"
+# bucket_name = "cldcde-assets"
+
+[vars]
+ENVIRONMENT = "production"
+SUPABASE_URL = "https://giuyocjmgwzfbkammehu.supabase.co"
+
+# Secrets (set via wrangler secret put)
+# NEO4J_URI
+# NEO4J_USERNAME  
+# NEO4J_PASSWORD
+# JWT_SECRET
+# SUPABASE_ANON_KEY
+# MEILISEARCH_KEY
