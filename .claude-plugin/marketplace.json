@@ -78,6 +78,83 @@
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
       }
+    },
+    {
+      "name": "sota-template-suite",
+      "source": "./plugins/sota-template-suite",
+      "description": "State-of-the-Art Template System with real performance optimization and AI-enhanced generation by ae.ltd",
+      "version": "1.0.0",
+      "repository": "https://github.com/aegntic/cldcde",
+      "license": "MIT",
+      "keywords": [
+        "templates",
+        "performance",
+        "ai-generation",
+        "web-optimization",
+        "developer-tools",
+        "core-web-vitals",
+        "scroll-animations",
+        "webassembly",
+        "solid-design",
+        "claude-code",
+        "ae-ltd"
+      ],
+      "category": "development-tools",
+      "author": {
+        "name": "ae.ltd",
+        "email": "research@aegntic.ai"
+      }
+    },
+    {
+      "name": "emergent-capability-suite",
+      "source": "./plugins/emergent-capability-suite",
+      "description": "Advanced meta-skill ecosystem that evolves new capabilities through intelligent skill synthesis and pattern recognition by ae.ltd",
+      "version": "1.0.0",
+      "repository": "https://github.com/aegntic/cldcde",
+      "license": "MIT",
+      "keywords": [
+        "emergent-capabilities",
+        "skill-synthesis",
+        "meta-skills",
+        "pattern-recognition",
+        "complex-adaptive-systems",
+        "capability-evolution",
+        "skill-ecosystem",
+        "ai-evolution",
+        "workflow-orchestration",
+        "claude-code",
+        "ae-ltd"
+      ],
+      "category": "ai-automation",
+      "author": {
+        "name": "ae.ltd",
+        "email": "research@aegntic.ai"
+      }
+    },
+    {
+      "name": "viral-automation-suite",
+      "source": "./plugins/viral-automation-suite",
+      "description": "Comprehensive viral marketing and automation ecosystem with multi-agent coordination by ae.ltd",
+      "version": "1.0.0",
+      "repository": "https://github.com/aegntic/cldcde",
+      "license": "MIT",
+      "keywords": [
+        "viral-marketing",
+        "multi-agent-orchestration",
+        "content-automation",
+        "social-media-automation",
+        "performance-analytics",
+        "campaign-generation",
+        "content-repurposing",
+        "growth-automation",
+        "claude-code",
+        "ae-ltd"
+      ],
+      "category": "marketing-automation",
+      "author": {
+        "name": "ae.ltd",
+        "email": "research@aegntic.ai"
+      }
     }
   ]
 }
