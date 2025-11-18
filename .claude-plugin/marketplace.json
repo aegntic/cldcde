@@ -26,6 +26,13 @@
       "author": {
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "premium",
+        "price": 49.99,
+        "currency": "USD",
+        "period": "one-time",
+        "trial": true
       }
     },
     {
@@ -51,6 +58,13 @@
       "author": {
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "professional",
+        "price": 79.99,
+        "currency": "USD",
+        "period": "one-time",
+        "trial": false
       }
     },
     {
@@ -77,6 +91,13 @@
       "author": {
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "enterprise",
+        "price": 199.99,
+        "currency": "USD",
+        "period": "one-time",
+        "trial": false
       }
     },
     {
@@ -103,6 +124,13 @@
       "author": {
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "premium",
+        "price": 99.99,
+        "currency": "USD",
+        "period": "one-time",
+        "trial": true
       }
     },
     {
@@ -129,6 +157,13 @@
       "author": {
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "enterprise",
+        "price": 299.99,
+        "currency": "USD",
+        "period": "one-time",
+        "trial": false
       }
     },
     {
@@ -154,7 +189,102 @@
       "author": {
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "enterprise",
+        "price": 249.99,
+        "currency": "USD",
+        "period": "one-time",
+        "trial": false
       }
+    }
+  ],
+  "bundles": [
+    {
+      "id": "content-creator-bundle",
+      "name": "Content Creator Professional Bundle",
+      "description": "Complete content creation and management suite with OBS control, YouTube tools, and AI optimization",
+      "plugins": [
+        "obs-studio-control",
+        "youtube-creator",
+        "youtube-creator-pro"
+      ],
+      "original_price": 329.97,
+      "bundle_price": 249.99,
+      "discount": 24.2,
+      "currency": "USD",
+      "features": [
+        "Multi-platform content management",
+        "AI-powered content optimization",
+        "Secure credential management",
+        "Enterprise-grade automation",
+        "Professional UI integration"
+      ]
+    },
+    {
+      "id": "developer-enterprise-bundle",
+      "name": "Developer Enterprise Bundle",
+      "description": "Professional development suite with SOTA templates, AI capabilities, and workflow orchestration",
+      "plugins": [
+        "sota-template-suite",
+        "emergent-capability-suite"
+      ],
+      "original_price": 399.98,
+      "bundle_price": 349.99,
+      "discount": 12.5,
+      "currency": "USD",
+      "features": [
+        "State-of-the-Art template system",
+        "Emergent capability evolution",
+        "Advanced pattern recognition",
+        "Enterprise-grade development tools",
+        "AI-powered workflow optimization"
+      ]
+    },
+    {
+      "id": "marketing-automation-bundle",
+      "name": "Marketing Automation Bundle",
+      "description": "Complete viral marketing and automation suite with multi-agent coordination and content repurposing",
+      "plugins": [
+        "viral-automation-suite",
+        "emergent-capability-suite"
+      ],
+      "original_price": 549.98,
+      "bundle_price": 399.99,
+      "discount": 27.3,
+      "currency": "USD",
+      "features": [
+        "FARTNODE multi-agent orchestration",
+        "AI-powered content generation",
+        "Cross-platform automation",
+        "Enterprise campaign management",
+        "Advanced performance analytics"
+      ]
+    },
+    {
+      "id": "ultimate-ae-ltd-bundle",
+      "name": "Ultimate ae.ltd Bundle",
+      "description": "Complete ae.ltd ecosystem with all professional plugins - ultimate development, content creation, and marketing automation suite",
+      "plugins": [
+        "obs-studio-control",
+        "youtube-creator",
+        "youtube-creator-pro",
+        "sota-template-suite",
+        "emergent-capability-suite",
+        "viral-automation-suite"
+      ],
+      "original_price": 879.95,
+      "bundle_price": 699.99,
+      "discount": 20.5,
+      "currency": "USD",
+      "features": [
+        "Complete media automation ecosystem",
+        "Advanced AI capabilities evolution",
+        "State-of-the-Art development tools",
+        "Enterprise marketing automation",
+        "Professional multi-agent coordination"
+      ],
+      "is_featured": true
     }
   ]
 }
