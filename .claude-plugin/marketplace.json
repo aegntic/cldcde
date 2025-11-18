@@ -4,7 +4,6 @@
     "name": "ae.ltd",
     "email": "research@aegntic.ai"
   },
-  "website": "https://cldcde.cc",
   "description": "Official CLDCDE Plugin Marketplace - Home of premium Claude Code extensions and automation tools",
   "plugins": [
     {
@@ -13,7 +12,6 @@
       "description": "Interactive OBS Studio control menu with real-time status monitoring and automation",
       "version": "1.0.0",
       "repository": "https://github.com/aegntic/cldcde",
-      "website": "https://cldcde.cc/plugins/obs-studio-control",
       "license": "MIT",
       "keywords": [
         "obs",
@@ -28,13 +26,7 @@
       "author": {
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
-      },
-      "maintainers": [
-        {
-          "name": "ae.ltd",
-          "email": "research@aegntic.ai"
-        }
-      ]
+      }
     },
     {
       "name": "youtube-creator",
@@ -42,7 +34,6 @@
       "description": "Interactive YouTube Creator toolkit with secure API management and comprehensive channel automation",
       "version": "1.0.0",
       "repository": "https://github.com/aegntic/cldcde",
-      "website": "https://cldcde.cc/plugins/youtube-creator",
       "license": "MIT",
       "keywords": [
         "youtube",
@@ -60,13 +51,7 @@
       "author": {
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
-      },
-      "maintainers": [
-        {
-          "name": "ae.ltd",
-          "email": "research@aegntic.ai"
-        }
-      ]
+      }
     },
     {
       "name": "youtube-creator-pro",
@@ -74,7 +59,6 @@
       "description": "Professional YouTube Creator toolkit with AI-powered content optimization, intelligent thumbnail generation, and automated workflow orchestration",
       "version": "2.0.0",
       "repository": "https://github.com/aegntic/cldcde",
-      "website": "https://cldcde.cc/plugins/youtube-creator-pro",
       "license": "MIT",
       "keywords": [
         "youtube",
@@ -93,13 +77,7 @@
       "author": {
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
-      },
-      "maintainers": [
-        {
-          "name": "ae.ltd",
-          "email": "research@aegntic.ai"
-        }
-      ]
+      }
     }
   ]
 }
