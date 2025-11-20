@@ -7,6 +7,35 @@
   "description": "Official CLDCDE Plugin Marketplace - Premium Claude Code extensions",
   "plugins": [
     {
+      "name": "obs-studio-control",
+      "source": "https://github.com/aegntic/cldcde/tree/main/plugins/obs-studio-control",
+      "description": "Interactive OBS Studio control menu with real-time status monitoring and automation",
+      "version": "1.0.0",
+      "repository": "https://github.com/aegntic/cldcde",
+      "license": "MIT",
+      "keywords": [
+        "obs",
+        "streaming",
+        "recording",
+        "media",
+        "control",
+        "automation",
+        "claude-code"
+      ],
+      "category": "media-automation",
+      "author": {
+        "name": "ae.ltd",
+        "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "premium",
+        "price": 49.99,
+        "currency": "USD",
+        "period": "one-time",
+        "trial": true
+      }
+    },
+    {
       "name": "youtube-creator",
       "source": "https://github.com/aegntic/cldcde/tree/main/plugins/youtube-creator",
       "description": "Free YouTube Creator toolkit with basic channel management and analytics",
@@ -269,6 +298,40 @@
         "currency": "USD",
         "period": "monthly"
       }
+    },
+    {
+      "name": "youtube-creator-pro",
+      "source": "https://github.com/aegntic/cldcde/tree/main/plugins/youtube-creator-pro",
+      "description": "Professional YouTube Creator toolkit with AI-powered content optimization, intelligent thumbnail generation, and automated workflow orchestration",
+      "version": "2.0.0",
+      "repository": "https://github.com/aegntic/cldcde",
+      "license": "MIT",
+      "keywords": [
+        "youtube",
+        "creator-pro",
+        "video",
+        "ai",
+        "automation",
+        "thumbnail",
+        "content",
+        "optimization",
+        "workflow",
+        "claude-code",
+        "enterprise"
+      ],
+      "category": "ai-media-automation",
+      "author": {
+        "name": "ae.ltd",
+        "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "enterprise",
+        "price": 199.99,
+        "currency": "USD",
+        "period": "one-time",
+        "trial": false
+      },
+      "upgradeFrom": "youtube-creator"
     }
   ]
 }
