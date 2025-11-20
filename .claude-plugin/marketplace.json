@@ -4,41 +4,12 @@
     "name": "ae.ltd",
     "email": "research@aegntic.ai"
   },
-  "description": "Official CLDCDE Plugin Marketplace - Home of premium Claude Code extensions and automation tools",
+  "description": "Official CLDCDE Plugin Marketplace - Premium Claude Code extensions",
   "plugins": [
     {
-      "name": "obs-studio-control",
-      "source": "./plugins/obs-studio-control",
-      "description": "Interactive OBS Studio control menu with real-time status monitoring and automation",
-      "version": "1.0.0",
-      "repository": "https://github.com/aegntic/cldcde",
-      "license": "MIT",
-      "keywords": [
-        "obs",
-        "streaming",
-        "recording",
-        "media",
-        "control",
-        "automation",
-        "claude-code"
-      ],
-      "category": "media-automation",
-      "author": {
-        "name": "ae.ltd",
-        "email": "research@aegntic.ai"
-      },
-      "pricing": {
-        "tier": "premium",
-        "price": 49.99,
-        "currency": "USD",
-        "period": "one-time",
-        "trial": true
-      }
-    },
-    {
       "name": "youtube-creator",
-      "source": "./plugins/youtube-creator",
-      "description": "Interactive YouTube Creator toolkit with secure API management and comprehensive channel automation",
+      "source": "https://github.com/aegntic/cldcde/tree/main/plugins/youtube-creator",
+      "description": "Free YouTube Creator toolkit with basic channel management and analytics",
       "version": "1.0.0",
       "repository": "https://github.com/aegntic/cldcde",
       "license": "MIT",
@@ -52,7 +23,7 @@
         "channel",
         "analytics",
         "claude-code",
-        "secure"
+        "free"
       ],
       "category": "media-automation",
       "author": {
@@ -60,65 +31,148 @@
         "email": "research@aegntic.ai"
       },
       "pricing": {
-        "tier": "professional",
-        "price": 79.99,
+        "tier": "free",
+        "price": 0,
         "currency": "USD",
-        "period": "one-time",
-        "trial": false
-      }
-    },
-    {
-      "name": "youtube-creator-pro",
-      "source": "./plugins/youtube-creator-pro",
-      "description": "Professional YouTube Creator toolkit with AI-powered content optimization, intelligent thumbnail generation, and automated workflow orchestration",
-      "version": "2.0.0",
-      "repository": "https://github.com/aegntic/cldcde",
-      "license": "MIT",
-      "keywords": [
-        "youtube",
-        "creator-pro",
-        "video",
-        "ai",
-        "automation",
-        "thumbnail",
-        "content",
-        "optimization",
-        "workflow",
-        "claude-code",
-        "enterprise"
-      ],
-      "category": "ai-media-automation",
-      "author": {
-        "name": "ae.ltd",
-        "email": "research@aegntic.ai"
+        "period": "forever"
       },
-      "pricing": {
-        "tier": "enterprise",
-        "price": 199.99,
-        "currency": "USD",
-        "period": "one-time",
-        "trial": false
+      "proFeatures": {
+        "upgradeUrl": "https://cldcde.cc/pro-shop",
+        "highlights": [
+          "AI-powered thumbnail generation",
+          "Advanced SEO optimization",
+          "Batch video processing",
+          "Competitor analysis tools",
+          "Automated content scheduling",
+          "Advanced analytics dashboard"
+        ]
       }
     },
     {
       "name": "sota-template-suite",
-      "source": "./plugins/sota-template-suite",
-      "description": "State-of-the-Art Template System with real performance optimization and AI-enhanced generation by ae.ltd",
+      "source": "https://github.com/aegntic/cldcde/tree/main/plugins/sota-template-suite",
+      "description": "Performance-First Solid Design Templates - professional template system",
       "version": "1.0.0",
       "repository": "https://github.com/aegntic/cldcde",
       "license": "MIT",
       "keywords": [
         "templates",
+        "design",
         "performance",
-        "ai-generation",
-        "web-optimization",
-        "developer-tools",
-        "core-web-vitals",
-        "scroll-animations",
-        "webassembly",
         "solid-design",
-        "claude-code",
-        "ae-ltd"
+        "web",
+        "professional",
+        "claude-code"
+      ],
+      "category": "design-tools",
+      "author": {
+        "name": "ae.ltd",
+        "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "premium",
+        "price": 29,
+        "currency": "USD",
+        "period": "monthly"
+      }
+    },
+    {
+      "name": "emergent-capability-suite",
+      "source": "https://github.com/aegntic/cldcde/tree/main/plugins/emergent-capability-suite",
+      "description": "Advanced AI capability development and synthesis tools",
+      "version": "1.0.0",
+      "repository": "https://github.com/aegntic/cldcde",
+      "license": "MIT",
+      "keywords": [
+        "ai",
+        "capabilities",
+        "emergence",
+        "development",
+        "synthesis",
+        "claude-code"
+      ],
+      "category": "ai-tools",
+      "author": {
+        "name": "ae.ltd",
+        "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "premium",
+        "price": 39,
+        "currency": "USD",
+        "period": "monthly"
+      }
+    },
+    {
+      "name": "fartnode-orchestrator-suite",
+      "source": "https://github.com/aegntic/cldcde/tree/main/plugins/fartnode-orchestrator-suite",
+      "description": "Viral automation ecosystem with coordinated multi-agent workflows",
+      "version": "1.0.0",
+      "repository": "https://github.com/aegntic/cldcde",
+      "license": "MIT",
+      "keywords": [
+        "automation",
+        "viral",
+        "orchestration",
+        "multi-agent",
+        "workflows",
+        "claude-code"
+      ],
+      "category": "automation",
+      "author": {
+        "name": "ae.ltd",
+        "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "premium",
+        "price": 49,
+        "currency": "USD",
+        "period": "monthly"
+      }
+    },
+    {
+      "name": "hyperliquid-risk-monitor",
+      "source": "https://github.com/aegntic/cldcde/tree/main/plugins/hyperliquid-risk-monitor",
+      "description": "Real-time risk monitoring system for live trading with automated alerts",
+      "version": "1.0.0",
+      "repository": "https://github.com/aegntic/cldcde",
+      "license": "MIT",
+      "keywords": [
+        "trading",
+        "risk",
+        "monitoring",
+        "hyperliquid",
+        "finance",
+        "alerts",
+        "claude-code"
+      ],
+      "category": "finance",
+      "author": {
+        "name": "ae.ltd",
+        "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "premium",
+        "price": 79,
+        "currency": "USD",
+        "period": "monthly"
+      }
+    },
+    {
+      "name": "remote-visual-debugger",
+      "source": "https://github.com/aegntic/cldcde/tree/main/plugins/remote-visual-debugger",
+      "description": "Comprehensive remote debugging toolkit for browser applications and React development",
+      "version": "1.0.0",
+      "repository": "https://github.com/aegntic/cldcde",
+      "license": "MIT",
+      "keywords": [
+        "debugging",
+        "remote",
+        "visual",
+        "browser",
+        "react",
+        "development",
+        "claude-code"
       ],
       "category": "development-tools",
       "author": {
@@ -127,164 +181,94 @@
       },
       "pricing": {
         "tier": "premium",
-        "price": 99.99,
+        "price": 35,
         "currency": "USD",
-        "period": "one-time",
-        "trial": true
+        "period": "monthly"
       }
     },
     {
-      "name": "emergent-capability-suite",
-      "source": "./plugins/emergent-capability-suite",
-      "description": "Advanced meta-skill ecosystem that evolves new capabilities through intelligent skill synthesis and pattern recognition by ae.ltd",
+      "name": "d3mo-video-generator",
+      "source": "https://github.com/aegntic/cldcde/tree/main/plugins/d3mo-video-generator",
+      "description": "Professional video generation with Remotion and advanced animation techniques",
       "version": "1.0.0",
       "repository": "https://github.com/aegntic/cldcde",
       "license": "MIT",
       "keywords": [
-        "emergent-capabilities",
-        "skill-synthesis",
-        "meta-skills",
-        "pattern-recognition",
-        "complex-adaptive-systems",
-        "capability-evolution",
-        "skill-ecosystem",
-        "ai-evolution",
-        "workflow-orchestration",
-        "claude-code",
-        "ae-ltd"
+        "video",
+        "generation",
+        "remotion",
+        "animation",
+        "demos",
+        "professional",
+        "claude-code"
       ],
-      "category": "ai-automation",
+      "category": "media-creation",
       "author": {
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
       },
       "pricing": {
-        "tier": "enterprise",
-        "price": 299.99,
+        "tier": "premium",
+        "price": 59,
         "currency": "USD",
-        "period": "one-time",
-        "trial": false
+        "period": "monthly"
       }
     },
     {
       "name": "viral-automation-suite",
-      "source": "./plugins/viral-automation-suite",
-      "description": "Comprehensive viral marketing and automation ecosystem with multi-agent coordination by ae.ltd",
+      "source": "https://github.com/aegntic/cldcde/tree/main/plugins/viral-automation-suite",
+      "description": "Build cross-platform social media automation workflows for viral growth",
       "version": "1.0.0",
       "repository": "https://github.com/aegntic/cldcde",
       "license": "MIT",
       "keywords": [
-        "viral-marketing",
-        "multi-agent-orchestration",
-        "content-automation",
-        "social-media-automation",
-        "performance-analytics",
-        "campaign-generation",
-        "content-repurposing",
-        "growth-automation",
-        "claude-code",
-        "ae-ltd"
+        "viral",
+        "social-media",
+        "automation",
+        "marketing",
+        "growth",
+        "workflows",
+        "claude-code"
       ],
-      "category": "marketing-automation",
+      "category": "marketing",
       "author": {
         "name": "ae.ltd",
         "email": "research@aegntic.ai"
       },
       "pricing": {
-        "tier": "enterprise",
-        "price": 249.99,
+        "tier": "premium",
+        "price": 45,
         "currency": "USD",
-        "period": "one-time",
-        "trial": false
+        "period": "monthly"
       }
-    }
-  ],
-  "bundles": [
-    {
-      "id": "content-creator-bundle",
-      "name": "Content Creator Professional Bundle",
-      "description": "Complete content creation and management suite with OBS control, YouTube tools, and AI optimization",
-      "plugins": [
-        "obs-studio-control",
-        "youtube-creator",
-        "youtube-creator-pro"
-      ],
-      "original_price": 329.97,
-      "bundle_price": 249.99,
-      "discount": 24.2,
-      "currency": "USD",
-      "features": [
-        "Multi-platform content management",
-        "AI-powered content optimization",
-        "Secure credential management",
-        "Enterprise-grade automation",
-        "Professional UI integration"
-      ]
     },
     {
-      "id": "developer-enterprise-bundle",
-      "name": "Developer Enterprise Bundle",
-      "description": "Professional development suite with SOTA templates, AI capabilities, and workflow orchestration",
-      "plugins": [
-        "sota-template-suite",
-        "emergent-capability-suite"
+      "name": "website-gen-automation",
+      "source": "https://github.com/aegntic/cldcde/tree/main/plugins/website-gen-automation",
+      "description": "Intelligent website generation and distribution workflow with animation studio",
+      "version": "1.0.0",
+      "repository": "https://github.com/aegntic/cldcde",
+      "license": "MIT",
+      "keywords": [
+        "website",
+        "generation",
+        "automation",
+        "seo",
+        "deployment",
+        "cloudflare",
+        "claude-code"
       ],
-      "original_price": 399.98,
-      "bundle_price": 349.99,
-      "discount": 12.5,
-      "currency": "USD",
-      "features": [
-        "State-of-the-Art template system",
-        "Emergent capability evolution",
-        "Advanced pattern recognition",
-        "Enterprise-grade development tools",
-        "AI-powered workflow optimization"
-      ]
-    },
-    {
-      "id": "marketing-automation-bundle",
-      "name": "Marketing Automation Bundle",
-      "description": "Complete viral marketing and automation suite with multi-agent coordination and content repurposing",
-      "plugins": [
-        "viral-automation-suite",
-        "emergent-capability-suite"
-      ],
-      "original_price": 549.98,
-      "bundle_price": 399.99,
-      "discount": 27.3,
-      "currency": "USD",
-      "features": [
-        "FARTNODE multi-agent orchestration",
-        "AI-powered content generation",
-        "Cross-platform automation",
-        "Enterprise campaign management",
-        "Advanced performance analytics"
-      ]
-    },
-    {
-      "id": "ultimate-ae-ltd-bundle",
-      "name": "Ultimate ae.ltd Bundle",
-      "description": "Complete ae.ltd ecosystem with all professional plugins - ultimate development, content creation, and marketing automation suite",
-      "plugins": [
-        "obs-studio-control",
-        "youtube-creator",
-        "youtube-creator-pro",
-        "sota-template-suite",
-        "emergent-capability-suite",
-        "viral-automation-suite"
-      ],
-      "original_price": 879.95,
-      "bundle_price": 699.99,
-      "discount": 20.5,
-      "currency": "USD",
-      "features": [
-        "Complete media automation ecosystem",
-        "Advanced AI capabilities evolution",
-        "State-of-the-Art development tools",
-        "Enterprise marketing automation",
-        "Professional multi-agent coordination"
-      ],
-      "is_featured": true
+      "category": "web-development",
+      "author": {
+        "name": "ae.ltd",
+        "email": "research@aegntic.ai"
+      },
+      "pricing": {
+        "tier": "premium",
+        "price": 69,
+        "currency": "USD",
+        "period": "monthly"
+      }
     }
   ]
 }
