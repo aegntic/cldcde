@@ -1,0 +1,15 @@
+include README.md
+include LICENSE
+include pyproject.toml
+recursive-include config *.yaml *.yml
+recursive-include src/obsidian_elite_rag/scripts *.sh *.py *.mjs
+recursive-include templates *.md
+recursive-include docs *.md
+global-exclude *.pyc
+global-exclude __pycache__
+global-exclude .DS_Store
+global-exclude *.log
+global-exclude .git*
+prune data
+prune logs
+prune *.egg-info

@@ -1,0 +1,160 @@
+{
+  "nodes": [
+    {
+      "style": "programmatic",
+      "nodeType": "nodes-base.httpRequest",
+      "displayName": "HTTP Request",
+      "description": "Makes HTTP requests and returns the response",
+      "category": "Core Nodes",
+      "properties": [
+        {
+          "name": "url",
+          "displayName": "URL",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "name": "method",
+          "displayName": "Method",
+          "type": "options",
+          "options": [
+            { "name": "GET", "value": "GET" },
+            { "name": "POST", "value": "POST" },
+            { "name": "PUT", "value": "PUT" },
+            { "name": "DELETE", "value": "DELETE" }
+          ],
+          "default": "GET"
+        }
+      ],
+      "credentials": [],
+      "isAITool": true,
+      "isTrigger": false,
+      "isWebhook": false,
+      "operations": [],
+      "version": "1",
+      "isVersioned": false,
+      "packageName": "n8n-nodes-base",
+      "documentation": "The HTTP Request node makes HTTP requests and returns the response data."
+    },
+    {
+      "style": "programmatic",
+      "nodeType": "nodes-base.webhook",
+      "displayName": "Webhook",
+      "description": "Receives data from external services via webhooks",
+      "category": "Core Nodes",
+      "properties": [
+        {
+          "name": "httpMethod",
+          "displayName": "HTTP Method",
+          "type": "options",
+          "options": [
+            { "name": "GET", "value": "GET" },
+            { "name": "POST", "value": "POST" }
+          ],
+          "default": "POST"
+        },
+        {
+          "name": "path",
+          "displayName": "Path",
+          "type": "string",
+          "default": "webhook"
+        }
+      ],
+      "credentials": [],
+      "isAITool": false,
+      "isTrigger": true,
+      "isWebhook": true,
+      "operations": [],
+      "version": "1",
+      "isVersioned": false,
+      "packageName": "n8n-nodes-base",
+      "documentation": "The Webhook node creates an endpoint to receive data from external services."
+    },
+    {
+      "style": "declarative",
+      "nodeType": "nodes-base.slack",
+      "displayName": "Slack",
+      "description": "Send messages and interact with Slack",
+      "category": "Communication",
+      "properties": [],
+      "credentials": [
+        {
+          "name": "slackApi",
+          "required": true
+        }
+      ],
+      "isAITool": true,
+      "isTrigger": false,
+      "isWebhook": false,
+      "operations": [
+        {
+          "name": "Message",
+          "value": "message",
+          "operations": [
+            {
+              "name": "Send",
+              "value": "send",
+              "description": "Send a message to a channel or user"
+            }
+          ]
+        }
+      ],
+      "version": "2.1",
+      "isVersioned": true,
+      "packageName": "n8n-nodes-base",
+      "documentation": "The Slack node allows you to send messages and interact with Slack workspaces."
+    }
+  ],
+  "templates": [
+    {
+      "id": 1001,
+      "name": "HTTP to Webhook",
+      "description": "Fetch data from HTTP and send to webhook",
+      "workflow": {
+        "nodes": [
+          {
+            "id": "1",
+            "name": "HTTP Request",
+            "type": "n8n-nodes-base.httpRequest",
+            "position": [250, 300],
+            "parameters": {
+              "url": "https://api.example.com/data",
+              "method": "GET"
+            }
+          },
+          {
+            "id": "2",
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "position": [450, 300],
+            "parameters": {
+              "path": "data-webhook",
+              "httpMethod": "POST"
+            }
+          }
+        ],
+        "connections": {
+          "HTTP Request": {
+            "main": [[{ "node": "Webhook", "type": "main", "index": 0 }]]
+          }
+        }
+      },
+      "nodes": [
+        { "id": 1, "name": "HTTP Request", "icon": "http" },
+        { "id": 2, "name": "Webhook", "icon": "webhook" }
+      ],
+      "categories": ["Data Processing"],
+      "user": {
+        "id": 1,
+        "name": "Test User",
+        "username": "testuser",
+        "verified": false
+      },
+      "views": 150,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-20T15:30:00Z",
+      "totalViews": 150
+    }
+  ]
+}

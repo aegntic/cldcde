@@ -1,0 +1,58 @@
+AI Collaboration Hub License
+
+Copyright (c) 2025 Mattae Cooper <human@mattaecooper.org> and '{ae}'aegntic.ai <contact@aegntic.ai>
+
+This software is dual-licensed under the following terms:
+
+## Personal and Non-Commercial Use License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction for personal, educational, research, and
+non-commercial purposes, including without limitation the rights to use, copy,
+modify, merge, publish, and distribute copies of the Software, subject to the
+following conditions:
+
+1. The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+2. Proper attribution must be maintained in all derivative works:
+   - Original Authors: Mattae Cooper <human@mattaecooper.org> and '{ae}'aegntic.ai <contact@aegntic.ai>
+   - Project: AI Collaboration Hub
+   - Repository: https://github.com/aegntic/aegntic-MCP
+
+3. This license applies only to personal, educational, research, and non-commercial use.
+
+## Commercial Use License
+
+Any commercial use, including but not limited to:
+- Use in commercial products or services
+- Use by organizations with annual revenue exceeding $100,000
+- Use in software-as-a-service offerings
+- Sublicensing for commercial purposes
+- Integration into commercial AI platforms or tools
+
+Requires explicit written permission and a separate commercial license from the copyright holders.
+
+For commercial licensing inquiries, contact:
+- Mattae Cooper: human@mattaecooper.org
+- '{ae}'aegntic.ai: contact@aegntic.ai
+
+## Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+## Credits
+
+This software was developed by:
+- Mattae Cooper <human@mattaecooper.org>
+- '{ae}'aegntic.ai <contact@aegntic.ai>
+
+Original concept and implementation for supervised AI-to-AI collaboration
+between Claude Code and Gemini using OpenRouter's API infrastructure.

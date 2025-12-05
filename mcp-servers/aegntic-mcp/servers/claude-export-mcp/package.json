@@ -1,0 +1,46 @@
+{
+  "name": "@aegntic/claude-export-mcp",
+  "version": "1.0.2",
+  "description": "MCP server for exporting Claude Desktop projects, conversations, and artifacts to Markdown",
+  "main": "index.js",
+  "bin": {
+    "claude-export-mcp": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "claude",
+    "anthropic",
+    "export",
+    "markdown",
+    "mcp",
+    "projects"
+  ],
+  "author": "aegntic",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/aegntic-MCP.git",
+    "directory": "servers/claude-export-mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/aegntic/aegntic-MCP/issues"
+  },
+  "homepage": "https://github.com/aegntic/aegntic-MCP/tree/main/servers/claude-export-mcp#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "optionalDependencies": {
+    "qrcode-terminal": "^0.12.0"
+  },
+  "files": [
+    "index.js",
+    "src/**/*.js",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

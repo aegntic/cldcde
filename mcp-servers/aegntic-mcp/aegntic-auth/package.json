@@ -1,0 +1,28 @@
+{
+  "name": "@aegntic/auth-mcp",
+  "version": "1.0.0",
+  "description": "Authentication and licensing MCP server for aegntic ecosystem",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "bun build ./src/index.ts --outdir ./dist --target node --external @modelcontextprotocol/sdk",
+    "dev": "bun run --watch src/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.1",
+    "@supabase/supabase-js": "^2.50.0",
+    "jsonwebtoken": "^9.0.0",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.0",
+    "stripe": "^14.0.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/nodemailer": "^6.4.0",
+    "dotenv": "^16.5.0"
+  },
+  "author": "aegnt_catface <human@mattaecooper.org>, aegntic.foundation <research@aegntic.ai>",
+  "license": "MIT"
+}

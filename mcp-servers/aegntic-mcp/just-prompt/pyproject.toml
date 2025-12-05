@@ -1,0 +1,30 @@
+[project]
+name = "just-prompt"
+version = "0.1.0"
+description = "A lightweight MCP server for various LLM providers"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "anthropic>=0.49.0",
+    "google-genai>=1.11.0",
+    "groq>=0.20.0",
+    "ollama>=0.4.7",
+    "openai>=1.68.0",
+    "python-dotenv>=1.0.1",
+    "pydantic>=2.0.0",
+    "mcp>=0.1.5",
+    "requests>=2.31.0",
+]
+
+[project.scripts]
+just-prompt = "just_prompt.__main__:main"
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.3.1",
+    "pytest-asyncio>=0.20.3",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

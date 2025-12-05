@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai-collaboration-hub"
+version = "1.0.0"
+description = "MCP server for supervised AI-to-AI collaboration between Claude Code and Gemini with 1M token context"
+readme = "README.md"
+license = { text = "Dual License: Free for non-commercial use, commercial license required for commercial use" }
+authors = [
+    { name = "Mattae Cooper", email = "human@mattaecooper.org" },
+    { name = "'{ae}'aegntic.ai", email = "contact@aegntic.ai" }
+]
+keywords = ["mcp", "ai", "claude", "gemini", "collaboration", "openrouter"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
+requires-python = ">=3.8"
+dependencies = [
+    "mcp>=1.0.0",
+    "httpx>=0.27.0",
+    "pydantic>=2.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/aegntic/MCP/tree/main/ai-collaboration-hub"
+Repository = "https://github.com/aegntic/MCP"
+Issues = "https://github.com/aegntic/MCP/issues"
+Documentation = "https://github.com/aegntic/MCP/tree/main/ai-collaboration-hub/docs"
+
+[project.scripts]
+ai-collaboration-hub = "ai_collaboration_hub.server:main"
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "black>=24.0.0",
+    "ruff>=0.3.0",
+    "mypy>=1.8.0"
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+select = ["E", "F", "W", "C", "N"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true

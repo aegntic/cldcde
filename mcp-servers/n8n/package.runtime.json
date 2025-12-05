@@ -1,0 +1,20 @@
+{
+  "name": "n8n-mcp-runtime",
+  "version": "2.10.1",
+  "description": "n8n MCP Server Runtime Dependencies Only",
+  "private": true,
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.13.2",
+    "express": "^5.1.0",
+    "dotenv": "^16.5.0",
+    "sql.js": "^1.13.0",
+    "uuid": "^10.0.0",
+    "axios": "^1.7.7"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^11.10.0"
+  }
+}

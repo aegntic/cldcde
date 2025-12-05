@@ -1,0 +1,4 @@
+<purpose>
+    I want to decide if I should spend time learning Python or TypeScript.
+    Help me decide between these two options. Given that I want to train ai models and build a fullstack website to host them, which language should I use?
+</purpose>

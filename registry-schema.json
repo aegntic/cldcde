@@ -1,0 +1,185 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "CLDCDE Marketplace Registry",
+    "description": "Schema for registering items in the cldcde.cc marketplace",
+    "definitions": {
+        "MCPServer": {
+            "type": "object",
+            "required": [
+                "name",
+                "version",
+                "description",
+                "type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string",
+                    "pattern": "^\\d+\\.\\d+\\.\\d+$"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "mcp-server"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "license": {
+                    "type": "string"
+                },
+                "repository": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "install": {
+                    "type": "object",
+                    "properties": {
+                        "npm": {
+                            "type": "string"
+                        },
+                        "command": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "capabilities": {
+                    "type": "array",
+                    "items": {
+                        "enum": [
+                            "tools",
+                            "resources",
+                            "prompts"
+                        ]
+                    }
+                },
+                "verified": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "downloads": {
+                    "type": "integer",
+                    "default": 0
+                }
+            }
+        },
+        "Plugin": {
+            "type": "object",
+            "required": [
+                "name",
+                "version",
+                "description",
+                "type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "plugin"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "category": {
+                    "enum": [
+                        "productivity",
+                        "integration",
+                        "utility",
+                        "theme"
+                    ]
+                }
+            }
+        },
+        "Workflow": {
+            "type": "object",
+            "required": [
+                "name",
+                "version",
+                "description",
+                "type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "workflow"
+                },
+                "platform": {
+                    "enum": [
+                        "n8n",
+                        "zapier",
+                        "custom"
+                    ]
+                }
+            }
+        },
+        "Skill": {
+            "type": "object",
+            "required": [
+                "name",
+                "version",
+                "description",
+                "type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "skill"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "type": "object",
+    "properties": {
+        "items": {
+            "type": "array",
+            "items": {
+                "oneOf": [
+                    {
+                        "$ref": "#/definitions/MCPServer"
+                    },
+                    {
+                        "$ref": "#/definitions/Plugin"
+                    },
+                    {
+                        "$ref": "#/definitions/Workflow"
+                    },
+                    {
+                        "$ref": "#/definitions/Skill"
+                    }
+                ]
+            }
+        }
+    }
+}

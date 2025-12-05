@@ -1,0 +1,62 @@
+{
+  "name": "obsidian-elite-rag",
+  "version": "1.0.0",
+  "description": "Elite Obsidian RAG System - Second Brain with Claude Code Integration",
+  "main": "index.js",
+  "scripts": {
+    "setup": "./scripts/setup-vault.sh",
+    "start": "./scripts/start-rag-engine.sh",
+    "dev": "concurrently \"npm run dev:rag\" \"npm run dev:web\"",
+    "dev:rag": "python3 integrations/rag-engine.py",
+    "dev:web": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "test": "python3 -m pytest tests/",
+    "lint": "eslint . --ext .js,.ts",
+    "watch": "./scripts/watch-vault.sh",
+    "index": "python3 scripts/index-vault.py",
+    "query": "python3 scripts/query-rag.py",
+    "start:neo4j": "./scripts/start-neo4j.sh",
+    "stop:neo4j": "docker stop neo4j 2>/dev/null || true",
+    "reset:neo4j": "docker stop neo4j 2>/dev/null; docker rm neo4j 2>/dev/null; rm -rf data/neo4j/*",
+    "start:databases": "concurrently \"docker run -d --name qdrant -p 6333:6333 -v $(pwd)/data/qdrant:/qdrant/storage qdrant/qdrant:latest\" \"npm run start:neo4j\"",
+    "stop:databases": "npm run stop:neo4j; docker stop qdrant 2>/dev/null || true",
+    "setup:graphiti": "pip install graphiti-core neo4j py2neo"
+  },
+  "keywords": [
+    "obsidian",
+    "rag",
+    "knowledge-management",
+    "claude",
+    "ai",
+    "second-brain"
+  ],
+  "author": "Elite Knowledge Systems",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "axios": "^1.5.0",
+    "dotenv": "^16.3.1",
+    "chokidar": "^3.5.3",
+    "natural": "^6.5.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "eslint": "^8.47.0",
+    "nodemon": "^3.0.1",
+    "@types/node": "^20.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "python": ">=3.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elite-knowledge/obsidian-elite-rag.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elite-knowledge/obsidian-elite-rag/issues"
+  },
+  "homepage": "https://github.com/elite-knowledge/obsidian-elite-rag#readme"
+}

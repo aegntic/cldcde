@@ -1,0 +1,350 @@
+# Elite RAG System - Automation Configuration
+
+# Core Automation Settings
+automation:
+  enabled: true
+  log_level: INFO
+  max_concurrent_tasks: 5
+  
+  # Knowledge Processing
+  knowledge_processing:
+    enabled: true
+    interval_seconds: 300  # 5 minutes
+    max_batch_size: 10
+    auto_embed: true
+    auto_link_discovery: true
+    
+  # Context Management
+  context_management:
+    enabled: true
+    cache_size: 1000
+    prediction_enabled: true
+    max_context_items: 50
+    context_freshness_hours: 24
+    
+  # Learning Automation
+  learning_automation:
+    enabled: true
+    spaced_repetition: true
+    review_frequency: daily
+    max_new_topics_per_day: 3
+    auto_generate_summaries: true
+    
+  # Performance Monitoring
+  performance_monitoring:
+    enabled: true
+    metrics_retention_days: 30
+    alert_thresholds:
+      query_time_ms: 5000
+      memory_usage_percent: 80
+      error_rate_percent: 5
+
+# RAG System Configuration
+rag_system:
+  # Retrieval Layers
+  layers:
+    semantic:
+      enabled: true
+      weight: 0.3
+      max_results: 20
+      similarity_threshold: 0.7
+
+    knowledge_graph:
+      enabled: true
+      weight: 0.25
+      provider: graphiti
+      max_depth: 4
+      min_connections: 1
+      entity_types: [
+        "concept", "person", "organization", "event", "location", "technology",
+        "methodology", "framework", "algorithm", "project", "research",
+        "workflow", "process", "system", "application", "tool", "library",
+        "database", "api", "protocol", "standard", "specification", "pattern",
+        "principle", "theory", "model", "architecture", "design", "implementation"
+      ]
+      relationship_types: [
+        "related_to", "part_of", "mentions", "examples_of", "implements",
+        "uses", "depends_on", "extends", "based_on", "similar_to", "contrasts_with",
+        "supports", "enables", "requires", "replaces", "improves", "integrates_with",
+        "connects_to", "references", "cites", "builds_on", "applies_to", "defines",
+        "describes", "explains", "demonstrates", "validates", "tests", "analyzes",
+        "compares", "evaluates", "optimizes", "automates", "manages", "monitors",
+        "deploys", "configures", "maintains", "documents", "teaches", "learns"
+      ]
+
+    graph:
+      enabled: true
+      weight: 0.15
+      max_depth: 3
+      min_connections: 1
+      
+    temporal:
+      enabled: true
+      weight: 0.15
+      recency_days: 30
+      freshness_weight: 0.6
+      
+    domain:
+      enabled: true
+      weight: 0.15
+      domain_specificity: true
+      
+    meta:
+      enabled: true
+      weight: 0.1
+      pattern_matching: true
+
+# Vector Database Configuration
+vector_database:
+  provider: qdrant
+  host: localhost
+  port: 6333
+  collection_name: obsidian_knowledge
+  embedding_dimension: 1536
+  distance_metric: cosine
+
+# Knowledge Graph Configuration
+knowledge_graph:
+  enabled: true
+  provider: graphiti
+  backup_provider: networkx
+
+  # Graphiti Configuration
+  graphiti:
+    neo4j_uri: bolt://localhost:7687
+    neo4j_user: neo4j
+    neo4j_password: "password"
+    database: neo4j
+
+    # Knowledge Extraction
+    entity_extraction:
+      enabled: true
+      extract_people: true
+      extract_organizations: true
+      extract_concepts: true
+      extract_locations: true
+      extract_events: true
+      extract_relationships: true
+
+    # Relationship Detection
+    relationship_detection:
+      enabled: true
+      min_confidence: 0.7
+      max_relationships_per_entity: 50
+
+    # Graph Construction
+    graph_construction:
+      auto_merge_entities: true
+      entity_resolution_threshold: 0.8
+      relationship_strength_threshold: 0.6
+  
+  # Indexing
+  indexing:
+    batch_size: 100
+    overlap_ratio: 0.1
+    chunk_size: 1000
+    min_chunk_size: 100
+
+# Claude Integration Configuration
+claude_integration:
+  enabled: true
+  api_endpoint: https://api.anthropic.com
+  max_tokens: 4000
+  temperature: 0.7
+  
+  # Context Enhancement
+  context_enhancement:
+    enabled: true
+    max_context_length: 8000
+    include_metadata: true
+    include_links: true
+    include_tags: true
+    
+  # Workflow Integration
+  workflows:
+    development:
+      enabled: true
+      include_code_examples: true
+      include_best_practices: true
+      
+    research:
+      enabled: true
+      include_methodology: true
+      include_citations: true
+      
+    learning:
+      enabled: true
+      adaptive_difficulty: true
+      include_exercises: true
+
+# File Watching Configuration
+file_watching:
+  enabled: true
+  watch_patterns:
+    - "**/*.md"
+    - "**/*.txt"
+    - "**/*.py"
+    - "**/*.js"
+    - "**/*.ts"
+    
+  ignore_patterns:
+    - "**/.obsidian/**"
+    - "**/node_modules/**"
+    - "**/.git/**"
+    - "**/__pycache__/**"
+    
+  events:
+    - created
+    - modified
+    - deleted
+    - moved
+
+# Processing Configuration
+processing:
+  # Text Processing
+  text_processing:
+    chunking_strategy: recursive
+    chunk_size: 1000
+    chunk_overlap: 200
+    min_chunk_size: 50
+    
+  # Metadata Extraction
+  metadata_extraction:
+    extract_entities: true
+    extract_concepts: true
+    extract_relationships: true
+    generate_tags: true
+    auto_categorize: true
+    
+  # Link Discovery
+  link_discovery:
+    enabled: true
+    discover_implicit_links: true
+    suggest_external_links: true
+    validate_existing_links: true
+
+# Performance Configuration
+performance:
+  # Caching
+  caching:
+    enabled: true
+    cache_type: memory
+    ttl_seconds: 3600
+    max_cache_size: 1000
+    
+  # Parallel Processing
+  parallelism:
+    max_workers: 4
+    processing_queue_size: 100
+    batch_processing: true
+    
+  # Resource Limits
+  resources:
+    max_memory_mb: 2048
+    max_cpu_percent: 80
+    max_file_size_mb: 100
+
+# Security Configuration
+security:
+  # Access Control
+  access_control:
+    enabled: false  # Enable for multi-user setups
+    authentication_required: false
+    
+  # Data Privacy
+  privacy:
+    encrypt_sensitive_data: true
+    anonymize_personal_info: true
+    retention_policy_days: 365
+    
+  # API Security
+  api_security:
+    rate_limiting: true
+    max_requests_per_minute: 100
+    api_key_required: true
+
+# Integration Configuration
+integrations:
+  # Obsidian
+  obsidian:
+    enabled: true
+    vault_path: ""  # Set during setup
+    sync_interval: 60
+    
+  # External Services
+  external_services:
+    github:
+      enabled: false
+      sync_repositories: []
+      
+    slack:
+      enabled: false
+      channels: []
+      
+    notion:
+      enabled: false
+      databases: []
+
+# Development Configuration
+development:
+  debug_mode: false
+  verbose_logging: false
+  mock_external_apis: false
+  
+  # Testing
+  testing:
+    enabled: false
+    test_vault_path: ""
+    run_integration_tests: false
+
+# Monitoring and Analytics
+monitoring:
+  enabled: true
+  metrics_collection: true
+  performance_tracking: true
+  
+  # Alerts
+  alerts:
+    email_enabled: false
+    webhook_enabled: false
+    slack_enabled: false
+    
+  # Dashboards
+  dashboards:
+    enabled: true
+    refresh_interval: 30
+    retention_days: 7
+
+# Backup and Recovery
+backup:
+  enabled: true
+  automatic_backup: true
+  backup_interval_hours: 24
+  backup_retention_days: 30
+  
+  # Backup Locations
+  backup_locations:
+    - type: local
+      path: "./backups"
+    - type: cloud
+      provider: ""  # Configure as needed
+      path: ""
+
+# Customization
+customization:
+  # User Preferences
+  preferences:
+    theme: default
+    language: en
+    timezone: UTC
+    
+  # Custom Rules
+  custom_rules:
+    enabled: true
+    rules_file: "config/custom-rules.yaml"
+    
+  # Templates
+  templates:
+    enabled: true
+    templates_path: "templates/"
+    auto_apply: true

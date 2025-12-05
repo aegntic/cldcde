@@ -1,0 +1,25 @@
+Create a countdown timer component that satisfies these requirements:
+
+1. Framework implementations:
+   - Vue.js
+   - Svelte
+   - React
+   - Vanilla JavaScript
+
+2. Component interface:
+   - :start-time: number (starting time in seconds)
+   - :format: number (display format, 0 = MM:SS, 1 = HH:MM:SS)
+
+3. Features:
+   - Count down from start-time to zero
+   - Display remaining time in specified format
+   - Stop counting when reaching zero
+   - Emit/callback 'finished' event when countdown completes
+   - Provide a visual indication when time is running low (< 10% of total)
+
+4. Include:
+   - Component implementation
+   - Sample usage
+   - Clear comments explaining key parts
+
+Provide clean, well-structured code for each framework version.

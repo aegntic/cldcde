@@ -1,0 +1,24 @@
+# docker-compose.test-n8n.yml - Simple test setup for n8n integration
+# Run n8n in Docker, n8n-mcp locally for faster testing
+
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n-test
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=false
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=development
+      - N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true
+    volumes:
+      - n8n_test_data:/home/node/.n8n
+    network_mode: "host"  # Use host network for easy local testing
+
+volumes:
+  n8n_test_data:

@@ -1,0 +1,75 @@
+# .dockerignore
+node_modules
+npm-debug.log
+.git
+.gitignore
+.env
+.env.local
+# Exclude all .env.* files except .env.example
+.env.*
+!.env.example
+# Keep nodes.db but exclude other database files
+data/*.db
+data/*.db-*
+!data/nodes.db
+dist
+.DS_Store
+*.log
+coverage
+.nyc_output
+.vscode
+.idea
+*.swp
+*.swo
+*~
+docker-compose.override.yml
+.github
+docs
+tests
+jest.config.js
+.eslintrc.js
+*.md
+!README.md
+!LICENSE
+# Exclude n8n-docs if present
+../n8n-docs
+n8n-docs
+# Exclude extracted nodes
+extracted-nodes/
+# Exclude temp directory
+temp/
+tmp/
+# Exclude any backup or temporary files
+*.bak
+*.tmp
+*.temp
+# Exclude build artifacts
+build/
+out/
+# Exclude local development files
+.eslintcache
+.stylelintcache
+# Exclude any large test data
+test-data/
+# Exclude Docker files during build
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+# Exclude development scripts
+scripts/test-*.sh
+scripts/deploy-*.sh
+# Exclude TypeScript cache
+.tscache
+tsconfig.tsbuildinfo
+# Exclude package manager caches
+.npm
+.pnpm-store
+.yarn
+# Exclude git hooks
+.husky
+# Exclude renovate config
+renovate.json
+# Exclude any local notes or TODO files
+TODO*
+NOTES*
+*.todo

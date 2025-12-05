@@ -1,0 +1,5 @@
+# Exclude OpenAI API tests that require API key
+test_openai_request.py
+
+# Exclude script that contains API key
+run_openai_test.sh

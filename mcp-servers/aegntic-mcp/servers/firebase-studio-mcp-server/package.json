@@ -1,0 +1,57 @@
+{
+  "name": "@aegntic/firebase-studio-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for Firebase Studio integration with complete access to Firebase and Google Cloud services",
+  "main": "index.js",
+  "bin": {
+    "firebase-studio-mcp-server": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "setup": "./setup.sh"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2",
+    "mcp-server": "^0.8.0",
+    "firebase-admin": "^11.11.0",
+    "google-auth-library": "^9.0.0"
+  },
+  "keywords": [
+    "firebase",
+    "google-cloud",
+    "mcp",
+    "claude",
+    "anthropic",
+    "firebase-studio",
+    "firestore",
+    "realtime-database",
+    "hosting",
+    "storage",
+    "firebase-auth"
+  ],
+  "author": "aegntic",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/aegntic-MCP.git",
+    "directory": "servers/firebase-studio-mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/aegntic/aegntic-MCP/issues"
+  },
+  "homepage": "https://github.com/aegntic/aegntic-MCP/tree/main/servers/firebase-studio-mcp-server#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "index.js",
+    "src/**/*.js",
+    "README.md",
+    "setup.sh",
+    "service-account-example.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

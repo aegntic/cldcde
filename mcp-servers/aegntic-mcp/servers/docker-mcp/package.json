@@ -1,0 +1,40 @@
+{
+  "name": "docker-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for Docker container and image management",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "dockerode": "^3.3.4",
+    "docker-compose": "^0.23.17",
+    "chalk": "^4.1.2",
+    "winston": "^3.8.2",
+    "yaml": "^2.2.2"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.22",
+    "standard": "^17.0.0"
+  },
+  "keywords": [
+    "docker",
+    "mcp",
+    "containers",
+    "orchestration"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/mcp-servers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/mcp-servers/issues"
+  },
+  "homepage": "https://github.com/your-username/mcp-servers/tree/main/servers/docker-mcp"
+}

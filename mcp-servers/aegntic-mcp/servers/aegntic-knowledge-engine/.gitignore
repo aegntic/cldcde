@@ -1,0 +1,4 @@
+.env
+.venv
+__pycache__
+crawl4ai_mcp.egg-info

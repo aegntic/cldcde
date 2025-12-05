@@ -1,0 +1,26 @@
+Build vue, react, and svelte components for this component definition:
+
+<TableOfContents :tree="tree" />
+
+The tree is a json object that looks like this:
+
+```json
+{
+    "name": "TableOfContents",
+    "children": [
+        {
+            "name": "Item",
+            "children": [
+                {
+                    "name": "Item",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "Item 2",
+            "children": []
+        }
+    ]
+}
+```

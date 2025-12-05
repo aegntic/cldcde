@@ -1,0 +1,45 @@
+#!/bin/sh
+# n8n-mcp wrapper script for Docker
+# Transforms "n8n-mcp serve" to proper start command
+
+# Validate arguments to prevent command injection
+validate_args() {
+    for arg in "$@"; do
+        case "$arg" in
+            # Allowed arguments - extend this list as needed
+            --port=*|--host=*|--verbose|--quiet|--help|-h|--version|-v)
+                # Valid arguments
+                ;;
+            *)
+                # Allow empty arguments
+                if [ -z "$arg" ]; then
+                    continue
+                fi
+                # Reject any other arguments for security
+                echo "Error: Invalid argument: $arg" >&2
+                echo "Allowed arguments: --port=<port>, --host=<host>, --verbose, --quiet, --help, --version" >&2
+                exit 1
+                ;;
+        esac
+    done
+}
+
+if [ "$1" = "serve" ]; then
+    # Transform serve command to start with HTTP mode
+    export MCP_MODE="http"
+    shift  # Remove "serve" from arguments
+    
+    # Validate remaining arguments
+    validate_args "$@"
+    
+    # For testing purposes, output the environment variable if requested
+    if [ "$DEBUG_ENV" = "true" ]; then
+        echo "MCP_MODE=$MCP_MODE" >&2
+    fi
+    
+    exec node /app/dist/mcp/index.js "$@"
+else
+    # For non-serve commands, pass through without validation
+    # This allows flexibility for other subcommands
+    exec node /app/dist/mcp/index.js "$@"
+fi

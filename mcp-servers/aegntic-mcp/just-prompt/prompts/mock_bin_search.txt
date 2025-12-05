@@ -1,0 +1,1 @@
+python: return code exclusively: def binary_search(arr, target) -> Optional[int]:

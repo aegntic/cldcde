@@ -1,0 +1,22 @@
+[install]
+# Optimize for production
+production = true
+cache = true
+
+[test]
+# Test configuration
+root = "./src"
+preload = ["./src/test-setup.ts"]
+
+[run]
+# Development settings
+hot = true
+watch = true
+
+# Build settings
+[build]
+target = "node"
+format = "esm"
+outdir = "./dist"
+splitting = false
+minify = true

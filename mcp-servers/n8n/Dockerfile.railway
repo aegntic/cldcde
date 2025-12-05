@@ -1,0 +1,88 @@
+# syntax=docker/dockerfile:1.7
+# Railway-compatible Dockerfile for n8n-mcp
+
+# --- Stage 1: Builder ---
+FROM node:22-alpine AS builder
+WORKDIR /app
+
+# Install system dependencies for native modules
+RUN apk add --no-cache python3 make g++ && \
+    rm -rf /var/cache/apk/*
+
+# Copy package files and tsconfig files
+COPY package*.json tsconfig*.json ./
+
+# Install all dependencies (including devDependencies for build)
+RUN npm ci --no-audit --no-fund
+
+# Copy source code
+COPY src ./src
+
+# Build the application
+RUN npm run build
+
+# --- Stage 2: Runtime ---
+FROM node:22-alpine AS runtime
+WORKDIR /app
+
+# Install system dependencies
+RUN apk add --no-cache curl python3 make g++ && \
+    rm -rf /var/cache/apk/*
+
+# Copy runtime-only package.json
+COPY package.runtime.json package.json
+
+# Install only production dependencies
+RUN npm install --production --no-audit --no-fund && \
+    npm cache clean --force
+
+# Copy built application from builder stage
+COPY --from=builder /app/dist ./dist
+
+# Copy necessary data and configuration files
+COPY data/ ./data/
+COPY src/database/schema-optimized.sql ./src/database/schema-optimized.sql
+COPY .env.example ./
+
+# Copy entrypoint script
+COPY docker/docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Create data directory if it doesn't exist and set permissions
+RUN mkdir -p ./data && \
+    chmod 755 ./data
+
+# Add metadata labels
+LABEL org.opencontainers.image.source="https://github.com/czlonkowski/n8n-mcp"
+LABEL org.opencontainers.image.description="n8n MCP Server - Integration between n8n workflow automation and Model Context Protocol"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.title="n8n-mcp"
+LABEL org.opencontainers.image.version="2.7.13"
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 && \
+    chown -R nodejs:nodejs /app
+USER nodejs
+
+# Set Railway-optimized environment variables
+ENV AUTH_TOKEN="REPLACE_THIS_AUTH_TOKEN_32_CHARS_MIN_abcdefgh"
+ENV NODE_ENV=production
+ENV IS_DOCKER=true
+ENV MCP_MODE=http
+ENV USE_FIXED_HTTP=true
+ENV LOG_LEVEL=info
+ENV TRUST_PROXY=1
+ENV HOST=0.0.0.0
+ENV CORS_ORIGIN="*"
+
+# Expose port (Railway will set PORT automatically)
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://127.0.0.1:${PORT:-3000}/health || exit 1
+
+# Optimized entrypoint (identical to main Dockerfile)
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["node", "dist/mcp/index.js", "--http"]

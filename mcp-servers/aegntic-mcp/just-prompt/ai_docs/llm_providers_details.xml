@@ -1,0 +1,2099 @@
+This file is a merged representation of a subset of the codebase, containing files not matching ignore patterns, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching these patterns are excluded: server/modules/exbench_module.py
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+<additional_info>
+
+</additional_info>
+
+</file_summary>
+
+<directory_structure>
+__init__.py
+anthropic_llm.py
+data_types.py
+deepseek_llm.py
+exbench_module.py
+execution_evaluators.py
+fireworks_llm.py
+gemini_llm.py
+llm_models.py
+ollama_llm.py
+openai_llm.py
+tools.py
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="__init__.py">
+# Empty file to make tests a package
+</file>
+
+<file path="anthropic_llm.py">
+import anthropic
+import os
+import json
+from modules.data_types import ModelAlias, PromptResponse, ToolsAndPrompts
+from utils import MAP_MODEL_ALIAS_TO_COST_PER_MILLION_TOKENS, parse_markdown_backticks
+from modules.data_types import (
+    SimpleToolCall,
+    ToolCallResponse,
+    BenchPromptResponse,
+)
+from utils import timeit
+from modules.tools import (
+    anthropic_tools_list,
+    run_coder_agent,
+    run_git_agent,
+    run_docs_agent,
+    all_tools_list,
+)
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Initialize Anthropic client
+anthropic_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+
+
+def get_anthropic_cost(model: str, input_tokens: int, output_tokens: int) -> float:
+    """
+    Calculate the cost for Anthropic API usage.
+
+    Args:
+        model: The model name/alias used
+        input_tokens: Number of input tokens
+        output_tokens: Number of output tokens
+
+    Returns:
+        float: Total cost in dollars
+    """
+
+    cost_map = MAP_MODEL_ALIAS_TO_COST_PER_MILLION_TOKENS.get(model)
+    if not cost_map:
+        return 0.0
+
+    input_cost = (input_tokens / 1_000_000) * cost_map["input"]
+    output_cost = (output_tokens / 1_000_000) * cost_map["output"]
+
+    return round(input_cost + output_cost, 6)
+
+
+def text_prompt(prompt: str, model: str) -> PromptResponse:
+    """
+    Send a prompt to Anthropic and get a response.
+    """
+    try:
+        with timeit() as t:
+            message = anthropic_client.messages.create(
+                model=model,
+                max_tokens=2048,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            elapsed_ms = t()
+
+            input_tokens = message.usage.input_tokens
+            output_tokens = message.usage.output_tokens
+            cost = get_anthropic_cost(model, input_tokens, output_tokens)
+
+            return PromptResponse(
+                response=message.content[0].text,
+                runTimeMs=elapsed_ms,
+                inputAndOutputCost=cost,
+            )
+    except Exception as e:
+        print(f"Anthropic error: {str(e)}")
+        return PromptResponse(
+            response=f"Error: {str(e)}", runTimeMs=0.0, inputAndOutputCost=0.0
+        )
+
+
+def bench_prompt(prompt: str, model: str) -> BenchPromptResponse:
+    """
+    Send a prompt to Anthropic and get detailed benchmarking response.
+    """
+    try:
+        with timeit() as t:
+            message = anthropic_client.messages.create(
+                model=model,
+                max_tokens=2048,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            elapsed_ms = t()
+
+            input_tokens = message.usage.input_tokens
+            output_tokens = message.usage.output_tokens
+            cost = get_anthropic_cost(model, input_tokens, output_tokens)
+
+        return BenchPromptResponse(
+            response=message.content[0].text,
+            tokens_per_second=0.0,  # Anthropic doesn't provide this info
+            provider="anthropic",
+            total_duration_ms=elapsed_ms,
+            load_duration_ms=0.0,
+            inputAndOutputCost=cost,
+        )
+    except Exception as e:
+        print(f"Anthropic error: {str(e)}")
+        return BenchPromptResponse(
+            response=f"Error: {str(e)}",
+            tokens_per_second=0.0,
+            provider="anthropic",
+            total_duration_ms=0.0,
+            load_duration_ms=0.0,
+            inputAndOutputCost=0.0,
+            errored=True,
+        )
+
+
+def tool_prompt(prompt: str, model: str) -> ToolCallResponse:
+    """
+    Run a chat model with tool calls using Anthropic's Claude.
+    Now supports JSON structured output variants by parsing the response.
+    """
+    with timeit() as t:
+        if "-json" in model:
+            # Standard message request but expecting JSON response
+            message = anthropic_client.messages.create(
+                model=model.replace("-json", ""),
+                max_tokens=2048,
+                messages=[{"role": "user", "content": prompt}],
+            )
+
+            try:
+                # Parse raw response text into ToolsAndPrompts model
+                parsed_response = ToolsAndPrompts.model_validate_json(
+                    parse_markdown_backticks(message.content[0].text)
+                )
+                tool_calls = [
+                    SimpleToolCall(
+                        tool_name=tap.tool_name, params={"prompt": tap.prompt}
+                    )
+                    for tap in parsed_response.tools_and_prompts
+                ]
+            except Exception as e:
+                print(f"Failed to parse JSON response: {e}")
+                tool_calls = []
+
+        else:
+            # Original implementation for function calling
+            message = anthropic_client.messages.create(
+                model=model,
+                max_tokens=2048,
+                messages=[{"role": "user", "content": prompt}],
+                tools=anthropic_tools_list,
+                tool_choice={"type": "any"},
+            )
+
+            # Extract tool calls with parameters
+            tool_calls = []
+            for content in message.content:
+                if content.type == "tool_use":
+                    tool_name = content.name
+                    if tool_name in all_tools_list:
+                        tool_calls.append(
+                            SimpleToolCall(tool_name=tool_name, params=content.input)
+                        )
+
+    # Calculate cost based on token usage
+    input_tokens = message.usage.input_tokens
+    output_tokens = message.usage.output_tokens
+    cost = get_anthropic_cost(model, input_tokens, output_tokens)
+
+    return ToolCallResponse(
+        tool_calls=tool_calls, runTimeMs=t(), inputAndOutputCost=cost
+    )
+</file>
+
+<file path="data_types.py">
+from typing import Optional, Union
+from pydantic import BaseModel
+from enum import Enum
+
+
+class ModelAlias(str, Enum):
+    haiku = "claude-3-5-haiku-latest"
+    haiku_3_legacy = "claude-3-haiku-20240307"
+    sonnet = "claude-3-5-sonnet-20241022"
+    gemini_pro_2 = "gemini-1.5-pro-002"
+    gemini_flash_2 = "gemini-1.5-flash-002"
+    gemini_flash_8b = "gemini-1.5-flash-8b-latest"
+    gpt_4o_mini = "gpt-4o-mini"
+    gpt_4o = "gpt-4o"
+    gpt_4o_predictive = "gpt-4o-predictive"
+    gpt_4o_mini_predictive = "gpt-4o-mini-predictive"
+
+    # JSON variants
+    o1_mini_json = "o1-mini-json"
+    gpt_4o_json = "gpt-4o-json"
+    gpt_4o_mini_json = "gpt-4o-mini-json"
+    gemini_pro_2_json = "gemini-1.5-pro-002-json"
+    gemini_flash_2_json = "gemini-1.5-flash-002-json"
+    sonnet_json = "claude-3-5-sonnet-20241022-json"
+    haiku_json = "claude-3-5-haiku-latest-json"
+    gemini_exp_1114_json = "gemini-exp-1114-json"
+
+    # ollama models
+    llama3_2_1b = "llama3.2:1b"
+    llama_3_2_3b = "llama3.2:latest"
+    qwen_2_5_coder_14b = "qwen2.5-coder:14b"
+    qwq_3db = "qwq:32b"
+    phi_4 = "vanilj/Phi-4:latest"
+
+
+class Prompt(BaseModel):
+    prompt: str
+    model: Union[ModelAlias, str]
+
+
+class ToolEnum(str, Enum):
+    run_coder_agent = "run_coder_agent"
+    run_git_agent = "run_git_agent"
+    run_docs_agent = "run_docs_agent"
+
+
+class ToolAndPrompt(BaseModel):
+    tool_name: ToolEnum
+    prompt: str
+
+
+class ToolsAndPrompts(BaseModel):
+    tools_and_prompts: list[ToolAndPrompt]
+
+
+class PromptWithToolCalls(BaseModel):
+    prompt: str
+    model: ModelAlias | str
+
+
+class PromptResponse(BaseModel):
+    response: str
+    runTimeMs: int
+    inputAndOutputCost: float
+
+
+class SimpleToolCall(BaseModel):
+    tool_name: str
+    params: dict
+
+
+class ToolCallResponse(BaseModel):
+    tool_calls: list[SimpleToolCall]
+    runTimeMs: int
+    inputAndOutputCost: float
+
+
+class ThoughtResponse(BaseModel):
+    thoughts: str
+    response: str
+    error: Optional[str] = None
+
+
+# ------------ Execution Evaluator Benchmarks ------------
+
+
+class BenchPromptResponse(BaseModel):
+    response: str
+    tokens_per_second: float
+    provider: str
+    total_duration_ms: float
+    load_duration_ms: float
+    inputAndOutputCost: float
+    errored: Optional[bool] = None
+
+
+class ModelProvider(str, Enum):
+    ollama = "ollama"
+    mlx = "mlx"
+
+
+class ExeEvalType(str, Enum):
+    execute_python_code_with_num_output = "execute_python_code_with_num_output"
+    execute_python_code_with_string_output = "execute_python_code_with_string_output"
+    raw_string_evaluator = "raw_string_evaluator"  # New evaluator type
+    python_print_execution_with_num_output = "python_print_execution_with_num_output"
+    json_validator_eval = "json_validator_eval"
+
+
+class ExeEvalBenchmarkInputRow(BaseModel):
+    dynamic_variables: Optional[dict]
+    expectation: str | dict
+
+
+class ExecEvalBenchmarkFile(BaseModel):
+    base_prompt: str
+    evaluator: ExeEvalType
+    prompts: list[ExeEvalBenchmarkInputRow]
+    benchmark_name: str
+    purpose: str
+    models: list[str]  # List of model names/aliases
+
+
+class ExeEvalBenchmarkOutputResult(BaseModel):
+    prompt_response: BenchPromptResponse
+    execution_result: str
+    expected_result: str
+    input_prompt: str
+    model: str
+    correct: bool
+    index: int
+
+
+class ExecEvalBenchmarkCompleteResult(BaseModel):
+    benchmark_file: ExecEvalBenchmarkFile
+    results: list[ExeEvalBenchmarkOutputResult]
+
+    @property
+    def correct_count(self) -> int:
+        return sum(1 for result in self.results if result.correct)
+
+    @property
+    def incorrect_count(self) -> int:
+        return len(self.results) - self.correct_count
+
+    @property
+    def accuracy(self) -> float:
+        return self.correct_count / len(self.results)
+
+
+class ExecEvalBenchmarkModelReport(BaseModel):
+    model: str  # Changed from ModelAlias to str
+    results: list[ExeEvalBenchmarkOutputResult]
+
+    correct_count: int
+    incorrect_count: int
+    accuracy: float
+
+    average_tokens_per_second: float
+    average_total_duration_ms: float
+    average_load_duration_ms: float
+    total_cost: float
+
+
+class ExecEvalPromptIteration(BaseModel):
+    dynamic_variables: dict
+    expectation: str | dict
+
+
+class ExecEvalBenchmarkReport(BaseModel):
+    benchmark_name: str
+    purpose: str
+    base_prompt: str
+    prompt_iterations: list[ExecEvalPromptIteration]
+    models: list[ExecEvalBenchmarkModelReport]
+
+    overall_correct_count: int
+    overall_incorrect_count: int
+    overall_accuracy: float
+
+    average_tokens_per_second: float
+    average_total_duration_ms: float
+    average_load_duration_ms: float
+</file>
+
+<file path="deepseek_llm.py">
+from openai import OpenAI
+from utils import MAP_MODEL_ALIAS_TO_COST_PER_MILLION_TOKENS, timeit
+from modules.data_types import BenchPromptResponse, PromptResponse, ThoughtResponse
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Initialize DeepSeek client
+client = OpenAI(
+    api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com"
+)
+
+
+def get_deepseek_cost(model: str, input_tokens: int, output_tokens: int) -> float:
+    """
+    Calculate the cost for Gemini API usage.
+
+    Args:
+        model: The model name/alias used
+        input_tokens: Number of input tokens
+        output_tokens: Number of output tokens
+
+    Returns:
+        float: Total cost in dollars
+    """
+
+    cost_map = MAP_MODEL_ALIAS_TO_COST_PER_MILLION_TOKENS.get(model)
+    if not cost_map:
+        return 0.0
+
+    input_cost = (input_tokens / 1_000_000) * cost_map["input"]
+    output_cost = (output_tokens / 1_000_000) * cost_map["output"]
+
+    return round(input_cost + output_cost, 6)
+
+
+def bench_prompt(prompt: str, model: str) -> BenchPromptResponse:
+    """
+    Send a prompt to DeepSeek and get detailed benchmarking response.
+    """
+    try:
+        with timeit() as t:
+            response = client.chat.completions.create(
+                model=model,
+                messages=[{"role": "user", "content": prompt}],
+                stream=False,
+            )
+            elapsed_ms = t()
+
+            input_tokens = response.usage.prompt_tokens
+            output_tokens = response.usage.completion_tokens
+            cost = get_deepseek_cost(model, input_tokens, output_tokens)
+
+        return BenchPromptResponse(
+            response=response.choices[0].message.content,
+            tokens_per_second=0.0,  # DeepSeek doesn't provide this info
+            provider="deepseek",
+            total_duration_ms=elapsed_ms,
+            load_duration_ms=0.0,
+            inputAndOutputCost=cost,
+        )
+    except Exception as e:
+        print(f"DeepSeek error: {str(e)}")
+        return BenchPromptResponse(
+            response=f"Error: {str(e)}",
+            tokens_per_second=0.0,
+            provider="deepseek",
+            total_duration_ms=0.0,
+            load_duration_ms=0.0,
+            errored=True,
+        )
+
+
+def text_prompt(prompt: str, model: str) -> PromptResponse:
+    """
+    Send a prompt to DeepSeek and get the response.
+    """
+    try:
+        with timeit() as t:
+            response = client.chat.completions.create(
+                model=model,
+                messages=[{"role": "user", "content": prompt}],
+                stream=False,
+            )
+            elapsed_ms = t()
+            input_tokens = response.usage.prompt_tokens
+            output_tokens = response.usage.completion_tokens
+            cost = get_deepseek_cost(model, input_tokens, output_tokens)
+
+        return PromptResponse(
+            response=response.choices[0].message.content,
+            runTimeMs=elapsed_ms,
+            inputAndOutputCost=cost,
+        )
+    except Exception as e:
+        print(f"DeepSeek error: {str(e)}")
+        return PromptResponse(
+            response=f"Error: {str(e)}",
+            runTimeMs=0.0,
+            inputAndOutputCost=0.0,
+        )
+
+def thought_prompt(prompt: str, model: str) -> ThoughtResponse:
+    """
+    Send a thought prompt to DeepSeek and parse structured response.
+    """
+    try:
+        # Validate model
+        if model != "deepseek-reasoner":
+            raise ValueError(f"Invalid model for thought prompts: {model}. Must use 'deepseek-reasoner'")
+
+        # Make API call with reasoning_content=True
+        with timeit() as t:
+            response = client.chat.completions.create(
+                model=model,
+                messages=[{"role": "user", "content": prompt}],
+                extra_body={"reasoning_content": True},  # Enable structured reasoning
+                stream=False,
+            )
+            elapsed_ms = t()
+
+        # Extract content and reasoning
+        message = response.choices[0].message
+        thoughts = getattr(message, "reasoning_content", "")
+        response_content = message.content
+
+        # Validate required fields
+        if not thoughts or not response_content:
+            raise ValueError("Missing thoughts or response in API response")
+
+        # Calculate costs
+        input_tokens = response.usage.prompt_tokens
+        output_tokens = response.usage.completion_tokens
+        cost = get_deepseek_cost("deepseek-reasoner", input_tokens, output_tokens)
+
+        return ThoughtResponse(
+            thoughts=thoughts,
+            response=response_content,
+            error=None,
+        )
+
+    except Exception as e:
+        print(f"DeepSeek thought error: {str(e)}")
+        return ThoughtResponse(
+            thoughts=f"Error processing request: {str(e)}",
+            response="",
+            error=str(e)
+        )
+</file>
+
+<file path="exbench_module.py">
+# ------------------------- Imports -------------------------
+from typing import List, Optional
+from datetime import datetime
+from pathlib import Path
+import time
+from concurrent.futures import ThreadPoolExecutor
+from modules.data_types import (
+    ExecEvalBenchmarkFile,
+    ExecEvalBenchmarkCompleteResult,
+    ExeEvalBenchmarkOutputResult,
+    ExecEvalBenchmarkModelReport,
+    ExecEvalBenchmarkReport,
+    ExecEvalPromptIteration,
+    ModelAlias,
+    ExeEvalType,
+    ModelProvider,
+    BenchPromptResponse,
+)
+from modules.ollama_llm import bench_prompt
+from modules.execution_evaluators import (
+    execute_python_code,
+    eval_result_compare,
+)
+from utils import parse_markdown_backticks
+from modules import (
+    ollama_llm,
+    anthropic_llm,
+    deepseek_llm,
+    gemini_llm,
+    openai_llm,
+    fireworks_llm,
+)
+
+provider_delimiter = "~"
+
+
+def parse_model_string(model: str) -> tuple[str, str]:
+    """
+    Parse model string into provider and model name.
+    Format: "provider:model_name" or "model_name" (defaults to ollama)
+
+    Raises:
+        ValueError: If provider is not supported
+    """
+    if provider_delimiter not in model:
+        # Default to ollama if no provider specified
+        return "ollama", model
+
+    provider, *model_parts = model.split(provider_delimiter)
+    model_name = provider_delimiter.join(model_parts)
+
+    # Validate provider
+    supported_providers = [
+        "ollama",
+        "anthropic",
+        "deepseek",
+        "openai",
+        "gemini",
+        "fireworks",
+        # "mlx",
+        # "groq",
+    ]
+    if provider not in supported_providers:
+        raise ValueError(
+            f"Unsupported provider: {provider}. "
+            f"Supported providers are: {', '.join(supported_providers)}"
+        )
+
+    return provider, model_name
+
+
+# ------------------------- File Operations -------------------------
+def save_report_to_file(
+    report: ExecEvalBenchmarkReport, output_dir: str = "reports"
+) -> str:
+    """Save benchmark report to file with standardized naming.
+
+    Args:
+        report: The benchmark report to save
+        output_dir: Directory to save the report in
+
+    Returns:
+        Path to the saved report file
+    """
+    # Create output directory if it doesn't exist
+    Path(output_dir).mkdir(exist_ok=True)
+
+    # Generate filename
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    safe_benchmark_name = report.benchmark_name.replace(" ", "_")
+    report_filename = f"{output_dir}/{safe_benchmark_name}_{timestamp}.json"
+    # Save report
+    with open(report_filename, "w") as f:
+        f.write(report.model_dump_json(indent=4))
+    return report_filename
+
+
+# ------------------------- Benchmark Execution -------------------------
+provider_bench_functions = {
+    "ollama": ollama_llm.bench_prompt,
+    "anthropic": anthropic_llm.bench_prompt,
+    "deepseek": deepseek_llm.bench_prompt,
+    "openai": openai_llm.bench_prompt,
+    "gemini": gemini_llm.bench_prompt,
+    "fireworks": fireworks_llm.bench_prompt,
+}
+
+
+def process_single_prompt(
+    prompt_row, benchmark_file, provider, model_name, index, total_tests
+):
+    print(f"  Running test {index}/{total_tests}...")
+
+    prompt = benchmark_file.base_prompt
+    if prompt_row.dynamic_variables:
+        for key, value in prompt_row.dynamic_variables.items():
+            prompt = prompt.replace(f"{{{{{key}}}}}", str(value))
+
+    bench_response = None
+    max_retries = 3
+    delay = 1
+    for attempt in range(max_retries + 1):
+        try:
+            bench_response = provider_bench_functions[provider](prompt, model_name)
+            break
+        except Exception as e:
+            if attempt < max_retries:
+                print(f"Retry {attempt+1} for test {index} due to error: {str(e)}")
+                time.sleep(delay * (attempt + 1))
+            else:
+                print(f"All retries failed for test {index}")
+                bench_response = BenchPromptResponse(
+                    response=f"Error: {str(e)}",
+                    tokens_per_second=0.0,
+                    provider=provider,
+                    total_duration_ms=0.0,
+                    load_duration_ms=0.0,
+                    errored=True,
+                )
+
+    backtick_parsed_response = parse_markdown_backticks(bench_response.response)
+    execution_result = ""
+    expected_result = str(prompt_row.expectation).strip()
+    correct = False
+
+    try:
+        if benchmark_file.evaluator == ExeEvalType.execute_python_code_with_num_output:
+            execution_result = execute_python_code(backtick_parsed_response)
+            parsed_execution_result = str(execution_result).strip()
+            correct = eval_result_compare(
+                benchmark_file.evaluator, expected_result, parsed_execution_result
+            )
+        elif (
+            benchmark_file.evaluator
+            == ExeEvalType.execute_python_code_with_string_output
+        ):
+            execution_result = execute_python_code(backtick_parsed_response)
+
+            correct = eval_result_compare(
+                benchmark_file.evaluator, expected_result, execution_result
+            )
+        elif benchmark_file.evaluator == ExeEvalType.raw_string_evaluator:
+            execution_result = backtick_parsed_response
+            correct = eval_result_compare(
+                benchmark_file.evaluator, expected_result, execution_result
+            )
+        elif benchmark_file.evaluator == "json_validator_eval":
+            # For JSON validator, no code execution is needed;
+            # use the response directly and compare the JSON objects.
+            execution_result = backtick_parsed_response
+            # expectation is assumed to be a dict (or JSON string convertible to dict)
+            expected_result = prompt_row.expectation
+            correct = eval_result_compare(
+                "json_validator_eval", expected_result, execution_result
+            )
+        elif (
+            benchmark_file.evaluator
+            == ExeEvalType.python_print_execution_with_num_output
+        ):
+            wrapped_code = f"print({backtick_parsed_response})"
+            execution_result = execute_python_code(wrapped_code)
+            correct = eval_result_compare(
+                ExeEvalType.execute_python_code_with_num_output,
+                expected_result,
+                execution_result.strip(),
+            )
+        else:
+            raise ValueError(f"Unsupported evaluator: {benchmark_file.evaluator}")
+    except Exception as e:
+        print(f"Error executing code in test {index}: {e}")
+        execution_result = str(e)
+        correct = False
+
+    return ExeEvalBenchmarkOutputResult(
+        input_prompt=prompt,
+        prompt_response=bench_response,
+        execution_result=str(execution_result),
+        expected_result=str(expected_result),
+        model=f"{provider}{provider_delimiter}{model_name}",
+        correct=correct,
+        index=index,
+    )
+
+
+def run_benchmark_for_model(
+    model: str, benchmark_file: ExecEvalBenchmarkFile
+) -> List[ExeEvalBenchmarkOutputResult]:
+    results = []
+    total_tests = len(benchmark_file.prompts)
+
+    try:
+        provider, model_name = parse_model_string(model)
+    except ValueError as e:
+        print(f"Invalid model string {model}: {str(e)}")
+        return []
+
+    print(f"Running benchmark with provider: {provider}, model: {model_name}")
+
+    if provider == "ollama":
+        # Sequential processing for Ollama
+        for i, prompt_row in enumerate(benchmark_file.prompts, 1):
+            result = process_single_prompt(
+                prompt_row, benchmark_file, provider, model_name, i, total_tests
+            )
+            results.append(result)
+    else:
+        # Parallel processing for other providers
+        with ThreadPoolExecutor(max_workers=50) as executor:
+            futures = []
+            for i, prompt_row in enumerate(benchmark_file.prompts, 1):
+                futures.append(
+                    executor.submit(
+                        process_single_prompt,
+                        prompt_row,
+                        benchmark_file,
+                        provider,
+                        model_name,
+                        i,
+                        total_tests,
+                    )
+                )
+
+            for future in futures:
+                results.append(future.result())
+
+    return results
+
+
+# ------------------------- Report Generation -------------------------
+def generate_report(
+    complete_result: ExecEvalBenchmarkCompleteResult,
+) -> ExecEvalBenchmarkReport:
+    model_reports = []
+
+    # Group results by model
+    model_results = {}
+    for result in complete_result.results:
+        if result.model not in model_results:
+            model_results[result.model] = []
+        model_results[result.model].append(result)
+
+    # Create model reports
+    for model, results in model_results.items():
+        correct_count = sum(1 for r in results if r.correct)
+        incorrect_count = len(results) - correct_count
+        accuracy = correct_count / len(results)
+
+        avg_tokens_per_second = sum(
+            r.prompt_response.tokens_per_second for r in results
+        ) / len(results)
+        avg_total_duration = sum(
+            r.prompt_response.total_duration_ms for r in results
+        ) / len(results)
+        avg_load_duration = sum(
+            r.prompt_response.load_duration_ms for r in results
+        ) / len(results)
+
+        model_total_cost = 0
+
+        try:
+            model_total_cost = sum(
+                (
+                    r.prompt_response.inputAndOutputCost
+                    if hasattr(r.prompt_response, "inputAndOutputCost")
+                    else 0.0
+                )
+                for r in results
+            )
+        except:
+            print(f"Error calculating model_total_cost for model: {model}")
+            model_total_cost = 0
+
+        model_reports.append(
+            ExecEvalBenchmarkModelReport(
+                model=model,
+                results=results,
+                correct_count=correct_count,
+                incorrect_count=incorrect_count,
+                accuracy=accuracy,
+                average_tokens_per_second=avg_tokens_per_second,
+                average_total_duration_ms=avg_total_duration,
+                average_load_duration_ms=avg_load_duration,
+                total_cost=model_total_cost,
+            )
+        )
+
+    # Calculate overall statistics
+    overall_correct = sum(r.correct_count for r in model_reports)
+    overall_incorrect = sum(r.incorrect_count for r in model_reports)
+    overall_accuracy = overall_correct / (overall_correct + overall_incorrect)
+
+    avg_tokens_per_second = sum(
+        r.average_tokens_per_second for r in model_reports
+    ) / len(model_reports)
+    avg_total_duration = sum(r.average_total_duration_ms for r in model_reports) / len(
+        model_reports
+    )
+    avg_load_duration = sum(r.average_load_duration_ms for r in model_reports) / len(
+        model_reports
+    )
+
+    return ExecEvalBenchmarkReport(
+        benchmark_name=complete_result.benchmark_file.benchmark_name,
+        purpose=complete_result.benchmark_file.purpose,
+        base_prompt=complete_result.benchmark_file.base_prompt,
+        prompt_iterations=[
+            ExecEvalPromptIteration(
+                dynamic_variables=(
+                    prompt.dynamic_variables
+                    if prompt.dynamic_variables is not None
+                    else {}
+                ),
+                expectation=prompt.expectation,
+            )
+            for prompt in complete_result.benchmark_file.prompts
+        ],
+        models=model_reports,
+        overall_correct_count=overall_correct,
+        overall_incorrect_count=overall_incorrect,
+        overall_accuracy=overall_accuracy,
+        average_tokens_per_second=avg_tokens_per_second,
+        average_total_duration_ms=avg_total_duration,
+        average_load_duration_ms=avg_load_duration,
+    )
+</file>
+
+<file path="execution_evaluators.py">
+import subprocess
+from modules.data_types import ExeEvalType
+import json
+from deepdiff import DeepDiff
+
+
+def eval_result_compare(evalType: ExeEvalType, expected: str, actual: str) -> bool:
+    """
+    Compare expected and actual results based on evaluation type.
+    For numeric outputs, compare with a small epsilon tolerance.
+    """
+    try:
+        if (
+            evalType == ExeEvalType.execute_python_code_with_num_output
+            or evalType == ExeEvalType.python_print_execution_with_num_output
+        ):
+            # Convert both values to float for numeric comparison
+            expected_num = float(expected)
+            actual_num = float(actual)
+            epsilon = 1e-6
+            return abs(expected_num - actual_num) < epsilon
+
+        elif evalType == ExeEvalType.execute_python_code_with_string_output:
+            return str(expected).strip() == str(actual).strip()
+
+        elif evalType == ExeEvalType.raw_string_evaluator:
+            return str(expected).strip() == str(actual).strip()
+
+        elif evalType == ExeEvalType.json_validator_eval:
+
+            if not isinstance(expected, dict):
+                expected = json.loads(expected)
+            actual_parsed = json.loads(actual) if isinstance(actual, str) else actual
+
+            print(f"Expected: {expected}")
+            print(f"Actual: {actual_parsed}")
+            deepdiffed = DeepDiff(expected, actual_parsed, ignore_order=False)
+            print(f"DeepDiff: {deepdiffed}")
+
+            return not deepdiffed
+
+        else:
+            return str(expected).strip() == str(actual).strip()
+    except (ValueError, TypeError):
+        return str(expected).strip() == str(actual).strip()
+
+
+def execute_python_code(code: str) -> str:
+    """
+    Execute Python code and return the numeric output as a string.
+    """
+    # Remove any surrounding quotes and whitespace
+    code = code.strip().strip("'").strip('"')
+
+    # Create a temporary file with the code
+    import tempfile
+
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=True) as tmp:
+        tmp.write(code)
+        tmp.flush()
+
+        # Execute the temporary file using uv
+        result = execute(f"uv run {tmp.name} --ignore-warnings")
+
+        # Try to parse the result as a number
+        try:
+            # Remove any extra whitespace or newlines
+            cleaned_result = result.strip()
+            # Convert to float and back to string to normalize format
+            return str(float(cleaned_result))
+        except (ValueError, TypeError):
+            # If conversion fails, return the raw result
+            return result
+
+
+def execute(code: str) -> str:
+    """Execute the tests and return the output as a string."""
+    try:
+        result = subprocess.run(
+            code.split(),
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode != 0:
+            return f"Error: {result.stderr}"
+        return result.stdout
+    except Exception as e:
+        return f"Execution error: {str(e)}"
+</file>
+
+<file path="fireworks_llm.py">
+import os
+import requests
+import json
+
+from modules.data_types import (
+    BenchPromptResponse,
+    PromptResponse,
+    ThoughtResponse,
+)
+from utils import deepseek_r1_distil_separate_thoughts_and_response
+import time
+
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+FIREWORKS_API_KEY = os.getenv("FIREWORKS_AI_API_KEY", "")
+
+API_URL = "https://api.fireworks.ai/inference/v1/completions"
+
+
+def get_fireworks_cost(model: str, input_tokens: int, output_tokens: int) -> float:
+    # For now, just return 0.0 or substitute a real cost calculation if available
+    return 0.0
+
+
+def bench_prompt(prompt: str, model: str) -> BenchPromptResponse:
+
+    start_time = time.time()
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {FIREWORKS_API_KEY}",
+    }
+    payload = {
+        "model": model,
+        "max_tokens": 20480,
+        "prompt": prompt,
+        "temperature": 0.2,
+    }
+
+    response = requests.post(API_URL, headers=headers, data=json.dumps(payload))
+    end_time = time.time()
+
+    resp_json = response.json()
+    content = ""
+    if "choices" in resp_json and len(resp_json["choices"]) > 0:
+        content = resp_json["choices"][0].get("text", "")
+
+    return BenchPromptResponse(
+        response=content,
+        tokens_per_second=0.0,  # or compute if available
+        provider="fireworks",
+        total_duration_ms=(end_time - start_time) * 1000,
+        load_duration_ms=0.0,
+        errored=not response.ok,
+    )
+
+
+def text_prompt(prompt: str, model: str) -> PromptResponse:
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {FIREWORKS_API_KEY}",
+    }
+    payload = {
+        "model": model,
+        "max_tokens": 20480,
+        "prompt": prompt,
+        "temperature": 0.0,
+    }
+
+    response = requests.post(API_URL, headers=headers, data=json.dumps(payload))
+    resp_json = response.json()
+
+    print("resp_json", resp_json)
+
+    # Extract just the text from the first choice
+    content = ""
+    if "choices" in resp_json and len(resp_json["choices"]) > 0:
+        content = resp_json["choices"][0].get("text", "")
+
+    return PromptResponse(
+        response=content,
+        runTimeMs=0,  # or compute if desired
+        inputAndOutputCost=0.0,  # or compute if you have cost details
+    )
+
+
+def thought_prompt(prompt: str, model: str) -> ThoughtResponse:
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {FIREWORKS_API_KEY}",
+    }
+    payload = {
+        "model": model,
+        "max_tokens": 20480,
+        "prompt": prompt,
+        "temperature": 0.2,
+    }
+
+    response = requests.post(API_URL, headers=headers, data=json.dumps(payload))
+    resp_json = response.json()
+
+    content = ""
+    if "choices" in resp_json and len(resp_json["choices"]) > 0:
+        content = resp_json["choices"][0].get("text", "")
+
+    if "r1" in model:
+        thoughts, response_content = deepseek_r1_distil_separate_thoughts_and_response(
+            content
+        )
+    else:
+        thoughts = ""
+        response_content = content
+
+    return ThoughtResponse(
+        thoughts=thoughts,
+        response=response_content,
+        error=None if response.ok else str(resp_json.get("error", "Unknown error")),
+    )
+</file>
+
+<file path="gemini_llm.py">
+import google.generativeai as genai
+from google import genai as genai2
+import os
+import json
+from modules.tools import gemini_tools_list
+from modules.data_types import (
+    PromptResponse,
+    SimpleToolCall,
+    ModelAlias,
+    ToolsAndPrompts,
+    ThoughtResponse,
+)
+from utils import (
+    parse_markdown_backticks,
+    timeit,
+    MAP_MODEL_ALIAS_TO_COST_PER_MILLION_TOKENS,
+)
+from modules.data_types import ToolCallResponse, BenchPromptResponse
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Initialize Gemini client
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+
+def get_gemini_cost(model: str, input_tokens: int, output_tokens: int) -> float:
+    """
+    Calculate the cost for Gemini API usage.
+
+    Args:
+        model: The model name/alias used
+        input_tokens: Number of input tokens
+        output_tokens: Number of output tokens
+
+    Returns:
+        float: Total cost in dollars
+    """
+
+    cost_map = MAP_MODEL_ALIAS_TO_COST_PER_MILLION_TOKENS.get(model)
+    if not cost_map:
+        return 0.0
+
+    input_cost = (input_tokens / 1_000_000) * cost_map["input"]
+    output_cost = (output_tokens / 1_000_000) * cost_map["output"]
+
+    return round(input_cost + output_cost, 6)
+
+
+def thought_prompt(prompt: str, model: str) -> ThoughtResponse:
+    """
+    Handle thought prompts for Gemini thinking models.
+    """
+    try:
+        # Validate model
+        if model != "gemini-2.0-flash-thinking-exp-01-21":
+            raise ValueError(
+                f"Invalid model for thought prompts: {model}. Must use 'gemini-2.0-flash-thinking-exp-01-21'"
+            )
+
+        # Configure thinking model
+        config = {"thinking_config": {"include_thoughts": True}}
+
+        client = genai2.Client(
+            api_key=os.getenv("GEMINI_API_KEY"), http_options={"api_version": "v1alpha"}
+        )
+
+        with timeit() as t:
+            response = client.models.generate_content(
+                model=model, contents=prompt, config=config
+            )
+            elapsed_ms = t()
+
+            # Parse thoughts and response
+            thoughts = []
+            response_content = []
+
+            for part in response.candidates[0].content.parts:
+                if hasattr(part, "thought") and part.thought:
+                    thoughts.append(part.text)
+                else:
+                    response_content.append(part.text)
+
+        return ThoughtResponse(
+            thoughts="\n".join(thoughts),
+            response="\n".join(response_content),
+            error=None,
+        )
+
+    except Exception as e:
+        print(f"Gemini thought error: {str(e)}")
+        return ThoughtResponse(
+            thoughts=f"Error processing request: {str(e)}", response="", error=str(e)
+        )
+
+
+def text_prompt(prompt: str, model: str) -> PromptResponse:
+    """
+    Send a prompt to Gemini and get a response.
+    """
+    try:
+        with timeit() as t:
+            gemini_model = genai.GenerativeModel(model_name=model)
+            response = gemini_model.generate_content(prompt)
+            elapsed_ms = t()
+
+            input_tokens = response._result.usage_metadata.prompt_token_count
+            output_tokens = response._result.usage_metadata.candidates_token_count
+            cost = get_gemini_cost(model, input_tokens, output_tokens)
+
+        return PromptResponse(
+            response=response.text,
+            runTimeMs=elapsed_ms,
+            inputAndOutputCost=cost,
+        )
+    except Exception as e:
+        print(f"Gemini error: {str(e)}")
+        return PromptResponse(
+            response=f"Error: {str(e)}", runTimeMs=0.0, inputAndOutputCost=0.0
+        )
+
+
+def bench_prompt(prompt: str, model: str) -> BenchPromptResponse:
+    """
+    Send a prompt to Gemini and get detailed benchmarking response.
+    """
+    try:
+        with timeit() as t:
+            gemini_model = genai.GenerativeModel(model_name=model)
+            response = gemini_model.generate_content(prompt)
+            elapsed_ms = t()
+
+            input_tokens = response._result.usage_metadata.prompt_token_count
+            output_tokens = response._result.usage_metadata.candidates_token_count
+            cost = get_gemini_cost(model, input_tokens, output_tokens)
+
+        return BenchPromptResponse(
+            response=response.text,
+            tokens_per_second=0.0,  # Gemini doesn't provide timing info
+            provider="gemini",
+            total_duration_ms=elapsed_ms,
+            load_duration_ms=0.0,
+            inputAndOutputCost=cost,
+        )
+    except Exception as e:
+        print(f"Gemini error: {str(e)}")
+        return BenchPromptResponse(
+            response=f"Error: {str(e)}",
+            tokens_per_second=0.0,
+            provider="gemini",
+            total_duration_ms=0.0,
+            load_duration_ms=0.0,
+            inputAndOutputCost=0.0,
+            errored=True,
+        )
+
+
+def tool_prompt(prompt: str, model: str, force_tools: list[str]) -> ToolCallResponse:
+    """
+    Run a chat model with tool calls using Gemini's API.
+    Now supports JSON structured output variants by parsing the response.
+    """
+    with timeit() as t:
+        if "-json" in model:
+            # Initialize model for JSON output
+            base_model = model.replace("-json", "")
+            if model == "gemini-exp-1114-json":
+                base_model = "gemini-exp-1114"  # Map to actual model name
+
+            gemini_model = genai.GenerativeModel(
+                model_name=base_model,
+            )
+
+            # Send message and get JSON response
+            chat = gemini_model.start_chat()
+            response = chat.send_message(prompt)
+
+            try:
+                # Parse raw response text into ToolsAndPrompts model
+                parsed_response = ToolsAndPrompts.model_validate_json(
+                    parse_markdown_backticks(response.text)
+                )
+                tool_calls = [
+                    SimpleToolCall(
+                        tool_name=tap.tool_name, params={"prompt": tap.prompt}
+                    )
+                    for tap in parsed_response.tools_and_prompts
+                ]
+            except Exception as e:
+                print(f"Failed to parse JSON response: {e}")
+                tool_calls = []
+
+        else:
+            # Original implementation using function calling
+            gemini_model = genai.GenerativeModel(
+                model_name=model, tools=gemini_tools_list
+            )
+            chat = gemini_model.start_chat(enable_automatic_function_calling=True)
+            response = chat.send_message(prompt)
+
+            tool_calls = []
+            for part in response.parts:
+                if hasattr(part, "function_call"):
+                    fc = part.function_call
+                    tool_calls.append(SimpleToolCall(tool_name=fc.name, params=fc.args))
+
+        # Extract token counts and calculate cost
+        usage_metadata = response._result.usage_metadata
+        input_tokens = usage_metadata.prompt_token_count
+        output_tokens = usage_metadata.candidates_token_count
+        cost = get_gemini_cost(model, input_tokens, output_tokens)
+
+    return ToolCallResponse(
+        tool_calls=tool_calls, runTimeMs=t(), inputAndOutputCost=cost
+    )
+</file>
+
+<file path="llm_models.py">
+import llm
+from dotenv import load_dotenv
+import os
+from modules import ollama_llm
+from modules.data_types import (
+    ModelAlias,
+    PromptResponse,
+    PromptWithToolCalls,
+    ToolCallResponse,
+    ThoughtResponse,
+)
+from modules import openai_llm, gemini_llm, deepseek_llm, fireworks_llm
+from utils import MAP_MODEL_ALIAS_TO_COST_PER_MILLION_TOKENS
+from modules.tools import all_tools_list
+from modules import anthropic_llm
+
+# Load environment variables from .env file
+load_dotenv()
+
+
+def simple_prompt(prompt_str: str, model_alias_str: str) -> PromptResponse:
+    parts = model_alias_str.split(":", 1)
+    if len(parts) < 2:
+        raise ValueError("No provider prefix found in model string")
+    provider = parts[0]
+    model_name = parts[1]
+
+    # For special predictive cases:
+    if provider == "openai" and model_name in [
+        "gpt-4o-predictive",
+        "gpt-4o-mini-predictive",
+    ]:
+        # Remove -predictive suffix when passing to API
+        clean_model_name = model_name.replace("-predictive", "")
+        return openai_llm.predictive_prompt(prompt_str, prompt_str, clean_model_name)
+
+    if provider == "openai":
+        return openai_llm.text_prompt(prompt_str, model_name)
+    elif provider == "ollama":
+        return ollama_llm.text_prompt(prompt_str, model_name)
+    elif provider == "anthropic":
+        return anthropic_llm.text_prompt(prompt_str, model_name)
+    elif provider == "gemini":
+        return gemini_llm.text_prompt(prompt_str, model_name)
+    elif provider == "deepseek":
+        return deepseek_llm.text_prompt(prompt_str, model_name)
+    elif provider == "fireworks":
+        return fireworks_llm.text_prompt(prompt_str, model_name)
+    else:
+        raise ValueError(f"Unsupported provider: {provider}")
+
+
+def tool_prompt(prompt: PromptWithToolCalls) -> ToolCallResponse:
+    model_str = str(prompt.model)
+    parts = model_str.split(":", 1)
+    if len(parts) < 2:
+        raise ValueError("No provider prefix found in model string")
+    provider = parts[0]
+    model_name = parts[1]
+
+    if provider == "openai":
+        return openai_llm.tool_prompt(prompt.prompt, model_name, all_tools_list)
+    elif provider == "anthropic":
+        return anthropic_llm.tool_prompt(prompt.prompt, model_name)
+    elif provider == "gemini":
+        return gemini_llm.tool_prompt(prompt.prompt, model_name, all_tools_list)
+    elif provider == "deepseek":
+        raise ValueError("DeepSeek does not support tool calls")
+    elif provider == "ollama":
+        raise ValueError("Ollama does not support tool calls")
+    else:
+        raise ValueError(f"Unsupported provider for tool calls: {provider}")
+
+
+def thought_prompt(prompt: str, model: str) -> ThoughtResponse:
+    """
+    Handle thought prompt requests with specialized parsing for supported models.
+    Fall back to standard text prompts for other models.
+    """
+    parts = model.split(":", 1)
+    if len(parts) < 2:
+        raise ValueError("No provider prefix found in model string")
+    provider = parts[0]
+    model_name = parts[1]
+
+    try:
+        if provider == "deepseek":
+            if model_name != "deepseek-reasoner":
+                # Fallback to standard text prompt for non-reasoner models
+                text_response = simple_prompt(prompt, model)
+                return ThoughtResponse(
+                    thoughts="", response=text_response.response, error=None
+                )
+
+            # Proceed with reasoner-specific processing
+            response = deepseek_llm.thought_prompt(prompt, model_name)
+            return response
+
+        elif provider == "gemini":
+            if model_name != "gemini-2.0-flash-thinking-exp-01-21":
+                # Fallback to standard text prompt for non-thinking models
+                text_response = simple_prompt(prompt, model)
+                return ThoughtResponse(
+                    thoughts="", response=text_response.response, error=None
+                )
+
+            # Proceed with thinking-specific processing
+            response = gemini_llm.thought_prompt(prompt, model_name)
+            return response
+
+        elif provider == "ollama":
+            if "deepseek-r1" not in model_name:
+                # Fallback to standard text prompt for non-R1 models
+                text_response = simple_prompt(prompt, model)
+                return ThoughtResponse(
+                    thoughts="", response=text_response.response, error=None
+                )
+
+            # Proceed with R1-specific processing
+            response = ollama_llm.thought_prompt(prompt, model_name)
+            return response
+
+        elif provider == "fireworks":
+            text_response = simple_prompt(prompt, model)
+            return ThoughtResponse(
+                thoughts="", response=text_response.response, error=None
+            )
+        else:
+            # For all other providers, use standard text prompt and wrap in ThoughtResponse
+            text_response = simple_prompt(prompt, model)
+            return ThoughtResponse(
+                thoughts="", response=text_response.response, error=None
+            )
+
+    except Exception as e:
+        return ThoughtResponse(
+            thoughts=f"Error processing request: {str(e)}", response="", error=str(e)
+        )
+</file>
+
+<file path="ollama_llm.py">
+from ollama import chat
+from modules.data_types import PromptResponse, BenchPromptResponse, ThoughtResponse
+from utils import timeit, deepseek_r1_distil_separate_thoughts_and_response
+import json
+
+
+def text_prompt(prompt: str, model: str) -> PromptResponse:
+    """
+    Send a prompt to Ollama and get a response.
+    """
+    try:
+        with timeit() as t:
+            response = chat(
+                model=model,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    },
+                ],
+            )
+            elapsed_ms = t()
+
+        return PromptResponse(
+            response=response.message.content,
+            runTimeMs=elapsed_ms,  # Now using actual timing
+            inputAndOutputCost=0.0,  # Ollama is free
+        )
+    except Exception as e:
+        print(f"Ollama error: {str(e)}")
+        return PromptResponse(
+            response=f"Error: {str(e)}", runTimeMs=0, inputAndOutputCost=0.0
+        )
+
+
+def get_ollama_costs() -> tuple[int, int]:
+    """
+    Return token costs for Ollama (always 0 since it's free)
+    """
+    return 0, 0
+
+
+def thought_prompt(prompt: str, model: str) -> ThoughtResponse:
+    """
+    Handle thought prompts for DeepSeek R1 models running on Ollama.
+    """
+    try:
+        # Validate model name contains deepseek-r1
+        if "deepseek-r1" not in model:
+            raise ValueError(
+                f"Model {model} not supported for thought prompts. Must contain 'deepseek-r1'"
+            )
+
+        with timeit() as t:
+            # Get raw response from Ollama
+            response = chat(
+                model=model,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    },
+                ],
+            )
+
+            # Extract content and parse thoughts/response
+            content = response.message.content
+            thoughts, response_content = (
+                deepseek_r1_distil_separate_thoughts_and_response(content)
+            )
+
+        return ThoughtResponse(
+            thoughts=thoughts,
+            response=response_content,
+            error=None,
+        )
+
+    except Exception as e:
+        print(f"Ollama thought error ({model}): {str(e)}")
+        return ThoughtResponse(
+            thoughts=f"Error processing request: {str(e)}", response="", error=str(e)
+        )
+
+
+def bench_prompt(prompt: str, model: str) -> BenchPromptResponse:
+    """
+    Send a prompt to Ollama and get detailed benchmarking response.
+    """
+    try:
+        response = chat(
+            model=model,
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                },
+            ],
+        )
+
+        # Calculate tokens per second using eval_count and eval_duration
+        eval_count = response.get("eval_count", 0)
+        eval_duration_ns = response.get("eval_duration", 0)
+
+        # Convert nanoseconds to seconds and calculate tokens per second
+        eval_duration_s = eval_duration_ns / 1_000_000_000
+        tokens_per_second = eval_count / eval_duration_s if eval_duration_s > 0 else 0
+
+        # Create BenchPromptResponse
+        bench_response = BenchPromptResponse(
+            response=response.message.content,
+            tokens_per_second=tokens_per_second,
+            provider="ollama",
+            total_duration_ms=response.get("total_duration", 0)
+            / 1_000_000,  # Convert ns to ms
+            load_duration_ms=response.get("load_duration", 0)
+            / 1_000_000,  # Convert ns to ms
+            inputAndOutputCost=0.0,  # Ollama is free
+        )
+
+        # print(json.dumps(bench_response.dict(), indent=2))
+
+        return bench_response
+
+    except Exception as e:
+        print(f"Ollama error: {str(e)}")
+        return BenchPromptResponse(
+            response=f"Error: {str(e)}",
+            tokens_per_second=0.0,
+            provider="ollama",
+            total_duration_ms=0.0,
+            load_duration_ms=0.0,
+            errored=True,
+        )
+</file>
+
+<file path="openai_llm.py">
+import openai
+import os
+import json
+from modules.tools import openai_tools_list
+from modules.data_types import SimpleToolCall, ToolsAndPrompts
+from utils import parse_markdown_backticks, timeit, parse_reasoning_effort
+from modules.data_types import (
+    PromptResponse,
+    ModelAlias,
+    ToolCallResponse,
+    BenchPromptResponse,
+)
+from utils import MAP_MODEL_ALIAS_TO_COST_PER_MILLION_TOKENS
+from modules.tools import all_tools_list
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+openai_client: openai.OpenAI = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# reasoning_effort_enabled_models = [
+#     "o3-mini",
+#     "o1",
+# ]
+
+
+def get_openai_cost(model: str, input_tokens: int, output_tokens: int) -> float:
+    """
+    Calculate the cost for OpenAI API usage.
+
+    Args:
+        model: The model name/alias used
+        input_tokens: Number of input tokens
+        output_tokens: Number of output tokens
+
+    Returns:
+        float: Total cost in dollars
+    """
+    # Direct model name lookup first
+    model_alias = model
+
+    # Only do special mapping for gpt-4 variants
+    if "gpt-4" in model:
+        if model == "gpt-4o-mini":
+            model_alias = ModelAlias.gpt_4o_mini
+        elif model == "gpt-4o":
+            model_alias = ModelAlias.gpt_4o
+        else:
+            model_alias = ModelAlias.gpt_4o
+
+    cost_map = MAP_MODEL_ALIAS_TO_COST_PER_MILLION_TOKENS.get(model_alias)
+    if not cost_map:
+        print(f"No cost map found for model: {model}")
+        return 0.0
+
+    input_cost = (input_tokens / 1_000_000) * float(cost_map["input"])
+    output_cost = (output_tokens / 1_000_000) * float(cost_map["output"])
+
+    # print(
+    #     f"model: {model}, input_cost: {input_cost}, output_cost: {output_cost}, total_cost: {input_cost + output_cost}, total_cost_rounded: {round(input_cost + output_cost, 6)}"
+    # )
+
+    return round(input_cost + output_cost, 6)
+
+
+def tool_prompt(prompt: str, model: str, force_tools: list[str]) -> ToolCallResponse:
+    """
+    Run a chat model forcing specific tool calls.
+    Now supports JSON structured output variants.
+    """
+    base_model, reasoning_effort = parse_reasoning_effort(model)
+    with timeit() as t:
+        if base_model == "o1-mini-json":
+            # Manual JSON parsing for o1-mini
+            completion = openai_client.chat.completions.create(
+                model="o1-mini",
+                messages=[{"role": "user", "content": prompt}],
+            )
+
+            try:
+                # Parse raw response text into ToolsAndPrompts model
+                parsed_response = ToolsAndPrompts.model_validate_json(
+                    parse_markdown_backticks(completion.choices[0].message.content)
+                )
+                tool_calls = [
+                    SimpleToolCall(
+                        tool_name=tap.tool_name.value, params={"prompt": tap.prompt}
+                    )
+                    for tap in parsed_response.tools_and_prompts
+                ]
+            except Exception as e:
+                print(f"Failed to parse JSON response: {e}")
+                tool_calls = []
+
+        elif "-json" in base_model:
+            # Use structured output for JSON variants
+            completion = openai_client.beta.chat.completions.parse(
+                model=base_model.replace("-json", ""),
+                messages=[{"role": "user", "content": prompt}],
+                response_format=ToolsAndPrompts,
+            )
+
+            try:
+                tool_calls = [
+                    SimpleToolCall(
+                        tool_name=tap.tool_name.value, params={"prompt": tap.prompt}
+                    )
+                    for tap in completion.choices[0].message.parsed.tools_and_prompts
+                ]
+            except Exception as e:
+                print(f"Failed to parse JSON response: {e}")
+                tool_calls = []
+
+        else:
+            # Original implementation for function calling
+            completion = openai_client.chat.completions.create(
+                model=base_model,
+                messages=[{"role": "user", "content": prompt}],
+                tools=openai_tools_list,
+                tool_choice="required",
+            )
+
+            tool_calls = [
+                SimpleToolCall(
+                    tool_name=tool_call.function.name,
+                    params=json.loads(tool_call.function.arguments),
+                )
+                for tool_call in completion.choices[0].message.tool_calls or []
+            ]
+
+    # Calculate costs
+    input_tokens = completion.usage.prompt_tokens
+    output_tokens = completion.usage.completion_tokens
+    cost = get_openai_cost(model, input_tokens, output_tokens)
+
+    return ToolCallResponse(
+        tool_calls=tool_calls, runTimeMs=t(), inputAndOutputCost=cost
+    )
+
+
+def bench_prompt(prompt: str, model: str) -> BenchPromptResponse:
+    """
+    Send a prompt to OpenAI and get detailed benchmarking response.
+    """
+    base_model, reasoning_effort = parse_reasoning_effort(model)
+    try:
+        with timeit() as t:
+            if reasoning_effort:
+                completion = openai_client.chat.completions.create(
+                    model=base_model,
+                    reasoning_effort=reasoning_effort,
+                    messages=[{"role": "user", "content": prompt}],
+                    stream=False,
+                )
+            else:
+                completion = openai_client.chat.completions.create(
+                    model=base_model,
+                    messages=[{"role": "user", "content": prompt}],
+                    stream=False,
+                )
+            elapsed_ms = t()
+
+            input_tokens = completion.usage.prompt_tokens
+            output_tokens = completion.usage.completion_tokens
+            cost = get_openai_cost(base_model, input_tokens, output_tokens)
+
+        return BenchPromptResponse(
+            response=completion.choices[0].message.content,
+            tokens_per_second=0.0,  # OpenAI doesn't provide timing info
+            provider="openai",
+            total_duration_ms=elapsed_ms,
+            load_duration_ms=0.0,
+            inputAndOutputCost=cost,
+        )
+    except Exception as e:
+        print(f"OpenAI error: {str(e)}")
+        return BenchPromptResponse(
+            response=f"Error: {str(e)}",
+            tokens_per_second=0.0,
+            provider="openai",
+            total_duration_ms=0.0,
+            load_duration_ms=0.0,
+            inputAndOutputCost=0.0,
+            errored=True,
+        )
+
+
+def predictive_prompt(prompt: str, prediction: str, model: str) -> PromptResponse:
+    """
+    Run a chat model with a predicted output to reduce latency.
+
+    Args:
+        prompt (str): The prompt to send to the OpenAI API.
+        prediction (str): The predicted output text.
+        model (str): The model ID to use for the API call.
+
+    Returns:
+        PromptResponse: The response including text, runtime, and cost.
+    """
+    base_model, reasoning_effort = parse_reasoning_effort(model)
+    # Prepare the API call parameters outside the timing block
+    messages = [{"role": "user", "content": prompt}]
+    prediction_param = {"type": "content", "content": prediction}
+
+    # Only time the actual API call
+    with timeit() as t:
+        completion = openai_client.chat.completions.create(
+            model=base_model,
+            reasoning_effort=reasoning_effort,
+            messages=messages,
+            prediction=prediction_param,
+        )
+
+    # Process results after timing block
+    input_tokens = completion.usage.prompt_tokens
+    output_tokens = completion.usage.completion_tokens
+    cost = get_openai_cost(base_model, input_tokens, output_tokens)
+
+    return PromptResponse(
+        response=completion.choices[0].message.content,
+        runTimeMs=t(),  # Get the elapsed time of just the API call
+        inputAndOutputCost=cost,
+    )
+
+
+def text_prompt(prompt: str, model: str) -> PromptResponse:
+    """
+    Send a prompt to OpenAI and get a response.
+    """
+    base_model, reasoning_effort = parse_reasoning_effort(model)
+    try:
+        with timeit() as t:
+            if reasoning_effort:
+                completion = openai_client.chat.completions.create(
+                    model=base_model,
+                    reasoning_effort=reasoning_effort,
+                    messages=[{"role": "user", "content": prompt}],
+                )
+            else:
+                completion = openai_client.chat.completions.create(
+                    model=base_model,
+                    messages=[{"role": "user", "content": prompt}],
+                )
+            print("completion.usage", completion.usage.model_dump())
+            input_tokens = completion.usage.prompt_tokens
+            output_tokens = completion.usage.completion_tokens
+            cost = get_openai_cost(base_model, input_tokens, output_tokens)
+
+        return PromptResponse(
+            response=completion.choices[0].message.content,
+            runTimeMs=t(),
+            inputAndOutputCost=cost,
+        )
+    except Exception as e:
+        print(f"OpenAI error: {str(e)}")
+        return PromptResponse(
+            response=f"Error: {str(e)}", runTimeMs=0.0, inputAndOutputCost=0.0
+        )
+</file>
+
+<file path="tools.py">
+def run_coder_agent(prompt: str) -> str:
+    """
+    Run the coder agent with the given prompt.
+
+    Args:
+        prompt (str): The input prompt for the coder agent
+
+    Returns:
+        str: The response from the coder agent
+    """
+    return "run_coder_agent"
+
+
+def run_git_agent(prompt: str) -> str:
+    """
+    Run the git agent with the given prompt.
+
+    Args:
+        prompt (str): The input prompt for the git agent
+
+    Returns:
+        str: The response from the git agent
+    """
+    return "run_git_agent"
+
+
+def run_docs_agent(prompt: str) -> str:
+    """
+    Run the docs agent with the given prompt.
+
+    Args:
+        prompt (str): The input prompt for the docs agent
+
+    Returns:
+        str: The response from the docs agent
+    """
+    return "run_docs_agent"
+
+
+# Gemini tools list
+gemini_tools_list = [
+    {
+        "function_declarations": [
+            {
+                "name": "run_coder_agent",
+                "description": "Run the coding agent with the given prompt. Use this when the user needs help writing, reviewing, or modifying code.",
+                "parameters": {
+                    "type_": "OBJECT",
+                    "properties": {
+                        "prompt": {
+                            "type_": "STRING",
+                            "description": "The input prompt that describes what to code for the coder agent"
+                        }
+                    },
+                    "required": ["prompt"]
+                }
+            },
+            {
+                "name": "run_git_agent",
+                "description": "Run the git agent with the given prompt. Use this when the user needs help with git operations, commits, or repository management.",
+                "parameters": {
+                    "type_": "OBJECT", 
+                    "properties": {
+                        "prompt": {
+                            "type_": "STRING",
+                            "description": "The input prompt that describes what to commit for the git agent"
+                        }
+                    },
+                    "required": ["prompt"]
+                }
+            },
+            {
+                "name": "run_docs_agent",
+                "description": "Run the documentation agent with the given prompt. Use this when the user needs help creating, updating, or reviewing documentation.",
+                "parameters": {
+                    "type_": "OBJECT",
+                    "properties": {
+                        "prompt": {
+                            "type_": "STRING",
+                            "description": "The input prompt that describes what to document for the documentation agent"
+                        }
+                    },
+                    "required": ["prompt"]
+                }
+            }
+        ]
+    }
+]
+
+# OpenAI tools list
+openai_tools_list = [
+    {
+        "type": "function",
+        "function": {
+            "name": "run_coder_agent",
+            "description": "Run the coding agent with the given prompt",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "type": "string",
+                        "description": "The input prompt that describes what to code for the coder agent",
+                    }
+                },
+                "required": ["prompt"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "run_git_agent",
+            "description": "Run the git agent with the given prompt",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "type": "string",
+                        "description": "The input prompt that describes what to commit for the git agent",
+                    }
+                },
+                "required": ["prompt"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "run_docs_agent",
+            "description": "Run the documentation agent with the given prompt",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "type": "string",
+                        "description": "The input prompt that describes what to document for the documentation agent",
+                    }
+                },
+                "required": ["prompt"],
+            },
+        },
+    },
+]
+
+anthropic_tools_list = [
+    {
+        "name": "run_coder_agent",
+        "description": "Run the coding agent with the given prompt",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "prompt": {
+                    "type": "string",
+                    "description": "The input prompt that describes what to code for the coder agent",
+                }
+            },
+            "required": ["prompt"]
+        }
+    },
+    {
+        "name": "run_git_agent", 
+        "description": "Run the git agent with the given prompt",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "prompt": {
+                    "type": "string",
+                    "description": "The input prompt that describes what to commit for the git agent",
+                }
+            },
+            "required": ["prompt"]
+        }
+    },
+    {
+        "name": "run_docs_agent",
+        "description": "Run the documentation agent with the given prompt",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "prompt": {
+                    "type": "string",
+                    "description": "The input prompt that describes what to document for the documentation agent",
+                }
+            },
+            "required": ["prompt"]
+        }
+    }
+]
+
+all_tools_list = [d["function"]["name"] for d in openai_tools_list]
+</file>
+
+</files>

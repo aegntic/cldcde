@@ -1,0 +1,41 @@
+# Jekyll configuration for GitHub Pages
+# This is only used for serving benchmark results
+
+# Only process benchmark-related files
+include:
+  - index.html
+  - benchmarks/
+
+# Exclude everything else to prevent Liquid syntax errors
+exclude:
+  - "*.md"
+  - "*.json"
+  - "*.ts"
+  - "*.js"
+  - "*.yml"
+  - src/
+  - tests/
+  - docs/
+  - scripts/
+  - dist/
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - tsconfig.json
+  - README.md
+  - CHANGELOG.md
+  - LICENSE
+  - Dockerfile*
+  - docker-compose*
+  - .github/
+  - .vscode/
+  - .claude/
+  - deploy/
+  - examples/
+  - data/
+
+# Disable Jekyll processing for files we don't want processed
+plugins: []
+
+# Use simple theme
+theme: null
