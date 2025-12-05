@@ -1,0 +1,135 @@
+{
+  "name": "ultra-sequential-swarm-universal",
+  "version": "1.0.0",
+  "description": "Universal AI Assistant Integration for Ultra Sequential Swarm - Multi-agent collaborative thinking with sequential reasoning across Claude Code, Gemini CLI, VSCode, and all major AI coding platforms",
+  "main": "src/index.js",
+  "bin": {
+    "ultra-swarm": "./bin/ultra-swarm.js"
+  },
+  "scripts": {
+    "install-universal": "./installers/install-universal.sh",
+    "install-mcp": "cp -r mcp-server ~/.config/claude-desktop/claude_desktop_config/ultra-sequential-swarm",
+    "install-shell": "./installers/install-universal.sh --shell-only",
+    "build-mcp": "node mcp-server/index.js",
+    "test": "node tests/test-integration.js",
+    "demo": "node src/demo.js",
+    "validate": "node tests/validate-integration.js",
+    "clean": "rm -rf ~/.config/claude-desktop/claude_desktop_config/ultra-sequential-swarm"
+  },
+  "keywords": [
+    "ai",
+    "ultra-sequential-swarm",
+    "claude-code",
+    "gemini-cli",
+    "cline",
+    "cursor",
+    "vscode",
+    "kilo",
+    "aider",
+    "mcp",
+    "model-context-protocol",
+    "sequential-thinking",
+    "ultrathink",
+    "multi-agent",
+    "collaborative-intelligence",
+    "fpef",
+    "first-principles",
+    "context-aware",
+    "prompt-engineering",
+    "ai-integration",
+    "coding-assistant",
+    "developer-tools"
+  ],
+  "author": {
+    "name": "Mattae Cooper",
+    "title": "AI Complex Systems Integrity Strategist",
+    "email": "mattae@ae.ltd",
+    "organization": "Aegntic",
+    "website": "https://aegntic.ai"
+  },
+  "maintainers": [
+    {
+      "name": "Aegntic Research Team",
+      "email": "research@aegntic.ai"
+    },
+    {
+      "name": "Aegntic Support",
+      "email": "contact@ae.ltd"
+    },
+    {
+      "name": "Aegntic Media",
+      "email": "media@aegntic.ai"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/aegntic-MCP.git",
+    "directory": "ultra-sequential-swarm-universal"
+  },
+  "bugs": {
+    "url": "https://github.com/aegntic/aegntic-MCP/issues",
+    "email": "support@aegntic.ai"
+  },
+  "homepage": "https://github.com/aegntic/aegntic-MCP/tree/main/ultra-sequential-swarm-universal",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.4.0",
+    "inquirer": "^9.2.12",
+    "chalk": "^4.1.2",
+    "uuid": "^9.0.1",
+    "winston": "^3.11.0",
+    "fs-extra": "^11.1.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.1"
+  },
+  "peerDependencies": {
+    "claude-cli": ">=1.0.0"
+  },
+  "files": [
+    "mcp-server/**/*",
+    "shell-integration/**/*",
+    "installers/**/*",
+    "src/**/*",
+    "bin/**/*",
+    "LICENSE.md",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "preferGlobal": true,
+  "funding": {
+    "type": "enterprise",
+    "url": "mailto:contact@ae.ltd"
+  },
+  "config": {
+    "mcp_server_path": "~/.config/claude-desktop/claude_desktop_config/ultra-sequential-swarm",
+    "shell_integration_path": "~/.local/bin/ultra-swarm",
+    "default_workspace": "/tmp/ultra-swarm-workspace"
+  },
+  "platforms": {
+    "mcp_compatible": [
+      "Claude Code",
+      "Cline",
+      "Cursor",
+      "Continue",
+      "Windsurf"
+    ],
+    "shell_compatible": [
+      "Gemini CLI",
+      "Aider",
+      "Kilo",
+      "Codeium",
+      "Supermaven"
+    ],
+    "extension_compatible": [
+      "VSCode",
+      "Neovim",
+      "Emacs"
+    ]
+  }
+}

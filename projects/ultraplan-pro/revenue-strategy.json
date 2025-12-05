@@ -1,0 +1,53 @@
+{
+  "pricing": {
+    "free_tier": {
+      "forms_per_month": 10,
+      "basic_automation": true,
+      "local_storage": true
+    },
+    "professional": {
+      "price": "$9.99/month",
+      "forms_per_month": "unlimited",
+      "advanced_automation": true,
+      "cloud_sync": true,
+      "priority_support": true
+    },
+    "team": {
+      "price": "$24.99/month",
+      "everything_in_pro": true,
+      "team_collaboration": true,
+      "admin_controls": true,
+      "sso_integration": true
+    }
+  },
+  "conversion_funnels": {
+    "free_to_pro": [
+      "form_limit_reached",
+      "advanced_features",
+      "cloud_sync"
+    ],
+    "pro_to_team": [
+      "team_size_growth",
+      "collaboration_needs",
+      "admin_controls"
+    ]
+  },
+  "revenue_projections": {
+    "month_1": {
+      "users": 100,
+      "revenue": 500
+    },
+    "month_3": {
+      "users": 500,
+      "revenue": 2500
+    },
+    "month_6": {
+      "users": 1000,
+      "revenue": 10000
+    },
+    "month_12": {
+      "users": 2500,
+      "revenue": 25000
+    }
+  }
+}

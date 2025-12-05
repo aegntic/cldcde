@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prologue - Early Access Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tagline {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 14px;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .features {
+            margin-bottom: 30px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+        .feature:hover {
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            color: #6366f1;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 2px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .form {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .interests {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .interest-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .interest-option:hover {
+            background: #e5e7eb;
+        }
+
+        .interest-option input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .interest-option label {
+            margin: 0;
+            font-weight: 400;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #6366f1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .message.success {
+            background: #10b981;
+            color: white;
+        }
+
+        .message.error {
+            background: #ef4444;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8fafc;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #6366f1;
+            text-decoration: none;
+        }
+
+        .stats {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .stats-number {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stats-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header, .content {
+                padding: 30px 20px;
+            }
+
+            .interests {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🎭 Prologue</div>
+            <div class="tagline">Begin Your Story</div>
+            <div class="description">
+                The AI-Powered Creative Framework for Building Tomorrow's Digital Experiences
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="stats">
+                <div class="stats-number" id="totalCount">147</div>
+                <div class="stats-label">Creators already on the waitlist</div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-text">
+                        <div class="feature-title">AI-Powered Creativity</div>
+                        <div class="feature-desc">6 specialized AI agents as your creative team</div>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-text">
+                        <div class="feature-title">Lightning Fast</div>
+                        <div class="feature-desc">Build in minutes, not hours with intelligent automation</div>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <div class="feature-text">
+                        <div class="feature-title">Multi-Disciplinary</div>
+                        <div class="feature-desc">Websites, games, art, apps, and more</div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="registrationForm" class="form">
+                <div class="form-group">
+                    <label for="name">Your Name (Optional)</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>What interests you most? (Select all that apply)</label>
+                    <div class="interests">
+                        <div class="interest-option">
+                            <input type="checkbox" id="web" name="interests" value="web-development">
+                            <label for="web">Web Development</label>
+                        </div>
+                        <div class="interest-option">
+                            <input type="checkbox" id="games" name="interests" value="game-development">
+                            <label for="games">Game Development</label>
+                        </div>
+                        <div class="interest-option">
+                            <input type="checkbox" id="art" name="interests" value="generative-art">
+                            <label for="art">Generative Art</label>
+                        </div>
+                        <div class="interest-option">
+                            <input type="checkbox" id="mobile" name="interests" value="mobile-apps">
+                            <label for="mobile">Mobile Apps</label>
+                        </div>
+                        <div class="interest-option">
+                            <input type="checkbox" id="ai" name="interests" value="ai-integration">
+                            <label for="ai">AI Integration</label>
+                        </div>
+                        <div class="interest-option">
+                            <input type="checkbox" id="other" name="interests" value="other">
+                            <label for="other">Other</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Get Early Access 🚀
+                </button>
+            </form>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Joining the creative revolution...</p>
+            </div>
+
+            <div class="message" id="message"></div>
+        </div>
+
+        <div class="footer">
+            <p>🎯 <strong>Early Access Benefits:</strong> Exclusive pricing, beta access, private community</p>
+            <p style="margin-top: 10px;">
+                Questions? <a href="mailto:team@logue.pro">Contact us</a> |
+                Visit us at <a href="https://logue.pro" target="_blank">logue.pro</a>
+            </p>
+            <p style="margin-top: 10px; font-size: 12px;">
+                © 2024 Prologue by AEGNTIC.ai. Unleash your creative potential.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const message = document.getElementById('message');
+            const form = document.getElementById('registrationForm');
+
+            // Get form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const interests = Array.from(document.querySelectorAll('input[name="interests"]:checked'))
+                .map(cb => cb.value);
+
+            // Show loading
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            message.style.display = 'none';
+
+            try {
+                // In a real implementation, this would call your backend API
+                // For demo purposes, we'll simulate the API call
+                const response = await simulateRegistration(name, email, interests);
+
+                if (response.success) {
+                    // Show success message
+                    message.className = 'message success';
+                    message.innerHTML = `
+                        <h3>🎉 Welcome to Prologue!</h3>
+                        <p>${response.message}</p>
+                        <p style="margin-top: 10px;">Check your email for confirmation details.</p>
+                    `;
+
+                    // Reset form
+                    form.reset();
+
+                    // Update stats
+                    updateStats();
+                } else {
+                    // Show error message
+                    message.className = 'message error';
+                    message.textContent = response.message;
+                }
+            } catch (error) {
+                message.className = 'message error';
+                message.textContent = 'Registration failed. Please try again later.';
+            } finally {
+                // Hide loading and show message
+                loading.style.display = 'none';
+                message.style.display = 'block';
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Simulate registration API call
+        async function simulateRegistration(name, email, interests) {
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                return {
+                    success: false,
+                    message: 'Please enter a valid email address.'
+                };
+            }
+
+            // Simulate successful registration
+            return {
+                success: true,
+                message: 'Successfully registered for early access! You\'ll receive updates as we approach launch.',
+                id: Date.now().toString()
+            };
+        }
+
+        // Update stats with animation
+        function updateStats() {
+            const totalCount = document.getElementById('totalCount');
+            const currentCount = parseInt(totalCount.textContent);
+            const newCount = currentCount + 1;
+
+            // Animate count up
+            let step = 0;
+            const increment = Math.ceil((newCount - currentCount) / 10);
+            const timer = setInterval(() => {
+                step++;
+                totalCount.textContent = currentCount + (increment * step);
+                if (step >= 10) {
+                    clearInterval(timer);
+                    totalCount.textContent = newCount;
+                }
+            }, 100);
+        }
+
+        // Add some interactivity to interest options
+        document.querySelectorAll('.interest-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+    </script>
+</body>
+</html>

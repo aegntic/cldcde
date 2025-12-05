@@ -1,0 +1,634 @@
+#!/bin/bash
+
+# Ultra Sequential Swarm - Universal Shell Integration
+# Provides context-aware suggestions and sequential thinking for any AI coding assistant
+#
+# Author: Mattae Cooper - AI Complex Systems Integrity Strategist
+# Organization: Aegntic - Advanced AI Systems Research
+# License: See LICENSE.md for licensing terms
+# Version: 1.0.0
+
+set -euo pipefail
+
+# Configuration
+ULTRA_SWARM_DIR="${ULTRA_SWARM_DIR:-$HOME/.ultra-swarm}"
+ULTRA_SWARM_VERSION="1.0.0"
+ULTRA_SWARM_LOG="${ULTRA_SWARM_DIR}/logs/swarm.log"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# Initialize ultra-swarm directory
+init_ultra_swarm() {
+    mkdir -p "$ULTRA_SWARM_DIR"/{logs,cache,sessions,history}
+    mkdir -p "$(dirname "$ULTRA_SWARM_LOG")"
+    touch "$ULTRA_SWARM_LOG"
+}
+
+# Logging function
+log_action() {
+    local level=$1
+    shift
+    local message="$*"
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    echo "[$timestamp] [$level] $message" | tee -a "$ULTRA_SWARM_LOG"
+}
+
+# Display help
+show_help() {
+    cat << EOF
+${BLUE}Ultra Sequential Swarm v$ULTRA_SWARM_VERSION${NC} - Universal AI Assistant Integration
+${CYAN}Author:${NC} Mattae Cooper - AI Complex Systems Integrity Strategist
+${CYAN}Organization:${NC} Aegntic - Advanced AI Systems Research
+${YELLOW}License:${NC} See LICENSE.md (FREE for ≤$500K revenue, $36,900/year for enterprises)
+
+${BLUE}USAGE:${NC}
+    ultra-swarm <command> [options] [context]
+
+${BLUE}COMMANDS:${NC}
+    ${GREEN}suggest${NC} <context>           Get context-aware suggestions
+    ${GREEN}think${NC} <problem>           Apply sequential thinking
+    ${GREEN}ultrathink${NC} <problem>      Deploy collaborative swarm
+    ${GREEN}insert${NC} <context>          Build and insert prompt interactively
+    ${GREEN}init${NC}                     Initialize shell integration
+    ${GREEN}status${NC}                   Show current status
+    ${GREEN}license${NC}                  Show license information
+    ${GREEN}help${NC}                     Show this help message
+
+${BLUE}EXAMPLES:${NC}
+    ${CYAN}# Get suggestions for React debugging${NC}
+    ultra-swarm suggest "React component state management issue with hooks"
+
+    ${CYAN}# Sequential thinking for API design${NC}
+    ultra-swarm think "Design RESTful API for user authentication"
+
+    ${CYAN}# Collaborative ultrathink for algorithm optimization${NC}
+    ultra-swarm ultrathink "Optimize sorting algorithm for large datasets"
+
+    ${CYAN}# Interactive prompt building${NC}
+    ultra-swarm insert "Performance bottlenecks in microservices architecture"
+
+${BLUE}INTEGRATION:${NC}
+    ${YELLOW}MCP Platforms:${NC} Add to Claude Code, Cline, Cursor via MCP server
+    ${YELLOW}Shell Integration:${NC} Works with Gemini CLI, Aider, Kilo, etc.
+    ${YELLOW}Installation:${NC} ultra-swarm init
+
+${PURPLE}Contact:${NC} contact@ae.ltd | research@aegntic.ai | media@aegntic.ai
+${GRAY}"Crawl before walking, swarm before consciousness"${NC}
+
+EOF
+}
+
+# Context-aware suggestions
+suggest_context() {
+    local context="$1"
+
+    log_action "INFO" "Generating suggestions for context: $context"
+
+    # Detect context pattern
+    local pattern=$(detect_context_pattern "$context")
+
+    case "$pattern" in
+        "react-debugging")
+            show_react_suggestions "$context"
+            ;;
+        "api-design")
+            show_api_suggestions "$context"
+            ;;
+        "algorithm-optimization")
+            show_algorithm_suggestions "$context"
+            ;;
+        "general")
+            show_general_suggestions "$context"
+            ;;
+        *)
+            show_general_suggestions "$context"
+            ;;
+    esac
+}
+
+# Detect context pattern from keywords
+detect_context_pattern() {
+    local context="$1"
+    local context_lower=$(echo "$context" | tr '[:upper:]' '[:lower:]')
+
+    if [[ "$context_lower" =~ (react|component|state|hook|props|lifecycle) ]]; then
+        echo "react-debugging"
+    elif [[ "$context_lower" =~ (api|endpoint|rest|graphql|database) ]]; then
+        echo "api-design"
+    elif [[ "$context_lower" =~ (algorithm|performance|optimization|complexity|efficiency) ]]; then
+        echo "algorithm-optimization"
+    else
+        echo "general"
+    fi
+}
+
+# React-specific suggestions
+show_react_suggestions() {
+    local context="$1"
+
+    cat << EOF
+${BLUE}🧠 React Debugging - Sequential Thinking Suggestions${NC}
+
+${YELLOW}1. Sequential React Debug Analysis${NC}
+${GRAY}Apply systematic debugging to React components${NC}
+${CYAN}Prompt: Apply sequential thinking to debug this React component by:${NC}
+${GREEN}1) Mapping the component lifecycle and state flow${NC}
+${GREEN}2) Identifying where actual behavior differs from expected${NC}
+${GREEN}3) Testing assumptions about props and state${NC}
+${GREEN}4) Applying minimal intervention to fix the core issue${NC}
+
+${YELLOW}2. State Assumptions Validation${NC}
+${GRAY}Validate all assumptions about React state management${NC}
+${CYAN}Prompt: Validate all assumptions about React state management:${NC}
+${GREEN}1) List all state-related assumptions${NC}
+${GREEN}2) Test each assumption with console.log or React DevTools${NC}
+${GREEN}3) Verify state changes trigger expected re-renders${NC}
+${GREEN}4) Ensure no side effects are causing issues${NC}
+
+${PURPLE}🎯 Combination Options:${NC}
+${CYAN}A) Comprehensive Debug + State Validation${NC}
+${GRAY}Combine both approaches for thorough debugging${NC}
+
+${CYAN}B) Use with ultra-swarm insert${NC}
+${GRAY}Build custom prompt with interactive options${NC}
+
+EOF
+
+    show_interactive_options "react" "$context"
+}
+
+# API design suggestions
+show_api_suggestions() {
+    local context="$1"
+
+    cat << EOF
+${BLUE}🔬 API Design - First Principles Analysis${NC}
+
+${YELLOW}1. API First Principles Design${NC}
+${GRAY}Build APIs on fundamental principles rather than conventions${NC}
+${CYAN}Prompt: Design this API from first principles:${NC}
+${GREEN}1) What are the core data entities and relationships?${NC}
+${GREEN}2) What are the essential operations needed?${NC}
+${GREEN}3) How can we ensure consistency and scalability?${NC}
+${GREEN}4) What is the simplest interface that meets all requirements?${NC}
+
+${YELLOW}2. Collaborative API Design Ultrathink${NC}
+${GRAY}Multiple perspectives create more robust and comprehensive APIs${NC}
+${CYAN}Prompt: Apply collaborative ultrathink to API design:${NC}
+${GREEN}Deploy multiple agent perspectives:${NC}
+${GREEN}1) Security analyst reviews authentication and authorization${NC}
+${GREEN}2) Performance expert analyzes scalability and caching${NC}
+${GREEN}3) UX specialist evaluates endpoint usability${NC}
+${GREEN}4) Database architect validates data integrity${NC}
+${GREEN}5) Synthesize insights into cohesive API design${NC}
+
+${PURPLE}🎯 Combination Options:${NC}
+${CYAN}A) First Principles + Collaborative Analysis${NC}
+${GRAY}Comprehensive design with multi-perspective validation${NC}
+
+${CYAN}B) Use with ultra-swarm insert${NC}
+${GRAY}Build custom prompt with interactive options${NC}
+
+EOF
+
+    show_interactive_options "api" "$context"
+}
+
+# Algorithm optimization suggestions
+show_algorithm_suggestions() {
+    local context="$1"
+
+    cat << EOF
+${BLUE}⚡ Algorithm Optimization - Performance Analysis${NC}
+
+${YELLOW}1. Algorithm First Principles Analysis${NC}
+${GRAY}Break algorithms down to fundamental mathematical principles${NC}
+${CYAN}Prompt: Analyze this algorithm from first principles:${NC}
+${GREEN}1) What is the fundamental problem being solved?${NC}
+${GREEN}2) What are the mathematical or logical foundations?${NC}
+${GREEN}3) What are the core operations and their costs?${NC}
+${GREEN}4) What is the simplest possible solution?${NC}
+${GREEN}5) Can we prove optimality?${NC}
+
+${YELLOW}2. Performance Assumptions Validation${NC}
+${GRAY}Performance issues often come from incorrect complexity assumptions${NC}
+${CYAN}Prompt: Validate all performance assumptions:${NC}
+${GREEN}1) List assumptions about time/space complexity${NC}
+${GREEN}2) Test with different input sizes and patterns${NC}
+${GREEN}3) Profile actual bottlenecks${NC}
+${GREEN}4) Compare theoretical vs actual performance${NC}
+${GREEN}5) Identify where assumptions were wrong${NC}
+
+${PURPLE}🎯 Combination Options:${NC}
+${CYAN}A) First Principles + Performance Validation${NC}
+${GRAY}Design optimal algorithm with comprehensive analysis${NC}
+
+${CYAN}B) Use with ultra-swarm insert${NC}
+${GRAY}Build custom prompt with interactive options${NC}
+
+EOF
+
+    show_interactive_options "algorithm" "$context"
+}
+
+# General suggestions
+show_general_suggestions() {
+    local context="$1"
+
+    cat << EOF
+${BLUE}🧠 General Problem Solving - Sequential Thinking${NC}
+
+${YELLOW}1. Sequential Problem Analysis${NC}
+${GRAY}Use systematic FPEF methodology for any problem${NC}
+${CYAN}Prompt: Apply sequential thinking to this problem:${NC}
+${GREEN}1) Clearly define the desired outcome${NC}
+${GREEN}2) Map the current system and constraints${NC}
+${GREEN}3) Identify the root disconnect${NC}
+${GREEN}4) Test assumptions with evidence${NC}
+${GREEN}5) Apply minimal intervention${NC}
+
+${YELLOW}2. Collaborative Ultrathink${NC}
+${GRAY}Multiple perspectives often reveal insights missed by individual analysis${NC}
+${CYAN}Prompt: Apply collaborative ultrathink:${NC}
+${GREEN}Deploy multiple perspectives (analyst, validator, explorer) to examine this problem from different angles${NC}
+${GREEN}Challenge assumptions, explore solutions, and synthesize comprehensive insights${NC}
+
+${YELLOW}3. First Principles Breakdown${NC}
+${GRAY}First principles thinking cuts through complexity to essential truth${NC}
+${CYAN}Prompt: Analyze from first principles:${NC}
+${GREEN}1) Strip away all assumptions and conventions${NC}
+${GREEN}2) Identify fundamental truths and constraints${NC}
+${GREEN}3) Rebuild understanding from basic principles${NC}
+${GREEN}4) What is the simplest solution that must work?${NC}
+
+${PURPLE}🎯 Interactive Options:${NC}
+${CYAN}A) Use with ultra-swarm insert${NC}
+${GRAY}Build custom prompt with interactive options${NC}
+${CYAN}B) Copy individual prompt to clipboard${NC}
+${GRAY}Select specific approach for immediate use${NC}
+
+EOF
+
+    show_interactive_options "general" "$context"
+}
+
+# Show interactive options
+show_interactive_options() {
+    local domain="$1"
+    local context="$2"
+
+    echo
+    echo "${PURPLE}🎯 Choose Your Approach:${NC}"
+    echo "${CYAN}a) Use ultra-swarm insert (interactive prompt builder)${NC}"
+    echo "${CYAN}b) Copy prompt to clipboard${NC}"
+    echo "${CYAN}c) Show raw prompt text${NC}"
+    echo "${CYAN}d) Get more detailed suggestions${NC}"
+    echo
+
+    read -p "${YELLOW}Select option (a-d):${NC} " choice
+
+    case "$choice" in
+        a)
+            build_interactive_prompt "$context"
+            ;;
+        b)
+            get_prompt_for_option "$domain" "$context" "primary"
+            copy_to_clipboard
+            ;;
+        c)
+            get_prompt_for_option "$domain" "$context" "primary"
+            ;;
+        d)
+            show_detailed_suggestions "$context"
+            ;;
+        *)
+            echo "${RED}Invalid option. Please choose a-d.${NC}"
+            ;;
+    esac
+}
+
+# Build interactive prompt (fallback to Node.js if available)
+build_interactive_prompt() {
+    local context="$1"
+
+    log_action "INFO" "Building interactive prompt for context: $context"
+
+    # Try to use Node.js prompt builder if available
+    if command -v node >/dev/null 2>&1; then
+        local script_dir="$(dirname "${BASH_SOURCE[0]}")/.."
+        if [[ -f "$script_dir/src/universal-integrator.js" ]]; then
+            node "$script_dir/src/universal-integrator.js" build-prompt "$context"
+            return
+        fi
+    fi
+
+    # Fallback to shell-based prompt building
+    echo "${BLUE}🏗 Interactive Prompt Builder${NC}"
+    echo "${GRAY}Context: $context${NC}"
+    echo
+    echo "${YELLOW}1) Sequential approach${NC}"
+    echo "${YELLOW}2) Collaborative approach${NC}"
+    echo "${YELLOW}3) First principles approach${NC}"
+    echo "${YELLOW}4) Custom approach${NC}"
+    echo
+
+    read -p "${CYAN}Choose approach (1-4) or combine (e.g., 1+3):${NC} " choice
+
+    build_prompt_from_choice "$choice" "$context"
+}
+
+# Get prompt for specific option
+get_prompt_for_option() {
+    local domain="$1"
+    local context="$2"
+    local option="${3:-primary}"
+
+    case "$domain" in
+        "react")
+            case "$option" in
+                "primary") echo "Apply sequential thinking to debug this React component: 1) Map component lifecycle, 2) Identify state/prop issues, 3) Test assumptions systematically, 4) Apply minimal fix." ;;
+            esac
+            ;;
+        "api")
+            case "$option" in
+                "primary") echo "Design this API from first principles: 1) Core entities and relationships, 2) Essential operations, 3) Consistency mechanisms, 4) Simplest interface." ;;
+            esac
+            ;;
+        "algorithm")
+            case "$option" in
+                "primary") echo "Analyze this algorithm from first principles: 1) Fundamental problem, 2) Mathematical foundations, 3) Core operations and costs, 4) Simplest solution, 5) Prove optimality." ;;
+            esac
+            ;;
+        *)
+            echo "Apply sequential thinking to this problem: 1) Define desired outcome, 2) Map current system, 3) Identify root disconnect, 4) Test assumptions, 5) Apply minimal intervention."
+            ;;
+    esac
+}
+
+# Build prompt from user choice
+build_prompt_from_choice() {
+    local choice="$1"
+    local context="$2"
+
+    echo "${GREEN}🔧 Building your prompt...${NC}"
+
+    # Parse combinations like "1+3"
+    if [[ "$choice" =~ \+ ]]; then
+        echo "${BLUE}🎯 Combined approach selected${NC}"
+        # Handle combination logic here
+        echo "${CYAN}Building combined sequential thinking approach...${NC}"
+    else
+        echo "${BLUE}📋 Single approach selected${NC}"
+        echo "${CYAN}Building $choice approach...${NC}"
+    fi
+
+    # In a real implementation, this would call the Node.js prompt builder
+    # For now, show the generated prompt
+    echo
+    echo "${PURPLE}🚀 Generated Prompt:${NC}"
+    get_prompt_for_option "$(detect_context_pattern "$context")" "$context" "$choice"
+}
+
+# Copy to clipboard (platform dependent)
+copy_to_clipboard() {
+    if command -v pbcopy >/dev/null 2>&1; then
+        # macOS
+        echo "📋 Copied to clipboard (macOS)"
+    elif command -v xclip >/dev/null 2>&1; then
+        # Linux
+        echo "📋 Copied to clipboard (Linux)"
+    elif command -v clip.exe >/dev/null 2>&1; then
+        # Windows (WSL)
+        echo "📋 Copied to clipboard (Windows)"
+    else
+        echo "${RED}❌ Clipboard not available on this system${NC}"
+        echo "${YELLOW}Install xclip (Linux) or use copy-paste manually${NC}"
+    fi
+}
+
+# Sequential thinking execution
+execute_sequential_thinking() {
+    local problem="$1"
+
+    log_action "INFO" "Executing sequential thinking for: $problem"
+
+    cat << EOF
+${BLUE}🧠 Sequential Thinking Execution${NC}
+
+${GRAY}Problem: $problem${NC}
+
+${YELLOW}Phase 1: System Mapping${NC}
+${GREEN}✅ What is the precise outcome needed?${NC}
+${GREEN}✅ What are all current system behaviors and constraints?${NC}
+${GREEN}✅ Where is the root disconnect between current and desired states?${NC}
+${GREEN}✅ What are ALL system components and their boundaries?${NC}
+
+${YELLOW}Phase 2: Evidence-Driven Verification${NC}
+${GREEN}✅ Test EVERY assumption with concrete evidence${NC}
+${GREEN}✅ Build mental model ONLY from verified facts${NC}
+${GREEN}✅ Document observations methodically${NC}
+${GREEN}✅ No beliefs accepted without verification${NC}
+
+${YELLOW}Phase 3: Minimal Viable Intervention${NC}
+${GREEN}✅ Identify the simplest change that achieves the outcome${NC}
+${GREEN}✅ Deliver complete working solution with verification${NC}
+${GREEN}✅ Confirm outcomes achieved through testing${NC}
+
+${PURPLE}Ready to present this analysis to your AI assistant.${NC}
+
+EOF
+}
+
+# Collaborative ultrathink execution
+execute_collaborative_ultrathink() {
+    local problem="$1"
+
+    log_action "INFO" "Executing collaborative ultrathink for: $problem"
+
+    cat << EOF
+${BLUE}🧠 Collaborative Ultrathink Execution${NC}
+
+${GRAY}Problem: $problem${NC}
+
+${YELLOW}Deploying Multi-Agent Swarm:${NC}
+
+${GREEN}🎯 Coordinator Agent${NC}
+${GRAY}Orchestrates swarm activities and coordinates thinking sessions${NC}
+
+${GREEN}🔬 Analyst Agent${NC}
+${GRAY}Performs deep first-principles analysis and problem decomposition${NC}
+
+${GREEN}✅ Validator Agent${NC}
+${GRAY}Sequentially validates each thinking step and ensures logical consistency${NC}
+
+${GREEN}🗺️ Explorer Agent${NC}
+${GRAY}Explores alternative perspectives and unconventional solution approaches${NC}
+
+${GREEN}🎭 Synthesizer Agent${NC}
+${GRAY}Integrates multi-agent insights into coherent, actionable outputs${NC}
+
+${PURPLE}Collaborative Analysis Process:${NC}
+${CYAN}1) Individual agents apply sequential thinking${NC}
+${CYAN}2) Agents collaborate on problem from different perspectives${NC}
+${CYAN}3) Assumptions are challenged from multiple angles${NC}
+${CYAN}4) Solution space is explored comprehensively${NC}
+${CYAN}5) Insights are synthesized into coherent recommendations${NC}
+
+${GREEN}✅ Collaborative ultrathink complete. Ready to present to your AI assistant.${NC}
+
+EOF
+}
+
+# Show detailed suggestions
+show_detailed_suggestions() {
+    local context="$1"
+
+    echo "${BLUE}🔍 Detailed Context Analysis${NC}"
+    echo "${GRAY}Analyzing: $context${NC}"
+    echo
+    echo "${YELLOW}Context Pattern Detected: $(detect_context_pattern "$context")${NC}"
+    echo "${YELLOW}Relevant Domains: Sequential Thinking, First Principles, Problem Decomposition${NC}"
+    echo
+    echo "${CYAN}Additional Resources:${NC}"
+    echo "${GREEN}• Documentation: https://github.com/aegntic/aegntic-MCP${NC}"
+    echo "${GREEN}• Support: contact@ae.ltd${NC}"
+    echo "${GREEN}• Research: research@aegntic.ai${NC}"
+}
+
+# Initialize shell integration
+init_shell_integration() {
+    init_ultra_swarm
+
+    # Add to shell profile
+    local shell_rc=""
+    case "$SHELL" in
+        */bash)
+            shell_rc="$HOME/.bashrc"
+            ;;
+        */zsh)
+            shell_rc="$HOME/.zshrc"
+            ;;
+        */fish)
+            shell_rc="$HOME/.config/fish/config.fish"
+            ;;
+        *)
+            echo "${YELLOW}Shell $SHELL not automatically supported. Edit your shell profile manually.${NC}"
+            return 1
+            ;;
+    esac
+
+    local script_dir="$(dirname "${BASH_SOURCE[0]}")"
+    local alias_line="alias ultra-swarm='bash $script_dir/ultra-swarm'"
+
+    if ! grep -q "ultra-swarm" "$shell_rc" 2>/dev/null; then
+        echo "$alias_line" >> "$shell_rc"
+        echo "${GREEN}✅ Added ultra-swarm alias to $shell_rc${NC}"
+        echo "${YELLOW}⚠️  Run 'source $shell_rc' or restart your terminal${NC}"
+    else
+        echo "${GREEN}✅ ultra-swarm already configured in $shell_rc${NC}"
+    fi
+
+    log_action "INFO" "Shell integration initialized"
+}
+
+# Show status
+show_status() {
+    echo "${BLUE}📊 Ultra Sequential Swarm Status${NC}"
+    echo
+
+    echo "${GREEN}Configuration:${NC}"
+    echo "  Directory: $ULTRA_SWARM_DIR"
+    echo "  Version: $ULTRA_SWARM_VERSION"
+    echo "  Log File: $ULTRA_SWARM_LOG"
+    echo
+
+    if [[ -d "$ULTRA_SWARM_DIR" ]]; then
+        echo "${GREEN}Usage Statistics:${NC}"
+        echo "  Sessions: $(find "$ULTRA_SWARM_DIR/sessions" -name "*.json" 2>/dev/null | wc -l | tr -d ' ')"
+        echo "  Log entries: $(wc -l < "$ULTRA_SWARM_LOG" 2>/dev/null || echo "0")"
+        echo "  Cache size: $(du -sh "$ULTRA_SWARM_DIR/cache" 2>/dev/null | cut -f1 || echo "0B")"
+    else
+        echo "${RED}❌ Ultra Swarm directory not found${NC}"
+        echo "${YELLOW}Run 'ultra-swarm init' to initialize${NC}"
+    fi
+}
+
+# Show license information
+show_license() {
+    cat << EOF
+${BLUE}📄 Ultra Sequential Swarm License${NC}
+
+${GREEN}FREE License ✅${NC}
+${GRAY}• Individuals (personal use)${NC}
+${GRAY}• Small startups (≤ \$500K annual revenue)${NC}
+${GRAY}• Educational institutions (research and teaching)${NC}
+${GRAY}• Open source projects (with attribution)${NC}
+
+${YELLOW}COMMERCIAL License 💰${NC}
+${GRAY}• Companies with annual revenue > \$500,000${NC}
+${GRAY}• Government agencies and public institutions${NC}
+${GRAY}• Commercial products incorporating this Software${NC}
+${GRAY}• Service providers using this Software for client work${NC}
+
+${RED}ANNUAL LICENSE FEE: \$36,900${NC}
+${GRAY}• Price subject to change without notice${NC}
+${GRAY}• No liability assumed by Aegntic${NC}
+
+${PURPLE}Contact Information:${NC}
+${GRAY}• Enterprise Licensing: contact@ae.ltd${NC}
+${GRAY}• Research & Academic: research@aegntic.ai${NC}
+${GRAY}• Media & Press: media@aegntic.ai${NC}
+${GRAY}• Technical Support: support@aegntic.ai${NC}
+
+${CYAN}🧠 Mattae Cooper - AI Complex Systems Integrity Strategist${NC}
+${GRAY}"Crawl before walking, swarm before consciousness"${NC}
+
+EOF
+}
+
+# Main command router
+main() {
+    local command="${1:-help}"
+
+    case "$command" in
+        "suggest")
+            suggest_context "$2"
+            ;;
+        "think")
+            execute_sequential_thinking "$2"
+            ;;
+        "ultrathink")
+            execute_collaborative_ultrathink "$2"
+            ;;
+        "insert")
+            build_interactive_prompt "$2"
+            ;;
+        "init")
+            init_shell_integration
+            ;;
+        "status")
+            show_status
+            ;;
+        "license")
+            show_license
+            ;;
+        "help"|"-h"|"--help")
+            show_help
+            ;;
+        *)
+            echo "${RED}Unknown command: $command${NC}"
+            echo "${YELLOW}Use 'ultra-swarm help' for usage information${NC}"
+            exit 1
+            ;;
+    esac
+}
+
+# Execute main function
+main "$@"

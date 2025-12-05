@@ -1,0 +1,43 @@
+{
+  "supabase": {
+    "project_name": "zkflow-pro-production",
+    "database_url": "postgresql://postgres:[password]@db.zkflow-pro.supabase.co:5432/postgres",
+    "api_url": "https://zkflow-pro.supabase.co",
+    "auth_enabled": true,
+    "rls_enabled": true,
+    "tables_created": true
+  },
+  "stripe": {
+    "live_mode": false,
+    "products": [
+      {
+        "id": "prod_professional",
+        "name": "zkFlow Professional",
+        "price": "$9.99/month",
+        "features": [
+          "Unlimited forms",
+          "Basic automation",
+          "Email support"
+        ]
+      },
+      {
+        "id": "prod_team",
+        "name": "zkFlow Team",
+        "price": "$24.99/month",
+        "features": [
+          "Everything in Pro",
+          "Team collaboration",
+          "Priority support"
+        ]
+      }
+    ],
+    "webhook_configured": true,
+    "test_payments_ready": true
+  },
+  "vercel": {
+    "domain": "zkflow.pro",
+    "ssl_enabled": true,
+    "auto_deploy": true,
+    "environment_variables_set": true
+  }
+}

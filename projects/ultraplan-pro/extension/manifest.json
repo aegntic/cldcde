@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "zkFlow.pro - Smart Form Automation",
+  "version": "1.0.0",
+  "description": "Professional form automation suite for power users. Save hours with intelligent form filling and workflow automation.",
+  "permissions": ["activeTab", "storage", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "src/background/service-worker.js"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["src/content/form-detector.js", "src/content/flow-recorder.js", "src/content/flow-player.js"],
+    "css": ["src/content/content.css"]
+  }],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "zkFlow.pro"
+  },
+  "options_page": "src/options/options.html",
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "homepage_url": "https://zkflow.pro"
+}

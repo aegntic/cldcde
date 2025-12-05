@@ -1,0 +1,33 @@
+{
+  "products": [
+    {
+      "name": "zkFlow Professional",
+      "price": 999,
+      "interval": "month",
+      "features": [
+        "Unlimited forms",
+        "Basic automation",
+        "Email support"
+      ]
+    },
+    {
+      "name": "zkFlow Team",
+      "price": 2499,
+      "interval": "month",
+      "features": [
+        "Everything in Pro",
+        "Team collaboration",
+        "Priority support",
+        "Advanced automation"
+      ]
+    }
+  ],
+  "webhook_endpoint": "https://zkflow.pro/api/webhooks/stripe",
+  "events": [
+    "customer.created",
+    "subscription.created",
+    "invoice.payment_succeeded",
+    "checkout.session.completed"
+  ],
+  "setup_status": "configured"
+}

@@ -1,0 +1,222 @@
+{
+  "name": "ultra-sequential-swarm",
+  "version": "1.0.0",
+  "description": "Multi-agent collaborative thinking system with sequential reasoning and ultrathink capabilities",
+  "author": {
+    "name": "Mattae Cooper",
+    "email": "mattae@ae.ltd"
+  },
+  "license": "SEE LICENSE.md",
+  "homepage": "https://github.com/aegntic/aegntic-MCP",
+  "server": {
+    "command": "node",
+    "args": ["mcp-server/index.js"],
+    "env": {
+      "NODE_ENV": "production"
+    }
+  },
+  "tools": [
+    {
+      "name": "sequential_think",
+      "description": "Apply sequential thinking methodology using Systems-First Execution Framework (FPEF) to analyze problems step-by-step with evidence-based reasoning",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "problem": {
+            "type": "string",
+            "description": "Problem or task to analyze using sequential thinking"
+          },
+          "agents": {
+            "type": "array",
+            "description": "Array of agent types to use (analyst, validator, explorer, synthesizer)",
+            "items": {
+              "type": "string",
+              "enum": ["analyst", "validator", "explorer", "synthesizer", "coordinator"]
+            }
+          },
+          "validation_level": {
+            "type": "string",
+            "description": "Level of validation rigor",
+            "enum": ["standard", "rigorous", "minimal"],
+            "default": "standard"
+          }
+        },
+        "required": ["problem"]
+      }
+    },
+    {
+      "name": "collaborative_ultrathink",
+      "description": "Deploy swarm for collaborative ultrathink - multiple agents analyze problem from different perspectives and synthesize insights",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "problem": {
+            "type": "string",
+            "description": "Complex problem requiring multi-perspective analysis"
+          },
+          "swarm_size": {
+            "type": "integer",
+            "description": "Number of agents to deploy (2-10)",
+            "minimum": 2,
+            "maximum": 10,
+            "default": 5
+          },
+          "collaboration_mode": {
+            "type": "string",
+            "description": "Collaboration approach",
+            "enum": ["sequential", "parallel", "hybrid"],
+            "default": "hybrid"
+          },
+          "synthesis_depth": {
+            "type": "string",
+            "description": "Depth of insight synthesis",
+            "enum": ["basic", "comprehensive", "deep"],
+            "default": "comprehensive"
+          }
+        },
+        "required": ["problem"]
+      }
+    },
+    {
+      "name": "context_suggest",
+      "description": "Get context-aware suggestions based on current coding context, project structure, and recent actions",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "context": {
+            "type": "string",
+            "description": "Current context (file type, project stage, recent actions)"
+          },
+          "suggestion_mode": {
+            "type": "string",
+            "description": "Type of suggestions needed",
+            "enum": ["sequential", "collaborative", "hybrid", "exploratory", "validation"],
+            "default": "hybrid"
+          },
+          "max_suggestions": {
+            "type": "integer",
+            "description": "Maximum number of suggestions to return",
+            "minimum": 1,
+            "maximum": 8,
+            "default": 5
+          },
+          "include_combinations": {
+            "type": "boolean",
+            "description": "Include combination suggestions",
+            "default": true
+          }
+        },
+        "required": ["context"]
+      }
+    },
+    {
+      "name": "smart_insert",
+      "description": "Build and insert context-aware prompt with combination options and user editing capabilities",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "base_suggestions": {
+            "type": "array",
+            "description": "Array of suggested prompts or approaches",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "string"},
+                "title": {"type": "string"},
+                "prompt": {"type": "string"},
+                "rationale": {"type": "string"},
+                "confidence": {"type": "number"}
+              }
+            }
+          },
+          "combinations": {
+            "type": "array",
+            "description": "Pre-defined suggestion combinations",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "string"},
+                "title": {"type": "string"},
+                "combination": {"type": "array", "items": {"type": "string"}},
+                "prompt": {"type": "string"}
+              }
+            }
+          },
+          "allow_customization": {
+            "type": "boolean",
+            "description": "Allow user to customize before insertion",
+            "default": true
+          },
+          "insertion_mode": {
+            "type": "string",
+            "description": "How to handle prompt insertion",
+            "enum": ["return", "copy", "direct"],
+            "default": "return"
+          }
+        }
+      }
+    },
+    {
+      "name": "analyze_first_principles",
+      "description": "Break down complex problems to fundamental truths using first-principles reasoning",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "problem": {
+            "type": "string",
+            "description": "Complex problem to analyze from first principles"
+          },
+          "domain": {
+            "type": "string",
+            "description": "Domain of the problem (technical, business, scientific, etc.)"
+          },
+          "assumptions_to_challenge": {
+            "type": "array",
+            "description": "Specific assumptions to question and validate",
+            "items": {"type": "string"}
+          },
+          "depth_level": {
+            "type": "string",
+            "enum": ["surface", "moderate", "deep", "fundamental"],
+            "default": "deep"
+          }
+        },
+        "required": ["problem"]
+      }
+    },
+    {
+      "name": "validate_thinking",
+      "description": "Validate reasoning chains, assumptions, and conclusions using rigorous logical analysis",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "reasoning": {
+            "type": "string",
+            "description": "Reasoning chain or argument to validate"
+          },
+          "validation_criteria": {
+            "type": "array",
+            "description": "Specific validation criteria to apply",
+            "items": {
+              "type": "string",
+              "enum": [
+                "logical_consistency",
+                "evidence_support",
+                "assumption_validity",
+                "conclusion_validity",
+                "completeness",
+                "bias_detection"
+              ]
+            }
+          },
+          "strictness": {
+            "type": "string",
+            "enum": ["lenient", "standard", "rigorous"],
+            "default": "standard"
+          }
+        },
+        "required": ["reasoning"]
+      }
+    }
+  ]
+}

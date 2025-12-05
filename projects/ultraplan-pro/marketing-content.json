@@ -1,0 +1,23 @@
+{
+  "productHunt": {
+    "title": "zkFlow.pro - Smart Form Automation Suite",
+    "tagline": "Transform repetitive form filling into effortless automation",
+    "description": "Professional Chrome extension for intelligent form automation. Save hours with one-click recording and replay. Perfect for developers, professionals, and power users.",
+    "launch_date": "Next Tuesday (optimal for PH)",
+    "hunter_kit": "Ready to deploy"
+  },
+  "socialMedia": {
+    "twitter": [
+      "🚀 Introducing zkFlow.pro - the form automation tool that saves hours every week! One-click recording, instant replay, zero data collection. Built for professionals who value their time. #productivity #automation #chrome",
+      "⚡ Just launched zkFlow.pro! Tired of filling the same forms over and over? Record once, replay forever. Free Chrome extension with pro features. #formautomation #productivity",
+      "🎯 zkFlow.pro is live! Professional form automation that respects your privacy. All data stored locally, no servers, no tracking. Try it free! #privacy #automation"
+    ],
+    "linkedin": "Excited to launch zkFlow.pro - a professional form automation suite for Chrome! After months of development, we've created a tool that saves professionals hours every week through intelligent form automation. Built by @aegntic with privacy-first design.",
+    "reddit": {
+      "r_productivity": "Built a Chrome extension for form automation - saves me 5+ hours/week",
+      "r_webdev": "Open-source form automation tool - feedback welcome!",
+      "r_entrepreneur": "Launched my first SaaS - zkFlow.pro form automation"
+    }
+  },
+  "pressRelease": "FOR IMMEDIATE RELEASE: aegntic Launches zkFlow.pro - Revolutionary Form Automation Suite..."
+}

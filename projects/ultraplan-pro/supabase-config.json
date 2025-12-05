@@ -1,0 +1,15 @@
+{
+  "project_name": "zkflow-pro-prod",
+  "region": "us-east-1",
+  "plan": "free",
+  "schema_applied": true,
+  "tables": [
+    "profiles",
+    "license_keys",
+    "usage_tracking",
+    "subscriptions"
+  ],
+  "rls_enabled": true,
+  "api_url": "https://demo-zkflow.supabase.co",
+  "setup_status": "configured"
+}

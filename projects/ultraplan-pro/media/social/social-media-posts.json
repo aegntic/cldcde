@@ -1,0 +1,65 @@
+{
+  "twitter": {
+    "launch_thread": [
+      "🧵 1/6 Just launched zkFlow.pro - the form automation tool I wish existed years ago!",
+      "",
+      "Problem: Spending 5+ hours/week filling out repetitive forms (job apps, client onboarding, testing)",
+      "",
+      "Solution: Record once, replay anywhere 🚀",
+      "",
+      "2/6 ⚡ How it works:",
+      "• Click record on any form",
+      "• Fill it out normally",
+      "• zkFlow.pro captures every step",
+      "• Replay instantly on similar forms",
+      "",
+      "No more repetitive typing!",
+      "",
+      "3/6 🔒 Privacy-first design:",
+      "• All data stored locally on YOUR device",
+      "• No external servers",
+      "• No data collection",
+      "• Zero tracking",
+      "",
+      "Your data never leaves your computer.",
+      "",
+      "4/6 💼 Perfect for:",
+      "• Developers testing form workflows",
+      "• Job seekers applying to multiple positions",
+      "• Professionals handling client onboarding",
+      "• Anyone tired of repetitive data entry",
+      "",
+      "5/6 🆓 Free to use with premium team features:",
+      "• Unlimited workflows",
+      "• Team collaboration",
+      "• Priority support",
+      "• Starting at $9.99/month",
+      "",
+      "6/6 🚀 Try it now:",
+      "Chrome Web Store: [link]",
+      "Website: https://zkflow.pro",
+      "",
+      "Built by @aegntic - would love your feedback!",
+      "",
+      "#productivity #automation #chrome #forms #saas"
+    ],
+    "single_posts": [
+      "🚀 Just launched zkFlow.pro! Tired of filling the same forms over and over? Record once, replay anywhere. Free Chrome extension that saves hours every week. #productivity #automation",
+      "⚡ New tool alert! zkFlow.pro automates repetitive form filling while keeping all your data private (stored locally only). Perfect for job applications, client onboarding, testing workflows. Try it free!",
+      "🔒 Privacy + ⚡ Productivity = zkFlow.pro. The form automation extension that saves time without compromising your data. All processing happens locally on YOUR device. #privacy #automation"
+    ]
+  },
+  "linkedin": {
+    "professional_post": "🚀 Excited to share zkFlow.pro with the professional community!\n\nAfter seeing countless hours wasted on repetitive form filling across organizations, we built a solution that respects both your time and privacy.\n\n🎯 The Challenge:\nProfessionals spend 5+ hours weekly on repetitive form tasks - job applications, client onboarding, testing workflows, administrative processes. This isn't just inefficient; it's a massive drain on productivity.\n\n💡 Our Solution:\nzkFlow.pro is a Chrome extension that lets you record any form workflow once, then replay it instantly on similar forms. The key differentiator? Complete privacy through local-only data storage.\n\n🔒 Privacy-First Design:\n• All data stored locally on your device\n• No external servers or cloud processing  \n• Zero data collection or tracking\n• Full user control and transparency\n\n⚡ Key Benefits:\n• Save 5+ hours per week on form automation\n• Intelligent form field detection and mapping\n• One-click workflow recording and replay\n• Professional-grade reliability\n\nPerfect for:\n✅ Developers streamlining testing workflows\n✅ HR teams optimizing onboarding processes\n✅ Sales professionals managing lead forms\n✅ Job seekers accelerating applications\n✅ Anyone handling repetitive data entry\n\nThe extension is free to use with premium team collaboration features available.\n\nI'd love to connect with others working on productivity solutions or anyone interested in trying zkFlow.pro!\n\nTry it: https://zkflow.pro\n\n#productivity #automation #formfilling #chrome #saas #privacy #workflow"
+  },
+  "reddit": {
+    "r_productivity": {
+      "title": "Built a Chrome extension that saves me 5+ hours/week on form automation",
+      "content": "Hey r/productivity!\n\nI got tired of spending hours every week filling out repetitive forms (job applications, client onboarding, testing workflows), so I built zkFlow.pro to solve this.\n\n**What it does**: Record any form workflow once, then replay it instantly on similar forms.\n\n**Key features**:\n- One-click recording and playback\n- Smart form field detection  \n- Complete privacy (all data stored locally)\n- Free to use\n\n**Real-world use cases**:\n- Job applications (save the same info across multiple sites)\n- Client onboarding forms\n- Testing form workflows as a developer\n- Any repetitive data entry\n\n**Privacy**: Unlike other automation tools, everything stays on your device. No cloud storage, no data collection.\n\n**Results**: I'm saving 5+ hours per week personally, and early users are reporting similar time savings.\n\nIt's free on the Chrome Web Store. Would love feedback from this community!\n\nChrome Web Store: [link]\nWebsite: https://zkflow.pro\n\nWhat repetitive tasks would you want to automate?"
+    },
+    "r_webdev": {
+      "title": "Open-source form automation tool - feedback welcome!",
+      "content": "Hey r/webdev!\n\nJust launched zkFlow.pro - a Chrome extension for automating form workflows. Built it primarily for testing form flows during development, but it's useful for anyone dealing with repetitive forms.\n\n**Tech details**:\n- Chrome Extension Manifest V3\n- Local storage only (no external APIs)\n- Smart form field detection using DOM analysis\n- Workflow recording and replay engine\n\n**Use cases for developers**:\n- Testing form workflows across different environments\n- QA automation for form-heavy applications\n- Streamlining repetitive admin tasks\n- Client demos with pre-filled forms\n\n**Privacy-first architecture**:\n- All data processing happens locally\n- No external servers or data transmission\n- Users maintain complete control over their data\n\n**Looking for feedback on**:\n- User experience and interface design\n- Technical architecture and performance\n- Additional features that would be valuable\n- Integration possibilities with development tools\n\nChrome Web Store: [link]\nWebsite: https://zkflow.pro\nGitHub: [link when available]\n\nWould love to hear thoughts from fellow developers! What form-related pain points do you face in your workflow?"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "zkflow-pro-extension",
+  "version": "1.0.0",
+  "description": "Zero Knowledge Form Flow Pro - Smart form automation Chrome extension",
+  "private": true,
+  "scripts": {
+    "build": "npm run clean && npm run copy",
+    "clean": "rm -rf dist",
+    "copy": "mkdir -p dist && cp -r manifest.json src assets dist/",
+    "package": "npm run build && cd dist && zip -r ../zkflow-pro.zip *",
+    "watch": "nodemon --watch src --watch manifest.json --exec npm run build",
+    "generate-icons": "node assets/icons/generate-icons.js"
+  },
+  "keywords": [
+    "chrome-extension",
+    "form-automation",
+    "password-manager",
+    "workflow-automation"
+  ],
+  "author": "zkFlow.pro",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "puppeteer": "^24.10.1"
+  }
+}

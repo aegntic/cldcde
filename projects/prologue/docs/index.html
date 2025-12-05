@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prologue - AI-Powered Creative Framework</title>
+    <meta name="description" content="Prologue is the world's first AI-powered creative framework. Build websites, games, art, and apps with specialized AI agents.">
+    <meta name="keywords" content="AI, creative framework, web development, game development, generative art, AI agents, Prologue">
+    <meta name="author" content="AEGNTIC.ai">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://logue.pro/">
+    <meta property="og:title" content="Prologue - AI-Powered Creative Framework">
+    <meta property="og:description" content="Begin Your Story with the AI-powered creative framework for building tomorrow's digital experiences">
+    <meta property="og:image" content="https://logue.pro/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://logue.pro/">
+    <meta property="twitter:title" content="Prologue - AI-Powered Creative Framework">
+    <meta property="twitter:description" content="Begin Your Story with the AI-powered creative framework for building tomorrow's digital experiences">
+    <meta property="twitter:image" content="https://logue.pro/og-image.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        .logo {
+            font-size: 64px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tagline {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .description {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .cta-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            margin: 0 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .secondary-button {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .secondary-button:hover {
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+
+        .feature-description {
+            font-size: 16px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .agents {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 60px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .agents h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .agent-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .agent-emoji {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .agent-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+
+        .agent-role {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .agent-description {
+            font-size: 13px;
+            color: #9ca3af;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #10b981;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: white;
+            opacity: 0.9;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .footer a {
+            color: #10b981;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 48px;
+            }
+
+            .tagline {
+                font-size: 24px;
+            }
+
+            .description {
+                font-size: 16px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .agents {
+                padding: 30px 20px;
+            }
+
+            .cta-button {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">🎭 Prologue</div>
+            <div class="tagline">Begin Your Story</div>
+            <div class="description">
+                The AI-Powered Creative Framework for Building Tomorrow's Digital Experiences
+            </div>
+
+            <div class="cta-container">
+                <a href="https://github.com/aegntic/prologue" class="cta-button">
+                    🚀 Get Early Access
+                </a>
+                <a href="https://github.com/aegntic/prologue" class="cta-button secondary-button">
+                    📚 View Documentation
+                </a>
+            </div>
+        </header>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">AI-Powered Creativity</h3>
+                <p class="feature-description">
+                    6 specialized AI agents that understand your creative intent and help bring your vision to life
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Lightning Fast</h3>
+                <p class="feature-description">
+                    Build in minutes, not hours with intelligent automation and smart templates
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3 class="feature-title">Multi-Disciplinary</h3>
+                <p class="feature-description">
+                    From web development to game design, interactive art to data visualization
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3 class="feature-title">Cross-Platform</h3>
+                <p class="feature-description">
+                    Create for web, mobile, desktop, and embedded systems with one framework
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Zero to Hero</h3>
+                <p class="feature-description">
+                    Perfect for beginners, powerful enough for experts with gentle learning curve
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3 class="feature-title">Real-Time Collaboration</h3>
+                <p class="feature-description">
+                    Work seamlessly with AI and human team members in real-time
+                </p>
+            </div>
+        </section>
+
+        <section class="agents">
+            <h2>Meet Your AI Creative Team</h2>
+            <div class="agent-grid">
+                <div class="agent-card">
+                    <div class="agent-emoji">🎭</div>
+                    <div class="agent-name">Visionary Director</div>
+                    <div class="agent-role">Creative Direction</div>
+                    <div class="agent-description">Understands your vision and provides creative direction</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-emoji">⚡</div>
+                    <div class="agent-name">Rapid Builder</div>
+                    <div class="agent-role">Development</div>
+                    <div class="agent-description">Translates ideas into working code instantly</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-emoji">🎨</div>
+                    <div class="agent-name">Design Master</div>
+                    <div class="agent-role">UI/UX Design</div>
+                    <div class="agent-description">Creates stunning visuals and user interfaces</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-emoji">📊</div>
+                    <div class="agent-name">Data Weaver</div>
+                    <div class="agent-role">Data Integration</div>
+                    <div class="agent-description">Integrates data sources and creates visualizations</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-emoji">🔒</div>
+                    <div class="agent-name">Security Guardian</div>
+                    <div class="agent-role">Security</div>
+                    <div class="agent-description">Implements robust security measures</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-emoji">🚀</div>
+                    <div class="agent-name">Deployment Expert</div>
+                    <div class="agent-role">Deployment</div>
+                    <div class="agent-description">Handles deployment to any platform</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="stat-card">
+                <div class="stat-number">147</div>
+                <div class="stat-label">Creators on Waitlist</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Specialized AI Agents</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Premium Templates</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Creative Possibilities</div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                <strong>Ready to begin your creative journey?</strong><br>
+                Join 147+ creators waiting for early access
+            </p>
+            <p style="margin-top: 20px;">
+                <a href="https://github.com/aegntic/prologue">GitHub</a> •
+                <a href="https://discord.gg/prologue">Discord</a> •
+                <a href="https://twitter.com/prologueai">Twitter</a> •
+                <a href="mailto:team@logue.pro">Contact</a>
+            </p>
+            <p style="margin-top: 30px; font-size: 14px; opacity: 0.7;">
+                © 2024 Prologue by AEGNTIC.ai. Begin Your Story.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Add smooth scrolling and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate stats on scroll
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all feature cards and stat cards
+            document.querySelectorAll('.feature-card, .stat-card, .agent-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

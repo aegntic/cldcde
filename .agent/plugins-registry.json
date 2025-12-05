@@ -1,0 +1,106 @@
+{
+    "name": "cldcde-plugins-registry",
+    "version": "1.0.0",
+    "description": "Registry of all CLDCDE plugins available for integration",
+    "basePath": "/home/ae/AE/01_Laboratory/cldcde/plugins",
+    "plugins": [
+        {
+            "name": "obs-studio-control",
+            "path": "obs-studio-control",
+            "category": "media-automation",
+            "description": "Interactive OBS Studio control with real-time status monitoring and automation",
+            "pricing": "premium"
+        },
+        {
+            "name": "youtube-creator",
+            "path": "youtube-creator",
+            "category": "media-automation",
+            "description": "Free YouTube Creator toolkit with basic channel management and analytics",
+            "pricing": "free"
+        },
+        {
+            "name": "youtube-creator-pro",
+            "path": "youtube-creator-pro",
+            "category": "ai-media-automation",
+            "description": "Professional YouTube Creator toolkit with AI-powered content optimization",
+            "pricing": "enterprise"
+        },
+        {
+            "name": "sota-template-suite",
+            "path": "sota-template-suite",
+            "category": "design-tools",
+            "description": "Performance-First Solid Design Templates",
+            "pricing": "premium"
+        },
+        {
+            "name": "emergent-capability-suite",
+            "path": "emergent-capability-suite",
+            "category": "ai-tools",
+            "description": "Advanced AI capability development and synthesis tools",
+            "pricing": "premium"
+        },
+        {
+            "name": "fartnode-orchestrator-suite",
+            "path": "fartnode-orchestrator-suite",
+            "category": "automation",
+            "description": "Viral automation ecosystem with coordinated multi-agent workflows",
+            "pricing": "premium"
+        },
+        {
+            "name": "hyperliquid-risk-monitor",
+            "path": "hyperliquid-risk-monitor",
+            "category": "finance",
+            "description": "Real-time risk monitoring system for live trading with automated alerts",
+            "pricing": "premium"
+        },
+        {
+            "name": "remote-visual-debugger",
+            "path": "remote-visual-debugger",
+            "category": "development-tools",
+            "description": "Comprehensive remote debugging toolkit for browser applications and React",
+            "pricing": "premium"
+        },
+        {
+            "name": "d3mo-video-generator",
+            "path": "d3mo-video-generator",
+            "category": "media-creation",
+            "description": "Professional video generation with Remotion and advanced animation",
+            "pricing": "premium"
+        },
+        {
+            "name": "viral-automation-suite",
+            "path": "viral-automation-suite",
+            "category": "marketing",
+            "description": "Build cross-platform social media automation workflows for viral growth",
+            "pricing": "premium"
+        },
+        {
+            "name": "website-gen-automation",
+            "path": "website-gen-automation",
+            "category": "web-development",
+            "description": "Intelligent website generation and distribution workflow",
+            "pricing": "premium"
+        }
+    ],
+    "mcpServers": [
+        {
+            "name": "aegntic-hive-mcp",
+            "path": "/home/ae/AE/01_Laboratory/cldcde/aegntic-hive-mcp",
+            "entrypoint": "server.js",
+            "description": "Project management for AI conversations with web scraping"
+        },
+        {
+            "name": "ai-memory-server",
+            "path": "/home/ae/AE/01_Laboratory/cldcde/mcp-servers/ai-memory-server",
+            "entrypoint": "index.js",
+            "description": "Multi-service AI memory with unified conversation access"
+        }
+    ],
+    "skills": [
+        {
+            "name": "banana",
+            "path": "/home/ae/AE/01_Laboratory/cldcde/.claude/skills/banana.md",
+            "description": "Seedream 4 image generator skill"
+        }
+    ]
+}
