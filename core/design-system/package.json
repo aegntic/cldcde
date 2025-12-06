@@ -1,0 +1,46 @@
+{
+    "name": "@cld/design-system",
+    "version": "1.0.0",
+    "description": "CLDCDE+ Unified Design System - Design tokens, themes, and components",
+    "main": "tokens.js",
+    "types": "tokens.d.ts",
+    "style": "unified.css",
+    "exports": {
+        ".": {
+            "types": "./tokens.d.ts",
+            "import": "./tokens.js",
+            "require": "./tokens.js"
+        },
+        "./css": "./unified.css",
+        "./tokens": "./tokens.js"
+    },
+    "files": [
+        "tokens.js",
+        "tokens.d.ts",
+        "unified.css",
+        "README.md"
+    ],
+    "keywords": [
+        "cldcde",
+        "claude-code",
+        "design-system",
+        "design-tokens",
+        "themes",
+        "css"
+    ],
+    "author": "Aegntic",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/aegntic/cldcde.git",
+        "directory": "core/design-system"
+    },
+    "peerDependencies": {
+        "react": ">=18.0.0"
+    },
+    "peerDependenciesMeta": {
+        "react": {
+            "optional": true
+        }
+    }
+}
