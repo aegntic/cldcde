@@ -1,0 +1,107 @@
+.header {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-default);
+    padding: var(--space-4) 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+}
+
+.header-logo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    text-decoration: none;
+}
+
+.logo-badge {
+    display: inline-block;
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    transform: rotate(-3deg);
+    width: fit-content;
+}
+
+.logo-text {
+    font-size: var(--text-2xl);
+    margin: 0;
+    white-space: nowrap;
+}
+
+.header-search {
+    flex: 1;
+    max-width: 500px;
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--text-muted);
+}
+
+.search-input {
+    width: 100%;
+    padding: var(--space-3) var(--space-4) var(--space-3) var(--space-12);
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+}
+
+.search-input:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 15px rgba(232, 109, 61, 0.2);
+    outline: none;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: color var(--transition-fast);
+}
+
+.nav-link:hover {
+    color: var(--accent-primary);
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-wrap: wrap;
+        gap: var(--space-4);
+    }
+
+    .header-search {
+        order: 3;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .logo-text {
+        font-size: var(--text-xl);
+    }
+}

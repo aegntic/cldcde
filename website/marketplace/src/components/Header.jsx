@@ -10,7 +10,7 @@ function Header() {
         <header className="header">
             <div className="header-container">
                 <Link to="/" className="header-logo">
-                    <ASCIIText text="CLDCDE.CC" variant="classic" size="medium" />
+                    <ASCIIText text="CLDCDE.CC" variant="coral" size="medium" />
                 </Link>
 
                 <div className="header-search">

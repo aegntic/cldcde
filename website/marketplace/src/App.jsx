@@ -15,10 +15,27 @@ function HomePage() {
 
     return (
         <>
+            {/* Hero Section */}
+            <section style={{
+                padding: 'var(--space-16) var(--space-4)',
+                textAlign: 'center',
+                background: 'linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%)'
+            }}>
+                <ASCIIText text="CLDCDE.CC" variant="coral" size="large" center />
+                <p style={{
+                    color: 'var(--color-text-muted)',
+                    fontSize: 'var(--text-lg)',
+                    marginTop: 'var(--space-4)',
+                    letterSpacing: '0.2em'
+                }}>
+                    CLAUDE CODE PLUS
+                </p>
+            </section>
+
             <CategoryNav />
             <main className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-16)' }}>
                 <section style={{ marginBottom: 'var(--space-12)' }}>
-                    <ASCIIText text="Featured" variant="gradient" size="small" />
+                    <ASCIIText text="Featured" variant="coral" size="small" />
                     <div className="grid grid-2" style={{ gap: 'var(--space-8)', marginTop: 'var(--space-4)' }}>
                         {featuredProducts.map(product => (
                             <ProductCard key={product.id} product={product} />
@@ -27,7 +44,7 @@ function HomePage() {
                 </section>
 
                 <section style={{ marginBottom: 'var(--space-12)' }}>
-                    <ASCIIText text="Scripts" variant="gradient" size="small" />
+                    <ASCIIText text="Skills" variant="coral" size="small" />
                     <div className="grid grid-2" style={{ gap: 'var(--space-8)', marginTop: 'var(--space-4)' }}>
                         {popularProducts.map(product => (
                             <ProductCard key={product.id} product={product} />
@@ -36,7 +53,7 @@ function HomePage() {
                 </section>
 
                 <section style={{ marginBottom: 'var(--space-12)' }}>
-                    <ASCIIText text="Community" variant="gradient" size="small" />
+                    <ASCIIText text="Community" variant="coral" size="small" />
                     <div className="grid grid-2" style={{ gap: 'var(--space-8)', marginTop: 'var(--space-4)' }}>
                         {communityProducts.map(product => (
                             <ProductCard key={product.id} product={product} />

@@ -4,22 +4,90 @@
     white-space: pre;
     display: flex;
     flex-direction: column;
-    color: var(--color-accent);
-    text-shadow: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent);
     margin: 0;
     overflow-x: auto;
+}
+
+.ascii-center {
+    align-items: center;
+    text-align: center;
 }
 
 .ascii-line {
     display: block;
 }
 
-/* Classic variant - solid green glow */
-.ascii-classic {
-    color: var(--color-accent);
+/* Coral variant - warm red/coral (default for headings) */
+.ascii-coral {
+    color: #ff6b5b;
 }
 
-/* Gradient variant - each line gets progressively dimmer */
+.ascii-coral .ascii-line-0 {
+    color: #ff8a7a;
+}
+
+.ascii-coral .ascii-line-1 {
+    color: #ff7a6a;
+}
+
+.ascii-coral .ascii-line-2 {
+    color: #ff6b5b;
+}
+
+.ascii-coral .ascii-line-3 {
+    color: #ff5c4c;
+}
+
+.ascii-coral .ascii-line-4 {
+    color: #e54a3a;
+}
+
+.ascii-coral .ascii-line-5 {
+    color: #cc4030;
+}
+
+/* Grey gradient variant - for product titles */
+.ascii-grey {
+    color: #888;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+.ascii-grey .ascii-line-0 {
+    color: #aaa;
+}
+
+.ascii-grey .ascii-line-1 {
+    color: #999;
+}
+
+.ascii-grey .ascii-line-2 {
+    color: #888;
+}
+
+.ascii-grey .ascii-line-3 {
+    color: #777;
+}
+
+.ascii-grey .ascii-line-4 {
+    color: #666;
+}
+
+.ascii-grey .ascii-line-5 {
+    color: #555;
+}
+
+/* Classic variant - solid green glow (legacy) */
+.ascii-classic {
+    color: var(--color-accent);
+    text-shadow: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent);
+}
+
+/* Gradient variant - green with opacity fade */
+.ascii-gradient {
+    color: var(--color-accent);
+    text-shadow: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent);
+}
+
 .ascii-gradient .ascii-line-0 {
     opacity: 1;
 }
@@ -60,6 +128,11 @@
     letter-spacing: 0;
 }
 
+.ascii-tiny {
+    font-size: 0.18rem;
+    letter-spacing: 0;
+}
+
 /* Responsive */
 @media (min-width: 768px) {
     .ascii-large {
@@ -72,6 +145,10 @@
 
     .ascii-small {
         font-size: 0.35rem;
+    }
+
+    .ascii-tiny {
+        font-size: 0.25rem;
     }
 }
 
@@ -86,5 +163,9 @@
 
     .ascii-small {
         font-size: 0.4rem;
+    }
+
+    .ascii-tiny {
+        font-size: 0.3rem;
     }
 }

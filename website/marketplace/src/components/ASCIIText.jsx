@@ -56,16 +56,17 @@ function renderASCII(text, useGradient = false) {
     return lines
 }
 
-function ASCIIText({ text, variant = 'classic', size = 'large', className = '' }) {
+function ASCIIText({ text, variant = 'coral', size = 'large', className = '', center = false }) {
     const lines = useMemo(() => {
         return renderASCII(text, variant === 'gradient')
     }, [text, variant])
 
-    const sizeClass = size === 'small' ? 'ascii-small' : size === 'medium' ? 'ascii-medium' : 'ascii-large'
-    const variantClass = variant === 'gradient' ? 'ascii-gradient' : 'ascii-classic'
+    const sizeClass = size === 'tiny' ? 'ascii-tiny' : size === 'small' ? 'ascii-small' : size === 'medium' ? 'ascii-medium' : 'ascii-large'
+    const variantClass = `ascii-${variant}`
+    const centerClass = center ? 'ascii-center' : ''
 
     return (
-        <pre className={`ascii-text ${sizeClass} ${variantClass} ${className}`} aria-label={text}>
+        <pre className={`ascii-text ${sizeClass} ${variantClass} ${centerClass} ${className}`} aria-label={text}>
             {lines.map((line, i) => (
                 <span key={i} className={`ascii-line ascii-line-${i}`}>{line}</span>
             ))}
@@ -74,3 +75,4 @@ function ASCIIText({ text, variant = 'classic', size = 'large', className = '' }
 }
 
 export default ASCIIText
+
