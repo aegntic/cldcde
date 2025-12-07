@@ -5,93 +5,118 @@ import ProductCard from './components/ProductCard'
 import ProductDetails from './components/ProductDetails'
 import Checkout from './components/Checkout'
 import NewsletterSignup from './components/NewsletterSignup'
+import AccountSidebar from './components/AccountSidebar'
 import ASCIIText from './components/ASCIIText'
+import HeroPanel from './components/HeroPanel'
 import { products } from './data/products'
 
 function HomePage() {
-    const featuredProducts = products.filter(p => p.category === 'Featured Models').slice(0, 4)
-    const popularProducts = products.filter(p => p.category === 'Popular Scripts').slice(0, 4)
-    const communityProducts = products.filter(p => p.category === 'Community').slice(0, 4)
+    const plugins = products.filter(p => p.category === 'Plugins').slice(0, 4)
+    const mcps = products.filter(p => p.category === 'MCPs').slice(0, 4)
+    const skills = products.filter(p => p.category === 'Skills').slice(0, 4)
+    const prompts = products.filter(p => p.category === 'Prompts').slice(0, 4)
+    const workflows = products.filter(p => p.category === 'Workflows').slice(0, 4)
 
     return (
         <>
-            {/* Hero Section */}
-            <section style={{
-                padding: 'var(--space-16) var(--space-4)',
-                textAlign: 'center',
-                background: 'linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%)'
-            }}>
-                <ASCIIText text="CLDCDE.CC" variant="coral" size="large" center />
-                <p style={{
-                    color: 'var(--color-text-muted)',
-                    fontSize: 'var(--text-lg)',
-                    marginTop: 'var(--space-4)',
-                    letterSpacing: '0.2em'
-                }}>
-                    CLAUDE CODE PLUS
-                </p>
-            </section>
+            <HeroPanel />
+            {/* <CategoryNav /> */}
+            <main style={{ paddingBottom: 'var(--space-16)' }}>
+                {/* Plugins Section */}
+                {plugins.length > 0 && (
+                    <section className="section-featured">
+                        <div className="container">
+                            <ASCIIText text="Plugins" variant="coral" size="small" />
+                            <div className="grid grid-2" style={{ gap: 'var(--space-8)', marginTop: 'var(--space-4)' }}>
+                                {plugins.map(product => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
 
-            <CategoryNav />
-            <main className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-16)' }}>
-                <section style={{ marginBottom: 'var(--space-12)' }}>
-                    <ASCIIText text="Featured" variant="coral" size="small" />
-                    <div className="grid grid-2" style={{ gap: 'var(--space-8)', marginTop: 'var(--space-4)' }}>
-                        {featuredProducts.map(product => (
-                            <ProductCard key={product.id} product={product} />
-                        ))}
-                    </div>
-                </section>
+                {/* MCPs Section */}
+                {mcps.length > 0 && (
+                    <section className="section-featured">
+                        <div className="container">
+                            <ASCIIText text="MCPs" variant="coral" size="small" />
+                            <div className="grid grid-2" style={{ gap: 'var(--space-8)', marginTop: 'var(--space-4)' }}>
+                                {mcps.map(product => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
 
-                <section style={{ marginBottom: 'var(--space-12)' }}>
-                    <ASCIIText text="Skills" variant="coral" size="small" />
-                    <div className="grid grid-2" style={{ gap: 'var(--space-8)', marginTop: 'var(--space-4)' }}>
-                        {popularProducts.map(product => (
-                            <ProductCard key={product.id} product={product} />
-                        ))}
-                    </div>
-                </section>
+                {/* Skills Section */}
+                {skills.length > 0 && (
+                    <section className="section-popular">
+                        <div className="container">
+                            <ASCIIText text="Skills" variant="coral" size="small" />
+                            <div className="grid grid-2" style={{ gap: 'var(--space-8)', marginTop: 'var(--space-4)' }}>
+                                {skills.map(product => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
 
-                <section style={{ marginBottom: 'var(--space-12)' }}>
-                    <ASCIIText text="Community" variant="coral" size="small" />
-                    <div className="grid grid-2" style={{ gap: 'var(--space-8)', marginTop: 'var(--space-4)' }}>
-                        {communityProducts.map(product => (
-                            <ProductCard key={product.id} product={product} />
-                        ))}
-                    </div>
-                </section>
+                {/* Prompts Section */}
+                {prompts.length > 0 && (
+                    <section className="section-community">
+                        <div className="container">
+                            <ASCIIText text="Prompts" variant="coral" size="small" />
+                            <div className="grid grid-2" style={{ gap: 'var(--space-8)', marginTop: 'var(--space-4)' }}>
+                                {prompts.map(product => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
 
-                <NewsletterSignup />
+                {/* Workflows Section */}
+                {workflows.length > 0 && (
+                    <section className="section-popular">
+                        <div className="container">
+                            <ASCIIText text="Workflows" variant="coral" size="small" />
+                            <div className="grid grid-2" style={{ gap: 'var(--space-8)', marginTop: 'var(--space-4)' }}>
+                                {workflows.map(product => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                <div className="container">
+                    <NewsletterSignup />
+                </div>
             </main>
         </>
     )
 }
 
 function ProductPage() {
-    return (
-        <main className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-16)' }}>
-            <ProductDetails />
-        </main>
-    )
-}
-
-function CheckoutPage() {
-    return (
-        <main className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-16)' }}>
-            <Checkout />
-        </main>
-    )
+    return <ProductDetails />
 }
 
 function App() {
     return (
         <Router>
-            <Header />
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/product/:id" element={<ProductPage />} />
-                <Route path="/checkout" element={<CheckoutPage />} />
-            </Routes>
+            <div className="app">
+                <Header />
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/product/:id" element={<ProductPage />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                </Routes>
+                {/* AccountSidebar is temporarily hidden or can be added here if needed */}
+                {/* <AccountSidebar /> */}
+            </div>
         </Router>
     )
 }

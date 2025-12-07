@@ -1,5 +1,5 @@
 {
-  "name": "@upstash/context7-mcp",
+  "name": "@cldcde/context7",
   "version": "1.0.6",
   "description": "MCP server for Context7",
   "scripts": {
@@ -15,9 +15,12 @@
   "keywords": [
     "modelcontextprotocol",
     "mcp",
-    "context7"
+    "context7",
+    "cldcde",
+    "creator-tools",
+    "aegntic"
   ],
-  "author": "abdush",
+  "author": "AEGNTIC AI Ecosystems for CLDCDE",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -27,9 +30,9 @@
     "dist"
   ],
   "bugs": {
-    "url": "https://github.com/upstash/context7/issues"
+    "url": "https://github.com/aegntic/cldcde/issues"
   },
-  "homepage": "https://github.com/upstash/context7#readme",
+  "homepage": "https://cldcde.cc",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
     "zod": "^3.24.2"
@@ -44,5 +47,24 @@
     "prettier": "^3.5.3",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0"
+  },
+  "cldcde": {
+    "type": "mcp-server",
+    "tier": "elite",
+    "category": "ai-integration",
+    "capabilities": [
+      "core-functionality"
+    ],
+    "compatibility": {
+      "cldcde": ">=1.0.0"
+    },
+    "permissions": [
+      "basic:execute"
+    ],
+    "branding": {
+      "logo": "https://cldcde.cc/assets/logo.png",
+      "brandColor": "#00ff41",
+      "terminalStyle": true
+    }
   }
 }

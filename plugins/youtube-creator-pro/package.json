@@ -18,9 +18,11 @@
     "automation",
     "optimization",
     "creator-pro",
-    "cldcde"
+    "cldcde",
+    "creator-tools",
+    "aegntic"
   ],
-  "author": "AEGNTIC AI Ecosystems",
+  "author": "AEGNTIC AI Ecosystems for CLDCDE",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -57,44 +59,24 @@
     "tier": "pro",
     "category": "content-creation",
     "capabilities": [
-      "ai-content-optimization",
-      "advanced-analytics",
-      "competitor-intelligence",
-      "trend-forecasting",
-      "workflow-automation",
-      "team-collaboration",
-      "revenue-optimization"
+      "ai-content-generation",
+      "automation",
+      "data-analysis"
     ],
     "compatibility": {
-      "youtube-api": "v3",
-      "cldcde": ">=1.0.0",
-      "@cldcde/youtube-creator": ">=1.0.0"
+      "cldcde": ">=1.0.0"
     },
     "permissions": [
-      "network:youtube-api",
-      "storage:secure-credentials",
-      "ui:interactive-wizard",
-      "ai:content-generation",
-      "ai:data-analysis",
-      "system:notifications",
-      "team:collaboration"
+      "ai:model-access"
     ],
-    "security": {
-      "credential-encryption": "AES-256",
-      "oauth2-flows": ["authorization-code"],
-      "secure-storage": true,
-      "privacy-controls": true,
-      "audit-logging": true
-    },
-    "ai": {
-      "providers": ["anthropic", "openai", "google"],
-      "local-processing": true,
-      "privacy-modes": ["strict", "balanced", "performance"]
-    },
-    "pricing": {
-      "tier": "pro",
-      "subscription": true,
-      "ai-credits": true
+    "branding": {
+      "logo": "https://cldcde.cc/assets/logo.png",
+      "brandColor": "#00ff41",
+      "terminalStyle": true
     }
+  },
+  "homepage": "https://cldcde.cc",
+  "bugs": {
+    "url": "https://github.com/aegntic/cldcde/issues"
   }
 }

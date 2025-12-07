@@ -1,0 +1,224 @@
+{
+  "timestamp": "2025-12-07T02:06:55.221Z",
+  "results": {
+    "passed": 21,
+    "failed": 0,
+    "warnings": 0,
+    "details": [
+      {
+        "status": "PASS",
+        "description": ".claude directory",
+        "path": ".claude",
+        "items": [
+          "agents",
+          "checkpoints",
+          "commands",
+          "helpers",
+          "skills",
+          "sparc-modes.json"
+        ]
+      },
+      {
+        "status": "PASS",
+        "description": ".claude agents",
+        "path": ".claude/agents",
+        "items": [
+          "analysis",
+          "architecture",
+          "base-template-generator.md",
+          "consensus",
+          "core",
+          "data",
+          "development",
+          "devops",
+          "documentation",
+          "flow-nexus",
+          "github",
+          "goal",
+          "hive-mind",
+          "model-configurator.md",
+          "neural",
+          "openrouter-switcher.md",
+          "optimization",
+          "reasoning",
+          "sparc",
+          "specialized",
+          "swarm",
+          "templates",
+          "testing",
+          "ultra-swarm-enhanced.md"
+        ]
+      },
+      {
+        "status": "PASS",
+        "description": ".claude commands",
+        "path": ".claude/commands",
+        "items": [
+          "agents",
+          "analysis",
+          "automation",
+          "cldcde-ecosystem.md",
+          "coordination",
+          "flow-nexus",
+          "fpef.md",
+          "github",
+          "hive-mind",
+          "hooks",
+          "improved-workflows.js",
+          "memory",
+          "monitoring",
+          "optimization",
+          "pair",
+          "plugins.md",
+          "prologue-interactive.md",
+          "prologue-universal.md",
+          "prologue.md",
+          "skills.md",
+          "sota-suite.md",
+          "sparc",
+          "stream-chain",
+          "swarm",
+          "training",
+          "truth",
+          "ultra-swarm.md",
+          "ultraplan-pro.md",
+          "verify",
+          "workflows"
+        ]
+      },
+      {
+        "status": "PASS",
+        "description": ".claude skills",
+        "path": ".claude/skills",
+        "items": [
+          "agentdb-advanced",
+          "agentdb-learning",
+          "agentdb-memory-patterns",
+          "agentdb-optimization",
+          "agentdb-vector-search",
+          "agentic-jujutsu",
+          "banana",
+          "banana.md",
+          "flow-nexus-neural",
+          "flow-nexus-platform",
+          "flow-nexus-swarm",
+          "github-code-review",
+          "github-multi-repo",
+          "github-project-management",
+          "github-release-management",
+          "github-workflow-automation",
+          "hive-mind-advanced",
+          "hooks-automation",
+          "pair-programming",
+          "performance-analysis",
+          "reasoningbank-agentdb",
+          "reasoningbank-intelligence",
+          "skill-builder",
+          "sparc-methodology",
+          "spline-professional",
+          "stream-chain",
+          "swarm-advanced",
+          "swarm-orchestration",
+          "verification-quality"
+        ]
+      },
+      {
+        "status": "PASS",
+        "description": "Integration modules",
+        "path": "plugins/tool-registry-manager/src/integrations",
+        "items": [
+          "CodeGenerator.ts",
+          "FPEFExecutor.ts",
+          "UltraSwarmIntegration.ts",
+          "UltraSwarmOrchestrator.ts"
+        ]
+      },
+      {
+        "status": "PASS",
+        "description": "Integration script",
+        "path": "scripts/integrate-antigravity.ts"
+      },
+      {
+        "status": "PASS",
+        "description": "Ultra Swarm Integration",
+        "path": "plugins/tool-registry-manager/src/integrations/UltraSwarmIntegration.ts"
+      },
+      {
+        "status": "PASS",
+        "description": "FPEF Executor",
+        "path": "plugins/tool-registry-manager/src/integrations/FPEFExecutor.ts"
+      },
+      {
+        "status": "PASS",
+        "description": "Ultra Swarm Orchestrator",
+        "path": "plugins/tool-registry-manager/src/integrations/UltraSwarmOrchestrator.ts"
+      },
+      {
+        "status": "PASS",
+        "description": "Ultra Swarm Workflows Configuration",
+        "path": "configs/ultra-swarm-workflows.json",
+        "structure": [
+          "version",
+          "description",
+          "workflows",
+          "agent_configurations",
+          "validation_rules",
+          "integration_settings"
+        ]
+      },
+      {
+        "status": "PASS",
+        "description": "Agent definitions",
+        "count": 80
+      },
+      {
+        "status": "PASS",
+        "description": "Command definitions",
+        "count": 158
+      },
+      {
+        "status": "PASS",
+        "description": "Skill files",
+        "count": 36
+      },
+      {
+        "status": "PASS",
+        "description": "Ultra Swarm Enhanced Agent",
+        "path": ".claude/agents/ultra-swarm-enhanced.md"
+      },
+      {
+        "status": "PASS",
+        "description": "FPEF Command",
+        "path": ".claude/commands/fpef.md"
+      },
+      {
+        "status": "PASS",
+        "description": "CLDCDE Ecosystem Command",
+        "path": ".claude/commands/cldcde-ecosystem.md"
+      },
+      {
+        "status": "PASS",
+        "description": "Ultra Swarm Command",
+        "path": ".claude/commands/ultra-swarm.md"
+      },
+      {
+        "status": "PASS",
+        "description": "Ultra Swarm Workflows Config",
+        "path": "configs/ultra-swarm-workflows.json",
+        "structure": [
+          "version",
+          "description",
+          "workflows",
+          "agent_configurations",
+          "validation_rules",
+          "integration_settings"
+        ]
+      }
+    ]
+  },
+  "content_counts": {
+    "agents": 80,
+    "commands": 158,
+    "skills": 36
+  }
+}

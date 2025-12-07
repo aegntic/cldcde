@@ -1,0 +1,52 @@
+{
+  "name": "@cldcde/google-ai-studio-mcp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cldcde",
+    "creator-tools",
+    "aegntic"
+  ],
+  "author": "AEGNTIC AI Ecosystems for CLDCDE",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.24.3",
+    "dotenv": "^17.2.3",
+    "puppeteer": "^24.32.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "homepage": "https://cldcde.cc",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/cldcde.git",
+    "directory": "mcp-servers/google-ai-studio-mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/aegntic/cldcde/issues"
+  },
+  "cldcde": {
+    "type": "mcp-server",
+    "tier": "elite",
+    "category": "ai-integration",
+    "capabilities": [
+      "core-functionality"
+    ],
+    "compatibility": {
+      "cldcde": ">=1.0.0"
+    },
+    "permissions": [
+      "basic:execute"
+    ],
+    "branding": {
+      "logo": "https://cldcde.cc/assets/logo.png",
+      "brandColor": "#00ff41",
+      "terminalStyle": true
+    }
+  }
+}

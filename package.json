@@ -48,12 +48,27 @@
     "typescript": "^5.3.0",
     "wrangler": "^4.22.0"
   },
-  "keywords": ["claude", "ai", "mcp", "extensions", "community", "terminal"],
+  "keywords": [
+    "claude",
+    "ai",
+    "mcp",
+    "extensions",
+    "community",
+    "terminal"
+  ],
   "author": "iamcatface",
   "license": "MIT",
   "homepage": "https://cldcde.cc",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iamcatface/cldcde-platform.git"
+  },
+  "main": "claude-with-monitor.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/iamcatface/cldcde-platform/issues"
   }
 }

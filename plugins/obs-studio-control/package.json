@@ -18,9 +18,11 @@
     "youtube",
     "control",
     "automation",
-    "cldcde"
+    "cldcde",
+    "creator-tools",
+    "aegntic"
   ],
-  "author": "AEGNTIC AI Ecosystems",
+  "author": "AEGNTIC AI Ecosystems for CLDCDE",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -47,22 +49,26 @@
   },
   "cldcde": {
     "type": "plugin",
-    "category": "streaming",
+    "tier": "pro",
+    "category": "content-creation",
     "capabilities": [
-      "obs-control",
-      "scene-management",
-      "stream-monitoring",
       "automation",
-      "interactive-menu"
+      "real-time"
     ],
     "compatibility": {
-      "obs-studio": ">=28.0",
       "cldcde": ">=1.0.0"
     },
     "permissions": [
-      "network:obs-websocket",
-      "ui:interactive-menu",
-      "system:notifications"
-    ]
+      "basic:execute"
+    ],
+    "branding": {
+      "logo": "https://cldcde.cc/assets/logo.png",
+      "brandColor": "#00ff41",
+      "terminalStyle": true
+    }
+  },
+  "homepage": "https://cldcde.cc",
+  "bugs": {
+    "url": "https://github.com/aegntic/cldcde/issues"
   }
 }

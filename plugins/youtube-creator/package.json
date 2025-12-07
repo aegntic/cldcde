@@ -18,9 +18,11 @@
     "analytics",
     "api",
     "creator",
-    "cldcde"
+    "cldcde",
+    "creator-tools",
+    "aegntic"
   ],
-  "author": "AEGNTIC AI Ecosystems",
+  "author": "AEGNTIC AI Ecosystems for CLDCDE",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -50,29 +52,26 @@
   },
   "cldcde": {
     "type": "plugin",
+    "tier": "pro",
     "category": "content-creation",
     "capabilities": [
-      "youtube-api",
-      "video-upload",
-      "analytics",
-      "comment-management",
-      "metadata-optimization",
-      "secure-credentials"
+      "data-analysis",
+      "integration"
     ],
     "compatibility": {
-      "youtube-api": "v3",
       "cldcde": ">=1.0.0"
     },
     "permissions": [
-      "network:youtube-api",
-      "storage:secure-credentials",
-      "ui:interactive-wizard",
-      "system:notifications"
+      "network:api-access"
     ],
-    "security": {
-      "credential-encryption": "AES-256",
-      "oauth2-flows": ["authorization-code"],
-      "secure-storage": true
+    "branding": {
+      "logo": "https://cldcde.cc/assets/logo.png",
+      "brandColor": "#00ff41",
+      "terminalStyle": true
     }
+  },
+  "homepage": "https://cldcde.cc",
+  "bugs": {
+    "url": "https://github.com/aegntic/cldcde/issues"
   }
 }

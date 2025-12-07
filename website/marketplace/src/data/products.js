@@ -3,7 +3,7 @@ export const products = [
         id: 'claude-elite-v2',
         name: 'CLAUDE-ELITE-V2',
         description: 'Advanced AI model with enhanced reasoning capabilities. Optimized for complex code generation, architectural decisions, and multi-step problem solving.',
-        category: 'Featured Models',
+        category: 'Skills',
         price: 49.99,
         image: '/images/product-elite.png',
         performance: {
@@ -28,7 +28,7 @@ export const products = [
         id: 'ultraplan-pro',
         name: 'ULTRAPLAN-PRO',
         description: 'Premium strategic planning framework with AI-powered project decomposition, timeline estimation, and resource allocation. Enterprise-grade planning for complex initiatives.',
-        category: 'Featured Models',
+        category: 'Workflows',
         price: 79.99,
         image: '/images/logo_ultraplan_pro.png',
         performance: {
@@ -52,7 +52,7 @@ export const products = [
         id: 'ultraplan',
         name: 'ULTRAPLAN',
         description: 'Strategic planning tool for developers and teams. Automatically breaks down complex projects into actionable tasks with AI-powered estimation.',
-        category: 'Popular Scripts',
+        category: 'Workflows',
         price: 39.99,
         image: '/images/logo_ultraplan_1765002300581.png',
         performance: {
@@ -75,7 +75,7 @@ export const products = [
         id: 'fpef',
         name: 'FPEF',
         description: 'First Principles Execution Framework - A systematic approach to problem-solving that breaks down complex challenges to their fundamental truths. Build solutions from the ground up.',
-        category: 'Featured Models',
+        category: 'Prompts',
         price: 59.99,
         image: '/images/logo_fpef_1765002334864.png',
         performance: {
@@ -99,7 +99,7 @@ export const products = [
         id: 'viral-27',
         name: 'VIRAL-27',
         description: 'Advanced viral content automation suite. AI-powered content generation, timing optimization, and cross-platform distribution for maximum reach and engagement.',
-        category: 'Popular Scripts',
+        category: 'Skills',
         price: 44.99,
         image: '/images/logo_viral27_1765002355285.png',
         performance: {
@@ -122,7 +122,7 @@ export const products = [
         id: 'aegnt-27',
         name: 'AEGNT-27',
         description: 'Autonomous AI agent framework with advanced reasoning, tool use, and multi-step task execution. Deploy intelligent agents that work independently toward your goals.',
-        category: 'Featured Models',
+        category: 'MCPs',
         price: 89.99,
         image: '/images/logo_aegnt27_1765002376575.png',
         performance: {
@@ -130,7 +130,6 @@ export const products = [
             labels: ['Jan', '25k', '50k', '75k', '100k']
         },
         reviews: [
-            { user: 'AIResearcher', rating: 5 },
             { user: 'AutomationPro', rating: 5 },
             { user: 'StartupAI', rating: 4 }
         ],
@@ -146,7 +145,7 @@ export const products = [
         id: 'prologue',
         name: 'PROLOGUE',
         description: 'Narrative-driven development framework. Write code as stories, document as you build, and create self-explanatory codebases that tell their own story.',
-        category: 'Popular Scripts',
+        category: 'Prompts',
         price: 29.99,
         image: '/images/logo_prologue_1765002393629.png',
         performance: {
@@ -169,7 +168,7 @@ export const products = [
         id: 'fartnode',
         name: 'FARTNODE',
         description: 'Fast Async Runtime for Distributed Edge nodes. Lightweight, blazing-fast runtime for deploying serverless functions at the edge with minimal cold starts.',
-        category: 'Popular Scripts',
+        category: 'Plugins',
         price: 24.99,
         image: '/images/logo_fartnode_1765002420136.png',
         performance: {
@@ -192,7 +191,7 @@ export const products = [
         id: 'd3mo',
         name: 'D3MO',
         description: 'Dynamic 3D demonstration platform. Create interactive product demos, walkthroughs, and presentations with stunning 3D visuals and smooth animations.',
-        category: 'Community',
+        category: 'Plugins',
         price: 34.99,
         image: '/images/logo_d3mo_1765002436051.png',
         performance: {
@@ -215,7 +214,7 @@ export const products = [
         id: 'obs-control',
         name: 'OBS-CONTROL',
         description: 'Advanced OBS Studio control plugin. Automate streaming workflows, scene switching, and content management with AI-powered production assistance.',
-        category: 'Popular Scripts',
+        category: 'Plugins',
         price: 19.99,
         image: '/images/logo_obs_1765002454644.png',
         performance: {
@@ -239,7 +238,7 @@ export const products = [
         id: 'stoa-suite',
         name: 'STOA-SUITE',
         description: 'Philosophy meets technology. A suite of tools for maintaining codebase stability, enforcing stoic coding practices, and managing technical debt with calm precision.',
-        category: 'Community',
+        category: 'MCPs',
         price: 45.99,
         image: '/images/logo_stoa_suite.png',
         performance: {
@@ -263,7 +262,7 @@ export const products = [
         id: 'auto-debug-pro',
         name: 'AUTO-DEBUG-PRO',
         description: 'Automated debugging toolkit that identifies and fixes code issues in real-time. Features AI-powered error detection and smart fix suggestions.',
-        category: 'Popular Scripts',
+        category: 'Plugins',
         price: 29.99,
         image: '/images/product-debug.png',
         performance: {
@@ -292,27 +291,33 @@ export const products = [
 
 export const categories = [
     {
-        id: 'featured-models',
-        name: 'Featured Models',
-        description: 'Premium AI models and configurations',
-        image: '/images/category-featured.png'
-    },
-    {
-        id: 'popular-scripts',
-        name: 'Popular Scripts',
-        description: 'Top-rated automation scripts',
+        id: 'plugins',
+        name: 'Plugins',
+        description: 'Extensions and tools for your environment',
         image: '/images/category-scripts.png'
     },
     {
-        id: 'community',
-        name: 'Community',
-        description: 'User-contributed tools and plugins',
+        id: 'mcps',
+        name: 'MCPs',
+        description: 'Model Context Protocol servers',
+        image: '/images/category-featured.png'
+    },
+    {
+        id: 'skills',
+        name: 'Skills',
+        description: 'Specialized capabilities for AI agents',
         image: '/images/category-community.png'
     },
     {
-        id: 'documentation',
-        name: 'Documentation',
-        description: 'Guides, tutorials, and references',
+        id: 'prompts',
+        name: 'Prompts',
+        description: 'Optimized system prompts and templates',
         image: '/images/category-docs.png'
+    },
+    {
+        id: 'workflows',
+        name: 'Workflows',
+        description: 'End-to-end automation sequences',
+        image: '/images/category-scripts.png'
     }
 ]

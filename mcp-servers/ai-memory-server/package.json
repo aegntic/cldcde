@@ -1,5 +1,5 @@
 {
-  "name": "ai-memory-mcp-server",
+  "name": "@cldcde/ai-memory-server",
   "version": "1.0.0",
   "description": "MCP server for accessing ChatGPT, Grok, and Gemini conversations and memory",
   "main": "index.js",
@@ -9,8 +9,19 @@
     "dev": "node --watch index.js",
     "build": "npm run start"
   },
-  "keywords": ["mcp", "claude", "chatgpt", "grok", "gemini", "ai", "memory"],
-  "author": "aegntic",
+  "keywords": [
+    "mcp",
+    "claude",
+    "chatgpt",
+    "grok",
+    "gemini",
+    "ai",
+    "memory",
+    "cldcde",
+    "creator-tools",
+    "aegntic"
+  ],
+  "author": "AEGNTIC AI Ecosystems for CLDCDE",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.4.0",
@@ -22,5 +33,33 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0"
+  },
+  "homepage": "https://cldcde.cc",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/cldcde.git",
+    "directory": "mcp-servers/ai-memory-server"
+  },
+  "bugs": {
+    "url": "https://github.com/aegntic/cldcde/issues"
+  },
+  "cldcde": {
+    "type": "mcp-server",
+    "tier": "elite",
+    "category": "ai-integration",
+    "capabilities": [
+      "ai-content-generation"
+    ],
+    "compatibility": {
+      "cldcde": ">=1.0.0"
+    },
+    "permissions": [
+      "ai:model-access"
+    ],
+    "branding": {
+      "logo": "https://cldcde.cc/assets/logo.png",
+      "brandColor": "#00ff41",
+      "terminalStyle": true
+    }
   }
 }

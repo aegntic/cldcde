@@ -1,7 +1,7 @@
 {
-  "name": "obsidian-elite-rag",
+  "name": "@cldcde/aegntic-mcp",
   "version": "1.0.0",
-  "description": "Elite Obsidian RAG System - Second Brain with Claude Code Integration",
+  "description": "CLDCDE Aegntic MCP Server - Elite Obsidian RAG System with Second Brain Integration",
   "main": "index.js",
   "scripts": {
     "setup": "./scripts/setup-vault.sh",
@@ -28,9 +28,13 @@
     "knowledge-management",
     "claude",
     "ai",
-    "second-brain"
+    "second-brain",
+    "cldcde",
+    "aegntic",
+    "mcp-server",
+    "creator-tools"
   ],
-  "author": "Elite Knowledge Systems",
+  "author": "AEGNTIC AI Ecosystems for CLDCDE",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
@@ -53,10 +57,31 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/elite-knowledge/obsidian-elite-rag.git"
+    "url": "https://github.com/aegntic/cldcde.git",
+    "directory": "mcp-servers/aegntic-mcp"
   },
   "bugs": {
-    "url": "https://github.com/elite-knowledge/obsidian-elite-rag/issues"
+    "url": "https://github.com/aegntic/cldcde/issues"
   },
-  "homepage": "https://github.com/elite-knowledge/obsidian-elite-rag#readme"
+  "homepage": "https://cldcde.cc",
+  "cldcde": {
+    "type": "mcp-server",
+    "tier": "elite",
+    "category": "ai-integration",
+    "capabilities": [
+      "ai-content-generation",
+      "integration"
+    ],
+    "compatibility": {
+      "cldcde": ">=1.0.0"
+    },
+    "permissions": [
+      "ai:model-access"
+    ],
+    "branding": {
+      "logo": "https://cldcde.cc/assets/logo.png",
+      "brandColor": "#00ff41",
+      "terminalStyle": true
+    }
+  }
 }

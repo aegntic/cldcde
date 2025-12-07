@@ -1,5 +1,5 @@
 {
-  "name": "n8n-mcp",
+  "name": "@cldcde/n8n",
   "version": "2.10.8",
   "description": "Integration between n8n workflow automation and Model Context Protocol (MCP)",
   "main": "dist/index.js",
@@ -91,14 +91,17 @@
     "model-context-protocol",
     "ai",
     "workflow",
-    "automation"
+    "automation",
+    "cldcde",
+    "creator-tools",
+    "aegntic"
   ],
-  "author": "Romuald Czlonkowski @ www.aiadvisors.pl/en",
+  "author": "AEGNTIC AI Ecosystems for CLDCDE",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/czlonkowski/n8n-mcp/issues"
+    "url": "https://github.com/aegntic/cldcde/issues"
   },
-  "homepage": "https://github.com/czlonkowski/n8n-mcp#readme",
+  "homepage": "https://cldcde.cc",
   "files": [
     "dist/**/*",
     "data/nodes.db",
@@ -141,5 +144,26 @@
     "@rollup/rollup-darwin-arm64": "^4.50.0",
     "@rollup/rollup-linux-x64-gnu": "^4.50.0",
     "better-sqlite3": "^11.10.0"
+  },
+  "cldcde": {
+    "type": "mcp-server",
+    "tier": "elite",
+    "category": "ai-integration",
+    "capabilities": [
+      "ai-content-generation",
+      "automation",
+      "integration"
+    ],
+    "compatibility": {
+      "cldcde": ">=1.0.0"
+    },
+    "permissions": [
+      "ai:model-access"
+    ],
+    "branding": {
+      "logo": "https://cldcde.cc/assets/logo.png",
+      "brandColor": "#00ff41",
+      "terminalStyle": true
+    }
   }
 }
