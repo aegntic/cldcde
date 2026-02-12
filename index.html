@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLDCDE — Claude Code Developer Ecosystem</title>
+  <meta name="description" content="CLDCDE is the Claude Code Developer Ecosystem: 40+ CLI shortcuts, real-time context monitoring, and a focused community for high-velocity AI coding." />
+  <meta property="og:title" content="CLDCDE — Claude Code Developer Ecosystem" />
+  <meta property="og:description" content="Ship faster with 40+ CLI shortcuts and real-time context monitoring for Claude Code." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cldcde.cc" />
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --bg-elev: #111827;
+      --panel: #0f172a;
+      --line: rgba(148, 163, 184, 0.2);
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #7c3aed;
+      --accent2: #06b6d4;
+      --success: #22c55e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 70% -10%, rgba(124,58,237,.35), transparent),
+                  radial-gradient(1000px 500px at 20% -20%, rgba(6,182,212,.25), transparent),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 24px; }
+    .nav { display: flex; justify-content: space-between; align-items: center; margin: 8px 0 36px; }
+    .logo { font-weight: 800; letter-spacing: .08em; }
+    .logo span { color: var(--accent2); }
+    .nav a { color: var(--muted); text-decoration: none; margin-left: 18px; }
+    .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 22px; align-items: stretch; }
+    .card { background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border: 1px solid var(--line); border-radius: 18px; padding: 28px; }
+    h1 { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; margin: 0 0 14px; }
+    .lead { color: var(--muted); font-size: 1.08rem; }
+    .kpis { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 20px; }
+    .kpi { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: rgba(15,23,42,.7); }
+    .kpi b { color: #fff; }
+    .btns { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn { text-decoration: none; border-radius: 10px; padding: 10px 14px; border: 1px solid var(--line); color: var(--text); }
+    .btn.primary { background: linear-gradient(90deg, var(--accent), var(--accent2)); border: none; font-weight: 600; }
+    .terminal { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9rem; background: #020617; border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+    .section { margin-top: 28px; }
+    .section h2 { margin: 0 0 12px; font-size: 1.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    .pkg h3 { margin: 0 0 8px; font-size: 1rem; }
+    .pkg code { color: #93c5fd; }
+    ul { margin: 10px 0 0; padding-left: 18px; }
+    .install pre { margin: 0; }
+    footer { margin: 30px 0 10px; color: var(--muted); text-align: center; font-size: .92rem; }
+    .pill { display:inline-block; color:#0b1020; background: var(--success); padding: 3px 8px; border-radius: 999px; font-size: .75rem; font-weight:700; margin-bottom:10px; }
+    @media (max-width: 900px) {
+      .hero, .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav">
+      <div class="logo">CLD<span>CDE</span></div>
+      <div>
+        <a href="#packages">Packages</a>
+        <a href="#install">Install</a>
+        <a href="#community">Community</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <article class="card">
+        <span class="pill">Claude Code Developer Ecosystem</span>
+        <h1>Ship faster in Claude Code with battle-tested tooling.</h1>
+        <p class="lead">CLDCDE gives AI-native developers a production-ready toolkit: <strong>40+ CLI shortcuts</strong>, <strong>real-time context monitoring</strong>, and a focused ecosystem built for reliable velocity.</p>
+        <div class="kpis">
+          <div class="kpi"><b>40+</b><br/>CLI shortcuts</div>
+          <div class="kpi"><b>Real-time</b><br/>context tracking</div>
+          <div class="kpi"><b>Community-first</b><br/>open ecosystem</div>
+        </div>
+        <div class="btns" id="community">
+          <a class="btn primary" href="https://github.com/aegntic/cldcde" target="_blank" rel="noopener">View on GitHub</a>
+          <a class="btn" href="https://discord.gg/" target="_blank" rel="noopener">Join Discord</a>
+        </div>
+      </article>
+      <aside class="card terminal">
+$ npm i -g @aegntic/cldcde-cli-shortcuts
+
+$ npx @aegntic/cldcde-context-tracker status
+> context-window: 68% used
+> risk-level: moderate
+> recommendation: summarize + checkpoint
+
+$ cldcde shortcuts list
+> 40+ productivity shortcuts active
+      </aside>
+    </section>
+
+    <section class="section" id="packages">
+      <h2>Core NPM Packages</h2>
+      <div class="grid">
+        <article class="card pkg">
+          <h3><code>@aegntic/cldcde-cli-shortcuts</code></h3>
+          <p>High-leverage commands and ergonomic aliases that reduce repetitive terminal operations for Claude Code workflows.</p>
+          <ul>
+            <li>40+ curated shortcuts</li>
+            <li>Fast setup for new environments</li>
+            <li>Consistent team workflows</li>
+          </ul>
+        </article>
+        <article class="card pkg">
+          <h3><code>@aegntic/cldcde-context-tracker</code></h3>
+          <p>Live token/context visibility to prevent context loss and maintain coherent, long-running coding sessions.</p>
+          <ul>
+            <li>Real-time context monitoring</li>
+            <li>Risk alerts before overflow</li>
+            <li>Actionable optimization hints</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section install" id="install">
+      <h2>Install in under 60 seconds</h2>
+      <div class="card terminal"><pre># Install shortcuts globally
+npm i -g @aegntic/cldcde-cli-shortcuts
+
+# Run context tracker in your repo
+npx @aegntic/cldcde-context-tracker
+
+# Optional: combine with your Claude Code shell profile
+cldcde setup --profile claude</pre></div>
+    </section>
+
+    <section class="section">
+      <h2>Why teams choose CLDCDE</h2>
+      <div class="grid">
+        <article class="card"><strong>Operational clarity</strong><p>Know exactly when context is healthy, at risk, or near limits.</p></article>
+        <article class="card"><strong>Faster onboarding</strong><p>Standardized shortcuts and docs reduce setup friction for new contributors.</p></article>
+        <article class="card"><strong>Reliability over hype</strong><p>Purpose-built utilities for day-to-day shipping, not demo-only features.</p></article>
+        <article class="card"><strong>Community ecosystem</strong><p>Open development with GitHub + Discord feedback loops.</p></article>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 CLDCDE · Claude Code Developer Ecosystem · Built for professional AI engineering teams.
+    </footer>
+  </div>
+</body>
+</html>
