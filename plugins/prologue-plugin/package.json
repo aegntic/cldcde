@@ -1,0 +1,48 @@
+{
+  "name": "@aegntic/prologue-plugin",
+  "version": "1.0.0",
+  "description": "Cross-platform interactive menu system for the @aegntic ecosystem. Works with Claude Code, Factory Droid, Antigravity, Gemini, and standalone CLI.",
+  "main": "index.js",
+  "bin": {
+    "prologue": "./cli.js",
+    "prologue-plugin": "./cli.js"
+  },
+  "scripts": {
+    "test": "echo 'Tests would go here'",
+    "start": "node cli.js"
+  },
+  "keywords": [
+    "prologue",
+    "aegntic",
+    "cli",
+    "menu",
+    "interactive",
+    "claude-code",
+    "factory-droid",
+    "antigravity",
+    "gemini",
+    "ai-agent",
+    "plugin"
+  ],
+  "author": "@aegntic",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/prologue-plugin.git"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "inquirer": "^9.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "cli.js",
+    "index.js",
+    "commands/",
+    "README.md",
+    "LICENSE"
+  ]
+}

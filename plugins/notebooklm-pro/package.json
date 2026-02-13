@@ -1,0 +1,53 @@
+{
+  "name": "@aegntic/notebooklm-pro",
+  "version": "1.0.0",
+  "description": "NotebookLM Pro - Advanced conversational research and document analysis with session-based RAG, Gemini integration, and multi-source synthesis",
+  "main": "src/index.js",
+  "bin": {
+    "notebooklm": "./src/cli.js",
+    "nbpro": "./src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "server": "node src/server.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "notebooklm",
+    "research",
+    "rag",
+    "documents",
+    "gemini",
+    "ai-research",
+    "conversation",
+    "synthesis",
+    "knowledge-base"
+  ],
+  "author": "@aegntic",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.0.0",
+    "chalk": "^4.1.2",
+    "inquirer": "^9.2.0",
+    "google-auth-library": "^9.0.0",
+    "axios": "^1.6.0",
+    "fs-extra": "^11.0.0",
+    "puppeteer": "^21.0.0",
+    "cheerio": "^1.0.0-rc.12",
+    "markdown-it": "^13.0.0",
+    "pdf-parse": "^1.1.1",
+    "mammoth": "^1.6.0",
+    "xlsx": "^0.18.5",
+    "natural": "^6.0.0",
+    "vectordb": "^0.4.0",
+    "uuid": "^9.0.0",
+    "date-fns": "^2.30.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/notebooklm-pro.git"
+  }
+}

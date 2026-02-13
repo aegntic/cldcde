@@ -1,0 +1,150 @@
+{
+  "name": "@aegntic/prologue-plugin",
+  "version": "1.0.0",
+  "description": "Cross-platform interactive menu system for the @aegntic ecosystem",
+  "type": "plugin",
+  "platforms": ["claude-code", "factory-droid", "antigravity", "gemini", "opencode", "codex", "kilo", "goose", "cursor", "cli"],
+  "entryPoints": {
+    "cli": "cli.js",
+    "claude-code": "commands/prologue.md",
+    "factory-droid": "commands/prologue.md",
+    "antigravity": "commands/prologue.md",
+    "gemini": "commands/prologue.md",
+    "opencode": "commands/prologue.md",
+    "codex": "commands/prologue.md",
+    "kilo": "commands/prologue.md",
+    "goose": "commands/prologue.md",
+    "cursor": "commands/prologue.md"
+  },
+  "commands": [
+    {
+      "name": "prologue",
+      "description": "Show Prologue banner and ecosystem overview",
+      "type": "info",
+      "aliases": ["p"]
+    },
+    {
+      "name": "prologue-interactive",
+      "description": "Launch interactive menu with arrow key navigation",
+      "type": "interactive",
+      "aliases": ["prologue-i", "pi"]
+    },
+    {
+      "name": "prologue-list",
+      "description": "List all available commands and categories",
+      "type": "list",
+      "aliases": ["prologue-ls"]
+    },
+    {
+      "name": "prologue-install",
+      "description": "Install Prologue for specific platform",
+      "type": "setup",
+      "arguments": ["platform"]
+    }
+  ],
+  "categories": [
+    {
+      "name": "Planning Systems",
+      "commands": ["ultraplan-pro", "fpef", "ultra-swarm", "sota-suite"],
+      "icon": "📊"
+    },
+    {
+      "name": "Quality Assurance",
+      "commands": ["debt-sentinel", "red-team-tribunal", "spec-lock", "compound-engineering"],
+      "icon": "🛡️"
+    },
+    {
+      "name": "Multi-Agent Systems",
+      "commands": ["swarm-orchestration", "swarm-advanced", "hive-mind-advanced", "mcp-universal-manager"],
+      "icon": "🤖"
+    },
+    {
+      "name": "AgentDB Suite",
+      "commands": ["agentdb-vector-search", "agentdb-memory-patterns", "agentdb-learning", "agentdb-advanced"],
+      "icon": "💾"
+    },
+    {
+      "name": "Analysis Tools",
+      "commands": ["fpef-analyzer", "reasoningbank-intelligence", "performance-analysis", "verification-quality"],
+      "icon": "🔍"
+    },
+    {
+      "name": "GitHub Automation",
+      "commands": ["github-code-review", "github-multi-repo", "github-project-management", "github-release-management", "github-workflow-automation"],
+      "icon": "🐙"
+    },
+    {
+      "name": "Flow Nexus",
+      "commands": ["flow-nexus-platform", "flow-nexus-neural", "flow-nexus-swarm"],
+      "icon": "🌊"
+    },
+    {
+      "name": "Development Tools",
+      "commands": ["avant-garde-frontend-architect", "blender-3d-studio", "remotion-best-practices", "pair-programming"],
+      "icon": "💻"
+    },
+    {
+      "name": "Utility",
+      "commands": ["skill-builder", "hooks-automation", "bd-management", "agentic-jujutsu"],
+      "icon": "🛠️"
+    }
+  ],
+  "dependencies": {
+    "node": ">=18.0.0"
+  },
+  "installation": {
+    "npm": "npm install -g @aegntic/prologue-plugin",
+    "npx": "npx @aegntic/prologue-plugin",
+    "claude-code": "Copy commands/prologue.md to ~/.claude/commands/",
+    "factory-droid": "Copy commands/prologue.md to ~/.factory/commands/",
+    "antigravity": "Copy commands/prologue.md to ~/.antigravity/commands/",
+    "gemini": "Copy commands/prologue.md to ~/.gemini/commands/",
+    "opencode": "Copy commands/prologue.md to ~/.opencode/commands/",
+    "codex": "Copy commands/prologue.md to ~/.codex/commands/",
+    "kilo": "Copy commands/prologue.md to ~/.kilo/commands/",
+    "goose": "Copy commands/prologue.md to ~/.goose/commands/",
+    "cursor": "Copy commands/prologue.md to ~/.cursor/commands/"
+  },
+  "compatibility": {
+    "claude-code": {
+      "version": ">=2.0.0",
+      "features": ["commands", "skills", "interactive"]
+    },
+    "factory-droid": {
+      "version": ">=1.0.0",
+      "features": ["commands", "agents", "interactive"]
+    },
+    "antigravity": {
+      "version": ">=1.0.0",
+      "features": ["commands", "workflows", "interactive"]
+    },
+    "gemini": {
+      "version": ">=1.0.0",
+      "features": ["commands", "interactive"]
+    },
+    "opencode": {
+      "version": ">=1.0.0",
+      "features": ["commands", "skills", "interactive"]
+    },
+    "codex": {
+      "version": ">=1.0.0",
+      "features": ["commands", "skills", "interactive"]
+    },
+    "kilo": {
+      "version": ">=1.0.0",
+      "features": ["commands", "skills", "interactive"]
+    },
+    "goose": {
+      "version": ">=1.0.0",
+      "features": ["commands", "skills", "interactive"]
+    },
+    "cursor": {
+      "version": ">=1.0.0",
+      "features": ["commands", "skills", "interactive"]
+    }
+  },
+  "author": "@aegntic",
+  "license": "MIT",
+  "repository": "https://github.com/aegntic/prologue-plugin",
+  "homepage": "https://github.com/aegntic/prologue-plugin#readme"
+}

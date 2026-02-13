@@ -1,0 +1,64 @@
+{
+  "browser": {
+    "headless": true,
+    "args": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-accelerated-2d-canvas",
+      "--no-first-run",
+      "--no-zygote",
+      "--single-process",
+      "--disable-gpu"
+    ]
+  },
+  "stealth": {
+    "userAgentRotation": true,
+    "viewportRandomization": true,
+    "platformRandomization": true,
+    "languageRandomization": true
+  },
+  "humanBehavior": {
+    "enableHumanDelays": true,
+    "minDelay": 5000,
+    "maxDelay": 15000,
+    "typingDelayMin": 50,
+    "typingDelayMax": 150,
+    "clickDelayMin": 100,
+    "clickDelayMax": 500,
+    "mouseMovementSteps": 10,
+    "scrollBehavior": "smooth"
+  },
+  "scraping": {
+    "captureScreenshots": true,
+    "enableRetry": true,
+    "maxRetries": 3,
+    "retryDelay": 5000,
+    "timeout": 30000,
+    "waitUntil": "networkidle2"
+  },
+  "protection": {
+    "detectCaptcha": true,
+    "detectCloudflare": true,
+    "handleChallenges": true,
+    "blockAds": true,
+    "enableRateLimiting": true,
+    "maxRequestsPerMinute": 10,
+    "minRequestInterval": 6000
+  },
+  "logging": {
+    "enableLogging": true,
+    "logLevel": "info",
+    "saveScreenshots": true,
+    "saveCookies": false,
+    "logRequests": false,
+    "logResponses": false
+  },
+  "ethical": {
+    "respectRobotsTxt": true,
+    "identifyBot": true,
+    "contactInfo": "your-email@example.com",
+    "purpose": "Educational/Research",
+    "complianceLevel": "strict"
+  }
+}

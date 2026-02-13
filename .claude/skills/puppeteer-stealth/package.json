@@ -1,0 +1,31 @@
+{
+  "name": "puppeteer-stealth-skill",
+  "version": "1.0.0",
+  "description": "Ethical web automation with Puppeteer Stealth for anti-bot evasion",
+  "main": "index.js",
+  "keywords": [
+    "puppeteer",
+    "stealth",
+    "web-automation",
+    "scraping",
+    "anti-bot",
+    "claude-code"
+  ],
+  "author": "Claude Code Skill",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^21.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "puppeteer-extra-plugin-user-preferences": "^2.4.1",
+    "@cliqz/adblocker-puppeteer": "^1.26.0",
+    "user-agents": "^1.0.1058"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anthropics/claude-code-skills.git"
+  }
+}

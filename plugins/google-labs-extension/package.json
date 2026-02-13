@@ -1,0 +1,48 @@
+{
+  "name": "@aegntic/google-labs-extension",
+  "version": "1.0.0",
+  "description": "Google Suite Labs Extension - Access Stitch, Whisk, Flow, and all Google experimental AI tools with OAuth authentication and browser automation",
+  "main": "src/index.js",
+  "bin": {
+    "google-labs": "./src/cli.js",
+    "glabs": "./src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "auth": "node src/auth/oauth-server.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "google-labs",
+    "stitch",
+    "whisk",
+    "flow",
+    "google-ai",
+    "experimental",
+    "browser-automation",
+    "oauth"
+  ],
+  "author": "@aegntic",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.0.0",
+    "puppeteer": "^21.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "google-auth-library": "^9.0.0",
+    "express": "^4.18.0",
+    "open": "^9.0.0",
+    "chalk": "^4.1.2",
+    "inquirer": "^9.2.0",
+    "fs-extra": "^11.0.0",
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aegntic/google-labs-extension.git"
+  }
+}

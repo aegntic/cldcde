@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  graphiti-mcp:
+    image: zepai/knowledge-graph-mcp:latest
+    container_name: agent-zero-brain
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PROVIDER=falkordb
+      - FALKORDB_URI=redis://falkordb:6379
+      - TRANSPORT=http
+      - SERVER_PORT=8000
+      # Ollama configuration - connect to host's Ollama
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - OLLAMA_MODEL=llama3.2:3b
+      - LLM_PROVIDER=ollama
+      - EMBEDDER_PROVIDER=ollama
+      - EMBEDDING_MODEL=nomic-embed-text
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - falkordb
+    volumes:
+      - ./data:/app/data
+    networks:
+      - brain-network
+    restart: unless-stopped
+
+  falkordb:
+    image: falkordb/falkordb:latest
+    container_name: agent-zero-falkordb
+    ports:
+      - "6379:6379"
+      - "3000:3000"
+    volumes:
+      - falkordb-data:/data
+    networks:
+      - brain-network
+    restart: unless-stopped
+
+volumes:
+  falkordb-data:
+
+networks:
+  brain-network:
+    driver: bridge
