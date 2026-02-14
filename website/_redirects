@@ -1,20 +1,7 @@
-# Cloudflare Redirects Configuration for SOTA Gallery
+# Cloudflare Redirects Configuration for CLDCDE
 
 # Main Redirects
-/demo/ /index.html 302
-/generator/ /ai-demo.html 302
-/animations/ /scroll-demo.html 302
-/examples/ /index.html 302
-/docs/ https://docs.sota.gallery 301
-/github/ https://github.com/aegntic/SOTA-suite 301
-
-# SEO Redirects
-/solid-design-template/ /index.html 301
-/ai-template-generator/ /ai-demo.html 301
-/scroll-animations/ /scroll-demo.html 301
+/github/ https://github.com/aegntic/cldcde 301
 
 # API Versioning
 /api/v1/ /api/ 302
-
-# Legacy redirects (if needed)
-/old-demo/ /index.html 302

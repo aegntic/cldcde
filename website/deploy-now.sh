@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 DEPLOYING SOTA GALLERY TO CLOUDFLARE PAGES"
+echo "🚀 DEPLOYING CLDCDE TO CLOUDFLARE PAGES"
 
 # Check if we have the necessary tools
 if ! command -v wrangler &> /dev/null; then

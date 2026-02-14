@@ -1,19 +1,359 @@
-<!DOCTYPE html><html lang="en"><head>
-      <title>SOTA Template Suite - Solid Design Demo | SOTA Gallery</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SOTA Template Suite - Performance-First Solid Design Templates</title><script src="https://cdn.tailwindcss.com"></script><style> /* Solid Design System - No AI Slop */ :root { /* Color Palette - Solid Colors Only */ --color-primary: #000000; --color-secondary: #1a1a1a; --color-tertiary: #2a2a2a; --color-quaternary: #404040; --color-text: #e0e0e0; --color-text-secondary: #999999; --color-text-muted: #666666; --color-text-inverse: #000000; --color-border: rgba(255, 255, 255, 0.1); --color-border-strong: rgba(255, 255, 255, 0.2); --color-accent: #ffffff; --color-success: #10b981; --color-warning: #f59e0b; --color-error: #ef4444; --color-info: #3b82f6; /* Monochrome Scale */ --color-gray-50: #f9fafb; --color-gray-100: #f3f4f6; --color-gray-200: #e5e7eb; --color-gray-300: #d1d5db; --color-gray-400: #9ca3af; --color-gray-500: #6b7280; --color-gray-600: #4b5563; --color-gray-700: #374151; --color-gray-800: #1f2937; --color-gray-900: #111827; /* Design Tokens */ --border-radius-sm: 0.25rem; --border-radius: 0.5rem; --border-radius-lg: 0.75rem; --border-radius-xl: 1rem; --spacing-xs: 0.25rem; --spacing-sm: 0.5rem; --spacing-md: 1rem; --spacing-lg: 1.5rem; --spacing-xl: 2rem; --spacing-2xl: 3rem; --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05); --shadow: 0 4px 6px rgba(0, 0, 0, 0.1); --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15); } * { margin: 0; padding: 0; box-sizing: border-box; } body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--color-primary); color: var(--color-text); line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; } /* Typography System */ h1, h2, h3, h4, h5, h6 { font-family: 'SF Mono', 'JetBrains Mono', 'Courier New', monospace; font-weight: 600; line-height: 1.2; color: var(--color-text); letter-spacing: -0.02em; margin-bottom: var(--spacing-md); } h1 { font-size: clamp(2rem, 5vw, 4rem); } h2 { font-size: clamp(1.5rem, 3vw, 3rem); } h3 { font-size: clamp(1.25rem, 2.5vw, 2rem); } p { color: var(--color-text-secondary); margin-bottom: var(--spacing-md); } /* Links */ a { color: var(--color-text); text-decoration: none; transition: color 0.2s ease; } a:hover { color: var(--color-accent); } /* Solid Buttons */ .button { display: inline-block; padding: var(--spacing-sm) var(--spacing-lg); background-color: var(--color-secondary); color: var(--color-text); border: 1px solid var(--color-border); border-radius: var(--border-radius); font-family: inherit; font-size: 1rem; font-weight: 500; text-decoration: none; transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1); cursor: pointer; } .button:hover { background-color: var(--color-tertiary); border-color: var(--border-color-strong); transform: translateY(-1px); } .button:active { transform: translateY(0); } .button-primary { background-color: var(--color-primary); color: var(--color-accent); } .button-primary:hover { background-color: var(--color-tertiary); } /* Solid Cards */ .card { background-color: var(--color-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-lg); padding: var(--spacing-xl); box-shadow: var(--shadow); transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); } .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); } /* Performance First Sections */ .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; background-color: var(--color-primary); } .hero h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; margin-bottom: var(--spacing-md); max-width: 1200px; } .hero p { font-size: 1.25rem; color: var(--color-text-secondary); max-width: 800px; margin-bottom: var(--spacing-xl); } .hero .button { background-color: var(--color-secondary); color: var(--color-text); border: 1px solid var(--color-border); padding: var(--spacing-md) var(--spacing-2xl); font-size: 1.125rem; font-weight: 600; } .hero .button:hover { background-color: var(--color-tertiary); } /* Sections */ .section { padding: var(--spacing-2xl) 0; max-width: 1200px; margin: 0 auto; } .section-title { font-size: clamp(2rem, 5vw, 3.5rem); text-align: center; margin-bottom: var(--spacing-2xl); color: var(--color-text); } /* Performance Demo Section */ .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-xl); margin: var(--spacing-2xl) 0; } .demo-item { background-color: var(--color-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-lg); padding: var(--spacing-lg); transition: all 0.3s ease; } .demo-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); } .demo-item h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: var(--spacing-sm); color: var(--color-text); } .demo-item p { color: var(--color-text-secondary); margin-bottom: var(--spacing-md); } .demo-item .button { font-size: 0.875rem; padding: var(--spacing-xs) var(--spacing-md); } /* Performance Metrics */ .metrics { background-color: var(--color-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-lg); padding: var(--spacing-lg); margin: var(--spacing-xl) 0; font-family: 'SF Mono', 'JetBrains Mono', 'Courier New', monospace; font-size: 0.875rem; } .metric { display: flex; justify-content: space-between; margin-bottom: var(--spacing-sm); padding: var(--spacing-xs) 0; border-bottom: 1px solid var(--color-border); } .metric:last-child { border-bottom: none; margin-bottom: 0; } .metric-label { color: var(--color-text-muted); font-size: 0.8rem; } .metric-value { color: var(--color-accent); font-weight: 600; font-size: 0.8rem; } /* Scroll Animation Demo */ .scroll-demo { background-color: var(--color-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-xl); padding: var(--spacing-2xl); margin: var(--spacing-xl) 0; } .scroll-item { height: 300px; background-color: var(--color-tertiary); border: 1px solid var(--color-border); border-radius: var(--border-radius); margin: var(--spacing-lg) 0; display: flex; align-items: center; justify-content: center; font-family: 'SF Mono', 'JetBrains Mono', 'Courier New', monospace; font-weight: 600; color: var(--color-text); } /* Footer */ .footer { background-color: var(--color-primary); border-top: 1px solid var(--color-border); padding: var(--spacing-xl) 0; text-align: center; color: var(--color-text-muted); } /* Responsive Design */ @media (max-width: 768px) { .hero { padding: var(--spacing-xl) var(--spacing-md); } .section { padding: var(--spacing-xl) var(--spacing-md); } .demo-grid { grid-template-columns: 1fr; } } @media (max-width: 480px) { .hero h1 { font-size: clamp(2rem, 6vw, 4rem); } .section { padding: var(--spacing-xl) var(--spacing-md); } } </style>
-      <!-- Production Optimizations -->
-      <meta name="robots" content="index, follow">
-      <meta name="googlebot" content="index, follow">
-      <meta name="google-site-verification" content="google-site-verification-code">
-      <link rel="canonical" href="https://sota.gallery/index.html">
-      <script>
-        // Performance monitoring
-        if ('PerformanceObserver' in window) {
-          const observer = new PerformanceObserver((list) => {
-            for (const entry of list.getEntries()) {
-              console.log('[Performance]', entry.name, entry.duration);
-            }
-          });
-          observer.observe({ entryTypes: ['measure', 'navigation'] });
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLDCDE - AI Agent Ecosystem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #0a0a0a;
+      --bg-tertiary: #151515;
+      --text-primary: #f5f5f7;
+      --text-secondary: #86868b;
+      --text-tertiary: #6e6e73;
+      --accent-blue: #2997ff;
+      --accent-purple: #bf5af2;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.47059;
+      letter-spacing: -0.022em;
+      overflow-x: hidden;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: saturate(180%) blur(20px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    nav ul {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      max-width: 980px;
+      width: 100%;
+      padding: 0 20px;
+    }
+    nav a {
+      color: #d6d6d6;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 400;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: #fff; }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse at center top, rgba(41, 151, 255, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 600;
+      line-height: 1.07143;
+      letter-spacing: -0.005em;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #fff 0%, #86868b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeUp 1s ease-out;
+    }
+    .hero h2 {
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1.10722;
+      letter-spacing: 0.004em;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      animation: fadeUp 1s ease-out 0.1s backwards;
+    }
+    .hero p {
+      font-size: 19px;
+      line-height: 1.21053;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 30px;
+      animation: fadeUp 1s ease-out 0.2s backwards;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 15px;
+      animation: fadeUp 1s ease-out 0.3s backwards;
+    }
+    .cta-btn {
+      padding: 12px 24px;
+      border-radius: 980px;
+      font-size: 17px;
+      font-weight: 400;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .cta-btn.primary { background: var(--accent-blue); color: #fff; }
+    .cta-btn.primary:hover { background: #0077ed; }
+    .cta-btn.secondary { background: transparent; color: var(--accent-blue); }
+    .cta-btn.secondary:hover { background: rgba(41, 151, 255, 0.1); }
+    .features { padding: 100px 20px; background: var(--bg-secondary); }
+    .section-header { text-align: center; max-width: 800px; margin: 0 auto 80px; }
+    .section-header h2 {
+      font-size: 48px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .section-header p { font-size: 21px; color: var(--text-secondary); }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .feature-card.visible { opacity: 1; transform: translateY(0); }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .glass-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, var(--glass-bg) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      transform: rotate(-10deg);
+      transition: transform 0.5s;
+    }
+    .feature-card:hover .glass-icon { transform: rotate(0deg) scale(1.1); }
+    .feature-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+    .feature-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.5; }
+    .stats { padding: 120px 20px; background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%); }
+    .stats-grid { display: flex; justify-content: center; gap: 80px; flex-wrap: wrap; max-width: 1000px; margin: 0 auto; }
+    .stat-item { text-align: center; }
+    .stat-value {
+      font-size: 72px;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 16px; color: var(--text-secondary); margin-top: 8px; }
+    .skills { padding: 100px 20px; }
+    .skill-categories { display: flex; justify-content: center; gap: 12px; margin-bottom: 60px; flex-wrap: wrap; }
+    .skill-tag {
+      padding: 8px 16px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .skill-tag:hover, .skill-tag.active { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; }
+    .pricing { padding: 100px 20px; background: var(--bg-secondary); }
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
+    .price-card {
+      background: var(--bg-tertiary);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      transition: all 0.4s;
+    }
+    .price-card:hover { transform: scale(1.02); }
+    .price-card.featured { background: linear-gradient(135deg, rgba(41,151,255,0.2), rgba(191,90,242,0.2)); border: 1px solid rgba(41,151,255,0.3); }
+    .price-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .price { font-size: 56px; font-weight: 600; margin: 20px 0; }
+    .price span { font-size: 17px; font-weight: 400; color: var(--text-secondary); }
+    .price-card ul { list-style: none; text-align: left; margin: 20px 0; }
+    .price-card li { padding: 8px 0; color: var(--text-secondary); font-size: 14px; }
+    .price-card li::before { content: '✓'; color: var(--accent-blue); margin-right: 8px; }
+    footer { padding: 40px 20px; text-align: center; color: var(--text-tertiary); font-size: 12px; border-top: 1px solid var(--glass-border); }
+    footer a { color: var(--accent-blue); text-decoration: none; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 40px; }
+      .hero h2 { font-size: 22px; }
+      .section-header h2 { font-size: 32px; }
+      .stats-grid { gap: 40px; }
+      .stat-value { font-size: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#plugins">Plugins</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="https://github.com/aegntic/cldcde" target="_blank">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1>CLDCDE</h1>
+    <h2>The Ultimate AI Agent Ecosystem</h2>
+    <p>Supercharge your AI coding workflow with 40+ skills, premium plugins, and production-ready MCP servers. Built for developers who demand excellence.</p>
+    <div class="cta-buttons">
+      <a href="#pricing" class="cta-btn primary">Get Started</a>
+      <a href="https://github.com/aegntic/cldcde" class="cta-btn secondary" target="_blank">View on GitHub</a>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="section-header">
+      <h2>Everything You Need</h2>
+      <p>A complete ecosystem for AI-powered development</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card"><div class="glass-icon">🧠</div><h3>40+ Skills</h3><p>Specialized AI skills for every development task.</p></div>
+      <div class="feature-card"><div class="glass-icon">🔌</div><h3>MCP Servers</h3><p>Production-ready Model Context Protocol servers.</p></div>
+      <div class="feature-card"><div class="glass-icon">⚡</div><h3>Premium Plugins</h3><p>Essential tools including debt-sentinel and more.</p></div>
+      <div class="feature-card"><div class="glass-icon">🎯</div><h3>CLI Shortcuts</h3><p>40+ battle-tested shortcuts to accelerate your workflow.</p></div>
+      <div class="feature-card"><div class="glass-icon">📊</div><h3>Context Tracking</h3><p>Real-time token monitoring and optimization.</p></div>
+      <div class="feature-card"><div class="glass-icon">🚀</div><h3>Auto-Deployment</h3><p>One-click deployment to any platform.</p></div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-value">40+</div><div class="stat-label">Skills</div></div>
+      <div class="stat-item"><div class="stat-value">15+</div><div class="stat-label">Plugins</div></div>
+      <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">MCP Servers</div></div>
+      <div class="stat-item"><div class="stat-value">∞</div><div class="stat-label">Possibilities</div></div>
+    </div>
+  </section>
+
+  <section class="skills" id="skills">
+    <div class="section-header"><h2>Skills for Every Task</h2><p>Discover skills tailored to your workflow</p></div>
+    <div class="skill-categories">
+      <span class="skill-tag active">All</span>
+      <span class="skill-tag">AgentDB</span>
+      <span class="skill-tag">GitHub</span>
+      <span class="skill-tag">Swarm</span>
+      <span class="skill-tag">Flow Nexus</span>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card"><div class="glass-icon">🧬</div><h3>AgentDB</h3><p>Vector search, memory patterns, and learning capabilities.</p></div>
+      <div class="feature-card"><div class="glass-icon">🐙</div><h3>GitHub</h3><p>Code review, project management, release automation.</p></div>
+      <div class="feature-card"><div class="glass-icon">🐝</div><h3>Swarm</h3><p>Multi-agent coordination and advanced patterns.</p></div>
+      <div class="feature-card"><div class="glass-icon">⚓</div><h3>Flow Nexus</h3><p>Neural training, platform management, workflows.</p></div>
+    </div>
+  </section>
+
+  <section class="features" id="plugins">
+    <div class="section-header"><h2>Premium Plugins</h2><p>Essential tools for professional development</p></div>
+    <div class="feature-grid">
+      <div class="feature-card"><div class="glass-icon">🛡️</div><h3>Debt Sentinel</h3><p>Anti-pattern detection to prevent code debt.</p></div>
+      <div class="feature-card"><div class="glass-icon">⚔️</div><h3>Red Team Tribunal</h3><p>Multi-agent adversarial review.</p></div>
+      <div class="feature-card"><div class="glass-icon">🔐</div><h3>Spec Lock</h3><p>Bi-directional code and documentation sync.</p></div>
+      <div class="feature-card"><div class="glass-icon">🔧</div><h3>Compound Engineering</h3><p>Orchestrate all tools into powerful workflows.</p></div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="section-header"><h2>Simple Pricing</h2><p>Start free, scale as you grow</p></div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Community</h3>
+        <div class="price">$0<span>/month</span></div>
+        <ul><li>40+ Open Source Skills</li><li>Basic CLI Shortcuts</li><li>Community Support</li></ul>
+        <a href="https://github.com/aegntic/cldcde" class="cta-btn secondary">Get Started</a>
+      </div>
+      <div class="price-card featured">
+        <h3>Pro</h3>
+        <div class="price">$19<span>/month</span></div>
+        <ul><li>Everything in Community</li><li>Premium Plugins</li><li>Priority Support</li></ul>
+        <a href="#" class="cta-btn primary">Coming Soon</a>
+      </div>
+      <div class="price-card">
+        <h3>Enterprise</h3>
+        <div class="price">Custom</div>
+        <ul><li>Custom Integrations</li><li>Dedicated Support</li><li>SLA Guarantee</li></ul>
+        <a href="mailto:hello@aegntic.ai" class="cta-btn secondary">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 <a href="https://aegntic.ai">AEGNTIC</a>. Built for the future of AI development.</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), index * 100);
         }
-      </script>
-      </head><body><section class="hero"><h1>SOTA Template Suite</h1><p>Performance-first solid design templates with advanced scroll animations and 60fps guarantee</p><button class="button" onclick="animateScrollSection()">View Scroll Animations</button></section><section class="section"><h2 class="section-title">Performance Leadership</h2><div class="metrics"><div class="metric"><span class="metric-label">Overall Score</span><span class="metric-value">-- Score</span></div><div class="metric"><span class="metric-label">LCP</span><span class="metric-value">--ms</span></div><div class="metric"><span class="metric-label">CLS</span><span class="metric-value">---</span></div><div class="metric"><span class="metric-label">INP</span><span class="metric-value">--ms</span></div><div class="metric"><span class="metric-label">FCP</span><span class="metric-value">--ms</span></div><div class="metric"><span class="metric-label">TTFB</span><span class="metric-value">--ms</span></div><div class="metric"><span class="metric-label">FID</span><span class="metric-value">--ms</span></div></div><div class="demo-grid"><div class="demo-item"><h3>Zero-Configuration</h3><p>Templates deploy with automatic optimization and no setup required. All performance guarantees enforced automatically.</p><button class="button">Try Demo</button></div><div class="demo-item"><h3>Real-Time Monitoring</h3><p>Built-in performance analytics that continuously optimize Core Web Vitals during user interactions.</p><button class="button">View Metrics</button></div><div class="demo-item"><h3>Developer SDK</h3><p>Professional tools for template customization with clean code generation and optimization.</p><button class="button">Explore SDK</button></div></div></section><section class="section"><h2 class="section-title">Advanced Scroll Animations</h2><div class="scroll-demo"><div class="scroll-item"><span>Physics-Based Scroll Animations</span></div><div class="scroll-item"><span>60fps Performance Guarantee</span></div><div class="scroll-item"><span>Velocity-Responsive Interactions</span></div><div class="scroll-item"><span>WebAssembly-Powered Effects</span></div><div class="scroll-item"><span>AI Optimization</span></div></div></section><footer class="footer"><p>© 2025 SOTA Template Suite. Performance First. Solid Design Excellence.</p></footer><script type="module"> // Import scroll animations module import { ScrollAnimationModule, ANIMATION_PRESETS } from '../scroll-animations-module/src/index.js'; // Import Web Vitals library for real performance monitoring import { getCLS, getFID, getFCP, getLCP, getTTFB, getINP } from 'https://unpkg.com/web-vitals@3/dist/web-vitals.js?module'; // Real-time performance monitoring system class RealPerformanceMonitor { constructor() { this.metrics = {}; this.thresholds = { LCP: { good: 2500, needsImprovement: 4000 }, CLS: { good: 0.1, needsImprovement: 0.25 }, INP: { good: 200, needsImprovement: 500 }, FCP: { good: 1800, needsImprovement: 3000 }, TTFB: { good: 800, needsImprovement: 1800 } }; } initialize() { // Initialize real Web Vitals monitoring getCLS((metric) => this.handleMetric(metric)); getFID((metric) => this.handleMetric(metric)); getFCP((metric) => this.handleMetric(metric)); getLCP((metric) => this.handleMetric(metric)); getTTFB((metric) => this.handleMetric(metric)); getINP((metric) => this.handleMetric(metric)); } handleMetric(metric) { this.metrics[metric.name] = metric; this.updateUI(metric); this.optimizePerformance(metric); // Log for debugging console.log(`[Performance] ${metric.name}: ${metric.value}${this.getUnit(metric.name)}`); } getUnit(metricName) { const units = { LCP: 'ms', CLS: '', INP: 'ms', FCP: 'ms', TTFB: 'ms', FID: 'ms' }; return units[metricName] || ''; } getRating(metric) { const threshold = this.thresholds[metric.name]; if (!threshold) return 'unknown'; if (metric.value <= threshold.good) return 'good'; if (metric.value <= threshold.needsImprovement) return 'needs-improvement'; return 'poor'; } updateUI(metric) { const rating = this.getRating(metric); const value = metric.value.toFixed(metric.name === 'CLS' ? 3 : 0); const unit = this.getUnit(metric.name); // Update metric displays in the UI const metricElements = { 'LCP': document.querySelector('.metric:nth-child(2) .metric-value'), 'CLS': document.querySelector('.metric:nth-child(3) .metric-value'), 'INP': document.querySelector('.metric:nth-child(4) .metric-value'), 'FCP': document.querySelector('.metric:nth-child(5) .metric-value'), 'TTFB': document.querySelector('.metric:nth-child(6) .metric-value'), 'FID': document.querySelector('.metric:nth-child(7) .metric-value') }; if (metricElements[metric.name]) { metricElements[metric.name].textContent = `${value}${unit}`; // Set color based on rating const element = metricElements[metric.name]; element.style.color = rating === 'good' ? '#10b981' : rating === 'needs-improvement' ? '#f59e0b' : '#ef4444'; } // Update overall score this.updateOverallScore(); } updateOverallScore() { const scoredMetrics = ['LCP', 'CLS', 'INP']; // Core Web Vitals let totalScore = 0; let validMetrics = 0; scoredMetrics.forEach(metricName => { const metric = this.metrics[metricName]; if (metric) { const rating = this.getRating(metric); const score = rating === 'good' ? 100 : rating === 'needs-improvement' ? 70 : 30; totalScore += score; validMetrics++; } }); const overallScore = validMetrics > 0 ? Math.round(totalScore / validMetrics) : 0; const scoreElement = document.querySelector('.metric:nth-child(1) .metric-value'); if (scoreElement) { scoreElement.textContent = `${overallScore} Score`; scoreElement.style.color = overallScore >= 90 ? '#10b981' : overallScore >= 70 ? '#f59e0b' : '#ef4444'; } } optimizePerformance(metric) { const rating = this.getRating(metric); // Apply real-time optimizations based on actual performance switch (metric.name) { case 'LCP': if (rating === 'poor') { this.optimizeLCP(); } break; case 'CLS': if (rating === 'poor') { this.optimizeCLS(); } break; case 'INP': if (rating === 'poor') { this.optimizeINP(); } break; } } optimizeLCP() { // Optimize for better Largest Contentful Paint document.querySelectorAll('img').forEach(img => { if (!img.loading) { img.loading = 'lazy'; } if (!img.decoding) { img.decoding = 'async'; } }); // Preload critical fonts const criticalFonts = document.querySelectorAll('link[rel="preconnect"][href*="fonts.googleapis.com"]'); if (criticalFonts.length === 0) { const preloadLink = document.createElement('link'); preloadLink.rel = 'preconnect'; preloadLink.href = 'https://fonts.googleapis.com'; document.head.appendChild(preloadLink); } } optimizeCLS() { // Optimize for better Cumulative Layout Shift document.querySelectorAll('img').forEach(img => { if (!img.style.aspectRatio && img.naturalWidth && img.naturalHeight) { img.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`; } }); // Ensure font-display: swap for all custom fonts const style = document.createElement('style'); style.textContent = ` @font-face { font-display: swap; } `; document.head.appendChild(style); } optimizeINP() { // Optimize for better Interaction to Next Paint if ('scheduler' in window && 'postTask' in scheduler) { // Break up long tasks using scheduler.postTask document.querySelectorAll('.demo-item, .scroll-item').forEach((element, index) => { scheduler.postTask(() => { element.style.willChange = 'transform, opacity'; }, { priority: 'background', delay: index * 50 }); }); } } } // Initialize performance monitor const performanceMonitor = new RealPerformanceMonitor(); // Initialize when page loads async function initializeAnimations() { // Initialize real performance monitoring first performanceMonitor.initialize(); await scrollModule.initialize(); // Animate scroll demo items document.querySelectorAll('.scroll-item').forEach((item, index) => { scrollModule.createAnimation({ target: item, start: 'top 80%', end: 'bottom 20%', animation: ANIMATION_PRESETS.fadeInUp, delay: index * 100, // Staggered animations once: false }); }); // Animate demo items document.querySelectorAll('.demo-item').forEach((item, index) => { scrollModule.createAnimation({ target: item, start: 'top 75%', end: 'bottom 25%', animation: { properties: { opacity: { from: 0, to: 1 }, translateY: { from: 20, to: 0, unit: 'px' } }, easing: 'ease-out-cubic', duration: 600, delay: index * 150 }, once: false }); }); // Animate section title document.querySelectorAll('.section-title').forEach((title) => { scrollModule.createAnimation({ target: title, start: 'top 90%', end: 'center 30%', animation: ANIMATION_PRESETS.fadeInUp, once: false }); }); console.log('SOTA Template Suite initialized with solid design principles and real performance monitoring'); } // Scroll to animation demo function animateScrollSection() { const scrollSection = document.querySelector('.scroll-demo'); if (scrollSection) { scrollSection.scrollIntoView({ behavior: 'smooth' }); } } // Performance monitoring functions for external access function getRealMetrics() { return performanceMonitor.metrics; } function getPerformanceScore() { const scoredMetrics = ['LCP', 'CLS', 'INP']; let totalScore = 0; let validMetrics = 0; scoredMetrics.forEach(metricName => { const metric = performanceMonitor.metrics[metricName]; if (metric) { const rating = performanceMonitor.getRating(metric); const score = rating === 'good' ? 100 : rating === 'needs-improvement' ? 70 : 30; totalScore += score; validMetrics++; } }); return validMetrics > 0 ? Math.round(totalScore / validMetrics) : 0; } function exportPerformanceReport() { const report = { timestamp: new Date().toISOString(), url: window.location.href, userAgent: navigator.userAgent, metrics: performanceMonitor.metrics, overallScore: getPerformanceScore(), deviceInfo: { deviceMemory: navigator.deviceMemory, hardwareConcurrency: navigator.hardwareConcurrency, connection: navigator.connection ? { effectiveType: navigator.connection.effectiveType, downlink: navigator.connection.downlink, rtt: navigator.connection.rtt } : null } }; console.log('Performance Report:', report); return report; } // Initialize on page load initializeAnimations(); // Global functions for external access window.animateScrollSection = animateScrollSection; window.getRealMetrics = getRealMetrics; window.getPerformanceScore = getPerformanceScore; window.exportPerformanceReport = exportPerformanceReport; window.performanceMonitor = performanceMonitor; </script></body></html>
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.feature-card').forEach(el => observer.observe(el));
+
+    document.querySelectorAll('.skill-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        document.querySelectorAll('.skill-tag').forEach(t => t.classList.remove('active'));
+        tag.classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
