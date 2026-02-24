@@ -7,6 +7,7 @@ This runbook defines the canonical way to build, validate, preview, and deploy `
 - Frontend app source: `frontend/src/`
 - Worker/API source: `src/`
 - Cloudflare Pages artifact: `.pages-dist/` (generated)
+- Worker config: `wrangler.worker.toml`
 - Pack downloads served by website: `public/downloads/ae-ltd/`
 - Deploy workflow: `.github/workflows/deploy.yml`
 

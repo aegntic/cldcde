@@ -131,7 +131,7 @@ bun run site:build           # Build Cloudflare Pages artifact (.pages-dist)
 bun run site:check           # Validate deploy artifact
 bun run site:preview         # Preview website locally on :4173
 bun run site:deploy          # Deploy frontend to Cloudflare Pages
-bunx wrangler deploy         # Deploy backend worker
+bunx wrangler deploy -c wrangler.worker.toml  # Deploy backend worker
 
 # NPM package development
 cd cli-shortcuts/

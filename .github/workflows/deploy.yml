@@ -63,7 +63,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy -c wrangler.toml
+          command: deploy -c wrangler.worker.toml
 
       - name: Deploy Pages to Cloudflare
         uses: cloudflare/wrangler-action@v3

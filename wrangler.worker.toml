@@ -1,7 +1,6 @@
 name = "cldcde-api"
 main = "src/worker-ultra.ts"
 compatibility_date = "2024-01-01"
-pages_build_output_dir = ".pages-dist"
 
 [site]
 bucket = "./dist"

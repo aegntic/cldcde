@@ -4,7 +4,7 @@
   "description": "Community platform for Claude Code extensions and MCP servers - cldcde.cc",
   "scripts": {
     "dev": "bun run --watch server.ts",
-    "dev:worker": "wrangler dev",
+    "dev:worker": "wrangler dev -c wrangler.worker.toml",
     "build": "bun build --minify --target browser --format esm --splitting --outdir ./dist ./frontend/src/index.tsx",
     "build:worker": "bun build ./src/worker.ts --outdir ./dist --target=browser --format=esm",
     "start": "bun server.ts",
@@ -20,7 +20,7 @@
     "packs:build": "cd website/ae-ltd-packager && python3 scripts/build_packs.py",
     "packs:build:free": "cd website/ae-ltd-packager && python3 scripts/build_packs.py --only ae-ltd-viral-free",
     "packs:validate-skills": "cd website/ae-ltd-packager && python3 scripts/validate_skills.py",
-    "deploy": "bun run build && wrangler deploy",
+    "deploy": "bun run build && wrangler deploy -c wrangler.worker.toml",
     "build:pages-site": "./scripts/build-pages-site.sh",
     "site:build": "bun run build:pages-site",
     "site:check": "./scripts/check-pages-site.sh",
