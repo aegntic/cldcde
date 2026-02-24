@@ -1,0 +1,4 @@
+interface:
+  display_name: "AE.LTD MCP Foundry"
+  short_description: "Scaffold and harden MCP servers"
+  default_prompt: "Use $ae-ltd-mcp-foundry to scaffold or extend this MCP server with strict tool schemas and tests."

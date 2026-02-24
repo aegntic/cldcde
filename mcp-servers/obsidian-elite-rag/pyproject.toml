@@ -1,0 +1,185 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "obsidian-elite-rag-mcp"
+version = "1.0.0"
+description = "Elite Obsidian RAG System MCP Server - Multi-layer Retrieval-Augmented Generation with Graphiti Knowledge Graph"
+authors = [
+    {name = "Mattae Cooper", email = "research@aegntic.ai"},
+]
+maintainers = [
+    {name = "Aegntic AI", email = "research@aegntic.ai"},
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Linguistic",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords = [
+    "obsidian",
+    "rag",
+    "knowledge-management",
+    "mcp-server",
+    "graphiti",
+    "neo4j",
+    "qdrant",
+    "claude",
+    "ai",
+    "second-brain",
+    "knowledge-graph",
+    "retrieval-augmented-generation"
+]
+
+dependencies = [
+    # Core RAG Framework
+    "langchain>=0.1.0",
+    "langchain-openai>=0.0.5",
+    "langchain-community>=0.0.10",
+    "openai>=1.0.0",
+
+    # Vector Databases
+    "qdrant-client>=1.6.0",
+    "chromadb>=0.4.0",
+    "faiss-cpu>=1.7.0",
+
+    # Knowledge Graph (Graphiti)
+    "graphiti-core>=0.2.0",
+    "neo4j>=5.14.0",
+    "py2neo>=2021.2.4",
+
+    # Text Processing
+    "tiktoken>=0.5.0",
+    "sentence-transformers>=2.2.0",
+    "transformers>=4.35.0",
+
+    # MCP Server
+    "mcp>=1.0.0",
+
+    # Web Framework
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "websockets>=12.0",
+
+    # File Processing
+    "pypdf2>=3.0.0",
+    "python-docx>=1.1.0",
+    "python-multipart>=0.0.6",
+    "pillow>=10.0.0",
+
+    # Data Processing
+    "numpy>=1.24.0",
+    "pandas>=2.1.0",
+    "scikit-learn>=1.3.0",
+
+    # Graph Processing
+    "networkx>=3.1.0",
+    "rdflib>=7.0.0",
+
+    # Database
+    "sqlalchemy>=2.0.0",
+
+    # Configuration & Utilities
+    "pydantic>=2.4.0",
+    "pydantic-settings>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "click>=8.1.0",
+    "rich>=13.6.0",
+    "tqdm>=4.66.0",
+    "pyyaml>=6.0",
+
+    # File Watching
+    "watchdog>=3.0.0",
+
+    # Async & Concurrency
+    "aiofiles>=23.2.0",
+    "concurrent-futures>=3.1.1",
+
+    # Logging & Monitoring
+    "loguru>=0.7.0",
+    "prometheus-client>=0.18.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.9.0",
+    "flake8>=6.1.0",
+    "mypy>=1.6.0",
+    "pre-commit>=3.5.0",
+]
+nlp = [
+    "spacy>=3.7.0",
+    "nltk>=3.8.0",
+]
+vision = [
+    "opencv-python>=4.8.0",
+    "pytesseract>=0.3.10",
+]
+audio = [
+    "librosa>=0.10.0",
+    "speechrecognition>=3.10.0",
+]
+advanced-ai = [
+    "anthropic>=0.7.0",
+    "cohere>=4.32.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/aegntic/aegntic-MCP"
+Documentation = "https://github.com/aegntic/aegntic-MCP/tree/main/obsidian-elite-rag"
+Repository = "https://github.com/aegntic/aegntic-MCP/tree/main/obsidian-elite-rag"
+"Bug Tracker" = "https://github.com/aegntic/aegntic-MCP/issues"
+
+[project.scripts]
+obsidian-elite-rag-server = "obsidian_elite_rag.server:main"
+obsidian-elite-rag-cli = "obsidian_elite_rag.cli:main"
+
+[tool.hatch.version]
+path = "src/obsidian_elite_rag/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/config",
+    "/scripts",
+    "/docs",
+    "/templates",
+    "/README.md",
+    "/LICENSE",
+    "/pyproject.toml",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/obsidian_elite_rag"]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]

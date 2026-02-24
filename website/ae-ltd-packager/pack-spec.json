@@ -1,0 +1,96 @@
+{
+  "version": "1.1.0",
+  "brand": "AE.LTD",
+  "affiliations": [
+    "cldcde.cc",
+    "aegntic.ai",
+    "ae.ltd",
+    "clawreform.com"
+  ],
+  "output_dir": "../../public/downloads/ae-ltd",
+  "web_prefix": "/static/downloads/ae-ltd",
+  "packs": [
+    {
+      "id": "ae-ltd-viral-free",
+      "name": "AE.LTD Viral Free",
+      "tier": "free",
+      "tagline": "Cross-platform launch kit with niche plugin gems and MCP-ready workflows.",
+      "upgrade_url": "https://ae.ltd/pro",
+      "copy": {
+        "skills": [
+          "../../skills/ae-ltd-mcp-foundry",
+          "../../skills/ae-ltd-worktree-mesh",
+          "../../skills/ae-ltd-mutation-gate",
+          "../../skills/ae-ltd-context7-radar",
+          "../../skills/ae-ltd-n8n-orbit"
+        ],
+        "mcps": [
+          "../../mcp-servers/ai-memory-server",
+          "../../mcp-servers/graphiti-mcp",
+          "../../mcp-servers/quick-data"
+        ],
+        "plugins_root": "../../plugins",
+        "plugins": [
+          "notebooklm-pro",
+          "google-labs-extension",
+          "create-worktrees",
+          "mutation-tester",
+          "context7-docs",
+          "n8n-workflow",
+          "visual-regression"
+        ],
+        "workflow_roots": [
+          "../../plugins",
+          "../../docs",
+          "../../mcp-servers"
+        ],
+        "prompt_roots": [
+          "../../plugins",
+          "../../docs",
+          "../../templates"
+        ],
+        "template_files": [
+          "../../templates/claude-md/monorepo.md",
+          "../../templates/claude-md/python-project.md"
+        ]
+      }
+    },
+    {
+      "id": "ae-ltd-creator-pro",
+      "name": "AE.LTD Creator Pro",
+      "tier": "pro",
+      "tagline": "Full ecosystem pack with advanced MCP graph + premium automation playbooks.",
+      "upgrade_url": "https://ae.ltd/pro",
+      "copy": {
+        "skills": [
+          "../../skills/ae-ltd-mcp-foundry",
+          "../../skills/ae-ltd-worktree-mesh",
+          "../../skills/ae-ltd-mutation-gate",
+          "../../skills/ae-ltd-claude-template-switchboard",
+          "../../skills/ae-ltd-context7-radar",
+          "../../skills/ae-ltd-visual-regression-forge",
+          "../../skills/ae-ltd-n8n-orbit"
+        ],
+        "mcps": [
+          "../../mcp-servers/ai-memory-server",
+          "../../mcp-servers/graphiti-mcp",
+          "../../mcp-servers/quick-data",
+          "../../mcp-servers/obsidian-elite-rag"
+        ],
+        "plugins_root": "../../plugins",
+        "plugins": "__ALL__",
+        "workflow_roots": [
+          "../../plugins",
+          "../../docs",
+          "../../mcp-servers"
+        ],
+        "prompt_roots": [
+          "../../plugins",
+          "../../docs",
+          "../../templates"
+        ],
+        "template_root": "../../templates/claude-md"
+      }
+    }
+  ]
+}

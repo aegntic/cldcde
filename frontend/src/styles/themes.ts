@@ -101,88 +101,87 @@ export interface Theme {
   }
 }
 
-// Claude Code Dark Theme (Default)
 export const claudeCodeTheme: Theme = {
-  name: 'Claude Code Dark',
+  name: 'Labs Signal Dark',
   colors: {
     background: {
-      primary: '#1a1a1a',      // Main dark background
-      secondary: '#2d2d2d',    // Slightly lighter for cards
-      tertiary: '#3a3a3a',     // Even lighter for modals
-      modal: 'rgba(26, 26, 26, 0.95)',
-      card: '#252525'
+      primary: '#070f16',
+      secondary: '#0e1823',
+      tertiary: '#152234',
+      modal: 'rgba(7, 15, 22, 0.95)',
+      card: '#0d1722'
     },
     text: {
-      primary: '#e8e8e8',      // Main text
-      secondary: '#b8b8b8',    // Secondary text
-      tertiary: '#888888',     // Muted text
-      muted: '#666666',        // Very muted
-      inverse: '#1a1a1a'       // Dark text on light backgrounds
+      primary: '#e8f4ff',
+      secondary: '#b8c8da',
+      tertiary: '#8ca2ba',
+      muted: '#667b94',
+      inverse: '#061019'
     },
     border: {
-      primary: '#404040',      // Main borders
-      secondary: '#333333',    // Subtle borders
-      focus: '#007acc',        // Focus ring (Claude blue)
-      hover: '#4a4a4a'         // Hover state borders
+      primary: '#25364a',
+      secondary: '#1b2a3c',
+      focus: '#4ec5ff',
+      hover: '#34516c'
     },
     status: {
-      success: '#4caf50',      // Green
-      error: '#f44336',        // Red
-      warning: '#ff9800',      // Orange
-      info: '#2196f3'          // Blue
+      success: '#29c27f',
+      error: '#ff5b5b',
+      warning: '#f6b73c',
+      info: '#4ec5ff'
     },
     interactive: {
-      primary: '#007acc',      // Claude blue
-      primaryHover: '#0056a3', // Darker blue
-      secondary: '#404040',    // Gray button
-      secondaryHover: '#4a4a4a', // Lighter gray
-      accent: '#00d4aa',       // Teal accent
-      accentHover: '#00b89a'   // Darker teal
+      primary: '#00a8ff',
+      primaryHover: '#0089cf',
+      secondary: '#1c3046',
+      secondaryHover: '#2c4864',
+      accent: '#0fd39f',
+      accentHover: '#0bb383'
     },
     terminal: {
-      green: '#4caf50',
-      blue: '#2196f3',
-      yellow: '#ffeb3b',
-      orange: '#ff9800',
-      purple: '#9c27b0',
-      cyan: '#00bcd4',
-      red: '#f44336',
-      white: '#ffffff',
-      gray: '#9e9e9e'
+      green: '#29c27f',
+      blue: '#4ec5ff',
+      yellow: '#f6b73c',
+      orange: '#ff8b3d',
+      purple: '#7890ff',
+      cyan: '#38e8d3',
+      red: '#ff5b5b',
+      white: '#f4f9ff',
+      gray: '#7f95ad'
     },
     syntax: {
-      keyword: '#569cd6',      // Blue keywords
-      string: '#ce9178',       // Orange strings
-      number: '#b5cea8',       // Green numbers
-      comment: '#6a9955',      // Green comments
-      function: '#dcdcaa',     // Yellow functions
-      variable: '#9cdcfe'      // Light blue variables
+      keyword: '#65cbff',
+      string: '#ffad71',
+      number: '#89e6bf',
+      comment: '#6f88a4',
+      function: '#ffd379',
+      variable: '#9cc9ff'
     }
   },
   fonts: {
-    mono: '"JetBrains Mono", "Fira Code", "SF Mono", Consolas, monospace',
-    sans: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    serif: '"Crimson Text", Georgia, serif'
+    mono: '"IBM Plex Mono", "JetBrains Mono", "SF Mono", Consolas, monospace',
+    sans: '"Space Grotesk", "Manrope", "Avenir Next", "Segoe UI", sans-serif',
+    serif: '"Instrument Serif", "Iowan Old Style", Georgia, serif'
   },
   spacing: {
-    xs: '0.25rem',   // 4px
-    sm: '0.5rem',    // 8px
-    md: '1rem',      // 16px
-    lg: '1.5rem',    // 24px
-    xl: '2rem',      // 32px
-    xxl: '3rem'      // 48px
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem',
+    xxl: '3rem'
   },
   borderRadius: {
-    sm: '0.25rem',   // 4px
-    md: '0.5rem',    // 8px
-    lg: '0.75rem',   // 12px
+    sm: '0.35rem',
+    md: '0.65rem',
+    lg: '1rem',
     full: '9999px'
   },
   shadows: {
-    sm: '0 1px 2px rgba(0, 0, 0, 0.05)',
-    md: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    lg: '0 10px 15px rgba(0, 0, 0, 0.1)',
-    glow: '0 0 20px rgba(0, 122, 204, 0.3)'
+    sm: '0 4px 12px rgba(0, 23, 44, 0.25)',
+    md: '0 10px 28px rgba(0, 20, 38, 0.35)',
+    lg: '0 20px 44px rgba(0, 20, 38, 0.44)',
+    glow: '0 0 24px rgba(78, 197, 255, 0.3), 0 0 52px rgba(15, 211, 159, 0.16)'
   },
   animations: {
     duration: {
@@ -198,68 +197,67 @@ export const claudeCodeTheme: Theme = {
   }
 }
 
-// Futuristic Monochrome Theme
 export const futuristicTheme: Theme = {
-  name: 'Futuristic Monochrome',
+  name: 'Compound Carbon',
   colors: {
     background: {
-      primary: '#0a0a0a',      // Deep black
-      secondary: '#111111',    // Slightly lighter black
-      tertiary: '#1a1a1a',     // Dark gray
-      modal: 'rgba(10, 10, 10, 0.98)',
-      card: '#0f0f0f'
+      primary: '#0b0907',
+      secondary: '#15110d',
+      tertiary: '#221b14',
+      modal: 'rgba(11, 9, 7, 0.97)',
+      card: '#17120e'
     },
     text: {
-      primary: '#e0e6ff',      // Subtle blue-white
-      secondary: '#a0b0d0',    // Muted blue-gray
-      tertiary: '#6080a0',     // Darker blue-gray
-      muted: '#405060',        // Very muted blue-gray
-      inverse: '#0a0a0a'       // Deep black
+      primary: '#f7efe6',
+      secondary: '#d3c3b3',
+      tertiary: '#b29d87',
+      muted: '#7f6c59',
+      inverse: '#120d09'
     },
     border: {
-      primary: '#1e2a3a',      // Dark blue-gray
-      secondary: '#151b25',    // Darker blue-gray
-      focus: '#3b82f6',        // Bright blue
-      hover: '#2a3645'         // Lighter blue-gray
+      primary: '#3c2d1f',
+      secondary: '#2d2218',
+      focus: '#ff8b3d',
+      hover: '#5b442e'
     },
     status: {
-      success: '#10b981',      // Emerald green
-      error: '#ef4444',        // Red
-      warning: '#f59e0b',      // Amber/burnt orange
-      info: '#3b82f6'          // Blue
+      success: '#58c28b',
+      error: '#ff6d4a',
+      warning: '#f4b654',
+      info: '#55b9ff'
     },
     interactive: {
-      primary: '#2563eb',      // Blue primary
-      primaryHover: '#1d4ed8', // Darker blue
-      secondary: '#1e293b',    // Dark slate
-      secondaryHover: '#334155', // Lighter slate
-      accent: '#eab308',       // Hazard yellow
-      accentHover: '#ca8a04'   // Darker yellow
+      primary: '#ff7a2f',
+      primaryHover: '#e05f1c',
+      secondary: '#352515',
+      secondaryHover: '#4a321f',
+      accent: '#f1cc4f',
+      accentHover: '#d7b238'
     },
     terminal: {
-      green: '#22d3ee',        // Cyan-green
-      blue: '#3b82f6',         // Bright blue
-      yellow: '#eab308',       // Hazard yellow
-      orange: '#f97316',       // Burnt orange
-      purple: '#8b5cf6',       // Purple
-      cyan: '#06b6d4',         // Cyan
-      red: '#ef4444',          // Red
-      white: '#e0e6ff',        // Blue-white
-      gray: '#64748b'          // Slate gray
+      green: '#58c28b',
+      blue: '#55b9ff',
+      yellow: '#f1cc4f',
+      orange: '#ff7a2f',
+      purple: '#d18eff',
+      cyan: '#6be9ff',
+      red: '#ff6d4a',
+      white: '#fff7ed',
+      gray: '#a99582'
     },
     syntax: {
-      keyword: '#60a5fa',      // Light blue
-      string: '#f97316',       // Burnt orange
-      number: '#22d3ee',       // Cyan
-      comment: '#64748b',      // Slate gray
-      function: '#eab308',     // Hazard yellow
-      variable: '#a78bfa'      // Light purple
+      keyword: '#ffb177',
+      string: '#ffd39f',
+      number: '#9de0bc',
+      comment: '#8f7a64',
+      function: '#f5d66f',
+      variable: '#ff9b70'
     }
   },
   fonts: {
-    mono: '"JetBrains Mono", "Fira Code", "SF Mono", Consolas, monospace',
-    sans: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    serif: '"Crimson Text", Georgia, serif'
+    mono: '"IBM Plex Mono", "JetBrains Mono", "SF Mono", Consolas, monospace',
+    sans: '"Manrope", "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif',
+    serif: '"Instrument Serif", "Iowan Old Style", Georgia, serif'
   },
   spacing: {
     xs: '0.25rem',
@@ -270,25 +268,25 @@ export const futuristicTheme: Theme = {
     xxl: '3rem'
   },
   borderRadius: {
-    sm: '0.125rem',  // Sharper corners for futuristic look
-    md: '0.25rem',
-    lg: '0.5rem',
+    sm: '0.2rem',
+    md: '0.35rem',
+    lg: '0.6rem',
     full: '9999px'
   },
   shadows: {
-    sm: '0 1px 2px rgba(59, 130, 246, 0.1)',
-    md: '0 4px 6px rgba(59, 130, 246, 0.15)',
-    lg: '0 10px 15px rgba(59, 130, 246, 0.2)',
-    glow: '0 0 30px rgba(59, 130, 246, 0.4), 0 0 60px rgba(234, 179, 8, 0.2)'
+    sm: '0 4px 12px rgba(36, 18, 8, 0.24)',
+    md: '0 10px 28px rgba(36, 18, 8, 0.34)',
+    lg: '0 20px 44px rgba(36, 18, 8, 0.46)',
+    glow: '0 0 28px rgba(255, 122, 47, 0.3), 0 0 64px rgba(241, 204, 79, 0.18)'
   },
   animations: {
     duration: {
-      fast: '100ms',    // Snappier animations
+      fast: '100ms',
       normal: '200ms',
       slow: '400ms'
     },
     easing: {
-      default: 'cubic-bezier(0.23, 1, 0.32, 1)',  // More dramatic easing
+      default: 'cubic-bezier(0.23, 1, 0.32, 1)',
       sharp: 'cubic-bezier(0.55, 0, 0.1, 1)',
       smooth: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
     }

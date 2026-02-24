@@ -20,267 +20,212 @@ const Header = styled(motion.header)`
   left: 0;
   right: 0;
   z-index: 100;
-  background: ${({ theme }) => theme.colors.background.primary}cc;
-  backdrop-filter: blur(10px);
   border-bottom: 1px solid ${({ theme }) => theme.colors.border.primary};
-  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+  background: ${({ theme }) => `${theme.colors.background.primary}d9`};
+  backdrop-filter: blur(12px);
 `
 
 const HeaderContent = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
+  padding: 0.85rem 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.9rem;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
 `
 
 const Logo = styled(motion.a)`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: ${({ theme }) => theme.colors.text.primary};
+  gap: 0.6rem;
   text-decoration: none;
-  cursor: pointer;
+  color: ${({ theme }) => theme.colors.text.primary};
 `
 
-const LogoIcon = styled.span`
-  font-size: 1.3rem;
-  color: ${({ theme }) => theme.colors.terminal.blue};
+const LogoMark = styled.span`
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  background: linear-gradient(
+    140deg,
+    ${({ theme }) => theme.colors.interactive.primary} 0%,
+    ${({ theme }) => theme.colors.interactive.accent} 100%
+  );
+  color: ${({ theme }) => theme.colors.text.inverse};
+  box-shadow: ${({ theme }) => theme.shadows.sm};
+`
+
+const LogoStack = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
 `
 
 const LogoText = styled.span`
-  background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.terminal.blue},
-    ${({ theme }) => theme.colors.terminal.cyan}
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-family: ${({ theme }) => theme.fonts.sans};
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  font-weight: 700;
+`
+
+const Subline = styled.span`
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.67rem;
+  color: ${({ theme }) => theme.colors.text.tertiary};
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 `
 
 const Navigation = styled.nav`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing.lg};
-
-  @media (max-width: 768px) {
-    gap: ${({ theme }) => theme.spacing.md};
-  }
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
 `
 
 const NavLink = styled(motion.a)`
-  color: ${({ theme }) => theme.colors.text.secondary};
+  border: 1px solid ${({ theme }) => theme.colors.border.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  padding: 0.34rem 0.72rem;
   text-decoration: none;
+  color: ${({ theme }) => theme.colors.text.secondary};
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.sm};
-  border-radius: ${({ theme }) => theme.borderRadius.sm};
-  transition: all ${({ theme }) => theme.animations.duration.fast} ${({ theme }) => theme.animations.easing.default};
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   cursor: pointer;
 
   &:hover {
     color: ${({ theme }) => theme.colors.text.primary};
-    background: ${({ theme }) => theme.colors.background.secondary};
-  }
-
-  @media (max-width: 768px) {
-    display: none;
+    border-color: ${({ theme }) => theme.colors.border.hover};
+    background: ${({ theme }) => `${theme.colors.background.secondary}b8`};
   }
 `
 
-const UserInfo = styled.div`
+const UserPanel = styled.div`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing.md};
+  justify-content: flex-end;
+  gap: 0.55rem;
+
+  @media (max-width: 980px) {
+    justify-content: flex-start;
+  }
 `
 
 const UserAvatar = styled.div`
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: ${({ theme }) => theme.borderRadius.full};
   background: ${({ theme }) => theme.colors.interactive.primary};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: ${({ theme }) => theme.colors.text.inverse};
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 700;
 `
 
 const Username = styled.span`
   font-family: ${({ theme }) => theme.fonts.mono};
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-size: 0.9rem;
-
-  @media (max-width: 480px) {
-    display: none;
-  }
+  font-size: 0.72rem;
+  color: ${({ theme }) => theme.colors.text.secondary};
 `
 
 const LoginButton = styled(motion.button)`
-  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
+  border: 1px solid ${({ theme }) => theme.colors.interactive.primary};
   background: ${({ theme }) => theme.colors.interactive.primary};
-  color: white;
-  border: none;
+  color: ${({ theme }) => theme.colors.text.inverse};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  font-family: ${({ theme }) => theme.fonts.mono};
+  padding: 0.45rem 0.8rem;
+  font-family: ${({ theme }) => theme.fonts.sans};
   font-weight: 600;
-  font-size: 0.9rem;
   cursor: pointer;
-  transition: all ${({ theme }) => theme.animations.duration.fast} ${({ theme }) => theme.animations.easing.default};
 
   &:hover {
     background: ${({ theme }) => theme.colors.interactive.primaryHover};
     transform: translateY(-1px);
   }
-
-  &:active {
-    transform: translateY(0);
-  }
-`
-
-const StatusDot = styled.div`
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: ${({ theme }) => theme.colors.status.success};
-  animation: pulse 2s infinite;
-
-  @keyframes pulse {
-    0% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.7;
-      transform: scale(1.1);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-`
-
-const MobileMenuButton = styled.button`
-  display: none;
-  background: none;
-  border: none;
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: ${({ theme }) => theme.spacing.xs};
-
-  @media (max-width: 768px) {
-    display: block;
-  }
 `
 
 const TerminalHeader: React.FC<TerminalHeaderProps> = ({ user, onLoginClick, onNavigate }) => {
-  const handleLogoClick = (e: React.MouseEvent) => {
-    e.preventDefault()
+  const handleLogoClick = (event: React.MouseEvent) => {
+    event.preventDefault()
     window.scrollTo({ top: 0, behavior: 'smooth' })
     if (onNavigate) onNavigate('/')
   }
 
-  const handleNavClick = (e: React.MouseEvent, path: string) => {
-    e.preventDefault()
-    if (onNavigate) {
+  const handleNavClick = (event: React.MouseEvent, path: string) => {
+    event.preventDefault()
+    if (onNavigate && path.startsWith('/')) {
       onNavigate(path)
-    } else if (path.startsWith('http')) {
+      return
+    }
+    if (path.startsWith('http')) {
       window.open(path, '_blank')
     }
   }
 
-  const getUserInitials = (username: string) => {
-    return username.slice(0, 2).toUpperCase()
-  }
-
   return (
     <Header
-      initial={{ y: -100, opacity: 0 }}
+      initial={{ y: -24, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3, delay: 0.1 }}
+      transition={{ duration: 0.35, delay: 0.08 }}
     >
       <HeaderContent>
-        <Logo
-          href="/"
-          onClick={handleLogoClick}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <LogoIcon>⚡</LogoIcon>
-          <LogoText>CLDCDE.CC</LogoText>
-          <StatusDot />
+        <Logo href="/" onClick={handleLogoClick} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+          <LogoMark>AE</LogoMark>
+          <LogoStack>
+            <LogoText>CLDCDE.CC</LogoText>
+            <Subline>AE.LTD :: Google Labs x Compound Engineering</Subline>
+          </LogoStack>
         </Logo>
 
         <Navigation>
-          <NavLink
-            href="/extensions"
-            onClick={(e) => handleNavClick(e, '/extensions')}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Extensions
-          </NavLink>
-          <NavLink
-            href="/mcp"
-            onClick={(e) => handleNavClick(e, '/mcp')}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            MCP Servers
-          </NavLink>
-          <NavLink
-            href="/news"
-            onClick={(e) => handleNavClick(e, '/news')}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            News
-          </NavLink>
-          <NavLink
-            href="/docs"
-            onClick={(e) => handleNavClick(e, '/docs')}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Docs
-          </NavLink>
-          <NavLink
-            href="https://github.com/anthropics/claude-code"
-            onClick={(e) => handleNavClick(e, 'https://github.com/anthropics/claude-code')}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            GitHub
-          </NavLink>
-
-          {user ? (
-            <UserInfo>
-              <Username>@{user.email?.split('@')[0] || 'user'}</Username>
-              <UserAvatar>
-                {user.profile?.avatar_url || user.email?.charAt(0).toUpperCase() || 'U'}
-              </UserAvatar>
-            </UserInfo>
-          ) : (
-            <LoginButton
-              onClick={onLoginClick}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          {[
+            { label: 'Extensions', path: '/extensions' },
+            { label: 'MCP', path: '/mcp' },
+            { label: 'Packs', path: '/packs' },
+            { label: 'Docs', path: '/docs' },
+            { label: 'News', path: '/news' },
+            { label: 'GitHub', path: 'https://github.com/aegntic/cldcde' }
+          ].map((item) => (
+            <NavLink
+              key={item.label}
+              href={item.path}
+              onClick={(event) => handleNavClick(event, item.path)}
+              whileHover={{ y: -1 }}
+              whileTap={{ scale: 0.97 }}
             >
+              {item.label}
+            </NavLink>
+          ))}
+        </Navigation>
+
+        <UserPanel>
+          {user ? (
+            <>
+              <Username>@{(user as any)?.email?.split('@')[0] || 'operator'}</Username>
+              <UserAvatar>{(user as any)?.email?.charAt(0)?.toUpperCase() || 'U'}</UserAvatar>
+            </>
+          ) : (
+            <LoginButton onClick={onLoginClick} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               Login
             </LoginButton>
           )}
-
-          <MobileMenuButton>☰</MobileMenuButton>
-        </Navigation>
+        </UserPanel>
       </HeaderContent>
     </Header>
   )

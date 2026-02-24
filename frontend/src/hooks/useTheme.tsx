@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { ThemeProvider as StyledThemeProvider } from 'styled-components'
-import { Theme, ThemeName, themes, claudeCodeTheme } from '../styles/themes'
+import { Theme, ThemeName, themes } from '../styles/themes'
 
 interface ThemeContextType {
   currentTheme: Theme
@@ -17,21 +17,18 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [themeName, setThemeName] = useState<ThemeName>('claudeCode') // Default to Claude Code theme
+  const [themeName, setThemeName] = useState<ThemeName>('claudeCode')
   const [isTransitioning, setIsTransitioning] = useState(false)
 
-  // Load theme from localStorage on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem('cldcde-theme') as ThemeName
     if (savedTheme && themes[savedTheme]) {
       setThemeName(savedTheme)
     } else if (savedTheme === 'claudeLight') {
-      // If user had claudeLight saved, default them to claudeCode
       setThemeName('claudeCode')
     }
   }, [])
 
-  // Save theme to localStorage when it changes
   useEffect(() => {
     localStorage.setItem('cldcde-theme', themeName)
   }, [themeName])
@@ -40,8 +37,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   const toggleTheme = () => {
     setIsTransitioning(true)
-    
-    // Cycle through themes: claudeCode -> futuristic -> claudeCode
+
     let newTheme: ThemeName
     switch (themeName) {
       case 'claudeCode':
@@ -53,10 +49,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       default:
         newTheme = 'claudeCode'
     }
-    
     setThemeName(newTheme)
-    
-    // Reset transition state after animation
+
     setTimeout(() => {
       setIsTransitioning(false)
     }, 500)
@@ -66,7 +60,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     if (newThemeName !== themeName) {
       setIsTransitioning(true)
       setThemeName(newThemeName)
-      
+
       setTimeout(() => {
         setIsTransitioning(false)
       }, 500)
@@ -98,7 +92,6 @@ export const useTheme = (): ThemeContextType => {
   return context
 }
 
-// Global styles and CSS variables
 export const createGlobalStyles = (theme: Theme) => `
   :root {
     /* Background colors */
@@ -196,12 +189,27 @@ export const createGlobalStyles = (theme: Theme) => `
   body {
     font-family: var(--font-sans);
     background-color: var(--bg-primary);
+    background-image:
+      radial-gradient(circle at 14% -18%, ${theme.colors.interactive.accent}24 0%, transparent 44%),
+      radial-gradient(circle at 88% -20%, ${theme.colors.interactive.primary}2e 0%, transparent 42%),
+      linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
     color: var(--text-primary);
     line-height: 1.6;
     transition: 
       background-color var(--duration-normal) var(--easing-default),
       color var(--duration-normal) var(--easing-default);
     overflow-x: hidden;
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  a {
+    color: inherit;
   }
 
   /* Scrollbar styling */

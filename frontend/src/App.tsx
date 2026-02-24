@@ -9,28 +9,82 @@ import { MCPBrowser } from './components/MCPBrowser'
 import { NewsPage } from './components/NewsPage'
 import { DocsPage } from './components/DocsPage'
 import { SettingsDocsPage } from './components/SettingsDocsPage'
+import { PacksPage } from './components/PacksPage'
 import { ThemeToggle } from './components/ThemeToggle'
 import { TerminalHeader } from './components/TerminalHeader'
+import { config } from './config'
 
-// Global styles with theme integration
 const GlobalStyle = createGlobalStyle`
   ${({ theme }) => createGlobalStyles(theme)}
 `
 
 const AppContainer = styled.div`
   min-height: 100vh;
-  background: ${({ theme }) => theme.colors.background.primary};
   color: ${({ theme }) => theme.colors.text.primary};
   position: relative;
   overflow-x: hidden;
 `
 
+const AmbientBackdrop = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(12px);
+    opacity: 0.5;
+    animation: drift 16s ease-in-out infinite;
+  }
+
+  &::before {
+    width: 42vw;
+    height: 42vw;
+    min-width: 320px;
+    min-height: 320px;
+    top: -14vw;
+    left: -8vw;
+    background: radial-gradient(circle, ${({ theme }) => `${theme.colors.interactive.accent}45`} 0%, transparent 70%);
+  }
+
+  &::after {
+    width: 36vw;
+    height: 36vw;
+    min-width: 260px;
+    min-height: 260px;
+    top: -10vw;
+    right: -6vw;
+    background: radial-gradient(circle, ${({ theme }) => `${theme.colors.interactive.primary}50`} 0%, transparent 68%);
+    animation-delay: 3s;
+  }
+
+  @keyframes drift {
+    0%,
+    100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, 24px, 0); }
+  }
+`
+
+const GridOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, ${({ theme }) => `${theme.colors.border.secondary}22`} 1px, transparent 1px),
+    linear-gradient(to bottom, ${({ theme }) => `${theme.colors.border.secondary}22`} 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+`
+
 const ThemeTransitionOverlay = styled(motion.div)`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: ${({ theme }) => theme.colors.background.primary};
   z-index: 9999;
   pointer-events: none;
@@ -41,228 +95,362 @@ const MainContent = styled(motion.main)`
   z-index: 1;
 `
 
-const HeroSection = styled.section`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+const StatusPill = styled(motion.div)<{ status: 'checking' | 'online' | 'offline' }>`
+  position: fixed;
+  bottom: ${({ theme }) => theme.spacing.md};
+  right: ${({ theme }) => theme.spacing.md};
+  z-index: 900;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: ${({ theme }) => theme.spacing.xl};
-  text-align: center;
-  position: relative;
-`
-
-const ASCIIContainer = styled(motion.div)`
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding: 0.5rem 0.85rem;
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  border: 1px solid ${({ theme }) => theme.colors.border.primary};
+  background: ${({ theme }) => `${theme.colors.background.card}dd`};
+  backdrop-filter: blur(10px);
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: clamp(0.4rem, 1.5vw, 0.8rem);
-  line-height: 1;
-  color: ${({ theme }) => theme.colors.terminal.blue};
-  text-shadow: 0 0 10px currentColor;
-  white-space: pre;
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-  filter: ${({ theme }) => 
-    theme.name === 'Futuristic Monochrome' 
-      ? 'drop-shadow(0 0 20px rgba(59, 130, 246, 0.5))' 
-      : 'none'
-  };
-  transition: all ${({ theme }) => theme.animations.duration.normal} ${({ theme }) => theme.animations.easing.default};
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
 
-  @media (max-width: 768px) {
-    font-size: clamp(0.25rem, 3vw, 0.5rem);
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: ${({ status, theme }) => {
+      if (status === 'online') return theme.colors.status.success
+      if (status === 'offline') return theme.colors.status.error
+      return theme.colors.status.info
+    }};
+    box-shadow: ${({ status, theme }) => {
+      if (status === 'online') return `0 0 12px ${theme.colors.status.success}`
+      if (status === 'offline') return `0 0 10px ${theme.colors.status.error}`
+      return `0 0 10px ${theme.colors.status.info}`
+    }};
   }
 `
 
-const Title = styled(motion.h1)`
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 700;
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
+const HomeShell = styled.section`
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(6rem, 9vw, 8rem) clamp(1rem, 3vw, 2.5rem) 3rem;
+  display: grid;
+  gap: 1.6rem;
+`
+
+const HeroGrid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 1.2rem;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const HeroCard = styled(motion.div)`
+  border: 1px solid ${({ theme }) => theme.colors.border.primary};
   background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.terminal.blue},
-    ${({ theme }) => theme.colors.terminal.cyan},
-    ${({ theme }) => theme.colors.interactive.accent}
+    160deg,
+    ${({ theme }) => `${theme.colors.background.card}f2`} 0%,
+    ${({ theme }) => `${theme.colors.background.secondary}d9`} 100%
   );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  padding: clamp(1.1rem, 2.8vw, 2rem);
+  backdrop-filter: blur(8px);
 `
 
-const Subtitle = styled(motion.p)`
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+const Eyebrow = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  border: 1px solid ${({ theme }) => theme.colors.border.secondary};
+  background: ${({ theme }) => `${theme.colors.background.secondary}c7`};
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: ${({ theme }) => theme.colors.text.secondary};
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-  max-width: 600px;
-  line-height: 1.4;
 `
 
-const ActionButtons = styled(motion.div)`
+const HeroTitle = styled(motion.h1)`
+  margin-top: 1rem;
+  font-family: ${({ theme }) => theme.fonts.sans};
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  font-size: clamp(2.1rem, 6vw, 4.8rem);
+  color: ${({ theme }) => theme.colors.text.primary};
+`
+
+const GradientWord = styled.span`
+  display: inline-block;
+  background: linear-gradient(
+    120deg,
+    ${({ theme }) => theme.colors.interactive.primary} 0%,
+    ${({ theme }) => theme.colors.interactive.accent} 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+`
+
+const HeroLead = styled(motion.p)`
+  margin-top: 1rem;
+  max-width: 62ch;
+  font-size: clamp(1rem, 1.45vw, 1.2rem);
+  line-height: 1.65;
+  color: ${({ theme }) => theme.colors.text.secondary};
+`
+
+const ButtonRow = styled(motion.div)`
+  margin-top: 1.35rem;
   display: flex;
-  gap: ${({ theme }) => theme.spacing.md};
   flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  gap: 0.7rem;
 `
 
-const Button = styled(motion.button)<{ variant?: 'primary' | 'secondary' | 'accent' }>`
-  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.xl};
+const ActionButton = styled(motion.button)<{ variant?: 'primary' | 'secondary' | 'ghost' }>`
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  border: 1px solid ${({ theme, variant }) => {
-    switch (variant) {
-      case 'primary': return theme.colors.interactive.primary
-      case 'accent': return theme.colors.interactive.accent
-      default: return theme.colors.border.primary
-    }
-  }};
-  background: ${({ theme, variant }) => {
-    switch (variant) {
-      case 'primary': return theme.colors.interactive.primary
-      case 'accent': return theme.colors.interactive.accent
-      default: return theme.colors.interactive.secondary
-    }
-  }};
-  color: ${({ theme, variant }) => 
-    variant === 'primary' || variant === 'accent' ? 'white' : theme.colors.text.primary
-  };
+  border: 1px solid ${({ theme, variant }) =>
+    variant === 'primary'
+      ? theme.colors.interactive.primary
+      : variant === 'secondary'
+      ? theme.colors.interactive.accent
+      : theme.colors.border.primary};
+  background: ${({ theme, variant }) =>
+    variant === 'primary'
+      ? theme.colors.interactive.primary
+      : variant === 'secondary'
+      ? theme.colors.interactive.accent
+      : `${theme.colors.background.secondary}d9`};
+  color: ${({ theme, variant }) =>
+    variant === 'ghost' ? theme.colors.text.primary : theme.colors.text.inverse};
+  padding: 0.72rem 1rem;
   font-family: ${({ theme }) => theme.fonts.sans};
   font-weight: 600;
-  font-size: 1.1rem;
+  letter-spacing: 0.01em;
   cursor: pointer;
-  transition: all ${({ theme }) => theme.animations.duration.fast} ${({ theme }) => theme.animations.easing.default};
-  position: relative;
-  overflow: hidden;
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: ${({ theme }) => theme.shadows.md};
-    background: ${({ theme, variant }) => {
-      switch (variant) {
-        case 'primary': return theme.colors.interactive.primaryHover
-        case 'accent': return theme.colors.interactive.accentHover
-        default: return theme.colors.interactive.secondaryHover
-      }
-    }};
-  }
-
-  &:active {
-    transform: translateY(0);
+    filter: saturate(1.05);
   }
 `
 
-const StatusIndicator = styled(motion.div)`
-  position: fixed;
-  top: ${({ theme }) => theme.spacing.md};
-  right: ${({ theme }) => theme.spacing.md};
-  z-index: 1000;
+const HeroMeta = styled(motion.div)`
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+`
+
+const MetaChip = styled.span`
+  border: 1px solid ${({ theme }) => theme.colors.border.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  padding: 0.3rem 0.65rem;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.72rem;
+  color: ${({ theme }) => theme.colors.text.tertiary};
+`
+
+const SectionLabel = styled.h2`
+  margin: 0 0 0.85rem;
+  font-size: 1rem;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+`
+
+const FlowLane = styled.div`
+  display: grid;
+  gap: 0.6rem;
+`
+
+const FlowStep = styled(motion.div)`
+  border: 1px solid ${({ theme }) => theme.colors.border.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  padding: 0.8rem;
+  background: ${({ theme }) => `${theme.colors.background.secondary}c7`};
+`
+
+const StepTitle = styled.h3`
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  color: ${({ theme }) => theme.colors.text.primary};
+`
+
+const StepText = styled.p`
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: ${({ theme }) => theme.colors.text.secondary};
+`
+
+const PipelineRow = styled(motion.div)`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const GateList = styled.div`
+  display: grid;
+  gap: 0.55rem;
+`
+
+const GateItem = styled.div`
+  border: 1px solid ${({ theme }) => theme.colors.border.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  padding: 0.75rem;
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
-  background: ${({ theme }) => theme.colors.background.card};
-  border: 1px solid ${({ theme }) => theme.colors.border.primary};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.9rem;
+  justify-content: space-between;
+  gap: 0.7rem;
+  background: ${({ theme }) => `${theme.colors.background.secondary}bf`};
 `
 
-const StatusDot = styled.div<{ connected: boolean }>`
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: ${({ connected, theme }) => 
-    connected ? theme.colors.status.success : theme.colors.status.error
-  };
-  animation: ${({ connected }) => connected ? 'pulse 2s infinite' : 'none'};
+const GateTitle = styled.span`
+  font-size: 0.92rem;
+  color: ${({ theme }) => theme.colors.text.primary};
+`
 
-  @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
+const GateTag = styled.span<{ tone: 'ok' | 'warn' | 'neutral' }>`
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  padding: 0.25rem 0.55rem;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  border: 1px solid ${({ theme, tone }) => {
+    if (tone === 'ok') return `${theme.colors.status.success}66`
+    if (tone === 'warn') return `${theme.colors.status.warning}66`
+    return theme.colors.border.secondary
+  }};
+  color: ${({ theme, tone }) => {
+    if (tone === 'ok') return theme.colors.status.success
+    if (tone === 'warn') return theme.colors.status.warning
+    return theme.colors.text.tertiary
+  }};
+`
+
+const ModuleGrid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
   }
 `
 
-// ASCII Art for the hero section
-const asciiArt = `
-╔══════════════════════════════════════════════════════════════════╗
-║                                                                  ║
-║    ████████╗██╗     ██████╗  ██████╗██████╗ ███████╗             ║
-║    ██╔═════╝██║     ██╔══██╗██╔════╝██╔══██╗██╔════╝             ║  
-║    ██║     ██║     ██║  ██║██║     ██║  ██║█████╗               ║
-║    ██║     ██║     ██║  ██║██║     ██║  ██║██╔══╝               ║
-║    ╚██████╗███████╗██████╔╝╚██████╗██████╔╝███████╗             ║
-║     ╚═════╝╚══════╝╚═════╝  ╚═════╝╚═════╝ ╚══════╝             ║
-║                                                                  ║
-║         🤖 Community Extensions for Claude Code 🚀               ║
-║                                                                  ║
-║    ┌─────────────────────────────────────────────────────────┐   ║
-║    │  • MCP Servers & Custom Extensions                     │   ║
-║    │  • Cross-Platform Installation (macOS/Linux/Windows)   │   ║
-║    │  • Secure User Data Storage                            │   ║
-║    │  • Community-Driven Development Tools                  │   ║
-║    └─────────────────────────────────────────────────────────┘   ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
+const ModuleCard = styled(motion.button)`
+  text-align: left;
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  border: 1px solid ${({ theme }) => theme.colors.border.primary};
+  background: linear-gradient(
+    150deg,
+    ${({ theme }) => `${theme.colors.background.card}ef`} 0%,
+    ${({ theme }) => `${theme.colors.background.secondary}d4`} 100%
+  );
+  padding: 0.95rem;
+  cursor: pointer;
+  color: inherit;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: ${({ theme }) => theme.shadows.md};
+    border-color: ${({ theme }) => theme.colors.border.hover};
+  }
+`
+
+const ModuleTitle = styled.h3`
+  margin: 0 0 0.3rem;
+  font-size: 1rem;
+  color: ${({ theme }) => theme.colors.text.primary};
+`
+
+const ModuleText = styled.p`
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: ${({ theme }) => theme.colors.text.secondary};
+`
+
+const FooterSignal = styled(motion.div)`
+  border-top: 1px solid ${({ theme }) => theme.colors.border.secondary};
+  padding-top: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+`
+
+const AffiliationChip = styled.span`
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  border: 1px solid ${({ theme }) => theme.colors.border.secondary};
+  padding: 0.28rem 0.65rem;
+  font-size: 0.7rem;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  color: ${({ theme }) => theme.colors.text.tertiary};
 `
 
 function AppContent() {
-  const { isTransitioning, currentTheme } = useTheme()
+  const { isTransitioning } = useTheme()
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showProfileSetup, setShowProfileSetup] = useState(false)
   const [showExtensions, setShowExtensions] = useState(false)
-  const [isConnected, setIsConnected] = useState(false)
-  const [user, setUser] = useState(null)
-  const [newUser, setNewUser] = useState(null)
+  const [connectionStatus, setConnectionStatus] = useState<'checking' | 'online' | 'offline'>('checking')
+  const [user, setUser] = useState<any>(null)
+  const [newUser, setNewUser] = useState<any>(null)
   const [currentPage, setCurrentPage] = useState('home')
 
-  // Check connection status
   useEffect(() => {
+    const apiOrigin = config.api.baseUrl.replace(/\/api\/?$/, '')
+
     const checkConnection = async () => {
       try {
-        const response = await fetch('/health')
-        setIsConnected(response.ok)
+        const response = await fetch(`${apiOrigin}/health`)
+        setConnectionStatus(response.ok ? 'online' : 'offline')
       } catch {
-        setIsConnected(false)
+        setConnectionStatus('offline')
       }
     }
 
     checkConnection()
-    const interval = setInterval(checkConnection, 30000) // Check every 30 seconds
+    const interval = setInterval(checkConnection, 30000)
     return () => clearInterval(interval)
   }, [])
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
+        staggerChildren: 0.08,
+        delayChildren: 0.12
       }
     }
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 14 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  }
-
-  const asciiVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 1,
-        ease: "easeOut"
+        duration: 0.45,
+        ease: 'easeOut'
       }
     }
   }
@@ -280,9 +468,8 @@ function AppContent() {
   }
 
   const handleNavigate = (path: string) => {
-    // Reset all pages first
     setShowExtensions(false)
-    
+
     switch (path) {
       case '/extensions':
         setCurrentPage('extensions')
@@ -300,6 +487,9 @@ function AppContent() {
       case '/news':
         setCurrentPage('news')
         break
+      case '/packs':
+        setCurrentPage('packs')
+        break
       case '/':
       default:
         setCurrentPage('home')
@@ -310,147 +500,235 @@ function AppContent() {
   return (
     <AppContainer>
       <GlobalStyle />
-      
-      {/* Theme transition overlay */}
+      <AmbientBackdrop />
+      <GridOverlay />
+
       <AnimatePresence>
         {isTransitioning && (
           <ThemeTransitionOverlay
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.8 }}
+            animate={{ opacity: 0.7 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
           />
         )}
       </AnimatePresence>
 
-      {/* Status indicator */}
-      <StatusIndicator
-        initial={{ opacity: 0, x: 100 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.5 }}
+      <StatusPill
+        status={connectionStatus}
+        initial={{ opacity: 0, y: -12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35 }}
       >
-        <StatusDot connected={isConnected} />
-        <span>{isConnected ? 'ONLINE' : 'OFFLINE'}</span>
-      </StatusIndicator>
+        {connectionStatus === 'online'
+          ? 'API ONLINE'
+          : connectionStatus === 'offline'
+          ? 'API OFFLINE'
+          : 'API CHECKING'}
+      </StatusPill>
 
-      {/* Theme toggle */}
       <ThemeToggle />
 
-      {/* Terminal header */}
-      <TerminalHeader 
+      <TerminalHeader
         user={user}
         onLoginClick={() => setShowLoginModal(true)}
         onNavigate={handleNavigate}
       />
 
-      <MainContent
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Render different pages based on currentPage */}
+      <MainContent variants={containerVariants} initial="hidden" animate="visible">
         {currentPage === 'home' && (
-          <HeroSection>
-            {/* ASCII Art */}
-            <ASCIIContainer
-              variants={asciiVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {asciiArt}
-            </ASCIIContainer>
+          <HomeShell>
+            <HeroGrid variants={itemVariants}>
+              <HeroCard>
+                <Eyebrow>Google Labs Pipeline + Compound Engineering</Eyebrow>
+                <HeroTitle>
+                  Build in <GradientWord>Labs mode</GradientWord>.
+                  <br />
+                  Ship with <GradientWord>Compound discipline</GradientWord>.
+                </HeroTitle>
+                <HeroLead>
+                  CLDCDE has been rebuilt around two production loops: creative generation through
+                  <strong> Stitch → Whisk → Flow</strong>, and delivery hardening through
+                  <strong> Safe Edit → Spec Sync → Adversarial Review</strong>.
+                </HeroLead>
 
-            {/* Main title */}
-            <Title variants={itemVariants}>
-              CLDCDE.CC
-            </Title>
+                <ButtonRow variants={itemVariants}>
+                  <ActionButton
+                    variant="primary"
+                    onClick={() => handleNavigate('/packs')}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    Open Skill Packs
+                  </ActionButton>
+                  <ActionButton
+                    variant="secondary"
+                    onClick={handleBrowseExtensions}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    Browse Extensions
+                  </ActionButton>
+                  <ActionButton
+                    variant="ghost"
+                    onClick={() => handleNavigate('/news')}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    View Latest News
+                  </ActionButton>
+                  <ActionButton
+                    variant="ghost"
+                    onClick={handleLogin}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    {user ? 'Open Dashboard' : 'Login / Register'}
+                  </ActionButton>
+                </ButtonRow>
 
-            {/* Subtitle */}
-            <Subtitle variants={itemVariants}>
-              The unofficial community hub for Claude Code extensions, MCP servers, 
-              and development tools. Upload, discover, and install extensions across 
-              all platforms.
-            </Subtitle>
+                <HeroMeta variants={itemVariants}>
+                  <MetaChip>Runtime: Bun + Hono</MetaChip>
+                  <MetaChip>Surface: cldcde.cc</MetaChip>
+                  <MetaChip>Distribution: aegntic/cldcde</MetaChip>
+                </HeroMeta>
+              </HeroCard>
 
-            {/* Action buttons */}
-            <ActionButtons variants={itemVariants}>
-              <Button
-                variant="primary"
-                onClick={handleLogin}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {user ? 'Dashboard' : 'Login / Register'}
-              </Button>
-              
-              <Button
-                variant="accent"
-                onClick={handleBrowseExtensions}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Browse Extensions
-              </Button>
-              
-              <Button
-                variant="secondary"
-                onClick={() => handleNavigate('/news')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Latest News
-              </Button>
-            </ActionButtons>
+              <HeroCard variants={itemVariants}>
+                <SectionLabel>Google Labs Creative Chain</SectionLabel>
+                <FlowLane>
+                  {[
+                    {
+                      title: '1. Stitch',
+                      text: 'Shape ideas into visual narrative frames and storyboard anchors.'
+                    },
+                    {
+                      title: '2. Whisk',
+                      text: 'Remix and multiply variants for style breadth and campaign depth.'
+                    },
+                    {
+                      title: '3. Flow',
+                      text: 'Animate selected frames into distribution-ready motion assets.'
+                    },
+                    {
+                      title: '4. Publish',
+                      text: 'Route final artifacts into reusable packs and launch prompts.'
+                    }
+                  ].map((step, index) => (
+                    <FlowStep
+                      key={step.title}
+                      initial={{ opacity: 0, x: 18 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.22 + index * 0.09 }}
+                    >
+                      <StepTitle>{step.title}</StepTitle>
+                      <StepText>{step.text}</StepText>
+                    </FlowStep>
+                  ))}
+                </FlowLane>
+              </HeroCard>
+            </HeroGrid>
 
-            {/* Connection info */}
-            <motion.div variants={itemVariants}>
-              <p style={{ 
-                fontFamily: currentTheme.fonts.mono, 
-                fontSize: '0.9rem',
-                color: currentTheme.colors.text.muted 
-              }}>
-                Runtime: Bun • Framework: Hono • Database: Supabase • Theme: {currentTheme.name}
-              </p>
-            </motion.div>
-          </HeroSection>
+            <PipelineRow variants={itemVariants}>
+              <HeroCard>
+                <SectionLabel>Compound Engineering Quality Gates</SectionLabel>
+                <GateList>
+                  <GateItem>
+                    <GateTitle>Debt Sentinel pre-edit scan</GateTitle>
+                    <GateTag tone="ok">Block critical debt</GateTag>
+                  </GateItem>
+                  <GateItem>
+                    <GateTitle>Spec Lock drift synchronization</GateTitle>
+                    <GateTag tone="neutral">Auto-resolve where possible</GateTag>
+                  </GateItem>
+                  <GateItem>
+                    <GateTitle>Red Team Tribunal adversarial verdict</GateTitle>
+                    <GateTag tone="warn">Reject if consensus fails</GateTag>
+                  </GateItem>
+                </GateList>
+              </HeroCard>
+
+              <HeroCard>
+                <SectionLabel>Launch Conversion Surface</SectionLabel>
+                <StepText>
+                  Free pack outputs are deliberately shareable. Every exported artifact carries install metadata
+                  and branded entry points into AE.LTD subscription paths without degrading first-use experience.
+                </StepText>
+                <HeroMeta style={{ marginTop: '0.95rem' }}>
+                  <MetaChip>Free tier: viral starter loops</MetaChip>
+                  <MetaChip>Pro tier: full automation depth</MetaChip>
+                  <MetaChip>X launch kit included</MetaChip>
+                </HeroMeta>
+              </HeroCard>
+            </PipelineRow>
+
+            <ModuleGrid variants={itemVariants}>
+              {[
+                {
+                  title: 'Extension Browser',
+                  text: 'Community plugins and execution tooling in one modal surface.',
+                  path: '/extensions'
+                },
+                {
+                  title: 'MCP Servers',
+                  text: 'Explore server integrations tuned for automation and retrieval.',
+                  path: '/mcp'
+                },
+                {
+                  title: 'AE.LTD Packs',
+                  text: 'Download self-contained skills, MCPs, prompts, and workflows.',
+                  path: '/packs'
+                },
+                {
+                  title: 'Documentation',
+                  text: 'Operational references, setup commands, and ecosystem links.',
+                  path: '/docs'
+                }
+              ].map((item) => (
+                <ModuleCard
+                  key={item.title}
+                  onClick={() => handleNavigate(item.path)}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <ModuleTitle>{item.title}</ModuleTitle>
+                  <ModuleText>{item.text}</ModuleText>
+                </ModuleCard>
+              ))}
+            </ModuleGrid>
+
+            <FooterSignal variants={itemVariants}>
+              {['cldcde.cc', 'aegntic.ai', 'ae.ltd', 'clawreform.com', 'github.com/aegntic/cldcde'].map((item) => (
+                <AffiliationChip key={item}>{item}</AffiliationChip>
+              ))}
+            </FooterSignal>
+          </HomeShell>
         )}
 
-        {/* Extensions page */}
         {currentPage === 'extensions' && showExtensions && (
-          <ExtensionBrowser 
-            onClose={() => handleNavigate('/')}
-            user={user}
-          />
+          <ExtensionBrowser onClose={() => handleNavigate('/')} user={user} />
         )}
 
-        {/* MCP Servers page */}
         {currentPage === 'mcp' && <MCPBrowser />}
-
-        {/* News page */}
         {currentPage === 'news' && <NewsPage />}
-
-        {/* Docs page */}
         {currentPage === 'docs' && <DocsPage />}
-
-        {/* Settings page */}
+        {currentPage === 'packs' && <PacksPage />}
         {currentPage === 'settings' && <SettingsDocsPage />}
       </MainContent>
 
-      {/* Login modal */}
       <AnimatePresence>
         {showLoginModal && (
-          <LoginModal 
+          <LoginModal
             onClose={() => setShowLoginModal(false)}
             onLogin={setUser}
-            onShowProfileSetup={(user) => {
-              setNewUser(user)
+            onShowProfileSetup={(nextUser) => {
+              setNewUser(nextUser)
               setShowProfileSetup(true)
             }}
           />
         )}
       </AnimatePresence>
 
-      {/* Profile setup modal */}
       <AnimatePresence>
         {showProfileSetup && newUser && (
           <ProfileSetupModal
