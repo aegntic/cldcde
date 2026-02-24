@@ -1,56 +1,88 @@
-name: Deploy to Cloudflare
+name: CLDCDE CI and Deploy
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cldcde-production
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  verify:
+    name: Verify Build
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v4
-      
-      - uses: oven-sh/setup-bun@v1
+
+      - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-          
+
       - name: Install dependencies
-        run: bun install
-        
+        run: bun install --frozen-lockfile
+
       - name: Run tests
         run: bun test
-        
-      - name: Build application
+
+      - name: Build worker and pages bundle
         run: |
-          bun run build
           bun run build:worker
-          
+          bun run site:build
+          bun run site:check
+
+  deploy:
+    name: Deploy Cloudflare
+    runs-on: ubuntu-latest
+    needs: verify
+    if: github.event_name != 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build deploy artifacts
+        run: |
+          bun run build:worker
+          bun run site:build
+          bun run site:check
+
       - name: Deploy Worker to Cloudflare
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          
+          command: deploy -c wrangler.toml
+
       - name: Deploy Pages to Cloudflare
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=cldcde
-          
-      - name: Run D1 Migrations
+          command: pages deploy .pages-dist --project-name=cldcde --branch main
+
+      - name: Run D1 migrations
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: d1 execute cldcde-content --file=./migrations/schema.sql
-          
-      - name: Purge Cloudflare Cache
+          command: d1 execute cldcde-content --file=./migrations/001_initial_schema.sql
+
+      - name: Purge Cloudflare cache
+        if: ${{ secrets.CLOUDFLARE_ZONE_ID != '' }}
         run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+          curl -fsS -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             --data '{"purge_everything":true}'

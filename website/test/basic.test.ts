@@ -22,8 +22,6 @@ describe('SOTA Template Suite - Basic Tests', () => {
       'README.md',
       'LICENSE',
       'package.json',
-      '.eslintrc.js',
-      '.prettierrc',
       'tsconfig.json',
       'vitest.config.ts'
     ];

@@ -127,9 +127,11 @@ cp .env.example .env
 ```bash
 # Platform development
 bun dev                      # Start development server
-bun build                    # Build frontend
-bun run deploy:pages         # Deploy frontend
-bunx wrangler deploy         # Deploy backend
+bun run site:build           # Build Cloudflare Pages artifact (.pages-dist)
+bun run site:check           # Validate deploy artifact
+bun run site:preview         # Preview website locally on :4173
+bun run site:deploy          # Deploy frontend to Cloudflare Pages
+bunx wrangler deploy         # Deploy backend worker
 
 # NPM package development
 cd cli-shortcuts/
@@ -140,6 +142,8 @@ cd ../context-tracker/
 npm test                     # Test context monitor
 npm run install-addon       # Test installation
 ```
+
+Website operations runbook: `docs/website-operations.md`
 
 ### Project Structure
 ```
