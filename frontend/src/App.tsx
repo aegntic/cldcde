@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ThemeProvider, useTheme, createGlobalStyles } from './hooks/useTheme'
@@ -12,6 +12,7 @@ import { SettingsDocsPage } from './components/SettingsDocsPage'
 import { PacksPage } from './components/PacksPage'
 import { ThemeToggle } from './components/ThemeToggle'
 import { TerminalHeader } from './components/TerminalHeader'
+import { AsciiHeading, buildAsciiBanner } from './components/AsciiHeading'
 import { config } from './config'
 
 const GlobalStyle = createGlobalStyle`
@@ -175,26 +176,8 @@ const Eyebrow = styled.span`
   color: ${({ theme }) => theme.colors.text.secondary};
 `
 
-const HeroTitle = styled(motion.h1)`
-  margin-top: 1rem;
-  font-family: ${({ theme }) => theme.fonts.sans};
-  font-weight: 700;
-  line-height: 1.06;
-  letter-spacing: -0.03em;
-  font-size: clamp(2.1rem, 6vw, 4.8rem);
-  color: ${({ theme }) => theme.colors.text.primary};
-`
-
-const GradientWord = styled.span`
-  display: inline-block;
-  background: linear-gradient(
-    120deg,
-    ${({ theme }) => theme.colors.interactive.primary} 0%,
-    ${({ theme }) => theme.colors.interactive.accent} 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+const HeroAsciiTitle = styled(AsciiHeading)`
+  margin-top: 0.9rem;
 `
 
 const HeroLead = styled(motion.p)`
@@ -257,13 +240,8 @@ const MetaChip = styled.span`
   color: ${({ theme }) => theme.colors.text.tertiary};
 `
 
-const SectionLabel = styled.h2`
+const SectionAscii = styled(AsciiHeading)`
   margin: 0 0 0.85rem;
-  font-size: 1rem;
-  font-family: ${({ theme }) => theme.fonts.mono};
-  color: ${({ theme }) => theme.colors.text.secondary};
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 `
 
 const FlowLane = styled.div`
@@ -278,10 +256,8 @@ const FlowStep = styled(motion.div)`
   background: ${({ theme }) => `${theme.colors.background.secondary}c7`};
 `
 
-const StepTitle = styled.h3`
+const StepAscii = styled(AsciiHeading)`
   margin: 0 0 0.35rem;
-  font-size: 0.95rem;
-  color: ${({ theme }) => theme.colors.text.primary};
 `
 
 const StepText = styled.p`
@@ -375,10 +351,8 @@ const ModuleCard = styled(motion.button)`
   }
 `
 
-const ModuleTitle = styled.h3`
+const ModuleAscii = styled(AsciiHeading)`
   margin: 0 0 0.3rem;
-  font-size: 1rem;
-  color: ${({ theme }) => theme.colors.text.primary};
 `
 
 const ModuleText = styled.p`
@@ -405,6 +379,171 @@ const AffiliationChip = styled.span`
   color: ${({ theme }) => theme.colors.text.tertiary};
 `
 
+const HeroLandingDeck = styled(motion.div)`
+  margin-top: 1rem;
+  border: 1px solid ${({ theme }) => theme.colors.border.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background:
+    linear-gradient(155deg, ${({ theme }) => `${theme.colors.background.secondary}e6`} 0%, ${({ theme }) => `${theme.colors.background.primary}d9`} 100%);
+  padding: 0.75rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, ${({ theme }) => `${theme.colors.border.secondary}35`} 1px, transparent 1px),
+      linear-gradient(to bottom, ${({ theme }) => `${theme.colors.border.secondary}35`} 1px, transparent 1px);
+    background-size: 16px 16px;
+    pointer-events: none;
+  }
+`
+
+const HeroSignalRows = styled.div`
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.45rem;
+`
+
+const HeroSignalRow = styled.div`
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 0.55rem;
+  align-items: center;
+
+  @media (max-width: 700px) {
+    grid-template-columns: 84px 1fr;
+  }
+`
+
+const HeroSignalLabel = styled.span`
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.7rem;
+  color: ${({ theme }) => theme.colors.terminal.cyan};
+  letter-spacing: 0.08em;
+`
+
+const HeroSignalTrack = styled.div`
+  border: 1px solid ${({ theme }) => `${theme.colors.border.secondary}cc`};
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  background: ${({ theme }) => `${theme.colors.background.primary}c7`};
+  height: 11px;
+  overflow: hidden;
+`
+
+const HeroSignalPulse = styled(motion.span)<{ $tone: 'green' | 'blue' | 'orange' | 'cyan' }>`
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: ${({ theme, $tone }) => {
+    if ($tone === 'green') return theme.colors.terminal.green
+    if ($tone === 'blue') return theme.colors.terminal.blue
+    if ($tone === 'orange') return theme.colors.terminal.orange
+    return theme.colors.terminal.cyan
+  }};
+  box-shadow: ${({ theme, $tone }) => {
+    if ($tone === 'green') return `0 0 12px ${theme.colors.terminal.green}`
+    if ($tone === 'blue') return `0 0 12px ${theme.colors.terminal.blue}`
+    if ($tone === 'orange') return `0 0 12px ${theme.colors.terminal.orange}`
+    return `0 0 12px ${theme.colors.terminal.cyan}`
+  }};
+`
+
+const HeroSweep = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 58px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    ${({ theme }) => `${theme.colors.terminal.cyan}40`} 46%,
+    ${({ theme }) => `${theme.colors.terminal.white}6e`} 52%,
+    transparent 100%
+  );
+`
+
+const HeroDeckCaption = styled.span`
+  margin-top: 0.6rem;
+  display: block;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.72rem;
+  color: ${({ theme }) => theme.colors.text.tertiary};
+`
+
+const BootOverlay = styled(motion.div)`
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background:
+    radial-gradient(circle at 50% -12%, ${({ theme }) => `${theme.colors.terminal.blue}22`} 0%, transparent 44%),
+    ${({ theme }) => `${theme.colors.background.primary}f0`};
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+`
+
+const BootPanel = styled(motion.div)`
+  width: min(940px, 100%);
+  border: 1px solid ${({ theme }) => theme.colors.border.primary};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  background: ${({ theme }) => `${theme.colors.background.secondary}f2`};
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+  overflow: hidden;
+`
+
+const BootHeader = styled.div`
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border.secondary};
+  font-family: ${({ theme }) => theme.fonts.mono};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  background: ${({ theme }) => `${theme.colors.background.primary}cc`};
+`
+
+const BootStream = styled.pre`
+  margin: 0;
+  min-height: clamp(260px, 44vh, 380px);
+  max-height: clamp(260px, 44vh, 380px);
+  overflow: hidden;
+  padding: 0.9rem;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: clamp(0.62rem, 0.9vw, 0.83rem);
+  line-height: 1.32;
+  color: ${({ theme }) => theme.colors.terminal.green};
+  background: linear-gradient(
+    180deg,
+    ${({ theme }) => `${theme.colors.background.primary}f4`} 0%,
+    ${({ theme }) => `${theme.colors.background.secondary}d8`} 100%
+  );
+`
+
+const BootPrompt = styled.div`
+  border-top: 1px solid ${({ theme }) => theme.colors.border.secondary};
+  padding: 0.58rem 0.9rem;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.76rem;
+  color: ${({ theme }) => theme.colors.terminal.cyan};
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  &::after {
+    content: '█';
+    animation: bootBlink 0.95s steps(1) infinite;
+  }
+
+  @keyframes bootBlink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+`
+
 function AppContent() {
   const { isTransitioning } = useTheme()
   const [showLoginModal, setShowLoginModal] = useState(false)
@@ -414,6 +553,26 @@ function AppContent() {
   const [user, setUser] = useState<any>(null)
   const [newUser, setNewUser] = useState<any>(null)
   const [currentPage, setCurrentPage] = useState('home')
+  const [showIntro, setShowIntro] = useState(true)
+  const [introCursor, setIntroCursor] = useState(0)
+
+  const introScript = useMemo(() => {
+    const banner = buildAsciiBanner('CLDCDE.CC').split('\n')
+    return [
+      '$ boot :: claude-code runtime init',
+      '$ sync :: cldcde.cc surface',
+      '$ route :: google labs chain',
+      '$ gate  :: compound quality verdict',
+      '',
+      ...banner,
+      '',
+      '$ modules/stitch ............. ok',
+      '$ modules/whisk .............. ok',
+      '$ modules/flow ............... ok',
+      '$ engine/compound ............ ok',
+      '$ launch surface ready'
+    ]
+  }, [])
 
   useEffect(() => {
     const apiOrigin = config.api.baseUrl.replace(/\/api\/?$/, '')
@@ -431,6 +590,33 @@ function AppContent() {
     const interval = setInterval(checkConnection, 30000)
     return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    if (!showIntro) return
+
+    const ticker = setInterval(() => {
+      setIntroCursor((prev) => {
+        if (prev >= introScript.length) {
+          clearInterval(ticker)
+          return prev
+        }
+        return prev + 1
+      })
+    }, 110)
+
+    return () => clearInterval(ticker)
+  }, [showIntro, introScript.length])
+
+  useEffect(() => {
+    if (!showIntro || introCursor < introScript.length) return
+    const timeout = setTimeout(() => setShowIntro(false), 850)
+    return () => clearTimeout(timeout)
+  }, [showIntro, introCursor, introScript.length])
+
+  const visibleIntroLines = useMemo(() => {
+    const keep = 16
+    return introScript.slice(Math.max(0, introCursor - keep), introCursor)
+  }, [introCursor, introScript])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -504,6 +690,29 @@ function AppContent() {
       <GridOverlay />
 
       <AnimatePresence>
+        {showIntro && (
+          <BootOverlay
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.32 }}
+            onClick={() => setShowIntro(false)}
+          >
+            <BootPanel
+              initial={{ opacity: 0, y: 12, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.28 }}
+            >
+              <BootHeader>CLAUDE CODE :: CLDCDE.CC :: ASCII BOOT</BootHeader>
+              <BootStream>{visibleIntroLines.join('\n')}</BootStream>
+              <BootPrompt>$ intro complete // click to skip</BootPrompt>
+            </BootPanel>
+          </BootOverlay>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
         {isTransitioning && (
           <ThemeTransitionOverlay
             initial={{ opacity: 0 }}
@@ -541,16 +750,49 @@ function AppContent() {
             <HeroGrid variants={itemVariants}>
               <HeroCard>
                 <Eyebrow>Google Labs Pipeline + Compound Engineering</Eyebrow>
-                <HeroTitle>
-                  Build in <GradientWord>Labs mode</GradientWord>.
-                  <br />
-                  Ship with <GradientWord>Compound discipline</GradientWord>.
-                </HeroTitle>
+                <HeroAsciiTitle
+                  text={'CLDCDE.CC\nCLAUDE CODE'}
+                  size="hero"
+                  level={1}
+                />
                 <HeroLead>
-                  CLDCDE has been rebuilt around two production loops: creative generation through
+                  CLDCDE now opens with a terminal-first motion language. Creative generation runs through
                   <strong> Stitch → Whisk → Flow</strong>, and delivery hardening through
-                  <strong> Safe Edit → Spec Sync → Adversarial Review</strong>.
+                  <strong> Safe Edit → Spec Sync → Adversarial Review</strong>, with launch assets packed for immediate reuse.
                 </HeroLead>
+
+                <HeroLandingDeck
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.22, duration: 0.45 }}
+                >
+                  <HeroSignalRows>
+                    {[
+                      { label: 'STITCH', tone: 'green' as const, delay: 0 },
+                      { label: 'WHISK', tone: 'blue' as const, delay: 0.14 },
+                      { label: 'FLOW', tone: 'orange' as const, delay: 0.26 },
+                      { label: 'COMPOUND', tone: 'cyan' as const, delay: 0.38 }
+                    ].map((row) => (
+                      <HeroSignalRow key={row.label}>
+                        <HeroSignalLabel>{row.label}</HeroSignalLabel>
+                        <HeroSignalTrack>
+                          <HeroSignalPulse
+                            $tone={row.tone}
+                            initial={{ width: '14%' }}
+                            animate={{ width: ['18%', '92%', '40%', '88%'] }}
+                            transition={{ duration: 3.1, repeat: Infinity, delay: row.delay }}
+                          />
+                        </HeroSignalTrack>
+                      </HeroSignalRow>
+                    ))}
+                  </HeroSignalRows>
+                  <HeroSweep
+                    initial={{ x: '-14%' }}
+                    animate={{ x: ['-14%', '112%'] }}
+                    transition={{ duration: 2.4, repeat: Infinity, ease: 'linear' }}
+                  />
+                  <HeroDeckCaption>Live terminal signal map for launch and quality loops.</HeroDeckCaption>
+                </HeroLandingDeck>
 
                 <ButtonRow variants={itemVariants}>
                   <ActionButton
@@ -595,7 +837,7 @@ function AppContent() {
               </HeroCard>
 
               <HeroCard variants={itemVariants}>
-                <SectionLabel>Google Labs Creative Chain</SectionLabel>
+                <SectionAscii text="GOOGLE LABS CHAIN" size="section" level={2} />
                 <FlowLane>
                   {[
                     {
@@ -621,7 +863,7 @@ function AppContent() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.22 + index * 0.09 }}
                     >
-                      <StepTitle>{step.title}</StepTitle>
+                      <StepAscii text={step.title.toUpperCase()} size="micro" level={3} />
                       <StepText>{step.text}</StepText>
                     </FlowStep>
                   ))}
@@ -631,7 +873,7 @@ function AppContent() {
 
             <PipelineRow variants={itemVariants}>
               <HeroCard>
-                <SectionLabel>Compound Engineering Quality Gates</SectionLabel>
+                <SectionAscii text="QUALITY GATES" size="section" level={2} />
                 <GateList>
                   <GateItem>
                     <GateTitle>Debt Sentinel pre-edit scan</GateTitle>
@@ -649,7 +891,7 @@ function AppContent() {
               </HeroCard>
 
               <HeroCard>
-                <SectionLabel>Launch Conversion Surface</SectionLabel>
+                <SectionAscii text="CONVERSION SURFACE" size="section" level={2} />
                 <StepText>
                   Free pack outputs are deliberately shareable. Every exported artifact carries install metadata
                   and branded entry points into AE.LTD subscription paths without degrading first-use experience.
@@ -665,21 +907,25 @@ function AppContent() {
             <ModuleGrid variants={itemVariants}>
               {[
                 {
+                  asciiTitle: 'EXTENSIONS',
                   title: 'Extension Browser',
                   text: 'Community plugins and execution tooling in one modal surface.',
                   path: '/extensions'
                 },
                 {
+                  asciiTitle: 'MCP SERVERS',
                   title: 'MCP Servers',
                   text: 'Explore server integrations tuned for automation and retrieval.',
                   path: '/mcp'
                 },
                 {
+                  asciiTitle: 'AE.LTD PACKS',
                   title: 'AE.LTD Packs',
                   text: 'Download self-contained skills, MCPs, prompts, and workflows.',
                   path: '/packs'
                 },
                 {
+                  asciiTitle: 'DOCS',
                   title: 'Documentation',
                   text: 'Operational references, setup commands, and ecosystem links.',
                   path: '/docs'
@@ -691,7 +937,7 @@ function AppContent() {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <ModuleTitle>{item.title}</ModuleTitle>
+                  <ModuleAscii text={item.asciiTitle} size="micro" level={3} />
                   <ModuleText>{item.text}</ModuleText>
                 </ModuleCard>
               ))}

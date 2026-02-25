@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
+import { AsciiHeading } from './AsciiHeading'
 
 type PackCounts = {
   skills: number
@@ -92,18 +93,8 @@ const Header = styled(motion.div)`
   margin-bottom: ${({ theme }) => theme.spacing.xxl};
 `
 
-const Title = styled.h1`
-  font-size: 3rem;
-  font-family: ${({ theme }) => theme.fonts.mono};
+const Title = styled(AsciiHeading)`
   margin-bottom: ${({ theme }) => theme.spacing.md};
-  background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.terminal.blue},
-    ${({ theme }) => theme.colors.terminal.green}
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 `
 
 const Subtitle = styled.p`
@@ -118,11 +109,8 @@ const Section = styled(motion.section)`
   margin-bottom: ${({ theme }) => theme.spacing.xxl};
 `
 
-const SectionTitle = styled.h2`
-  font-size: 1.8rem;
+const SectionTitle = styled(AsciiHeading)`
   margin-bottom: ${({ theme }) => theme.spacing.lg};
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${({ theme }) => theme.fonts.mono};
 `
 
 const AffiliationCard = styled.div`
@@ -176,10 +164,8 @@ const PackHeader = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing.md};
 `
 
-const PackName = styled.h3`
+const PackName = styled(AsciiHeading)`
   margin: 0;
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-size: 1.2rem;
 `
 
 const TierBadge = styled.span<{ tier: string }>`
@@ -323,7 +309,7 @@ export const PacksPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <Title>AE.LTD Skill Sets</Title>
+        <Title text="AE.LTD SKILL SETS" size="hero" level={1} align="center" />
         <Subtitle>
           Packaged through <InlineCode>github.com/aegntic/cldcde</InlineCode> and published for{' '}
           <InlineCode>cldcde.cc</InlineCode>. Built to stay self-contained, installable on macOS/Linux/Windows,
@@ -336,7 +322,7 @@ export const PacksPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
       >
-        <SectionTitle>Affiliations</SectionTitle>
+        <SectionTitle text="AFFILIATIONS" size="section" level={2} />
         <AffiliationCard>
           <PillRow>
             {affiliationLinks.map((item) => (
@@ -356,7 +342,7 @@ export const PacksPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        <SectionTitle>Pack Downloads</SectionTitle>
+        <SectionTitle text="PACK DOWNLOADS" size="section" level={2} />
         <PackGrid>
           {manifest.packs.map((pack, index) => (
             <PackCard
@@ -367,7 +353,7 @@ export const PacksPage: React.FC = () => {
               whileHover={{ y: -2 }}
             >
               <PackHeader>
-                <PackName>{pack.name}</PackName>
+                <PackName text={pack.name.toUpperCase()} size="micro" level={3} />
                 <TierBadge tier={pack.tier}>{pack.tier}</TierBadge>
               </PackHeader>
 
@@ -418,7 +404,7 @@ export const PacksPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <SectionTitle>Install Targets</SectionTitle>
+        <SectionTitle text="INSTALL TARGETS" size="section" level={2} />
         <InstallBlock>{`python install/install.py \\
   --install-skills \\
   --install-agent-zero \\
@@ -433,7 +419,7 @@ export const PacksPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.35 }}
       >
-        <SectionTitle>Niche Hidden Gems Included</SectionTitle>
+        <SectionTitle text="NICHE HIDDEN GEMS" size="section" level={2} />
         <GemList>
           <li>Context7 docs grounding via the AE.LTD skill <InlineCode>ae-ltd-context7-radar</InlineCode></li>
           <li>Visual diff quality gates via <InlineCode>ae-ltd-visual-regression-forge</InlineCode></li>
