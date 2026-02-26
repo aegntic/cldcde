@@ -116,16 +116,18 @@ const BootVideo = styled.video`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(1.07) contrast(1.05) brightness(0.72);
+  transform: scale(1.18);
+  opacity: 0.84;
+  filter: blur(8px) saturate(1.16) contrast(1.08) brightness(0.56);
 `
 
 const BootVeil = styled.div`
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 25% 15%, rgba(90, 230, 255, 0.2) 0%, transparent 46%),
-    radial-gradient(circle at 75% 20%, rgba(88, 246, 203, 0.18) 0%, transparent 48%),
-    linear-gradient(180deg, rgba(5, 12, 24, 0.2) 0%, rgba(5, 12, 24, 0.86) 100%);
+    radial-gradient(circle at 25% 15%, rgba(90, 230, 255, 0.16) 0%, transparent 42%),
+    radial-gradient(circle at 75% 20%, rgba(88, 246, 203, 0.15) 0%, transparent 44%),
+    linear-gradient(180deg, rgba(5, 12, 24, 0.42) 0%, rgba(5, 12, 24, 0.92) 100%);
 `
 
 const BootPanel = styled(MarketplacePanel)`
@@ -172,16 +174,19 @@ const HeroVideo = styled.video`
   height: 100%;
   object-fit: cover;
   object-position: center center;
-  filter: saturate(1.08) contrast(1.08) brightness(0.65);
+  transform: scale(1.24);
+  opacity: 0.6;
+  filter: blur(10px) saturate(1.16) contrast(1.12) brightness(0.44);
 `
 
 const HeroOverlay = styled.div`
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 24% 22%, rgba(73, 230, 255, 0.26) 0%, transparent 42%),
-    radial-gradient(circle at 82% 18%, rgba(95, 255, 190, 0.18) 0%, transparent 46%),
-    linear-gradient(180deg, rgba(6, 12, 22, 0.22) 0%, rgba(6, 12, 22, 0.9) 80%);
+    radial-gradient(circle at 24% 22%, rgba(73, 230, 255, 0.2) 0%, transparent 34%),
+    radial-gradient(circle at 82% 18%, rgba(95, 255, 190, 0.14) 0%, transparent 36%),
+    radial-gradient(circle at 50% 48%, rgba(6, 12, 22, 0.46) 0%, rgba(6, 12, 22, 0.74) 52%, rgba(6, 12, 22, 0.88) 100%),
+    linear-gradient(180deg, rgba(6, 12, 22, 0.6) 0%, rgba(6, 12, 22, 0.94) 100%);
 `
 
 const HeroContent = styled.div`
