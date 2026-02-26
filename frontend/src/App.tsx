@@ -43,8 +43,9 @@ type Page =
   | 'settings'
 
 const BOOT_SESSION_KEY = 'cldcde_market_boot_v1_seen'
-const LANDING_VIDEO = '/static/media/landing/grok-launch-v2.mp4'
-const LANDING_POSTER = '/static/media/landing/grok-launch-v2-poster.jpg'
+const R2_PUBLIC_BASE = 'https://pub-5720f0c8abe84850a71c8d81dcd6f928.r2.dev'
+const LANDING_VIDEO = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v3.mp4`
+const LANDING_POSTER = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v3-poster.jpg`
 
 const AppContainer = styled.div`
   min-height: 100vh;
