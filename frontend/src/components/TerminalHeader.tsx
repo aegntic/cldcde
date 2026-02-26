@@ -48,20 +48,16 @@ const Logo = styled(motion.a)`
   color: ${({ theme }) => theme.colors.text.primary};
 `
 
-const LogoMark = styled.span`
+const LogoMark = styled.img`
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    linear-gradient(150deg, ${({ theme }) => theme.colors.interactive.primary} 0%, ${({ theme }) => theme.colors.interactive.accent} 100%);
-  color: ${({ theme }) => theme.colors.text.inverse};
+  display: block;
+  object-fit: cover;
+  border: 1px solid ${({ theme }) => theme.colors.border.primary};
+  background: ${({ theme }) => theme.colors.background.secondary};
   box-shadow: ${({ theme }) => theme.shadows.glow};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.74rem;
-  letter-spacing: 0.06em;
+  filter: saturate(1.08) brightness(1.04);
 `
 
 const LogoStack = styled.div`
@@ -187,7 +183,12 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ user, onLoginClick, onN
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
         >
-          <LogoMark>AE</LogoMark>
+          <LogoMark
+            src="/media/branding/glass-character-mark.png"
+            alt="CLDCDE glass glyph"
+            loading="eager"
+            decoding="async"
+          />
           <LogoStack>
             <LogoText>CLDCDE.CC</LogoText>
             <Subline>Marketplace Rail :: Plugins + MCP + Packs</Subline>
