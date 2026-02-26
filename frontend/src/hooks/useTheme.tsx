@@ -21,9 +21,9 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('cldcde-theme') as ThemeName
-    if (savedTheme && themes[savedTheme]) {
-      setThemeName(savedTheme)
+    const savedTheme = localStorage.getItem('cldcde-theme')
+    if (savedTheme && savedTheme in themes) {
+      setThemeName(savedTheme as ThemeName)
     } else if (savedTheme === 'claudeLight') {
       setThemeName('claudeCode')
     }
@@ -190,9 +190,23 @@ export const createGlobalStyles = (theme: Theme) => `
     font-family: var(--font-sans);
     background-color: var(--bg-primary);
     background-image:
-      radial-gradient(circle at 14% -18%, ${theme.colors.interactive.accent}24 0%, transparent 44%),
-      radial-gradient(circle at 88% -20%, ${theme.colors.interactive.primary}2e 0%, transparent 42%),
+      radial-gradient(circle at 14% -16%, ${theme.colors.interactive.accent}2b 0%, transparent 42%),
+      radial-gradient(circle at 88% -16%, ${theme.colors.interactive.primary}32 0%, transparent 42%),
+      linear-gradient(to right, ${theme.colors.border.secondary}2b 1px, transparent 1px),
+      linear-gradient(to bottom, ${theme.colors.border.secondary}24 1px, transparent 1px),
       linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    background-size:
+      auto,
+      auto,
+      46px 46px,
+      46px 46px,
+      auto;
+    background-position:
+      center top,
+      center top,
+      center center,
+      center center,
+      center center;
     color: var(--text-primary);
     line-height: 1.6;
     transition: 

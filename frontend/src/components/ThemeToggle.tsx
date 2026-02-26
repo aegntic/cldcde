@@ -8,47 +8,40 @@ const ToggleContainer = styled(motion.button)`
   bottom: ${({ theme }) => theme.spacing.md};
   left: ${({ theme }) => theme.spacing.md};
   z-index: 999;
-  min-width: 168px;
-  height: 46px;
+  min-width: 186px;
+  height: 48px;
   border-radius: ${({ theme }) => theme.borderRadius.full};
   border: 1px solid ${({ theme }) => theme.colors.border.primary};
-  background: ${({ theme }) => `${theme.colors.background.card}db`};
+  background:
+    linear-gradient(165deg, ${({ theme }) => `${theme.colors.background.card}e6`} 0%, ${({ theme }) => `${theme.colors.background.secondary}ca`} 100%);
   color: ${({ theme }) => theme.colors.text.primary};
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.4rem 0.8rem 0.4rem 0.45rem;
-  gap: 0.55rem;
-  transition: all ${({ theme }) => theme.animations.duration.fast} ${({ theme }) => theme.animations.easing.default};
-  backdrop-filter: blur(10px);
-  box-shadow: ${({ theme }) => theme.shadows.sm};
+  gap: 0.6rem;
+  padding: 0.36rem 0.85rem 0.36rem 0.44rem;
+  box-shadow: ${({ theme }) => theme.shadows.md};
+  backdrop-filter: blur(12px);
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.border.hover};
-    background: ${({ theme }) => `${theme.colors.background.secondary}e1`};
-    transform: translateY(-1px);
-    box-shadow: ${({ theme }) => theme.shadows.md};
-  }
-
-  &:active {
-    transform: translateY(0);
+    border-color: ${({ theme }) => theme.colors.interactive.primary};
+    box-shadow: ${({ theme }) => theme.shadows.glow};
   }
 `
 
-const Badge = styled(motion.div)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const ModeBadge = styled(motion.span)`
   width: 30px;
   height: 30px;
-  border-radius: 9999px;
+  border-radius: ${({ theme }) => theme.borderRadius.full};
   border: 1px solid ${({ theme }) => theme.colors.border.secondary};
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.7rem;
+  font-size: 0.66rem;
   letter-spacing: 0.08em;
   color: ${({ theme }) => theme.colors.text.primary};
-  background: ${({ theme }) => `${theme.colors.background.secondary}ba`};
+  background: ${({ theme }) => `${theme.colors.background.primary}cb`};
 `
 
 const LabelStack = styled.span`
@@ -57,7 +50,6 @@ const LabelStack = styled.span`
   align-items: flex-start;
   min-width: 0;
   line-height: 1.1;
-  flex: 1;
 `
 
 const LabelTop = styled.span`
@@ -70,8 +62,7 @@ const LabelTop = styled.span`
 
 const LabelBottom = styled.span`
   font-family: ${({ theme }) => theme.fonts.sans};
-  font-size: 0.84rem;
-  font-weight: 600;
+  font-size: 0.8rem;
   color: ${({ theme }) => theme.colors.text.primary};
   white-space: nowrap;
   overflow: hidden;
@@ -79,65 +70,45 @@ const LabelBottom = styled.span`
 `
 
 const Hint = styled.span`
+  margin-left: auto;
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 0.62rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
   color: ${({ theme }) => theme.colors.text.tertiary};
 `
 
 const ThemeToggle: React.FC = () => {
   const { currentTheme, themeName, toggleTheme, isTransitioning } = useTheme()
-
-  const getThemeMeta = () => {
-    switch (themeName) {
-      case 'claudeCode':
-        return { badge: 'LS', hint: 'Alt: CC' }
-      case 'futuristic':
-        return { badge: 'CC', hint: 'Alt: LS' }
-      default:
-        return { badge: '--', hint: 'Alt' }
-    }
-  }
-
-  const themeMeta = getThemeMeta()
-
-  const getThemeName = () => {
-    switch (themeName) {
-      case 'claudeCode':
-        return 'Labs Signal Dark'
-      case 'futuristic':
-        return 'Compound Carbon'
-      default:
-        return 'Unknown Theme'
-    }
-  }
+  const badge = themeName === 'claudeCode' ? 'NG' : 'NM'
+  const next = themeName === 'claudeCode' ? 'to NM' : 'to NG'
 
   return (
     <ToggleContainer
+      type="button"
       onClick={toggleTheme}
       disabled={isTransitioning}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      initial={{ opacity: 0, x: -50 }}
+      whileHover={{ scale: 1.01 }}
+      whileTap={{ scale: 0.98 }}
+      initial={{ opacity: 0, x: -40 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.3 }}
-      title={`Current theme: ${getThemeName()}. Click to toggle.`}
-      aria-label={`Toggle theme. Current theme: ${getThemeName()}`}
+      title={`Current theme: ${currentTheme.name}. Click to toggle.`}
+      aria-label={`Toggle theme. Current theme: ${currentTheme.name}`}
     >
-      <Badge
+      <ModeBadge
         key={themeName}
-        initial={{ rotate: -120, scale: 0.85, opacity: 0.5 }}
+        initial={{ rotate: -100, scale: 0.84, opacity: 0.5 }}
         animate={{ rotate: 0, scale: 1, opacity: 1 }}
-        transition={{ duration: 0.35, ease: 'easeOut' }}
+        transition={{ duration: 0.32, ease: 'easeOut' }}
       >
-        {themeMeta.badge}
-      </Badge>
+        {badge}
+      </ModeBadge>
       <LabelStack>
-        <LabelTop>Theme</LabelTop>
+        <LabelTop>Theme Rail</LabelTop>
         <LabelBottom>{currentTheme.name}</LabelBottom>
       </LabelStack>
-      <Hint>{themeMeta.hint}</Hint>
+      <Hint>{next}</Hint>
     </ToggleContainer>
   )
 }

@@ -1,7 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { config } from '../config'
+import {
+  Badge,
+  FilterPill,
+  MarketplacePanel,
+  NeonButton,
+  SectionHeaderAscii,
+  SectionLead
+} from './common/marketplace'
 
 interface ProfileSetupModalProps {
   onClose: () => void
@@ -9,276 +17,237 @@ interface ProfileSetupModalProps {
   user: any
 }
 
+const AVATAR_CHOICES = [
+  '[[]]',
+  '<::>',
+  '{##}',
+  '<00>',
+  '{::}',
+  '<##>',
+  '[//]',
+  '<||>',
+  '{==}',
+  '[<>]',
+  '{@@}',
+  '<++>'
+]
+
 const Overlay = styled(motion.div)`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  inset: 0;
+  z-index: 1200;
   padding: ${({ theme }) => theme.spacing.md};
+  background:
+    radial-gradient(circle at 18% 12%, rgba(73, 221, 255, 0.13) 0%, transparent 40%),
+    radial-gradient(circle at 84% 18%, rgba(80, 245, 200, 0.1) 0%, transparent 42%),
+    rgba(2, 7, 16, 0.78);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
 `
 
-const Modal = styled(motion.div)`
-  background: ${({ theme }) => theme.colors.background.modal};
-  border: 1px solid ${({ theme }) => theme.colors.border.primary};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  padding: ${({ theme }) => theme.spacing.xl};
-  max-width: 500px;
-  width: 100%;
+const Modal = styled(MarketplacePanel).attrs({
+  initial: { opacity: 0, y: 10, scale: 0.98 },
+  animate: { opacity: 1, y: 0, scale: 1 },
+  exit: { opacity: 0, y: 10, scale: 0.98 },
+  transition: { duration: 0.18 }
+})`
+  width: min(640px, 100%);
+  max-height: min(92vh, 780px);
+  overflow: auto;
   position: relative;
-  backdrop-filter: blur(10px);
+  display: grid;
+  gap: ${({ theme }) => theme.spacing.md};
 `
 
-const Title = styled.h2`
-  font-size: 1.5rem;
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
-  color: ${({ theme }) => theme.colors.text.primary};
-  text-align: center;
-`
-
-const Subtitle = styled.p`
-  font-size: 0.9rem;
-  color: ${({ theme }) => theme.colors.text.secondary};
-  text-align: center;
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-`
-
-const Form = styled.form`
+const TopRow = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.lg};
-`
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
 `
 
-const Label = styled.label`
-  font-size: 0.9rem;
-  font-weight: 500;
+const CloseButton = styled.button`
+  border: 1px solid ${({ theme }) => theme.colors.border.primary};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background: ${({ theme }) => `${theme.colors.background.secondary}d8`};
   color: ${({ theme }) => theme.colors.text.secondary};
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.primary};
+    border-color: ${({ theme }) => theme.colors.interactive.primary};
+  }
+`
+
+const Form = styled.form`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing.md};
+`
+
+const Field = styled.label`
+  display: grid;
+  gap: 0.42rem;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  color: ${({ theme }) => theme.colors.text.tertiary};
+  text-transform: uppercase;
 `
 
 const Input = styled.input`
-  padding: ${({ theme }) => theme.spacing.md};
+  width: 100%;
   border: 1px solid ${({ theme }) => theme.colors.border.primary};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  background: ${({ theme }) => theme.colors.background.secondary};
+  background: ${({ theme }) => `${theme.colors.background.secondary}dc`};
   color: ${({ theme }) => theme.colors.text.primary};
   font-family: ${({ theme }) => theme.fonts.sans};
-  font-size: 1rem;
-  transition: all ${({ theme }) => theme.animations.duration.fast} ${({ theme }) => theme.animations.easing.default};
+  font-size: 0.95rem;
+  padding: 0.66rem 0.78rem;
 
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.colors.border.focus};
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.border.focus}33;
-  }
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.text.muted};
+    border-color: ${({ theme }) => theme.colors.interactive.primary};
+    box-shadow: 0 0 0 1px ${({ theme }) => `${theme.colors.interactive.primary}66`};
   }
 `
 
-const AvatarSection = styled.div`
+const StatusRow = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.md};
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.xs};
 `
 
 const AvatarGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
   gap: ${({ theme }) => theme.spacing.sm};
-  max-height: 200px;
-  overflow-y: auto;
-  padding: ${({ theme }) => theme.spacing.sm};
-  border: 1px solid ${({ theme }) => theme.colors.border.secondary};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  background: ${({ theme }) => theme.colors.background.secondary};
 `
 
-const AvatarOption = styled.button<{ selected: boolean }>`
-  width: 60px;
-  height: 60px;
-  border: 2px solid ${({ selected, theme }) => 
-    selected ? theme.colors.interactive.primary : theme.colors.border.secondary};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  background: ${({ selected, theme }) => 
-    selected ? theme.colors.background.secondary : theme.colors.background.primary};
-  cursor: pointer;
-  transition: all ${({ theme }) => theme.animations.duration.fast} ${({ theme }) => theme.animations.easing.default};
-  display: flex;
-  align-items: center;
+const AvatarButton = styled(FilterPill)<{ $selected: boolean }>`
+  min-height: 48px;
   justify-content: center;
-  font-size: 2rem;
-  position: relative;
-
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.border.focus};
-    transform: scale(1.05);
-  }
-
-  ${({ selected, theme }) => selected && `
-    &::after {
-      content: '✓';
-      position: absolute;
-      bottom: -2px;
-      right: -2px;
-      background: ${theme.colors.interactive.primary};
-      color: white;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-    }
-  `}
+  font-size: 0.84rem;
+  background: ${({ theme, $selected }) =>
+    $selected ? `${theme.colors.interactive.primary}28` : `${theme.colors.background.secondary}ca`};
+  color: ${({ theme }) => theme.colors.text.primary};
 `
 
-const ButtonGroup = styled.div`
+const ActionRow = styled.div`
   display: flex;
-  gap: ${({ theme }) => theme.spacing.md};
-  margin-top: ${({ theme }) => theme.spacing.md};
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.sm};
 `
 
-const Button = styled.button<{ variant?: 'primary' | 'secondary' }>`
-  flex: 1;
-  padding: ${({ theme }) => theme.spacing.md};
-  background: ${({ variant, theme }) => 
-    variant === 'secondary' ? 'transparent' : theme.colors.interactive.primary};
-  color: ${({ variant, theme }) => 
-    variant === 'secondary' ? theme.colors.text.secondary : 'white'};
-  border: 1px solid ${({ variant, theme }) => 
-    variant === 'secondary' ? theme.colors.border.primary : theme.colors.interactive.primary};
+const Msg = styled.div<{ $kind: 'error' | 'ok' }>`
+  border: 1px solid
+    ${({ theme, $kind }) => ($kind === 'error' ? `${theme.colors.status.error}66` : `${theme.colors.status.success}66`)};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  font-family: ${({ theme }) => theme.fonts.sans};
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all ${({ theme }) => theme.animations.duration.fast} ${({ theme }) => theme.animations.easing.default};
-
-  &:hover {
-    background: ${({ variant, theme }) => 
-      variant === 'secondary' ? theme.colors.background.secondary : theme.colors.interactive.primaryHover};
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-  }
+  background: ${({ theme }) => `${theme.colors.background.secondary}cc`};
+  color: ${({ theme, $kind }) => ($kind === 'error' ? theme.colors.status.error : theme.colors.status.success)};
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.78rem;
+  padding: ${({ theme }) => theme.spacing.sm};
 `
 
-const ErrorMessage = styled.div`
-  color: ${({ theme }) => theme.colors.status.error};
-  font-size: 0.85rem;
-  margin-top: ${({ theme }) => theme.spacing.xs};
-`
-
-const LoadingSpinner = styled.div`
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid transparent;
-  border-top: 2px solid currentColor;
+const Spinner = styled.span`
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: currentColor;
+  display: inline-block;
+  animation: spin 0.8s linear infinite;
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 `
 
-// Default avatars - mix of emojis and ASCII art
-const DEFAULT_AVATARS = [
-  '🤖', '👾', '🚀', '💻', '🔧', '⚡', '🎯', '🎨',
-  '🧠', '💡', '🔍', '📡', '🛸', '🌟', '🔮', '🎪',
-  '🦾', '🤯', '🧬', '🔬', '🪐', '🌌', '🎭', '🎲',
-  '◉', '◎', '◈', '◊', '▣', '▤', '▥', '▦',
-  '♠', '♣', '♥', '♦', '★', '☆', '✦', '✧'
-]
+const sanitizeUsername = (value: string): string => value.toLowerCase().replace(/[^a-z0-9_-]/g, '')
 
 const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ onClose, onComplete, user }) => {
   const [username, setUsername] = useState('')
-  const [selectedAvatar, setSelectedAvatar] = useState(DEFAULT_AVATARS[0])
+  const [selectedAvatar, setSelectedAvatar] = useState(AVATAR_CHOICES[0])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isCheckingUsername, setIsCheckingUsername] = useState(false)
   const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null)
 
-  // Check username availability
-  const checkUsername = async (value: string) => {
-    if (value.length < 3) {
+  useEffect(() => {
+    const candidate = username.trim()
+    if (candidate.length < 3) {
       setUsernameAvailable(null)
+      setIsCheckingUsername(false)
       return
     }
 
-    setIsCheckingUsername(true)
-    try {
-      const response = await fetch(`${config.api.baseUrl}/users/check-username?username=${value}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+    let cancelled = false
+    const timer = window.setTimeout(async () => {
+      setIsCheckingUsername(true)
+      try {
+        const response = await fetch(`${config.api.baseUrl}/users/check-username?username=${encodeURIComponent(candidate)}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        const data = await response.json()
+        if (!cancelled) {
+          setUsernameAvailable(Boolean(data.available))
         }
-      })
-      
-      const data = await response.json()
-      setUsernameAvailable(data.available)
-    } catch (err) {
-      console.error('Username check failed:', err)
-    } finally {
-      setIsCheckingUsername(false)
+      } catch (err) {
+        console.error('Username check failed:', err)
+        if (!cancelled) {
+          setUsernameAvailable(null)
+        }
+      } finally {
+        if (!cancelled) {
+          setIsCheckingUsername(false)
+        }
+      }
+    }, 320)
+
+    return () => {
+      cancelled = true
+      window.clearTimeout(timer)
     }
-  }
+  }, [username])
 
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, '')
-    setUsername(value)
-    setError(null)
-    
-    // Debounce username check
-    const timeoutId = setTimeout(() => checkUsername(value), 500)
-    return () => clearTimeout(timeoutId)
-  }
+  const canSubmit = useMemo(
+    () => username.length >= 3 && username.length <= 20 && usernameAvailable === true,
+    [username, usernameAvailable]
+  )
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
     setError(null)
     setIsLoading(true)
 
     try {
-      // Validate username
       if (username.length < 3) {
-        throw new Error('Username must be at least 3 characters')
+        throw new Error('Username must be at least 3 characters.')
       }
       if (username.length > 20) {
-        throw new Error('Username must be 20 characters or less')
+        throw new Error('Username must be 20 characters or less.')
       }
-      if (!usernameAvailable) {
-        throw new Error('Username is already taken')
+      if (usernameAvailable !== true) {
+        throw new Error('Username is not available yet.')
       }
 
-      // Update user profile
       const response = await fetch(`${config.api.baseUrl}/users/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
           username,
@@ -293,90 +262,84 @@ const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ onClose, onComple
 
       const updatedProfile = await response.json()
       onComplete(updatedProfile)
-      
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message)
       } else {
-        setError('Failed to update profile. Please try again.')
+        setError('Failed to update profile.')
       }
     } finally {
       setIsLoading(false)
     }
   }
 
-  const handleSkip = () => {
-    onClose()
-  }
-
   return (
-    <Overlay
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <Modal
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        transition={{ duration: 0.2 }}
-      >
-        <Title>Welcome to cldcde.cc! 🎉</Title>
-        <Subtitle>Let's set up your profile</Subtitle>
+    <Overlay initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Modal>
+        <TopRow>
+          <Badge $tone="new">New Operator</Badge>
+          <CloseButton type="button" onClick={onClose} aria-label="Close profile setup">
+            ×
+          </CloseButton>
+        </TopRow>
+
+        <SectionHeaderAscii text="PROFILE SETUP" size="card" level={2} />
+        <SectionLead>
+          Configure a unique profile handle and avatar signature for marketplace activity.
+          {user?.email ? ` Signed in as ${user.email}.` : ''}
+        </SectionLead>
 
         <Form onSubmit={handleSubmit}>
-          <FormGroup>
-            <Label htmlFor="username">Choose your username</Label>
+          <Field>
+            Username
             <Input
               id="username"
               type="text"
-              placeholder="cooldev123"
+              placeholder="operator_handle"
               value={username}
-              onChange={handleUsernameChange}
-              pattern="[a-z0-9_-]+"
+              onChange={(event) => {
+                setUsername(sanitizeUsername(event.target.value))
+                setError(null)
+              }}
               maxLength={20}
+              autoComplete="off"
               required
             />
-            {isCheckingUsername && (
-              <small style={{ color: 'gray' }}>Checking availability...</small>
-            )}
-            {!isCheckingUsername && usernameAvailable === true && username.length >= 3 && (
-              <small style={{ color: 'green' }}>✓ Username available</small>
-            )}
-            {!isCheckingUsername && usernameAvailable === false && (
-              <small style={{ color: 'red' }}>✗ Username already taken</small>
-            )}
-          </FormGroup>
+          </Field>
 
-          <FormGroup>
-            <Label>Pick your avatar</Label>
+          <StatusRow>
+            {isCheckingUsername && <Badge>checking availability</Badge>}
+            {!isCheckingUsername && username.length >= 3 && usernameAvailable === true && <Badge $tone="new">username available</Badge>}
+            {!isCheckingUsername && username.length >= 3 && usernameAvailable === false && <Badge $tone="tier">username taken</Badge>}
+          </StatusRow>
+
+          <Field>
+            Avatar Signature
             <AvatarGrid>
-              {DEFAULT_AVATARS.map((avatar, index) => (
-                <AvatarOption
-                  key={index}
+              {AVATAR_CHOICES.map((avatar) => (
+                <AvatarButton
+                  key={avatar}
                   type="button"
-                  selected={selectedAvatar === avatar}
+                  $active={selectedAvatar === avatar}
+                  $selected={selectedAvatar === avatar}
                   onClick={() => setSelectedAvatar(avatar)}
                 >
                   {avatar}
-                </AvatarOption>
+                </AvatarButton>
               ))}
             </AvatarGrid>
-          </FormGroup>
+          </Field>
 
-          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {error && <Msg $kind="error">{error}</Msg>}
 
-          <ButtonGroup>
-            <Button type="button" variant="secondary" onClick={handleSkip}>
+          <ActionRow>
+            <NeonButton type="button" $tone="ghost" onClick={onClose} whileTap={{ scale: 0.98 }}>
               Skip for now
-            </Button>
-            <Button 
-              type="submit" 
-              disabled={isLoading || username.length < 3 || !usernameAvailable}
-            >
-              {isLoading ? <LoadingSpinner /> : 'Complete Setup'}
-            </Button>
-          </ButtonGroup>
+            </NeonButton>
+            <NeonButton type="submit" disabled={isLoading || !canSubmit} whileTap={{ scale: 0.98 }}>
+              {isLoading ? <Spinner aria-hidden /> : 'Complete setup'}
+            </NeonButton>
+          </ActionRow>
         </Form>
       </Modal>
     </Overlay>

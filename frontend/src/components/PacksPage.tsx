@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { AsciiHeading } from './AsciiHeading'
+import { selectCatalogInstallCommand } from '../lib/marketplaceApi'
 
 type PackCounts = {
   skills: number
@@ -315,12 +316,6 @@ const toAbsoluteUrl = (value: string): string => {
 }
 
 const toGithubTreeUrl = (docsPath: string): string => `https://github.com/aegntic/cldcde/tree/main/${docsPath}`
-
-const derivePackRoot = (tarPath: string, fallbackRoot: string): string => {
-  const fileName = tarPath.split('/').pop()
-  if (!fileName || !fileName.endsWith('.tar.gz')) return fallbackRoot
-  return fileName.replace(/\.tar\.gz$/, '')
-}
 
 const machinePanel = css`
   position: relative;
@@ -992,33 +987,13 @@ export const PacksPage: React.FC = () => {
   const hiddenAssets = Math.max(filteredAssets.length - visibleAssets.length, 0)
 
   const getInstallCommand = (item: AssetCatalogItem): string => {
-    if (item.npmPackage) {
-      return `npm install -g ${item.npmPackage}`
-    }
-
-    const tarPath = item.packTier === 'free' ? packTarByTier.free : packTarByTier.pro
-    const tarUrl = toAbsoluteUrl(tarPath)
-    const fallbackRoot = item.packTier === 'free' ? 'ae-ltd-viral-free-v1.1.0' : 'ae-ltd-creator-pro-v1.1.0'
-    const packRoot = derivePackRoot(tarPath, fallbackRoot)
-
-    if (item.kind === 'skill') {
-      return `tmp="$(mktemp -d)" && \\
-curl -fsSL "${tarUrl}" -o "$tmp/pack.tar.gz" && \\
-tar -xzf "$tmp/pack.tar.gz" -C "$tmp" && \\
-mkdir -p ~/.codex/skills ~/.zeroclaw/workspace/skills ~/.clawreform/workspace/skills && \\
-cp -R "$tmp/${packRoot}/bundle/skills/${item.id}" ~/.codex/skills/ && \\
-cp -R "$tmp/${packRoot}/bundle/skills/${item.id}" ~/.zeroclaw/workspace/skills/ && \\
-cp -R "$tmp/${packRoot}/bundle/skills/${item.id}" ~/.clawreform/workspace/skills/ && \\
-echo "[OK] Installed ${item.id}"`
-    }
-
-    return `tmp="$(mktemp -d)" && \\
-curl -fsSL "${tarUrl}" -o "$tmp/pack.tar.gz" && \\
-tar -xzf "$tmp/pack.tar.gz" -C "$tmp" && \\
-target="\${AE_PLUGIN_DIR:-$HOME/.ae-ltd/plugins}" && \\
-mkdir -p "$target" && \\
-cp -R "$tmp/${packRoot}/bundle/plugins/${item.id}" "$target/" && \\
-echo "[OK] Installed ${item.id} to $target"`
+    return selectCatalogInstallCommand({
+      id: item.id,
+      kind: item.kind,
+      packTier: item.packTier,
+      npmPackage: item.npmPackage,
+      packTarByTier
+    })
   }
 
   const copyInstallCommand = async (item: AssetCatalogItem) => {

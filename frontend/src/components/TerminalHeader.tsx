@@ -12,23 +12,23 @@ interface TerminalHeaderProps {
   } | null
   onLoginClick?: () => void
   onNavigate?: (path: string) => void
+  currentPath?: string
 }
 
 const Header = styled(motion.header)`
   position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
+  z-index: 110;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border.primary};
-  background: ${({ theme }) => `${theme.colors.background.primary}d9`};
+  background:
+    linear-gradient(165deg, ${({ theme }) => `${theme.colors.background.primary}ea`} 0%, ${({ theme }) => `${theme.colors.background.secondary}e1`} 100%);
   backdrop-filter: blur(12px);
 `
 
 const HeaderContent = styled.div`
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0.85rem 1rem;
+  padding: 0.74rem 1rem;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -36,81 +36,74 @@ const HeaderContent = styled.div`
 
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 0.7rem;
   }
 `
 
 const Logo = styled(motion.a)`
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.62rem;
   text-decoration: none;
   color: ${({ theme }) => theme.colors.text.primary};
 `
 
 const LogoMark = styled.span`
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
-  background: linear-gradient(
-    140deg,
-    ${({ theme }) => theme.colors.interactive.primary} 0%,
-    ${({ theme }) => theme.colors.interactive.accent} 100%
-  );
+  background:
+    linear-gradient(150deg, ${({ theme }) => theme.colors.interactive.primary} 0%, ${({ theme }) => theme.colors.interactive.accent} 100%);
   color: ${({ theme }) => theme.colors.text.inverse};
-  box-shadow: ${({ theme }) => theme.shadows.sm};
+  box-shadow: ${({ theme }) => theme.shadows.glow};
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
 `
 
 const LogoStack = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
+  line-height: 1.05;
 `
 
 const LogoText = styled.span`
   font-family: ${({ theme }) => theme.fonts.sans};
-  font-size: 1rem;
-  letter-spacing: 0.01em;
-  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: 0.03em;
 `
 
 const Subline = styled.span`
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.67rem;
+  font-size: 0.63rem;
   color: ${({ theme }) => theme.colors.text.tertiary};
   text-transform: uppercase;
   letter-spacing: 0.08em;
 `
 
-const Navigation = styled.nav`
+const NavigationRail = styled.nav`
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  justify-content: center;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
 `
 
-const NavLink = styled(motion.a)`
-  border: 1px solid ${({ theme }) => theme.colors.border.secondary};
+const NavLink = styled(motion.button)<{ $active: boolean }>`
+  border: 1px solid ${({ theme, $active }) => ($active ? theme.colors.interactive.primary : theme.colors.border.secondary)};
   border-radius: ${({ theme }) => theme.borderRadius.full};
-  padding: 0.34rem 0.72rem;
-  text-decoration: none;
-  color: ${({ theme }) => theme.colors.text.secondary};
+  background: ${({ theme, $active }) =>
+    $active ? `${theme.colors.interactive.primary}26` : `${theme.colors.background.secondary}c9`};
+  color: ${({ theme, $active }) => ($active ? theme.colors.interactive.primary : theme.colors.text.secondary)};
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
+  padding: 0.33rem 0.68rem;
   cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.text.primary};
-    border-color: ${({ theme }) => theme.colors.border.hover};
-    background: ${({ theme }) => `${theme.colors.background.secondary}b8`};
-  }
 `
 
 const UserPanel = styled.div`
@@ -125,17 +118,18 @@ const UserPanel = styled.div`
 `
 
 const UserAvatar = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: ${({ theme }) => theme.borderRadius.full};
-  background: ${({ theme }) => theme.colors.interactive.primary};
+  border: 1px solid ${({ theme }) => theme.colors.border.primary};
+  background: ${({ theme }) => `${theme.colors.interactive.primary}2c`};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.text.inverse};
+  color: ${({ theme }) => theme.colors.text.primary};
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
 `
 
 const Username = styled.span`
@@ -146,73 +140,74 @@ const Username = styled.span`
 
 const LoginButton = styled(motion.button)`
   border: 1px solid ${({ theme }) => theme.colors.interactive.primary};
-  background: ${({ theme }) => theme.colors.interactive.primary};
-  color: ${({ theme }) => theme.colors.text.inverse};
+  background: ${({ theme }) => `${theme.colors.interactive.primary}28`};
+  color: ${({ theme }) => theme.colors.text.primary};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  padding: 0.45rem 0.8rem;
-  font-family: ${({ theme }) => theme.fonts.sans};
-  font-weight: 600;
+  padding: 0.42rem 0.78rem;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   cursor: pointer;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.interactive.primaryHover};
-    transform: translateY(-1px);
-  }
 `
 
-const TerminalHeader: React.FC<TerminalHeaderProps> = ({ user, onLoginClick, onNavigate }) => {
-  const handleLogoClick = (event: React.MouseEvent) => {
-    event.preventDefault()
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    if (onNavigate) onNavigate('/')
-  }
+const TerminalHeader: React.FC<TerminalHeaderProps> = ({ user, onLoginClick, onNavigate, currentPath = '/' }) => {
+  const nav = [
+    { label: 'Home', path: '/' },
+    { label: 'Marketplace', path: '/extensions' },
+    { label: 'MCP', path: '/mcp' },
+    { label: 'Packs', path: '/packs' },
+    { label: 'Docs', path: '/docs' },
+    { label: 'News', path: '/news' },
+    { label: 'Settings', path: '/settings' },
+    { label: 'GitHub', path: 'https://github.com/aegntic/cldcde' }
+  ]
 
-  const handleNavClick = (event: React.MouseEvent, path: string) => {
-    event.preventDefault()
-    if (onNavigate && path.startsWith('/')) {
-      onNavigate(path)
-      return
-    }
+  const openPath = (path: string) => {
     if (path.startsWith('http')) {
       window.open(path, '_blank')
+      return
     }
+    if (onNavigate) onNavigate(path)
   }
 
   return (
     <Header
-      initial={{ y: -24, opacity: 0 }}
+      initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.35, delay: 0.08 }}
+      transition={{ duration: 0.36, delay: 0.05 }}
     >
       <HeaderContent>
-        <Logo href="/" onClick={handleLogoClick} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+        <Logo
+          href="/"
+          onClick={(event) => {
+            event.preventDefault()
+            openPath('/')
+          }}
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
+        >
           <LogoMark>AE</LogoMark>
           <LogoStack>
             <LogoText>CLDCDE.CC</LogoText>
-            <Subline>AE.LTD :: Google Labs x Compound Engineering</Subline>
+            <Subline>Marketplace Rail :: Plugins + MCP + Packs</Subline>
           </LogoStack>
         </Logo>
 
-        <Navigation>
-          {[
-            { label: 'Extensions', path: '/extensions' },
-            { label: 'MCP', path: '/mcp' },
-            { label: 'Packs', path: '/packs' },
-            { label: 'Docs', path: '/docs' },
-            { label: 'News', path: '/news' },
-            { label: 'GitHub', path: 'https://github.com/aegntic/cldcde' }
-          ].map((item) => (
+        <NavigationRail>
+          {nav.map((item) => (
             <NavLink
               key={item.label}
-              href={item.path}
-              onClick={(event) => handleNavClick(event, item.path)}
+              type="button"
+              $active={!item.path.startsWith('http') && currentPath === item.path}
+              onClick={() => openPath(item.path)}
               whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.97 }}
+              whileTap={{ scale: 0.98 }}
             >
               {item.label}
             </NavLink>
           ))}
-        </Navigation>
+        </NavigationRail>
 
         <UserPanel>
           {user ? (
@@ -221,8 +216,8 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ user, onLoginClick, onN
               <UserAvatar>{(user as any)?.email?.charAt(0)?.toUpperCase() || 'U'}</UserAvatar>
             </>
           ) : (
-            <LoginButton onClick={onLoginClick} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
-              Login
+            <LoginButton type="button" onClick={onLoginClick} whileTap={{ scale: 0.98 }}>
+              Login / Register
             </LoginButton>
           )}
         </UserPanel>

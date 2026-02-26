@@ -1,93 +1,73 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { config } from '../config'
+import {
+  FilterPill,
+  MarketplacePanel,
+  NeonButton,
+  SectionHeaderAscii,
+  SectionLead,
+  SectionRail
+} from './common/marketplace'
 
 interface UserSettingsProps {
   user: any
   onUpdate: (user: any) => void
 }
 
-const SettingsContainer = styled.div`
-  max-width: 600px;
-  margin: 0 auto;
-  padding: ${({ theme }) => theme.spacing.xl};
+const Group = styled(MarketplacePanel)`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing.sm};
 `
 
-const Section = styled.section`
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-  padding: ${({ theme }) => theme.spacing.lg};
-  background: ${({ theme }) => theme.colors.background.secondary};
-  border: 1px solid ${({ theme }) => theme.colors.border.primary};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-`
-
-const SectionTitle = styled.h2`
-  font-size: 1.2rem;
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-  color: ${({ theme }) => theme.colors.text.primary};
-`
-
-const PreferenceGroup = styled.div`
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-`
-
-const CheckboxLabel = styled.label`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  font-size: 0.95rem;
-  color: ${({ theme }) => theme.colors.text.primary};
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
-  
-  input[type="checkbox"] {
-    margin-right: ${({ theme }) => theme.spacing.sm};
-    cursor: pointer;
-    
-    &:checked {
-      accent-color: ${({ theme }) => theme.colors.interactive.primary};
-    }
-  }
-`
-
-const Description = styled.p`
-  font-size: 0.85rem;
-  color: ${({ theme }) => theme.colors.text.secondary};
-  margin-left: 1.5rem;
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-`
-
-const SaveButton = styled.button`
-  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
-  background: ${({ theme }) => theme.colors.interactive.primary};
-  color: white;
-  border: none;
+const OptionRow = styled.label`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: ${({ theme }) => theme.spacing.sm};
+  align-items: start;
+  border: 1px solid ${({ theme }) => theme.colors.border.secondary};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  font-weight: 600;
-  cursor: pointer;
-  transition: all ${({ theme }) => theme.animations.duration.fast} ${({ theme }) => theme.animations.easing.default};
-  
-  &:hover {
-    background: ${({ theme }) => theme.colors.interactive.primaryHover};
-  }
-  
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+  background: ${({ theme }) => `${theme.colors.background.secondary}c4`};
+  padding: ${({ theme }) => theme.spacing.sm};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: 0.84rem;
+  line-height: 1.45;
+
+  input[type='checkbox'] {
+    margin-top: 0.15rem;
+    accent-color: ${({ theme }) => theme.colors.interactive.primary};
   }
 `
 
-const SuccessMessage = styled.div`
-  color: ${({ theme }) => theme.colors.status.success};
-  margin-top: ${({ theme }) => theme.spacing.md};
+const OptionTitle = styled.div`
+  color: ${({ theme }) => theme.colors.text.primary};
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+`
+
+const ButtonRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.sm};
+`
+
+const Feedback = styled.div<{ $tone: 'ok' | 'error' }>`
+  border: 1px solid
+    ${({ theme, $tone }) => ($tone === 'ok' ? `${theme.colors.status.success}66` : `${theme.colors.status.error}66`)};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background: ${({ theme }) => `${theme.colors.background.secondary}cc`};
+  color: ${({ theme, $tone }) => ($tone === 'ok' ? theme.colors.status.success : theme.colors.status.error)};
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.78rem;
   padding: ${({ theme }) => theme.spacing.sm};
-  background: ${({ theme }) => theme.colors.background.secondary};
-  border: 1px solid ${({ theme }) => theme.colors.status.success}33;
-  border-radius: ${({ theme }) => theme.borderRadius.sm};
 `
 
 export const UserSettings: React.FC<UserSettingsProps> = ({ user, onUpdate }) => {
   const [loading, setLoading] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [preferences, setPreferences] = useState({
     mailing_list_opt_in: true,
     newsletter: true,
@@ -97,7 +77,6 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ user, onUpdate }) =>
   })
 
   useEffect(() => {
-    // Load user preferences
     if (user?.profile) {
       setPreferences({
         mailing_list_opt_in: user.profile.mailing_list_opt_in ?? true,
@@ -114,6 +93,7 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ user, onUpdate }) =>
   const handleSave = async () => {
     setLoading(true)
     setSaved(false)
+    setError(null)
 
     try {
       const token = localStorage.getItem('token')
@@ -121,7 +101,7 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ user, onUpdate }) =>
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
           mailing_list_opt_in: preferences.mailing_list_opt_in,
@@ -141,9 +121,10 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ user, onUpdate }) =>
       const updatedUser = await response.json()
       onUpdate(updatedUser)
       setSaved(true)
-      setTimeout(() => setSaved(false), 3000)
-    } catch (error) {
-      console.error('Failed to save preferences:', error)
+      window.setTimeout(() => setSaved(false), 2800)
+    } catch (err) {
+      console.error('Failed to save preferences:', err)
+      setError('Could not save preferences. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -160,101 +141,100 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ user, onUpdate }) =>
   }
 
   return (
-    <SettingsContainer>
-      <Section>
-        <SectionTitle>Email Preferences</SectionTitle>
-        
-        <PreferenceGroup>
-          <CheckboxLabel>
-            <input
-              type="checkbox"
-              checked={preferences.mailing_list_opt_in}
-              onChange={(e) => setPreferences({ ...preferences, mailing_list_opt_in: e.target.checked })}
-            />
-            Subscribe to mailing list
-          </CheckboxLabel>
-          <Description>
-            Receive emails about new features and updates. We promise not to spam you or sell your data to third parties.
-          </Description>
-        </PreferenceGroup>
+    <SectionRail>
+      <SectionHeaderAscii text="USER SETTINGS" size="section" level={2} />
+      <SectionLead>Control notifications and release updates for your account.</SectionLead>
+
+      <Group>
+        <OptionRow>
+          <input
+            type="checkbox"
+            checked={preferences.mailing_list_opt_in}
+            onChange={(event) =>
+              setPreferences({
+                ...preferences,
+                mailing_list_opt_in: event.target.checked
+              })
+            }
+          />
+          <div>
+            <OptionTitle>Mailing List</OptionTitle>
+            Enable core release emails and operational updates.
+          </div>
+        </OptionRow>
 
         {preferences.mailing_list_opt_in && (
           <>
-            <PreferenceGroup>
-              <CheckboxLabel>
-                <input
-                  type="checkbox"
-                  checked={preferences.newsletter}
-                  onChange={(e) => setPreferences({ ...preferences, newsletter: e.target.checked })}
-                />
-                Weekly Newsletter
-              </CheckboxLabel>
-              <Description>
-                Get a weekly digest of new extensions, top-rated resources, and community highlights.
-              </Description>
-            </PreferenceGroup>
+            <OptionRow>
+              <input
+                type="checkbox"
+                checked={preferences.newsletter}
+                onChange={(event) => setPreferences({ ...preferences, newsletter: event.target.checked })}
+              />
+              <div>
+                <OptionTitle>Weekly Newsletter</OptionTitle>
+                Digest of new plugins, MCP servers, and pack improvements.
+              </div>
+            </OptionRow>
 
-            <PreferenceGroup>
-              <CheckboxLabel>
-                <input
-                  type="checkbox"
-                  checked={preferences.product_updates}
-                  onChange={(e) => setPreferences({ ...preferences, product_updates: e.target.checked })}
-                />
-                Product Updates
-              </CheckboxLabel>
-              <Description>
-                Be the first to know about new features and improvements to the platform.
-              </Description>
-            </PreferenceGroup>
+            <OptionRow>
+              <input
+                type="checkbox"
+                checked={preferences.product_updates}
+                onChange={(event) => setPreferences({ ...preferences, product_updates: event.target.checked })}
+              />
+              <div>
+                <OptionTitle>Product Updates</OptionTitle>
+                Detailed release notes for major feature updates.
+              </div>
+            </OptionRow>
 
-            <PreferenceGroup>
-              <CheckboxLabel>
-                <input
-                  type="checkbox"
-                  checked={preferences.community_digest}
-                  onChange={(e) => setPreferences({ ...preferences, community_digest: e.target.checked })}
-                />
-                Community Digest
-              </CheckboxLabel>
-              <Description>
-                Monthly roundup of community contributions, discussions, and events.
-              </Description>
-            </PreferenceGroup>
+            <OptionRow>
+              <input
+                type="checkbox"
+                checked={preferences.community_digest}
+                onChange={(event) => setPreferences({ ...preferences, community_digest: event.target.checked })}
+              />
+              <div>
+                <OptionTitle>Community Digest</OptionTitle>
+                Highlights from ecosystem contributions and launch stories.
+              </div>
+            </OptionRow>
 
-            <PreferenceGroup>
-              <CheckboxLabel>
-                <input
-                  type="checkbox"
-                  checked={preferences.promotional}
-                  onChange={(e) => setPreferences({ ...preferences, promotional: e.target.checked })}
-                />
-                Promotional Emails
-              </CheckboxLabel>
-              <Description>
-                Occasional special offers and partner promotions (max 1 per month).
-              </Description>
-            </PreferenceGroup>
+            <OptionRow>
+              <input
+                type="checkbox"
+                checked={preferences.promotional}
+                onChange={(event) => setPreferences({ ...preferences, promotional: event.target.checked })}
+              />
+              <div>
+                <OptionTitle>Promotional Offers</OptionTitle>
+                Optional partner announcements and special offers.
+              </div>
+            </OptionRow>
           </>
         )}
 
-        <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
-          <SaveButton onClick={handleSave} disabled={loading}>
+        <ButtonRow>
+          <NeonButton type="button" onClick={handleSave} disabled={loading} whileTap={{ scale: 0.98 }}>
             {loading ? 'Saving...' : 'Save Preferences'}
-          </SaveButton>
-          
-          {preferences.mailing_list_opt_in && (
-            <SaveButton 
-              onClick={handleUnsubscribeAll}
-              style={{ background: 'transparent', border: '1px solid currentColor', color: 'inherit' }}
-            >
-              Unsubscribe from All
-            </SaveButton>
-          )}
-        </div>
+          </NeonButton>
 
-        {saved && <SuccessMessage>Your preferences have been saved!</SuccessMessage>}
-      </Section>
-    </SettingsContainer>
+          {preferences.mailing_list_opt_in && (
+            <NeonButton type="button" $tone="ghost" onClick={handleUnsubscribeAll} whileTap={{ scale: 0.98 }}>
+              Unsubscribe All
+            </NeonButton>
+          )}
+
+          <FilterPill type="button" $active>
+            account:{' '}
+            {(user?.email as string | undefined)?.split('@')[0] || 'operator'}
+          </FilterPill>
+        </ButtonRow>
+
+        {saved && <Feedback $tone="ok">Preferences saved.</Feedback>}
+        {error && <Feedback $tone="error">{error}</Feedback>}
+      </Group>
+    </SectionRail>
   )
 }

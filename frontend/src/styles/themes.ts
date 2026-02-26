@@ -1,7 +1,6 @@
 export interface Theme {
   name: string
   colors: {
-    // Background colors
     background: {
       primary: string
       secondary: string
@@ -9,7 +8,6 @@ export interface Theme {
       modal: string
       card: string
     }
-    // Text colors
     text: {
       primary: string
       secondary: string
@@ -17,21 +15,18 @@ export interface Theme {
       muted: string
       inverse: string
     }
-    // Border and divider colors
     border: {
       primary: string
       secondary: string
       focus: string
       hover: string
     }
-    // Status colors
     status: {
       success: string
       error: string
       warning: string
       info: string
     }
-    // Interactive elements
     interactive: {
       primary: string
       primaryHover: string
@@ -40,7 +35,6 @@ export interface Theme {
       accent: string
       accentHover: string
     }
-    // ASCII art and terminal elements
     terminal: {
       green: string
       blue: string
@@ -52,7 +46,6 @@ export interface Theme {
       white: string
       gray: string
     }
-    // Syntax highlighting
     syntax: {
       keyword: string
       string: string
@@ -101,68 +94,7 @@ export interface Theme {
   }
 }
 
-export const claudeCodeTheme: Theme = {
-  name: 'Labs Signal Dark',
-  colors: {
-    background: {
-      primary: '#070f16',
-      secondary: '#0e1823',
-      tertiary: '#152234',
-      modal: 'rgba(7, 15, 22, 0.95)',
-      card: '#0d1722'
-    },
-    text: {
-      primary: '#e8f4ff',
-      secondary: '#b8c8da',
-      tertiary: '#8ca2ba',
-      muted: '#667b94',
-      inverse: '#061019'
-    },
-    border: {
-      primary: '#25364a',
-      secondary: '#1b2a3c',
-      focus: '#4ec5ff',
-      hover: '#34516c'
-    },
-    status: {
-      success: '#29c27f',
-      error: '#ff5b5b',
-      warning: '#f6b73c',
-      info: '#4ec5ff'
-    },
-    interactive: {
-      primary: '#00a8ff',
-      primaryHover: '#0089cf',
-      secondary: '#1c3046',
-      secondaryHover: '#2c4864',
-      accent: '#0fd39f',
-      accentHover: '#0bb383'
-    },
-    terminal: {
-      green: '#29c27f',
-      blue: '#4ec5ff',
-      yellow: '#f6b73c',
-      orange: '#ff8b3d',
-      purple: '#7890ff',
-      cyan: '#38e8d3',
-      red: '#ff5b5b',
-      white: '#f4f9ff',
-      gray: '#7f95ad'
-    },
-    syntax: {
-      keyword: '#65cbff',
-      string: '#ffad71',
-      number: '#89e6bf',
-      comment: '#6f88a4',
-      function: '#ffd379',
-      variable: '#9cc9ff'
-    }
-  },
-  fonts: {
-    mono: '"IBM Plex Mono", "JetBrains Mono", "SF Mono", Consolas, monospace',
-    sans: '"Space Grotesk", "Manrope", "Avenir Next", "Segoe UI", sans-serif',
-    serif: '"Instrument Serif", "Iowan Old Style", Georgia, serif'
-  },
+const commonTheme = {
   spacing: {
     xs: '0.25rem',
     sm: '0.5rem',
@@ -173,126 +105,165 @@ export const claudeCodeTheme: Theme = {
   },
   borderRadius: {
     sm: '0.35rem',
-    md: '0.65rem',
+    md: '0.6rem',
     lg: '1rem',
     full: '9999px'
   },
-  shadows: {
-    sm: '0 4px 12px rgba(0, 23, 44, 0.25)',
-    md: '0 10px 28px rgba(0, 20, 38, 0.35)',
-    lg: '0 20px 44px rgba(0, 20, 38, 0.44)',
-    glow: '0 0 24px rgba(78, 197, 255, 0.3), 0 0 52px rgba(15, 211, 159, 0.16)'
-  },
   animations: {
     duration: {
-      fast: '150ms',
-      normal: '300ms',
-      slow: '500ms'
+      fast: '140ms',
+      normal: '280ms',
+      slow: '520ms'
     },
     easing: {
-      default: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      default: 'cubic-bezier(0.25, 0.8, 0.25, 1)',
       sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
-      smooth: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+      smooth: 'cubic-bezier(0.22, 1, 0.36, 1)'
     }
   }
 }
 
-export const futuristicTheme: Theme = {
-  name: 'Compound Carbon',
+export const claudeCodeTheme: Theme = {
+  name: 'Neon Grid Blue',
   colors: {
     background: {
-      primary: '#0b0907',
-      secondary: '#15110d',
-      tertiary: '#221b14',
-      modal: 'rgba(11, 9, 7, 0.97)',
-      card: '#17120e'
+      primary: '#040b16',
+      secondary: '#091427',
+      tertiary: '#0f1f3a',
+      modal: 'rgba(4, 11, 22, 0.95)',
+      card: '#081625'
     },
     text: {
-      primary: '#f7efe6',
-      secondary: '#d3c3b3',
-      tertiary: '#b29d87',
-      muted: '#7f6c59',
-      inverse: '#120d09'
+      primary: '#e7f7ff',
+      secondary: '#b7cfe8',
+      tertiary: '#89aac8',
+      muted: '#617f9d',
+      inverse: '#020a13'
     },
     border: {
-      primary: '#3c2d1f',
-      secondary: '#2d2218',
-      focus: '#ff8b3d',
-      hover: '#5b442e'
+      primary: '#214264',
+      secondary: '#1a334f',
+      focus: '#63dfff',
+      hover: '#2d5886'
     },
     status: {
-      success: '#58c28b',
-      error: '#ff6d4a',
-      warning: '#f4b654',
-      info: '#55b9ff'
+      success: '#35d29c',
+      error: '#ff5b7a',
+      warning: '#ffbe55',
+      info: '#58d6ff'
     },
     interactive: {
-      primary: '#ff7a2f',
-      primaryHover: '#e05f1c',
-      secondary: '#352515',
-      secondaryHover: '#4a321f',
-      accent: '#f1cc4f',
-      accentHover: '#d7b238'
+      primary: '#33d7ff',
+      primaryHover: '#23bddf',
+      secondary: '#132944',
+      secondaryHover: '#1c3b5f',
+      accent: '#4df4c2',
+      accentHover: '#35d2a5'
     },
     terminal: {
-      green: '#58c28b',
-      blue: '#55b9ff',
-      yellow: '#f1cc4f',
-      orange: '#ff7a2f',
-      purple: '#d18eff',
-      cyan: '#6be9ff',
-      red: '#ff6d4a',
-      white: '#fff7ed',
-      gray: '#a99582'
+      green: '#4df4c2',
+      blue: '#58d6ff',
+      yellow: '#ffbe55',
+      orange: '#ff9a4a',
+      purple: '#8eb3ff',
+      cyan: '#46f4ff',
+      red: '#ff5b7a',
+      white: '#f5fbff',
+      gray: '#83a3bf'
     },
     syntax: {
-      keyword: '#ffb177',
-      string: '#ffd39f',
-      number: '#9de0bc',
-      comment: '#8f7a64',
-      function: '#f5d66f',
-      variable: '#ff9b70'
+      keyword: '#74d5ff',
+      string: '#ffbe77',
+      number: '#80f0bc',
+      comment: '#7192b2',
+      function: '#ffe47b',
+      variable: '#92c6ff'
     }
   },
   fonts: {
     mono: '"IBM Plex Mono", "JetBrains Mono", "SF Mono", Consolas, monospace',
-    sans: '"Manrope", "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif',
-    serif: '"Instrument Serif", "Iowan Old Style", Georgia, serif'
-  },
-  spacing: {
-    xs: '0.25rem',
-    sm: '0.5rem',
-    md: '1rem',
-    lg: '1.5rem',
-    xl: '2rem',
-    xxl: '3rem'
-  },
-  borderRadius: {
-    sm: '0.2rem',
-    md: '0.35rem',
-    lg: '0.6rem',
-    full: '9999px'
+    sans: '"Orbitron", "Space Grotesk", "Exo 2", "Segoe UI", sans-serif',
+    serif: '"Rajdhani", "Instrument Serif", Georgia, serif'
   },
   shadows: {
-    sm: '0 4px 12px rgba(36, 18, 8, 0.24)',
-    md: '0 10px 28px rgba(36, 18, 8, 0.34)',
-    lg: '0 20px 44px rgba(36, 18, 8, 0.46)',
-    glow: '0 0 28px rgba(255, 122, 47, 0.3), 0 0 64px rgba(241, 204, 79, 0.18)'
+    sm: '0 6px 16px rgba(0, 22, 46, 0.35)',
+    md: '0 14px 32px rgba(0, 19, 40, 0.48)',
+    lg: '0 24px 58px rgba(0, 16, 35, 0.58)',
+    glow: '0 0 24px rgba(88, 214, 255, 0.35), 0 0 60px rgba(77, 244, 194, 0.2)'
   },
-  animations: {
-    duration: {
-      fast: '100ms',
-      normal: '200ms',
-      slow: '400ms'
-    },
-    easing: {
-      default: 'cubic-bezier(0.23, 1, 0.32, 1)',
-      sharp: 'cubic-bezier(0.55, 0, 0.1, 1)',
-      smooth: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-    }
-  }
+  ...commonTheme
 }
 
+export const futuristicTheme: Theme = {
+  name: 'Neon Grid Magma',
+  colors: {
+    background: {
+      primary: '#0a090f',
+      secondary: '#141220',
+      tertiary: '#201b2f',
+      modal: 'rgba(10, 9, 15, 0.96)',
+      card: '#161325'
+    },
+    text: {
+      primary: '#f6f2ff',
+      secondary: '#d7caee',
+      tertiary: '#b7a7d9',
+      muted: '#8878aa',
+      inverse: '#0e0916'
+    },
+    border: {
+      primary: '#3a2f58',
+      secondary: '#2e2647',
+      focus: '#ff7bd7',
+      hover: '#55457c'
+    },
+    status: {
+      success: '#53d6a1',
+      error: '#ff688d',
+      warning: '#ffc364',
+      info: '#7ec5ff'
+    },
+    interactive: {
+      primary: '#ff7bd7',
+      primaryHover: '#dc61ba',
+      secondary: '#231a37',
+      secondaryHover: '#352652',
+      accent: '#74c4ff',
+      accentHover: '#5b9dd1'
+    },
+    terminal: {
+      green: '#53d6a1',
+      blue: '#74c4ff',
+      yellow: '#ffc364',
+      orange: '#ff9b5f',
+      purple: '#c8a0ff',
+      cyan: '#8eefff',
+      red: '#ff688d',
+      white: '#fbf8ff',
+      gray: '#a091bf'
+    },
+    syntax: {
+      keyword: '#b88dff',
+      string: '#ffc49a',
+      number: '#8ef4ca',
+      comment: '#8c7aa8',
+      function: '#ffd980',
+      variable: '#edb6ff'
+    }
+  },
+  fonts: {
+    mono: '"IBM Plex Mono", "JetBrains Mono", "SF Mono", Consolas, monospace',
+    sans: '"Orbitron", "Exo 2", "Space Grotesk", "Segoe UI", sans-serif',
+    serif: '"Rajdhani", "Instrument Serif", Georgia, serif'
+  },
+  shadows: {
+    sm: '0 6px 16px rgba(20, 12, 30, 0.35)',
+    md: '0 14px 32px rgba(20, 12, 30, 0.5)',
+    lg: '0 24px 58px rgba(20, 12, 30, 0.62)',
+    glow: '0 0 24px rgba(255, 123, 215, 0.35), 0 0 60px rgba(116, 196, 255, 0.2)'
+  },
+  ...commonTheme
+}
 
 export const themes = {
   claudeCode: claudeCodeTheme,
