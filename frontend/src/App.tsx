@@ -104,62 +104,84 @@ const BootOverlay = styled(motion.div)`
   position: fixed;
   inset: 0;
   z-index: 1200;
-  background: ${({ theme }) => `${theme.colors.background.primary}f1`};
-  display: grid;
-  place-items: center;
-  padding: 1rem;
+  background: ${({ theme }) => theme.colors.background.primary};
+  overflow: hidden;
 `
 
 const BootVideo = styled.video`
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100dvh;
   object-fit: cover;
-  transform: scale(1.18);
-  opacity: 0.84;
-  filter: blur(8px) saturate(1.16) contrast(1.08) brightness(0.56);
+  object-position: center center;
 `
 
 const BootVeil = styled.div`
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 25% 15%, rgba(90, 230, 255, 0.16) 0%, transparent 42%),
-    radial-gradient(circle at 75% 20%, rgba(88, 246, 203, 0.15) 0%, transparent 44%),
-    linear-gradient(180deg, rgba(5, 12, 24, 0.42) 0%, rgba(5, 12, 24, 0.92) 100%);
+    radial-gradient(circle at 25% 15%, rgba(90, 230, 255, 0.16) 0%, transparent 40%),
+    radial-gradient(circle at 75% 20%, rgba(88, 246, 203, 0.12) 0%, transparent 44%),
+    linear-gradient(180deg, rgba(5, 12, 24, 0.22) 0%, rgba(5, 12, 24, 0.86) 100%);
 `
 
 const BootPanel = styled(MarketplacePanel)`
-  width: min(900px, 100%);
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: clamp(0.8rem, 4.2vh, 2rem);
+  width: min(880px, calc(100% - 1.4rem));
   z-index: 2;
   display: grid;
-  gap: ${({ theme }) => theme.spacing.md};
+  gap: ${({ theme }) => theme.spacing.sm};
   text-align: center;
-`
 
-const BootTitle = styled(AsciiHeading)`
-  margin: 0;
+  @media (max-width: 700px) {
+    width: calc(100% - 0.8rem);
+    bottom: 0.45rem;
+    padding: ${({ theme }) => theme.spacing.sm};
+    gap: ${({ theme }) => theme.spacing.xs};
+  }
 `
 
 const BootCopy = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.colors.text.secondary};
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.84rem;
+  font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  max-width: 52ch;
+  justify-self: center;
+
+  @media (max-width: 700px) {
+    font-size: 0.66rem;
+    max-width: 34ch;
+    line-height: 1.4;
+  }
 `
 
 const BootActions = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
   justify-content: center;
   gap: ${({ theme }) => theme.spacing.sm};
+
+  @media (max-width: 700px) {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: ${({ theme }) => theme.spacing.xs};
+
+    > button:first-child {
+      grid-column: 1 / -1;
+    }
+  }
 `
 
 const HomeHero = styled.section`
-  min-height: min(760px, calc(100vh - 86px));
+  min-height: max(560px, calc(100dvh - 86px));
   position: relative;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   border: 1px solid ${({ theme }) => theme.colors.border.primary};
@@ -167,25 +189,24 @@ const HomeHero = styled.section`
   box-shadow: ${({ theme }) => theme.shadows.lg};
 `
 
-const HeroVideo = styled.video`
+const HeroBackdrop = styled.div`
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  transform: scale(1.24);
-  opacity: 0.6;
-  filter: blur(10px) saturate(1.16) contrast(1.12) brightness(0.44);
+  background-image: url(${LANDING_POSTER});
+  background-size: cover;
+  background-position: center center;
+  transform: scale(1.06);
+  opacity: 0.82;
+  filter: blur(6px) saturate(1.08) contrast(1.02) brightness(0.52);
 `
 
 const HeroOverlay = styled.div`
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 24% 22%, rgba(73, 230, 255, 0.2) 0%, transparent 34%),
-    radial-gradient(circle at 82% 18%, rgba(95, 255, 190, 0.14) 0%, transparent 36%),
-    radial-gradient(circle at 50% 48%, rgba(6, 12, 22, 0.46) 0%, rgba(6, 12, 22, 0.74) 52%, rgba(6, 12, 22, 0.88) 100%),
+    radial-gradient(circle at 24% 22%, rgba(73, 230, 255, 0.22) 0%, transparent 34%),
+    radial-gradient(circle at 82% 18%, rgba(95, 255, 190, 0.16) 0%, transparent 36%),
+    radial-gradient(circle at 50% 48%, rgba(6, 12, 22, 0.4) 0%, rgba(6, 12, 22, 0.68) 52%, rgba(6, 12, 22, 0.86) 100%),
     linear-gradient(180deg, rgba(6, 12, 22, 0.6) 0%, rgba(6, 12, 22, 0.94) 100%);
 `
 
@@ -319,7 +340,6 @@ function AppContent() {
   const [currentPage, setCurrentPage] = useState<Page>('home')
   const [showVideoBoot, setShowVideoBoot] = useState(false)
   const [bootMuted, setBootMuted] = useState(true)
-  const [heroMuted, setHeroMuted] = useState(true)
   const [catalog, setCatalog] = useState<MarketplaceItem[]>([])
   const [featured, setFeatured] = useState<MarketplaceItem[]>([])
 
@@ -384,16 +404,12 @@ function AppContent() {
     }
   }, [currentPage])
 
-  useEffect(() => {
-    if (!showVideoBoot) return
-    const timeout = window.setTimeout(() => {
-      try {
-        sessionStorage.setItem(BOOT_SESSION_KEY, '1')
-      } catch {}
-      setShowVideoBoot(false)
-    }, 3600)
-    return () => window.clearTimeout(timeout)
-  }, [showVideoBoot])
+  const completeBoot = () => {
+    try {
+      sessionStorage.setItem(BOOT_SESSION_KEY, '1')
+    } catch {}
+    setShowVideoBoot(false)
+  }
 
   const navigateTo = (path: string) => {
     const targetPage = mapPathToPage(path)
@@ -424,41 +440,32 @@ function AppContent() {
           >
             <BootVideo
               autoPlay
-              loop
               muted={bootMuted}
               playsInline
+              preload="auto"
               poster={LANDING_POSTER}
-              onError={() => setShowVideoBoot(false)}
+              onEnded={completeBoot}
+              onError={completeBoot}
             >
               <source src={LANDING_VIDEO} type="video/mp4" />
             </BootVideo>
             <BootVeil />
             <BootPanel initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-              <BootTitle text="CLDCDE MARKETPLACE" size="hero" level={1} align="center" />
-              <BootCopy>plugin + mcp marketplace booting // click enter to continue</BootCopy>
+              <Badge $tone="new">Launch Clip</Badge>
+              <BootCopy>full-screen launch clip // transitions on clip end</BootCopy>
               <BootActions>
                 <NeonButton
-                  onClick={() => {
-                    try {
-                      sessionStorage.setItem(BOOT_SESSION_KEY, '1')
-                    } catch {}
-                    setShowVideoBoot(false)
-                  }}
+                  onClick={completeBoot}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Enter Marketplace
+                  Enter
                 </NeonButton>
                 <NeonButton $tone="secondary" onClick={() => setBootMuted((prev) => !prev)} whileTap={{ scale: 0.98 }}>
                   {bootMuted ? 'Unmute' : 'Mute'}
                 </NeonButton>
                 <NeonButton
                   $tone="ghost"
-                  onClick={() => {
-                    try {
-                      sessionStorage.setItem(BOOT_SESSION_KEY, '1')
-                    } catch {}
-                    setShowVideoBoot(false)
-                  }}
+                  onClick={completeBoot}
                   whileTap={{ scale: 0.98 }}
                 >
                   Skip
@@ -502,9 +509,7 @@ function AppContent() {
           <MarketplaceShell>
             <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <HomeHero>
-                <HeroVideo autoPlay loop muted={heroMuted} playsInline poster={LANDING_POSTER}>
-                  <source src={LANDING_VIDEO} type="video/mp4" />
-                </HeroVideo>
+                <HeroBackdrop />
                 <HeroOverlay />
                 <HeroContent>
                   <Badge $tone="new">Marketplace Live</Badge>
@@ -522,9 +527,6 @@ function AppContent() {
                     </NeonButton>
                     <NeonButton $tone="ghost" onClick={() => navigateTo('/packs')} whileTap={{ scale: 0.98 }}>
                       View Packs
-                    </NeonButton>
-                    <NeonButton $tone="ghost" onClick={() => setHeroMuted((prev) => !prev)} whileTap={{ scale: 0.98 }}>
-                      {heroMuted ? 'Unmute' : 'Mute'}
                     </NeonButton>
                   </HeroActionRow>
                   <HeroMeta>
