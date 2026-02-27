@@ -43,8 +43,8 @@ type Page =
   | 'settings'
 
 const R2_PUBLIC_BASE = 'https://pub-5720f0c8abe84850a71c8d81dcd6f928.r2.dev'
-const LANDING_VIDEO = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v4.mp4`
-const LANDING_POSTER = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v4-poster.png`
+const LANDING_VIDEO = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v5.mp4`
+const LANDING_POSTER = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v5-poster.png`
 const LANDING_MEDIA_ORIGIN = '50% 60%'
 const LANDING_MEDIA_SCALE = 1.05
 
@@ -114,6 +114,9 @@ const BootOverlay = styled(motion.div)`
   inset: 0;
   z-index: 1200;
   background: ${({ theme }) => theme.colors.background.primary};
+  background-image: url(${LANDING_POSTER});
+  background-size: cover;
+  background-position: center center;
   overflow: hidden;
 `
 
