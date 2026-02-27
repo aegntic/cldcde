@@ -33,4 +33,25 @@ cat > "$OUT_DIR/_redirects" <<'REDIRECTS'
 /* /index.html 200
 REDIRECTS
 
+# Cache policy for non-hashed entrypoints to avoid mixed-version UI after deploys.
+cat > "$OUT_DIR/_headers" <<'HEADERS'
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.js
+  Cache-Control: no-store
+
+/static/index.js
+  Cache-Control: no-store
+
+/media/*
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/static/media/*
+  Cache-Control: public, max-age=3600, must-revalidate
+HEADERS
+
 echo "[OK] Pages bundle prepared at $OUT_DIR"
