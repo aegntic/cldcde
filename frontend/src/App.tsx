@@ -44,8 +44,10 @@ type Page =
 
 const BOOT_SESSION_KEY = 'cldcde_market_boot_v1_seen'
 const R2_PUBLIC_BASE = 'https://pub-5720f0c8abe84850a71c8d81dcd6f928.r2.dev'
-const LANDING_VIDEO = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v3.mp4`
-const LANDING_POSTER = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v3-poster.jpg`
+const LANDING_VIDEO = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v4.mp4`
+const LANDING_POSTER = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v4-poster.png`
+const LANDING_MEDIA_ORIGIN = '50% 68%'
+const LANDING_MEDIA_SCALE = 1.12
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -123,13 +125,16 @@ const BootVideo = styled.video`
   height: 100dvh;
   object-fit: cover;
   object-position: center center;
+  transform: scale(${LANDING_MEDIA_SCALE});
+  transform-origin: ${LANDING_MEDIA_ORIGIN};
+  image-rendering: auto;
 `
 
 const BootVeil = styled.div`
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(4, 10, 20, 0.04) 0%, rgba(4, 10, 20, 0.18) 100%);
+    linear-gradient(180deg, rgba(4, 10, 20, 0.02) 0%, rgba(4, 10, 20, 0.09) 100%);
 `
 
 const BootControls = styled.div`
@@ -155,12 +160,17 @@ const BootControls = styled.div`
 `
 
 const HomeHero = styled.section`
-  min-height: calc(100dvh - 96px);
+  min-height: 100dvh;
   position: relative;
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  border: 1px solid ${({ theme }) => theme.colors.border.primary};
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border.primary};
   overflow: hidden;
-  box-shadow: ${({ theme }) => theme.shadows.lg};
+`
+
+const HomeHeroRail = styled(SectionRail)`
+  margin-top: calc(-1 * (86px + ${({ theme }) => theme.spacing.xl}));
 `
 
 const HeroBackdrop = styled.div`
@@ -169,9 +179,10 @@ const HeroBackdrop = styled.div`
   background-image: url(${LANDING_POSTER});
   background-size: cover;
   background-position: center center;
-  transform: scale(1.01);
-  opacity: 0.86;
-  filter: blur(1px) saturate(1.04) brightness(0.72);
+  transform: scale(${LANDING_MEDIA_SCALE});
+  transform-origin: ${LANDING_MEDIA_ORIGIN};
+  opacity: 1;
+  filter: none;
 `
 
 const HeroWire = styled.div`
@@ -190,27 +201,9 @@ const HeroOverlay = styled.div`
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 18% 9%, rgba(96, 255, 226, 0.12) 0%, transparent 34%),
-    radial-gradient(circle at 84% 12%, rgba(99, 198, 255, 0.12) 0%, transparent 32%),
-    linear-gradient(180deg, rgba(3, 9, 19, 0.06) 0%, rgba(3, 9, 19, 0.34) 100%);
-`
-
-const HeroStamp = styled.div`
-  position: relative;
-  z-index: 2;
-  margin: clamp(1rem, 2vw, 1.8rem);
-  margin-top: auto;
-  width: fit-content;
-  border: 1px solid ${({ theme }) => `${theme.colors.border.primary}b8`};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  padding: 0.45rem 0.7rem;
-  background: rgba(2, 10, 22, 0.4);
-  backdrop-filter: blur(6px);
-  font-family: ${({ theme }) => theme.fonts.mono};
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.text.secondary};
-  font-size: 0.74rem;
+    radial-gradient(circle at 18% 9%, rgba(96, 255, 226, 0.06) 0%, transparent 34%),
+    radial-gradient(circle at 84% 12%, rgba(99, 198, 255, 0.06) 0%, transparent 32%),
+    linear-gradient(180deg, rgba(3, 9, 19, 0.02) 0%, rgba(3, 9, 19, 0.12) 100%);
 `
 
 const HeroVideoStage = styled.div`
@@ -514,6 +507,10 @@ const FooterSignal = styled.div`
   justify-content: center;
 `
 
+const HomeContentShell = styled(MarketplaceShell)`
+  padding-top: ${({ theme }) => theme.spacing.xl};
+`
+
 const mapPathToPage = (path: string): Page => {
   switch (path) {
     case '/extensions':
@@ -738,18 +735,17 @@ function AppContent() {
 
       <MainContent $hidden={isHomeBootActive} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         {currentPage === 'home' && (
-          <MarketplaceShell>
-            <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+          <>
+            <HomeHeroRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <HomeHero>
                 <HeroBackdrop />
                 <HeroWire />
                 <HeroOverlay />
-                <HeroVideoStage>
-                  <HeroStamp>Full-screen launch clip</HeroStamp>
-                </HeroVideoStage>
+                <HeroVideoStage />
               </HomeHero>
-            </SectionRail>
+            </HomeHeroRail>
 
+            <HomeContentShell>
             <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.04 }}>
               <HomeGrid>
                 <HeroPrimary initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
@@ -977,7 +973,8 @@ function AppContent() {
                 ))}
               </FooterSignal>
             </SectionRail>
-          </MarketplaceShell>
+            </HomeContentShell>
+          </>
         )}
 
         {currentPage === 'extensions' && <ExtensionBrowser />}
