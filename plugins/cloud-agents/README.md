@@ -47,55 +47,113 @@ The flagship feature - aegnts that run in isolated VMs/sandboxes and can:
 
 ## Installation
 
+### Global Installation (All Platforms)
+
+```bash
+# Install globally via npm
+npm install -g @aegntic/cldcde-cloud-aegnts
+
+# The post-install script will auto-detect and configure for all installed platforms
+# Available commands:
+cldcde-aegnts start "Build a REST API"
+cloud-aegnts start "Build a REST API"
+aegnts start "Build a REST API"
+```
+
+### Platform-Specific Setup
+
+After global installation, you can run setup for specific platforms:
+
+```bash
+# Setup for Claude Code
+cldcde-aegnts setup claude-code
+# Or directly:
+npm run setup:claude-code
+
+# Setup for Agent-Zero
+cldcde-aegnts setup agent-zero
+# Or directly:
+npm run setup:agent-zero
+
+# Setup for OpenCode
+cldcde-aegnts setup opencode
+# Or directly:
+npm run setup:opencode
+
+# Setup for OpenClaw
+cldcde-aegnts setup openclaw
+# Or directly:
+npm run setup:openclaw
+
+# Setup all platforms at once
+npm run setup:all
+```
+
 ### Claude Code
 ```bash
-# Add to your .claude/settings.json
+# Automatic setup (recommended)
+npm install -g @aegntic/cldcde-cloud-aegnts
+
+# Manual setup - add to your .claude/settings.json
 {
-  "skills": ["./autonomous-agents-multiplatform/skills/auto-demo-skill.yaml"],
+  "skills": [
+    "~/.claude/skills/cloud-agent-skill.yaml",
+    "~/.claude/skills/auto-demo-skill.yaml"
+  ],
   "hooks": {
-    "PreTask": "node ./autonomous-agents-multiplatform/hooks/auto-agent-hooks.js pre-task",
-    "PostTask": "node ./autonomous-agents-multiplatform/hooks/auto-agent-hooks.js post-task",
-    "PreEdit": "node ./autonomous-agents-multiplatform/hooks/auto-agent-hooks.js pre-edit",
-    "PostEdit": "node ./autonomous-agents-multiplatform/hooks/auto-agent-hooks.js post-edit"
+    "PreTask": "node ~/.claude/hooks/auto-agent-hooks.js pre-task",
+    "PostTask": "node ~/.claude/hooks/auto-agent-hooks.js post-task"
   }
 }
 ```
 
 ### Agent-Zero
 ```bash
-pip install auto-agent-multiplatform
+# Automatic setup
+cldcde-aegnts setup agent-zero
+
+# Manual installation
+pip install agent-zero
+# Python adapter is installed to ~/.agent-zero/plugins/cloud_aegnts.py
 ```
 
 ```python
-from auto_agent import AutoDemoSystem
+from cloud_aegnts import CloudAegnt
 
-demo = AutoDemoSystem()
-demo.start_recording({"name": "My Demo"})
+aegnt = CloudAegnt()
+await aegnt.start("Build a REST API")
 ```
 
 ### OpenCode
 ```bash
-npm install auto-agent-multiplatform
+# Automatic setup
+cldcde-aegnts setup opencode
+
+# Use in your OpenCode project
+npm install @aegntic/cldcde-cloud-aegnts
 ```
 
 ```javascript
-const { AutoDemoSystem } = require('auto-agent-multiplatform/opencode');
-const demo = new AutoDemoSystem();
-demo.startRecording({ name: 'My Demo' });
+import { CloudAegnt } from '@aegntic/cldcde-cloud-aegnts';
+
+const aegnt = new CloudAegnt();
+await aegnt.start('Build a REST API');
 ```
 
 ### OpenClaw
-```toml
-# Cargo.toml
-[dependencies]
-auto-agent-multiplatform = { version = "1.0.0", features = ["openclaw"] }
+```bash
+# Automatic setup
+cldcde-aegnts setup openclaw
+
+# Rust adapter is installed to ~/.cargo/cloud-aegnts/
+cd ~/.cargo/cloud-aegnts && cargo build
 ```
 
 ```rust
-use auto_agent_multiplatform::{AutoDemoSystem, RecordingConfig};
+use cloud_aegnts::CloudAegnt;
 
-let mut demo = AutoDemoSystem::new();
-demo.start_recording(RecordingConfig::default());
+let aegnt = CloudAegnt::new();
+aegnt.start("Build a REST API").await?;
 ```
 
 ## Quick Start

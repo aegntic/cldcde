@@ -6,7 +6,9 @@
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "cldcde-aegnts": "./dist/cli.js"
+    "cldcde-aegnts": "./dist/cli.js",
+    "cloud-aegnts": "./dist/cli.js",
+    "aegnts": "./dist/cli.js"
   },
   "exports": {
     ".": {
@@ -56,6 +58,7 @@
   "files": [
     "dist",
     "skills",
+    "bin",
     "examples",
     "README.md",
     "LICENSE"
@@ -68,7 +71,13 @@
     "lint": "eslint src --ext .ts",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build",
-    "release": "npm run build && npm publish --access public"
+    "postinstall": "node ./bin/install.js",
+    "release": "npm run build && npm publish --access public",
+    "setup:claude-code": "node ./bin/setup-claude-code.js",
+    "setup:agent-zero": "node ./bin/setup-agent-zero.js",
+    "setup:opencode": "node ./bin/setup-opencode.js",
+    "setup:openclaw": "node ./bin/setup-openclaw.js",
+    "setup:all": "npm run setup:claude-code && npm run setup:agent-zero && npm run setup:opencode && npm run setup:openclaw"
   },
   "keywords": [
     "cldcde",
@@ -92,7 +101,8 @@
     "e2b",
     "docker",
     "browser-automation",
-    "artifacts"
+    "artifacts",
+    "global"
   ],
   "author": "AE.ltd <research@aegntic.ai>",
   "contributors": [
@@ -133,6 +143,7 @@
   "cldcde": {
     "pluginType": "core",
     "category": "automation",
+    "global": true,
     "provides": [
       "cloud-aegnts",
       "computer-use",

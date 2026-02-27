@@ -1,32 +1,77 @@
 #!/usr/bin/env node
 
 /**
- * CLDCDE CLI - Cloud Agents with Computer Use
+ * CLDCDE Cloud Aegnts CLI
  *
- * Command-line interface for running cloud agents in isolated sandboxes
+ * Command-line interface for running cloud aegnts in isolated sandboxes
  * with automatic video recording and artifact generation.
+ *
+ * (c) 2025 AE.ltd - Research: aegntic.ai - Led by Mattae Cooper
  */
 
 import { Command } from 'commander';
 import * as fs from 'fs';
 import * as path from 'path';
+import { execSync } from 'child_process';
 
 const program = new Command();
 
 const VERSION = '1.0.0';
+const PACKAGE_DIR = path.dirname(__dirname);
 
 program
-  .name('cldcde')
-  .description('Cloud Agents with Computer Use - Run agents in isolated sandboxes that record themselves')
+  .name('cldcde-aegnts')
+  .description('Cloud Aegnts with Computer Use - Run aegnts in isolated sandboxes that record themselves')
   .version(VERSION);
 
 // ============================================================================
-// CLOUD AGENT COMMANDS
+// SETUP COMMANDS
+// ============================================================================
+
+program
+  .command('setup [platform]')
+  .description('Setup Cloud Aegnts for a specific platform (claude-code, agent-zero, opencode, openclaw, all)')
+  .action(async (platform?: string) => {
+    console.log(`\n☁️  Cloud Aegnts Setup`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+
+    const binDir = path.join(PACKAGE_DIR, 'bin');
+
+    const setupScripts: Record<string, string> = {
+      'claude-code': path.join(binDir, 'setup-claude-code.js'),
+      'agent-zero': path.join(binDir, 'setup-agent-zero.js'),
+      'opencode': path.join(binDir, 'setup-opencode.js'),
+      'openclaw': path.join(binDir, 'setup-openclaw.js')
+    };
+
+    if (!platform || platform === 'all') {
+      // Run all setups
+      for (const [name, script] of Object.entries(setupScripts)) {
+        if (fs.existsSync(script)) {
+          console.log(`\n📡 Setting up ${name}...`);
+          try {
+            execSync(`node "${script}"`, { stdio: 'inherit' });
+          } catch (e) {
+            console.log(`  ⚠ Setup for ${name} had issues`);
+          }
+        }
+      }
+    } else if (setupScripts[platform]) {
+      // Run specific setup
+      execSync(`node "${setupScripts[platform]}"`, { stdio: 'inherit' });
+    } else {
+      console.log(`Unknown platform: ${platform}`);
+      console.log('Available platforms: claude-code, agent-zero, opencode, openclaw, all\n');
+    }
+  });
+
+// ============================================================================
+// CLOUD AEGNT COMMANDS
 // ============================================================================
 
 program
   .command('start <task>')
-  .description('Start a cloud agent in an isolated sandbox')
+  .description('Start a cloud aegnt in an isolated sandbox')
   .option('-r, --repo <url>', 'Git repository URL')
   .option('-b, --branch <name>', 'Git branch name')
   .option('-s, --sandbox <type>', 'Sandbox type (docker, e2b, vm, remote)', 'docker')
@@ -221,17 +266,23 @@ program
   .command('info')
   .description('Show system information')
   .action(() => {
-    console.log(`\n☁️  CLDCDE v${VERSION}`);
+    console.log(`\n☁️  CLDCDE Cloud Aegnts v${VERSION}`);
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
-    console.log('Cloud Agents with Computer Use');
+    console.log('(c) 2025 AE.ltd - Research: aegntic.ai - Led by Mattae Cooper\n');
+    console.log('Cloud Aegnts with Computer Use');
     console.log('Inspired by Cursor: https://cursor.com/blog/agent-computer-use\n');
     console.log('Features:');
     console.log('  ☁️  Isolated sandbox execution (Docker, E2B, VM, Remote)');
     console.log('  🖥️  Computer Use: browser & desktop automation');
-    console.log('  📹  Automatic video recording of agent interactions');
+    console.log('  📹  Automatic video recording of aegnt interactions');
     console.log('  📦  Artifact generation (videos, screenshots, logs)');
-    console.log('  🔀  Multi-agent parallelism (up to 8 agents)');
+    console.log('  🔀  Multi-aegnt parallelism (up to 8 aegnts)');
     console.log('  🌐  Multiplatform: Claude Code, Agent-Zero, OpenCode, OpenClaw\n');
+    console.log('Global Commands:');
+    console.log('  cldcde-aegnts start "task"     Start a cloud aegnt');
+    console.log('  cldcde-aegnts parallel "t1"... Run multiple aegnts');
+    console.log('  cldcde-aegnts setup [platform] Setup for a platform');
+    console.log('  cldcde-aegnts info             Show this info\n');
     console.log('Documentation: https://github.com/aegntic/cldcde\n');
   });
 
