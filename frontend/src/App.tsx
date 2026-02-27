@@ -53,9 +53,16 @@ const AppContainer = styled.div`
   position: relative;
 `
 
-const MainContent = styled(motion.main)`
+const HeaderVisibility = styled.div<{ $hidden: boolean }>`
+  visibility: ${({ $hidden }) => ($hidden ? 'hidden' : 'visible')};
+  pointer-events: ${({ $hidden }) => ($hidden ? 'none' : 'auto')};
+`
+
+const MainContent = styled(motion.main)<{ $hidden: boolean }>`
   position: relative;
   z-index: 1;
+  visibility: ${({ $hidden }) => ($hidden ? 'hidden' : 'visible')};
+  pointer-events: ${({ $hidden }) => ($hidden ? 'none' : 'auto')};
 `
 
 const ThemeTransitionOverlay = styled(motion.div)`
@@ -156,26 +163,15 @@ const HomeHero = styled.section`
   box-shadow: ${({ theme }) => theme.shadows.lg};
 `
 
-const HeroVideoLayer = styled.video`
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  opacity: 0.48;
-  filter: saturate(1.12) contrast(1.03) brightness(0.66);
-`
-
 const HeroBackdrop = styled.div`
   position: absolute;
   inset: 0;
   background-image: url(${LANDING_POSTER});
   background-size: cover;
   background-position: center center;
-  transform: scale(1.02);
-  opacity: 0.74;
-  filter: blur(3px) saturate(1.08) brightness(0.62);
+  transform: scale(1.01);
+  opacity: 0.86;
+  filter: blur(1px) saturate(1.04) brightness(0.72);
 `
 
 const HeroWire = styled.div`
@@ -654,6 +650,21 @@ function AppContent() {
     if (featuredItems.length > 0) return featuredItems.slice(0, 3)
     return catalog.slice(0, 3)
   }, [featuredItems, catalog])
+  const isHomeBootActive = currentPage === 'home' && showVideoBoot
+
+  useEffect(() => {
+    if (!isHomeBootActive) return
+
+    const previousBodyOverflow = document.body.style.overflow
+    const previousHtmlOverflow = document.documentElement.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow
+      document.documentElement.style.overflow = previousHtmlOverflow
+    }
+  }, [isHomeBootActive])
 
   return (
     <AppContainer>
@@ -661,7 +672,7 @@ function AppContent() {
       <DepthScene />
 
       <AnimatePresence>
-        {showVideoBoot && currentPage === 'home' && (
+        {isHomeBootActive && (
           <BootOverlay
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
@@ -721,17 +732,16 @@ function AppContent() {
 
       <ThemeToggle />
 
-      <TerminalHeader user={user} onLoginClick={() => setShowLoginModal(true)} onNavigate={navigateTo} currentPath={mapPageToPath(currentPage)} />
+      <HeaderVisibility $hidden={isHomeBootActive}>
+        <TerminalHeader user={user} onLoginClick={() => setShowLoginModal(true)} onNavigate={navigateTo} currentPath={mapPageToPath(currentPage)} />
+      </HeaderVisibility>
 
-      <MainContent initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <MainContent $hidden={isHomeBootActive} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         {currentPage === 'home' && (
           <MarketplaceShell>
             <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <HomeHero>
                 <HeroBackdrop />
-                <HeroVideoLayer autoPlay loop muted playsInline preload="metadata" poster={LANDING_POSTER}>
-                  <source src={LANDING_VIDEO} type="video/mp4" />
-                </HeroVideoLayer>
                 <HeroWire />
                 <HeroOverlay />
                 <HeroVideoStage>
