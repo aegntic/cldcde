@@ -3,7 +3,7 @@
 The complete productivity suite for Claude Code developers. **40+ CLI shortcuts**, **real-time context monitoring**, and a community platform for extensions and resources.
 
 🌐 **Live Platform**: [https://cldcde.cc](https://cldcde.cc)  
-📦 **NPM Packages**: [@aegntic/cldcde-cli-shortcuts](https://npm.im/@aegntic/cldcde-cli-shortcuts) • [@aegntic/cldcde-context-tracker](https://npm.im/@aegntic/cldcde-context-tracker)
+📦 **NPM Packages**: [@aegntic/cldcde-cloud-agents](https://npm.im/@aegntic/cldcde-cloud-agents) ⭐ • [@aegntic/cldcde-cli-shortcuts](https://npm.im/@aegntic/cldcde-cli-shortcuts) • [@aegntic/cldcde-context-tracker](https://npm.im/@aegntic/cldcde-context-tracker)
 
 ## ⚡ Quick Start
 
@@ -32,7 +32,28 @@ cld-help         # Show all 40+ shortcuts
 
 ### 📦 NPM Packages
 
-#### 1. CLI Shortcuts (`@aegntic/cldcde-cli-shortcuts`)
+#### 1. Cloud Agents (`@aegntic/cldcde-cloud-agents`) ⭐ NEW
+**Cursor-inspired Cloud Agents with Computer Use** - Run agents in isolated sandboxes:
+- ✅ **Isolated sandbox execution** (Docker, E2B, VM, Remote)
+- ✅ **Computer Use**: browser & desktop automation
+- ✅ **Automatic video recording** of agent interactions
+- ✅ **Artifact generation** (videos, screenshots, logs)
+- ✅ **Multi-agent parallelism** (up to 8 agents)
+- ✅ **Merge-ready PRs** with demo artifacts
+- ✅ **Multiplatform**: Claude Code, Agent-Zero, OpenCode, OpenClaw
+
+```bash
+# Installation
+npm install -g @aegntic/cldcde-cloud-agents
+
+# Quick start - run a cloud agent with video recording
+cldcde-cloud start "Build a REST API and test it" --repo=https://github.com/owner/repo
+
+# Multi-agent parallel execution
+cldcde-cloud parallel "Build frontend" "Build backend" "Write tests"
+```
+
+#### 2. CLI Shortcuts (`@aegntic/cldcde-cli-shortcuts`)
 **40+ battle-tested shortcuts** for Claude Code productivity:
 - ✅ **30+ aliases** like `cld`, `cldp`, `cldc`, `cldr`
 - ✅ **10+ utility functions** like `cld-help`, `cld-auto`, `cld-quick`
@@ -51,7 +72,7 @@ cld-auto "review for bugs"    # Auto-execute with safety warnings
 clds "explain this function"  # Use Claude 4 Sonnet specifically
 ```
 
-#### 2. Context Tracker (`@aegntic/cldcde-context-tracker`)
+#### 3. Context Tracker (`@aegntic/cldcde-context-tracker`)
 **Real-time context window monitor** that shows token usage below Claude input:
 - ✅ **Live token counting** as you type
 - ✅ **Color-coded progress bar** (green → yellow → red)
@@ -88,6 +109,7 @@ The **community hub** for Claude Code extensions, MCP servers, and resources:
 ```
 CLDCDE Ecosystem
 ├── NPM Packages
+│   ├── @aegntic/cldcde-cloud-agents      # Cloud Agents with Computer Use ⭐
 │   ├── @aegntic/cldcde-cli-shortcuts     # 40+ Claude CLI shortcuts
 │   └── @aegntic/cldcde-context-tracker   # Real-time context monitor
 ├── CLDCDE.CC Platform                    # Community hub

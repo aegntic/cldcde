@@ -1,0 +1,146 @@
+{
+  "name": "@aegntic/cldcde-cloud-agents",
+  "version": "1.0.0",
+  "description": "Cloud Agents with Computer Use - Run agents in isolated sandboxes that record themselves interacting with software they build. Cursor-inspired multiplatform system for Claude Code, Agent-Zero, OpenCode, and OpenClaw.",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "cldcde-cloud": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./core/cloud-agent": {
+      "import": "./dist/core/cloud-agent.js",
+      "require": "./dist/core/cloud-agent.cjs",
+      "types": "./dist/core/cloud-agent.d.ts"
+    },
+    "./core/agent-oracle": {
+      "import": "./dist/core/agent-oracle.js",
+      "require": "./dist/core/agent-oracle.cjs",
+      "types": "./dist/core/agent-oracle.d.ts"
+    },
+    "./core/auto-demo-engine": {
+      "import": "./dist/core/auto-demo-engine.js",
+      "require": "./dist/core/auto-demo-engine.cjs",
+      "types": "./dist/core/auto-demo-engine.d.ts"
+    },
+    "./core/video-generator": {
+      "import": "./dist/core/video-generator.js",
+      "require": "./dist/core/video-generator.cjs",
+      "types": "./dist/core/video-generator.d.ts"
+    },
+    "./core/video-renderer": {
+      "import": "./dist/core/video-renderer.js",
+      "require": "./dist/core/video-renderer.cjs",
+      "types": "./dist/core/video-renderer.d.ts"
+    },
+    "./platforms/agent-zero": {
+      "import": "./dist/platforms/agent-zero-config.js",
+      "require": "./dist/platforms/agent-zero-config.cjs"
+    },
+    "./platforms/opencode": {
+      "import": "./dist/platforms/opencode-config.js",
+      "require": "./dist/platforms/opencode-config.cjs"
+    },
+    "./hooks": {
+      "import": "./dist/hooks/auto-agent-hooks.js",
+      "require": "./dist/hooks/auto-agent-hooks.cjs"
+    },
+    "./skills": "./skills"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src --ext .ts",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "release": "npm run build && npm publish --access public"
+  },
+  "keywords": [
+    "cldcde",
+    "aegntic",
+    "cloud-agents",
+    "computer-use",
+    "ai",
+    "autonomous",
+    "agents",
+    "multi-agent",
+    "sandbox",
+    "demo",
+    "video-generation",
+    "recording",
+    "claude-code",
+    "agent-zero",
+    "opencode",
+    "openclaw",
+    "cursor",
+    "multiplatform",
+    "e2b",
+    "docker",
+    "browser-automation",
+    "artifacts"
+  ],
+  "author": "aegntic",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aegntic/cldcde.git",
+    "directory": "plugins/cloud-agents"
+  },
+  "bugs": {
+    "url": "https://github.com/aegntic/cldcde/issues"
+  },
+  "homepage": "https://github.com/aegntic/cldcde/tree/main/plugins/cloud-agents#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0"
+  },
+  "cldcde": {
+    "pluginType": "core",
+    "category": "automation",
+    "provides": [
+      "cloud-agents",
+      "computer-use",
+      "video-recording",
+      "sandbox-execution"
+    ],
+    "compatibleWith": [
+      "claude-code",
+      "agent-zero",
+      "opencode",
+      "openclaw"
+    ],
+    "minClaudeCodeVersion": "1.0.0"
+  }
+}

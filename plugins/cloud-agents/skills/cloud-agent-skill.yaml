@@ -1,0 +1,142 @@
+name: cloud-agent
+description: |
+  Cloud Agents with Computer Use - Run agents in isolated sandboxes that record
+  themselves interacting with software they build. Creates merge-ready PRs with
+  demo video artifacts.
+
+  Based on Cursor's Agent Computer Use feature:
+  https://cursor.com/blog/agent-computer-use
+
+triggers:
+  - /cloud-agent
+  - /cloud
+  - /sandbox-agent
+
+commands:
+  start:
+    description: Start a cloud agent in an isolated sandbox
+    usage: /cloud-agent start <task> [--repo=<url>] [--branch=<name>]
+    examples:
+      - /cloud-agent start Build a REST API --repo=https://github.com/owner/repo
+      - /cloud-agent start Fix the login bug --branch=bugfix/login
+
+  parallel:
+    description: Run multiple cloud agents in parallel (up to 8)
+    usage: /cloud-agent parallel "<task1>" "<task2>" "<task3>"
+    examples:
+      - /cloud-agent parallel "Build frontend" "Build backend" "Write tests"
+
+  status:
+    description: Check status of running cloud agents
+    usage: /cloud-agent status [agent-id]
+
+  stop:
+    description: Stop a running agent and collect artifacts
+    usage: /cloud-agent stop [agent-id]
+
+  pr:
+    description: Create a PR with demo video and screenshots
+    usage: /cloud-agent pr --title="<title>" --description="<desc>"
+
+  config:
+    description: Configure sandbox and recording settings
+    usage: /cloud-agent config --sandbox=docker --recording=true --fps=30
+
+configuration:
+  sandbox:
+    type: docker  # docker, e2b, vm, remote
+    resources:
+      cpu: 2
+      memory: 4g
+      disk: 10g
+
+  recording:
+    enabled: true
+    captureBrowser: true
+    captureTerminal: true
+    captureDesktop: false
+    fps: 30
+    quality: high  # low, medium, high
+
+  artifacts:
+    video: true
+    screenshots: true
+    logs: true
+
+templates:
+  task_prompt: |
+    You are a Cloud Agent running in an isolated sandbox with Computer Use capabilities.
+
+    Your task: {task}
+
+    You can:
+    1. Execute terminal commands with `exec()`
+    2. Browse websites with `browse(url)`
+    3. Click elements with `click(selector)`
+    4. Type text with `type(text, selector?)`
+    5. Take screenshots with `screenshot(description)`
+    6. Create PRs with `createPR(title, description)`
+
+    All your interactions are being recorded for a demo video.
+    Work methodically and explain what you're doing.
+
+  parallel_coordination: |
+    You are agent {agent_index} of {total_agents} working in parallel.
+
+    Your specialty: {specialty}
+    Your task: {task}
+
+    Coordinate through shared memory when needed.
+    Report progress to the orchestrator.
+
+examples:
+  - title: Build and Test Feature
+    command: /cloud-agent start "Build a user profile page with avatar upload"
+    description: |
+      Agent will:
+      1. Create the profile component
+      2. Add avatar upload functionality
+      3. Test the feature in a browser
+      4. Record a demo video
+      5. Create a PR with artifacts
+
+  - title: Security Vulnerability Reproduction
+    command: /cloud-agent start "Reproduce the XSS vulnerability in search"
+    description: |
+      Agent will:
+      1. Navigate to the vulnerable page
+      2. Attempt XSS payloads
+      3. Record evidence as video
+      4. Document findings
+
+  - title: Multi-Agent Feature Development
+    command: |
+      /cloud-agent parallel \
+        "Build the frontend login form" \
+        "Create the backend auth API" \
+        "Write integration tests" \
+        "Generate API documentation"
+    description: |
+      Four agents work in parallel:
+      - Frontend agent handles UI
+      - Backend agent handles API
+      - Test agent writes tests
+      - Docs agent generates docs
+
+hooks:
+  pre_start:
+    - Validate sandbox configuration
+    - Check git repository access
+    - Initialize recording pipeline
+
+  post_complete:
+    - Compile video from frames
+    - Generate screenshot gallery
+    - Create artifact manifest
+    - Optionally create PR
+
+  on_error:
+    - Save current state
+    - Capture error screenshot
+    - Log error details
+    - Notify if configured

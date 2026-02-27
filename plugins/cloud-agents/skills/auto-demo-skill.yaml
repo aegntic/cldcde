@@ -1,0 +1,214 @@
+---
+skillName: auto-demo
+version: 1.0.0
+description: Multiplatform automatic demo generation and recording system - creates interactive code walkthroughs, presentations, and demonstrations
+author: CLDCDE
+tags:
+  - demo
+  - recording
+  - presentation
+  - walkthrough
+  - multiplatform
+platforms:
+  - claude-code
+  - agent-zero
+  - opencode
+  - openclaw
+inspiredBy: Cursor AI autoDemo feature
+---
+
+# Auto-Demo: Multiplatform Automatic Demo Generation
+
+## Overview
+
+Auto-Demo is a multiplatform system for automatically generating code demonstrations, interactive walkthroughs, and presentations. It can record coding sessions, generate step-by-step guides, and create shareable demos of your work.
+
+## Core Capabilities
+
+### 1. Session Recording
+- Automatic recording of coding sessions
+- Capture of key actions (file edits, terminal commands, tests)
+- Smart filtering to include only relevant steps
+- Export to multiple formats
+
+### 2. Interactive Walkthrough Generation
+- Step-by-step code explanations
+- Clickable navigation between steps
+- Code highlighting and annotations
+- Voice narration (TTS) support
+
+### 3. Presentation Export
+- Export to Reveal.js, Marp, Slidev
+- PDF generation
+- Video export (with ffmpeg)
+- Web-based interactive demos
+
+### 4. Multi-Platform Support
+- Unified interface across Claude Code, Agent-Zero, OpenCode, OpenClaw
+- Platform-specific optimizations
+- Shared demo templates
+
+## Commands
+
+### Start Recording
+```
+/auto-demo start [--name="demo-name"] [--format=walkthrough|presentation|video]
+```
+
+### Stop Recording
+```
+/auto-demo stop [--export=html|pdf|video|reveal]
+```
+
+### Generate from Code
+```
+/auto-demo generate <file-or-directory> [--style=tutorial|overview|deep-dive]
+```
+
+### Create Walkthrough
+```
+/auto-demo walkthrough <task-description> [--interactive] [--narrate]
+```
+
+### Export Demo
+```
+/auto-demo export <demo-id> --format=<format> --output=<path>
+```
+
+## Demo Templates
+
+### Tutorial Demo
+```yaml
+template: tutorial
+structure:
+  - introduction
+  - prerequisites
+  - step-by-step
+  - summary
+features:
+  - code-highlighting
+  - progress-indicator
+  - copy-buttons
+```
+
+### Feature Showcase
+```yaml
+template: showcase
+structure:
+  - hook
+  - problem
+  - solution
+  - demo
+  - call-to-action
+features:
+  - animations
+  - interactive-elements
+  - before-after
+```
+
+### Deep Dive
+```yaml
+template: deep-dive
+structure:
+  - overview
+  - architecture
+  - implementation
+  - testing
+  - deployment
+features:
+  - diagrams
+  - code-annotations
+  - external-links
+```
+
+## Configuration
+
+```yaml
+auto-demo:
+  recording:
+    auto_start: false
+    capture_terminal: true
+    capture_browser: true
+    filter_actions:
+      - file_save
+      - command_execute
+      - test_run
+      - git_commit
+    exclude_patterns:
+      - "*.log"
+      - "node_modules/**"
+  export:
+    default_format: html
+    video_codec: libx264
+    video_fps: 30
+    pdf_dpi: 300
+  narration:
+    enabled: false
+    voice: default
+    speed: 1.0
+  platforms:
+    claude-code:
+      hooks: true
+      memory: true
+    agent-zero:
+      sandbox: true
+    opencode:
+      api: true
+    openclaw:
+      native: true
+```
+
+## Output Formats
+
+### HTML Walkthrough
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Auto-Demo: <name></title>
+  <link rel="stylesheet" href="auto-demo.css">
+</head>
+<body>
+  <nav class="demo-nav">...</nav>
+  <main class="demo-content">
+    <section class="step" data-step="1">
+      <h2>Step 1: Initialize Project</h2>
+      <pre><code class="language-typescript">...</code></pre>
+      <p class="explanation">...</p>
+    </section>
+  </main>
+  <script src="auto-demo.js"></script>
+</body>
+</html>
+```
+
+### Reveal.js Presentation
+```markdown
+---
+theme: auto-demo
+---
+
+# Project Demo
+
+## Step 1: Setup
+
+```typescript
+npm init -y
+```
+
+Note: First, we initialize the project...
+
+---
+
+## Step 2: Add Dependencies
+
+```typescript
+npm install express typescript
+```
+```
+
+### Video Export
+- Uses ffmpeg for encoding
+- Captures screen + terminal
+- Adds narration track
+- Includes chapter markers

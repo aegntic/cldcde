@@ -1,0 +1,172 @@
+# CLDCDE Cloud Agents Plugin
+# Cursor-inspired Cloud Agents with Computer Use
+
+id: cloud-agents
+name: Cloud Agents with Computer Use
+version: 1.0.0
+author: aegntic
+description: |
+  Run AI agents in isolated sandboxes that record themselves interacting
+  with software they build. Features automatic video recording, browser
+  automation, artifact generation, and merge-ready PRs.
+
+  Inspired by Cursor's Agent Computer Use:
+  https://cursor.com/blog/agent-computer-use
+
+category: automation
+tags:
+  - cloud-agents
+  - computer-use
+  - sandbox
+  - video-recording
+  - browser-automation
+  - artifacts
+  - cursor-inspired
+
+platforms:
+  - claude-code
+  - agent-zero
+  - opencode
+  - openclaw
+
+minClaudeCodeVersion: 1.0.0
+
+features:
+  - id: cloud-agents
+    name: Cloud Agents
+    description: Run agents in isolated Docker/E2B/VM sandboxes
+    commands:
+      - /cloud-agent start <task>
+      - /cloud-agent parallel <tasks...>
+      - /cloud-agent status
+      - /cloud-agent stop
+      - /cloud-agent pr
+
+  - id: computer-use
+    name: Computer Use
+    description: Browser and desktop automation for agents
+    capabilities:
+      - Navigate browsers
+      - Click elements
+      - Type text
+      - Take screenshots
+      - Execute terminal commands
+
+  - id: video-recording
+    name: Video Recording
+    description: Automatic video recording of agent interactions
+    outputFormats:
+      - mp4
+      - webm
+      - gif
+
+  - id: artifact-generation
+    name: Artifact Generation
+    description: Generate videos, screenshots, and logs
+    artifactTypes:
+      - video
+      - screenshot
+      - logs
+      - diff
+
+  - id: multi-agent
+    name: Multi-Agent Parallelism
+    description: Run up to 8 agents in parallel
+    strategies:
+      - race
+      - consensus
+      - specialized
+      - sequential
+
+sandboxTypes:
+  - type: docker
+    description: Local Docker container
+    useCase: Development, testing
+  - type: e2b
+    description: E2B secure sandbox
+    useCase: Production, untrusted code
+  - type: vm
+    description: Full virtual machine
+    useCase: Complex environments
+  - type: remote
+    description: Remote server
+    useCase: Existing infrastructure
+
+hooks:
+  preTask:
+    file: hooks/auto-agent-hooks.js
+    function: preTask
+  postTask:
+    file: hooks/auto-agent-hooks.js
+    function: postTask
+  preEdit:
+    file: hooks/auto-agent-hooks.js
+    function: preEdit
+  postEdit:
+    file: hooks/auto-agent-hooks.js
+    function: postEdit
+
+skills:
+  - skills/cloud-agent-skill.yaml
+  - skills/auto-agent-skill.yaml
+  - skills/auto-demo-skill.yaml
+
+installation:
+  npm:
+    package: "@aegntic/cldcde-cloud-agents"
+    global: true
+  manual:
+    - Copy skills/*.yaml to ~/.claude/skills/
+    - Copy hooks/*.js to ~/.claude/hooks/
+    - Add to Claude Code settings
+
+configuration:
+  sandbox:
+    type: docker
+    resources:
+      cpu: 2
+      memory: 4g
+      disk: 10g
+  recording:
+    enabled: true
+    captureBrowser: true
+    captureTerminal: true
+    fps: 30
+    quality: high
+
+examples:
+  - title: Quick Start
+    code: |
+      import { runCloudAgent } from '@aegntic/cldcde-cloud-agents';
+
+      const result = await runCloudAgent('Build a REST API', {
+        repo: 'https://github.com/owner/repo',
+        createPR: true
+      });
+
+      console.log('Video:', result.videoUrl);
+
+  - title: Multi-Agent Parallel
+    code: |
+      import { CloudAgentOrchestrator } from '@aegntic/cldcde-cloud-agents';
+
+      const orchestrator = new CloudAgentOrchestrator();
+
+      await orchestrator.runParallel([
+        'Build frontend',
+        'Build backend',
+        'Write tests'
+      ]);
+
+documentation:
+  readme: README.md
+  examples: examples/
+  api: docs/api.md
+
+links:
+  homepage: https://github.com/aegntic/cldcde/tree/main/plugins/cloud-agents
+  issues: https://github.com/aegntic/cldcde/issues
+  npm: https://npm.im/@aegntic/cldcde-cloud-agents
+  cursor: https://cursor.com/blog/agent-computer-use
+
+license: MIT
