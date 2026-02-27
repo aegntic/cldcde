@@ -138,7 +138,30 @@ const BootVeil = styled.div`
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(4, 10, 20, 0.02) 0%, rgba(4, 10, 20, 0.09) 100%);
+    radial-gradient(circle at 52% 30%, rgba(5, 16, 30, 0.04) 0%, rgba(5, 16, 30, 0.24) 75%),
+    linear-gradient(180deg, rgba(3, 9, 20, 0.16) 0%, rgba(3, 9, 20, 0.24) 100%);
+`
+
+const BootTopMask = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: clamp(66px, 14dvh, 130px);
+  background: linear-gradient(180deg, rgba(3, 9, 20, 0.86) 0%, rgba(3, 9, 20, 0.2) 78%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+`
+
+const BootBottomMask = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(72px, 18dvh, 180px);
+  background: linear-gradient(180deg, transparent 0%, rgba(3, 9, 20, 0.26) 34%, rgba(3, 9, 20, 0.86) 100%);
+  z-index: 1;
+  pointer-events: none;
 `
 
 const BootControls = styled.div`
@@ -210,12 +233,94 @@ const HeroOverlay = styled.div`
     linear-gradient(180deg, rgba(3, 9, 19, 0.02) 0%, rgba(3, 9, 19, 0.12) 100%);
 `
 
+const HeroTopMask = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: clamp(58px, 11dvh, 112px);
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(3, 9, 20, 0.76) 0%, rgba(3, 9, 20, 0.14) 76%, transparent 100%);
+`
+
+const HeroBottomMask = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(64px, 14dvh, 148px);
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgba(3, 9, 20, 0.26) 32%, rgba(3, 9, 20, 0.78) 100%);
+`
+
+const HeroCornerMask = styled.div<{ $side: 'left' | 'right' }>`
+  position: absolute;
+  bottom: 0;
+  ${({ $side }) => ($side === 'left' ? 'left: 0;' : 'right: 0;')}
+  width: clamp(70px, 10vw, 140px);
+  height: clamp(54px, 11vh, 96px);
+  z-index: 4;
+  pointer-events: none;
+  background: ${({ $side }) =>
+    $side === 'left'
+      ? 'linear-gradient(90deg, rgba(3, 9, 20, 0.88) 0%, rgba(3, 9, 20, 0) 100%)'
+      : 'linear-gradient(270deg, rgba(3, 9, 20, 0.88) 0%, rgba(3, 9, 20, 0) 100%)'};
+`
+
 const HeroVideoStage = styled.div`
   position: relative;
   z-index: 2;
   min-height: inherit;
   display: flex;
   align-items: flex-end;
+`
+
+const HeroActionLayer = styled.div`
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: clamp(0.9rem, 2.4vw, 1.8rem);
+  pointer-events: none;
+`
+
+const HeroActionPanel = styled.div`
+  width: min(96vw, 900px);
+  pointer-events: auto;
+  border: 1px solid ${({ theme }) => `${theme.colors.border.primary}d0`};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  background: linear-gradient(180deg, rgba(3, 10, 20, 0.78) 0%, rgba(3, 10, 20, 0.54) 100%);
+  backdrop-filter: blur(7px);
+  box-shadow: ${({ theme }) => theme.shadows.md};
+  display: grid;
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding: clamp(0.8rem, 1.9vw, 1.2rem);
+`
+
+const HeroActionTitle = styled.h1`
+  margin: 0;
+  font-family: ${({ theme }) => theme.fonts.sans};
+  font-size: clamp(1.05rem, 2.4vw, 2.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: ${({ theme }) => theme.colors.text.primary};
+`
+
+const HeroActionLead = styled.p`
+  margin: 0;
+  font-size: clamp(0.82rem, 1.2vw, 1rem);
+  line-height: 1.5;
+  color: ${({ theme }) => theme.colors.text.secondary};
+`
+
+const HeroActionButtons = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.sm};
 `
 
 const HeroPrimary = styled(MarketplacePanel)`
@@ -713,6 +818,8 @@ function AppContent() {
               <source src={launchMedia.video} type="video/mp4" />
             </BootVideo>
             <BootVeil />
+            <BootTopMask />
+            <BootBottomMask />
             <BootControls>
               <NeonButton onClick={completeBoot} whileTap={{ scale: 0.98 }}>
                 Enter
@@ -766,7 +873,31 @@ function AppContent() {
                 <HeroBackdrop $poster={launchMedia.poster} />
                 <HeroWire />
                 <HeroOverlay />
+                <HeroTopMask />
+                <HeroBottomMask />
+                <HeroCornerMask $side="left" />
+                <HeroCornerMask $side="right" />
                 <HeroVideoStage />
+                <HeroActionLayer>
+                  <HeroActionPanel>
+                    <HeroActionTitle>Build The Future, Block By Block</HeroActionTitle>
+                    <HeroActionLead>
+                      Install curated plugins, MCP servers, and workflow packs with direct commands for Codex, Agent Zero,
+                      ZeroClaw, and ClawReform.
+                    </HeroActionLead>
+                    <HeroActionButtons>
+                      <NeonButton $tone="primary" onClick={() => navigateTo('/extensions')} whileTap={{ scale: 0.98 }}>
+                        Start Creating
+                      </NeonButton>
+                      <NeonButton $tone="secondary" onClick={() => navigateTo('/mcp')} whileTap={{ scale: 0.98 }}>
+                        Explore MCP
+                      </NeonButton>
+                      <NeonButton $tone="ghost" onClick={() => navigateTo('/packs')} whileTap={{ scale: 0.98 }}>
+                        View Packs
+                      </NeonButton>
+                    </HeroActionButtons>
+                  </HeroActionPanel>
+                </HeroActionLayer>
               </HomeHero>
             </HomeHeroRail>
 
