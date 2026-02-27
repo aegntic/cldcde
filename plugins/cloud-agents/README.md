@@ -1,13 +1,18 @@
-# Multiplatform Autonomous Agent System
+# CLDCDE Cloud Aegnts
 
-A Cursor-inspired autonomous agent system with **Cloud Agents with Computer Use** and **automatic demo VIDEO generation** capabilities, designed to work across **Claude Code**, **Agent-Zero**, **OpenCode**, and **OpenClaw**.
+> **Cloud Aegnts with Computer Use** - Run agents in isolated sandboxes that record themselves interacting with software they build.
+
+A Cursor-inspired autonomous agent system with **Cloud Aegnts with Computer Use** and **automatic demo VIDEO generation** capabilities, designed to work across **Claude Code**, **Agent-Zero**, **OpenCode**, and **OpenClaw**.
 
 Based on [Cursor's Agent Computer Use](https://cursor.com/blog/agent-computer-use) feature.
 
+[![npm version](https://badge.fury.io/js/@aegntic%2Fcldcde-cloud-aegnts.svg)](https://badge.fury.io/js/@aegntic%2Fcldcde-cloud-aegnts)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Features
 
-### ☁️ Cloud Agents with Computer Use (Cursor-Inspired)
-The flagship feature - agents that run in isolated VMs/sandboxes and can:
+### ☁️ Cloud Aegnts with Computer Use (Cursor-Inspired)
+The flagship feature - aegnts that run in isolated VMs/sandboxes and can:
 - **Isolated Execution**: Run in Docker, E2B, VM, or remote sandboxes
 - **Computer Use**: Navigate browsers, click buttons, fill forms, use desktop apps
 - **Automatic Video Recording**: Agents record themselves interacting with software they build
@@ -540,8 +545,23 @@ Contributions are welcome! Please see the platform-specific guides:
 
 MIT License - See [LICENSE](./LICENSE) for details.
 
-## Acknowledgments
+## Credits & Acknowledgments
 
-- Inspired by [Cursor](https://cursor.sh/) and their innovative autonomous agent features
+### Created by
+**AE.ltd** - *Advanced Enterprises Limited*
+https://aegntic.ai
+
+### Research Team
+**aegntic.ai Research Team** - Led by **Mattae Cooper**
+
+### Acknowledgments
+- Inspired by [Cursor](https://cursor.sh/) and their innovative [Agent Computer Use](https://cursor.com/blog/agent-computer-use) feature
 - Built for the AI coding assistant community
 - Designed for cross-platform compatibility
+
+---
+
+<p align="center">
+  <strong>AE.ltd</strong> &copy; 2025<br>
+  <a href="https://aegntic.ai">aegntic.ai</a> | <a href="https://github.com/aegntic">GitHub</a>
+</p>

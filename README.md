@@ -3,7 +3,7 @@
 The complete productivity suite for Claude Code developers. **40+ CLI shortcuts**, **real-time context monitoring**, and a community platform for extensions and resources.
 
 🌐 **Live Platform**: [https://cldcde.cc](https://cldcde.cc)  
-📦 **NPM Packages**: [@aegntic/cldcde-cloud-agents](https://npm.im/@aegntic/cldcde-cloud-agents) ⭐ • [@aegntic/cldcde-cli-shortcuts](https://npm.im/@aegntic/cldcde-cli-shortcuts) • [@aegntic/cldcde-context-tracker](https://npm.im/@aegntic/cldcde-context-tracker)
+📦 **NPM Packages**: [@aegntic/cldcde-cloud-aegnts](https://npm.im/@aegntic/cldcde-cloud-aegnts) ⭐ • [@aegntic/cldcde-cli-shortcuts](https://npm.im/@aegntic/cldcde-cli-shortcuts) • [@aegntic/cldcde-context-tracker](https://npm.im/@aegntic/cldcde-context-tracker)
 
 ## ⚡ Quick Start
 
@@ -32,25 +32,25 @@ cld-help         # Show all 40+ shortcuts
 
 ### 📦 NPM Packages
 
-#### 1. Cloud Agents (`@aegntic/cldcde-cloud-agents`) ⭐ NEW
-**Cursor-inspired Cloud Agents with Computer Use** - Run agents in isolated sandboxes:
+#### 1. Cloud Aegnts (`@aegntic/cldcde-cloud-aegnts`) ⭐ NEW
+**Cursor-inspired Cloud Aegnts with Computer Use** - Run aegnts in isolated sandboxes:
 - ✅ **Isolated sandbox execution** (Docker, E2B, VM, Remote)
 - ✅ **Computer Use**: browser & desktop automation
-- ✅ **Automatic video recording** of agent interactions
+- ✅ **Automatic video recording** of aegnt interactions
 - ✅ **Artifact generation** (videos, screenshots, logs)
-- ✅ **Multi-agent parallelism** (up to 8 agents)
+- ✅ **Multi-aegnt parallelism** (up to 8 aegnts)
 - ✅ **Merge-ready PRs** with demo artifacts
 - ✅ **Multiplatform**: Claude Code, Agent-Zero, OpenCode, OpenClaw
 
 ```bash
 # Installation
-npm install -g @aegntic/cldcde-cloud-agents
+npm install -g @aegntic/cldcde-cloud-aegnts
 
-# Quick start - run a cloud agent with video recording
-cldcde-cloud start "Build a REST API and test it" --repo=https://github.com/owner/repo
+# Quick start - run a cloud aegnt with video recording
+cldcde-aegnts start "Build a REST API and test it" --repo=https://github.com/owner/repo
 
-# Multi-agent parallel execution
-cldcde-cloud parallel "Build frontend" "Build backend" "Write tests"
+# Multi-aegnt parallel execution
+cldcde-aegnts parallel "Build frontend" "Build backend" "Write tests"
 ```
 
 #### 2. CLI Shortcuts (`@aegntic/cldcde-cli-shortcuts`)
@@ -109,7 +109,7 @@ The **community hub** for Claude Code extensions, MCP servers, and resources:
 ```
 CLDCDE Ecosystem
 ├── NPM Packages
-│   ├── @aegntic/cldcde-cloud-agents      # Cloud Agents with Computer Use ⭐
+│   ├── @aegntic/cldcde-cloud-aegnts      # Cloud Aegnts with Computer Use ⭐
 │   ├── @aegntic/cldcde-cli-shortcuts     # 40+ Claude CLI shortcuts
 │   └── @aegntic/cldcde-context-tracker   # Real-time context monitor
 ├── CLDCDE.CC Platform                    # Community hub

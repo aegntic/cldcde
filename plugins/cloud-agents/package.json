@@ -1,12 +1,12 @@
 {
-  "name": "@aegntic/cldcde-cloud-agents",
+  "name": "@aegntic/cldcde-cloud-aegnts",
   "version": "1.0.0",
-  "description": "Cloud Agents with Computer Use - Run agents in isolated sandboxes that record themselves interacting with software they build. Cursor-inspired multiplatform system for Claude Code, Agent-Zero, OpenCode, and OpenClaw.",
+  "description": "Cloud Aegnts with Computer Use - Run agents in isolated sandboxes that record themselves interacting with software they build. Cursor-inspired multiplatform system for Claude Code, Agent-Zero, OpenCode, and OpenClaw.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "cldcde-cloud": "./dist/cli.js"
+    "cldcde-aegnts": "./dist/cli.js"
   },
   "exports": {
     ".": {
@@ -73,7 +73,7 @@
   "keywords": [
     "cldcde",
     "aegntic",
-    "cloud-agents",
+    "cloud-aegnts",
     "computer-use",
     "ai",
     "autonomous",
@@ -94,7 +94,11 @@
     "browser-automation",
     "artifacts"
   ],
-  "author": "aegntic",
+  "author": "AE.ltd <research@aegntic.ai>",
+  "contributors": [
+    "Mattae Cooper <mattae@aegntic.ai>",
+    "aegntic.ai Research Team"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -130,7 +134,7 @@
     "pluginType": "core",
     "category": "automation",
     "provides": [
-      "cloud-agents",
+      "cloud-aegnts",
       "computer-use",
       "video-recording",
       "sandbox-execution"

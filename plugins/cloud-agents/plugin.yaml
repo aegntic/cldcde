@@ -1,12 +1,16 @@
-# CLDCDE Cloud Agents Plugin
-# Cursor-inspired Cloud Agents with Computer Use
+# CLDCDE Cloud Aegnts Plugin
+# Cursor-inspired Cloud Aegnts with Computer Use
+# (c) 2025 AE.ltd - Research: aegntic.ai - Led by Mattae Cooper
 
-id: cloud-agents
-name: Cloud Agents with Computer Use
+id: cloud-aegnts
+name: Cloud Aegnts with Computer Use
 version: 1.0.0
-author: aegntic
+author: AE.ltd
+contributors:
+  - Mattae Cooper (Lead Researcher)
+  - aegntic.ai Research Team
 description: |
-  Run AI agents in isolated sandboxes that record themselves interacting
+  Run AI aegnts in isolated sandboxes that record themselves interacting
   with software they build. Features automatic video recording, browser
   automation, artifact generation, and merge-ready PRs.
 
@@ -15,7 +19,7 @@ description: |
 
 category: automation
 tags:
-  - cloud-agents
+  - cloud-aegnts
   - computer-use
   - sandbox
   - video-recording
@@ -113,7 +117,7 @@ skills:
 
 installation:
   npm:
-    package: "@aegntic/cldcde-cloud-agents"
+    package: "@aegntic/cldcde-cloud-aegnts"
     global: true
   manual:
     - Copy skills/*.yaml to ~/.claude/skills/
@@ -137,20 +141,20 @@ configuration:
 examples:
   - title: Quick Start
     code: |
-      import { runCloudAgent } from '@aegntic/cldcde-cloud-agents';
+      import { runCloudAegnt } from '@aegntic/cldcde-cloud-aegnts';
 
-      const result = await runCloudAgent('Build a REST API', {
+      const result = await runCloudAegnt('Build a REST API', {
         repo: 'https://github.com/owner/repo',
         createPR: true
       });
 
       console.log('Video:', result.videoUrl);
 
-  - title: Multi-Agent Parallel
+  - title: Multi-Aegnt Parallel
     code: |
-      import { CloudAgentOrchestrator } from '@aegntic/cldcde-cloud-agents';
+      import { CloudAegntOrchestrator } from '@aegntic/cldcde-cloud-aegnts';
 
-      const orchestrator = new CloudAgentOrchestrator();
+      const orchestrator = new CloudAegntOrchestrator();
 
       await orchestrator.runParallel([
         'Build frontend',
@@ -166,7 +170,12 @@ documentation:
 links:
   homepage: https://github.com/aegntic/cldcde/tree/main/plugins/cloud-agents
   issues: https://github.com/aegntic/cldcde/issues
-  npm: https://npm.im/@aegntic/cldcde-cloud-agents
+  npm: https://npm.im/@aegntic/cldcde-cloud-aegnts
   cursor: https://cursor.com/blog/agent-computer-use
+  aegntic: https://aegntic.ai
 
 license: MIT
+
+copyright: |
+  (c) 2025 AE.ltd (Advanced Enterprises Limited)
+  Research: aegntic.ai - Led by Mattae Cooper
