@@ -122,67 +122,33 @@ const BootVeil = styled.div`
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 25% 15%, rgba(90, 230, 255, 0.16) 0%, transparent 40%),
-    radial-gradient(circle at 75% 20%, rgba(88, 246, 203, 0.12) 0%, transparent 44%),
-    linear-gradient(180deg, rgba(5, 12, 24, 0.22) 0%, rgba(5, 12, 24, 0.86) 100%);
+    linear-gradient(180deg, rgba(4, 10, 20, 0.04) 0%, rgba(4, 10, 20, 0.18) 100%);
 `
 
-const BootPanel = styled(MarketplacePanel)`
+const BootControls = styled.div`
   position: absolute;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  bottom: clamp(0.8rem, 4.2vh, 2rem);
-  width: min(880px, calc(100% - 1.4rem));
+  right: clamp(0.7rem, 2vw, 1.2rem);
+  bottom: clamp(0.7rem, 2vw, 1.2rem);
   z-index: 2;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing.sm};
-  text-align: center;
+  padding: 0.5rem;
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  border: 1px solid ${({ theme }) => `${theme.colors.border.primary}aa`};
+  background: rgba(3, 9, 20, 0.38);
+  backdrop-filter: blur(5px);
 
   @media (max-width: 700px) {
-    width: calc(100% - 0.8rem);
-    bottom: 0.45rem;
-    padding: ${({ theme }) => theme.spacing.sm};
-    gap: ${({ theme }) => theme.spacing.xs};
-  }
-`
-
-const BootCopy = styled.p`
-  margin: 0;
-  color: ${({ theme }) => theme.colors.text.secondary};
-  font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  max-width: 52ch;
-  justify-self: center;
-
-  @media (max-width: 700px) {
-    font-size: 0.66rem;
-    max-width: 34ch;
-    line-height: 1.4;
-  }
-`
-
-const BootActions = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-
-  @media (max-width: 700px) {
-    width: 100%;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: ${({ theme }) => theme.spacing.xs};
-
-    > button:first-child {
-      grid-column: 1 / -1;
-    }
+    left: 0.5rem;
+    right: 0.5rem;
+    justify-content: center;
   }
 `
 
 const HomeHero = styled.section`
-  min-height: min(860px, calc(100dvh - 94px));
+  min-height: calc(100dvh - 96px);
   position: relative;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   border: 1px solid ${({ theme }) => theme.colors.border.primary};
@@ -228,26 +194,35 @@ const HeroOverlay = styled.div`
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 8%, rgba(96, 255, 226, 0.2) 0%, transparent 36%),
-    radial-gradient(circle at 85% 14%, rgba(99, 198, 255, 0.2) 0%, transparent 34%),
-    linear-gradient(180deg, rgba(3, 9, 19, 0.25) 0%, rgba(3, 9, 19, 0.9) 100%);
+    radial-gradient(circle at 18% 9%, rgba(96, 255, 226, 0.12) 0%, transparent 34%),
+    radial-gradient(circle at 84% 12%, rgba(99, 198, 255, 0.12) 0%, transparent 32%),
+    linear-gradient(180deg, rgba(3, 9, 19, 0.06) 0%, rgba(3, 9, 19, 0.34) 100%);
 `
 
-const HeroInner = styled.div`
+const HeroStamp = styled.div`
+  position: relative;
+  z-index: 2;
+  margin: clamp(1rem, 2vw, 1.8rem);
+  margin-top: auto;
+  width: fit-content;
+  border: 1px solid ${({ theme }) => `${theme.colors.border.primary}b8`};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  padding: 0.45rem 0.7rem;
+  background: rgba(2, 10, 22, 0.4);
+  backdrop-filter: blur(6px);
+  font-family: ${({ theme }) => theme.fonts.mono};
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: 0.74rem;
+`
+
+const HeroVideoStage = styled.div`
   position: relative;
   z-index: 2;
   min-height: inherit;
-  padding: clamp(1rem, 2.8vw, 2rem);
-  display: grid;
-  grid-template-columns: 1.06fr 0.94fr;
-  gap: ${({ theme }) => theme.spacing.md};
-  align-content: center;
-
-  @media (max-width: 980px) {
-    grid-template-columns: 1fr;
-    align-content: start;
-    min-height: auto;
-  }
+  display: flex;
+  align-items: flex-end;
 `
 
 const HeroPrimary = styled(MarketplacePanel)`
@@ -705,28 +680,17 @@ function AppContent() {
               <source src={LANDING_VIDEO} type="video/mp4" />
             </BootVideo>
             <BootVeil />
-            <BootPanel initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-              <Badge $tone="new">Launch Clip</Badge>
-              <BootCopy>full-screen launch clip // transitions on clip end</BootCopy>
-              <BootActions>
-                <NeonButton
-                  onClick={completeBoot}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Enter
-                </NeonButton>
-                <NeonButton $tone="secondary" onClick={() => setBootMuted((prev) => !prev)} whileTap={{ scale: 0.98 }}>
-                  {bootMuted ? 'Unmute' : 'Mute'}
-                </NeonButton>
-                <NeonButton
-                  $tone="ghost"
-                  onClick={completeBoot}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Skip
-                </NeonButton>
-              </BootActions>
-            </BootPanel>
+            <BootControls>
+              <NeonButton onClick={completeBoot} whileTap={{ scale: 0.98 }}>
+                Enter
+              </NeonButton>
+              <NeonButton $tone="secondary" onClick={() => setBootMuted((prev) => !prev)} whileTap={{ scale: 0.98 }}>
+                {bootMuted ? 'Unmute' : 'Mute'}
+              </NeonButton>
+              <NeonButton $tone="ghost" onClick={completeBoot} whileTap={{ scale: 0.98 }}>
+                Skip
+              </NeonButton>
+            </BootControls>
           </BootOverlay>
         )}
       </AnimatePresence>
@@ -770,63 +734,69 @@ function AppContent() {
                 </HeroVideoLayer>
                 <HeroWire />
                 <HeroOverlay />
-                <HeroInner>
-                  <HeroPrimary initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
-                    <Badge $tone="new">Marketplace Live</Badge>
-                    <HeroLogoRow>
-                      <HeroLogoMark
-                        src="/media/branding/glass-character-mark.png"
-                        alt="CLDCDE glass glyph"
-                        loading="eager"
-                        decoding="async"
-                      />
-                      <HeroHeading text="CLDCDE.CC" size="hero" level={1} />
-                    </HeroLogoRow>
-                    <HeroMiniNav>
-                      {['Home', 'Features', 'Pricing', 'Community', 'Contact'].map((label) => (
-                        <span key={label}>{label}</span>
-                      ))}
-                    </HeroMiniNav>
-                    <HeroTagline>Build The Future, Block By Block</HeroTagline>
-                    <HeroLead>
-                      Route-first catalog for plugins, MCP servers, and AE.LTD packs. Every listing includes direct install
-                      commands for Codex, Agent Zero, ZeroClaw, and ClawReform.
-                    </HeroLead>
-                    <HeroActionRow>
-                      <NeonButton $tone="primary" onClick={() => navigateTo('/extensions')} whileTap={{ scale: 0.98 }}>
-                        Start Creating
-                      </NeonButton>
-                      <NeonButton $tone="secondary" onClick={() => navigateTo('/mcp')} whileTap={{ scale: 0.98 }}>
-                        Explore MCP
-                      </NeonButton>
-                      <NeonButton $tone="ghost" onClick={() => navigateTo('/packs')} whileTap={{ scale: 0.98 }}>
-                        View Packs
-                      </NeonButton>
-                    </HeroActionRow>
-                    <HeroMeta>
-                      <Badge>{extensionCount} plugins</Badge>
-                      <Badge>{mcpCount} mcp</Badge>
-                      <Badge>{packCount} packs</Badge>
-                      <Badge>{catalog.length} total assets</Badge>
-                    </HeroMeta>
-                  </HeroPrimary>
-
-                  <HeroSecondary initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
-                    <SectionHeaderAscii text="THE MODULAR REVOLUTION" size="card" level={2} />
-                    <CardText>
-                      Build once and ship across Codex + terminal workflows. CLDCDE keeps discovery public and install paths fast,
-                      with launch-ready prompts, plugins, and MCP endpoints.
-                    </CardText>
-                    <IsoCity />
-                    <NeonButton $tone="secondary" onClick={() => navigateTo('/docs')} whileTap={{ scale: 0.98 }}>
-                      Explore The Builder
-                    </NeonButton>
-                  </HeroSecondary>
-                </HeroInner>
+                <HeroVideoStage>
+                  <HeroStamp>Full-screen launch clip</HeroStamp>
+                </HeroVideoStage>
               </HomeHero>
             </SectionRail>
 
-            <SectionRail initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }}>
+            <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.04 }}>
+              <HomeGrid>
+                <HeroPrimary initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
+                  <Badge $tone="new">Marketplace Live</Badge>
+                  <HeroLogoRow>
+                    <HeroLogoMark
+                      src="/media/branding/glass-character-mark.png"
+                      alt="CLDCDE glass glyph"
+                      loading="eager"
+                      decoding="async"
+                    />
+                    <HeroHeading text="CLDCDE.CC" size="hero" level={1} />
+                  </HeroLogoRow>
+                  <HeroMiniNav>
+                    {['Home', 'Features', 'Pricing', 'Community', 'Contact'].map((label) => (
+                      <span key={label}>{label}</span>
+                    ))}
+                  </HeroMiniNav>
+                  <HeroTagline>Build The Future, Block By Block</HeroTagline>
+                  <HeroLead>
+                    Route-first catalog for plugins, MCP servers, and AE.LTD packs. Every listing includes direct install
+                    commands for Codex, Agent Zero, ZeroClaw, and ClawReform.
+                  </HeroLead>
+                  <HeroActionRow>
+                    <NeonButton $tone="primary" onClick={() => navigateTo('/extensions')} whileTap={{ scale: 0.98 }}>
+                      Start Creating
+                    </NeonButton>
+                    <NeonButton $tone="secondary" onClick={() => navigateTo('/mcp')} whileTap={{ scale: 0.98 }}>
+                      Explore MCP
+                    </NeonButton>
+                    <NeonButton $tone="ghost" onClick={() => navigateTo('/packs')} whileTap={{ scale: 0.98 }}>
+                      View Packs
+                    </NeonButton>
+                  </HeroActionRow>
+                  <HeroMeta>
+                    <Badge>{extensionCount} plugins</Badge>
+                    <Badge>{mcpCount} mcp</Badge>
+                    <Badge>{packCount} packs</Badge>
+                    <Badge>{catalog.length} total assets</Badge>
+                  </HeroMeta>
+                </HeroPrimary>
+
+                <HeroSecondary initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
+                  <SectionHeaderAscii text="THE MODULAR REVOLUTION" size="card" level={2} />
+                  <CardText>
+                    Step confidently through every stage. Build in modular blocks, route installs cleanly, and keep
+                    launch-ready prompts, plugins, and MCP endpoints in one surface.
+                  </CardText>
+                  <IsoCity />
+                  <NeonButton $tone="secondary" onClick={() => navigateTo('/docs')} whileTap={{ scale: 0.98 }}>
+                    Explore The Builder
+                  </NeonButton>
+                </HeroSecondary>
+              </HomeGrid>
+            </SectionRail>
+
+            <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.06 }}>
               <HomeGrid>
                 <FeaturePanel>
                   <SectionHeaderAscii text="VISUALIZE YOUR SUCCESS" size="section" level={2} />
@@ -900,7 +870,7 @@ function AppContent() {
               </HomeGrid>
             </SectionRail>
 
-            <SectionRail initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }}>
+            <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
               <HomeGrid>
                 <FeaturePanel>
                   <SectionHeaderAscii text="EMPOWER YOUR TEAM" size="section" level={2} />
@@ -967,7 +937,7 @@ function AppContent() {
               </HomeGrid>
             </SectionRail>
 
-            <SectionRail initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }}>
+            <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
               <SectionHeaderAscii text="FEATURED RELEASE STRIP" size="section" level={2} />
               <SectionLead>Curated launch-ready assets based on download traction and featured flags.</SectionLead>
               <FeaturedGrid>
@@ -990,7 +960,7 @@ function AppContent() {
               </FeaturedGrid>
             </SectionRail>
 
-            <SectionRail initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }}>
+            <SectionRail initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}>
               <FooterSignal>
                 {['cldcde.cc', 'aegntic.ai', 'ae.ltd', 'clawreform.com', 'github.com/aegntic/cldcde'].map((item) => (
                   <Badge key={item}>{item}</Badge>
