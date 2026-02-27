@@ -42,12 +42,11 @@ type Page =
   | 'news'
   | 'settings'
 
-const BOOT_SESSION_KEY = 'cldcde_market_boot_v1_seen'
 const R2_PUBLIC_BASE = 'https://pub-5720f0c8abe84850a71c8d81dcd6f928.r2.dev'
 const LANDING_VIDEO = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v4.mp4`
 const LANDING_POSTER = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v4-poster.png`
-const LANDING_MEDIA_ORIGIN = '50% 68%'
-const LANDING_MEDIA_SCALE = 1.12
+const LANDING_MEDIA_ORIGIN = '50% 60%'
+const LANDING_MEDIA_SCALE = 1.05
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -558,6 +557,7 @@ function AppContent() {
   const [newUser, setNewUser] = useState<any>(null)
   const [currentPage, setCurrentPage] = useState<Page>('home')
   const [showVideoBoot, setShowVideoBoot] = useState(false)
+  const [bootEligibleForLoad, setBootEligibleForLoad] = useState(() => window.location.pathname === '/')
   const [bootMuted, setBootMuted] = useState(true)
   const [catalog, setCatalog] = useState<MarketplaceItem[]>([])
   const [featured, setFeatured] = useState<MarketplaceItem[]>([])
@@ -606,28 +606,16 @@ function AppContent() {
   }, [])
 
   useEffect(() => {
-    if (currentPage !== 'home') {
+    if (currentPage !== 'home' || !bootEligibleForLoad) {
       setShowVideoBoot(false)
       return
     }
-
-    let seen = false
-    try {
-      seen = sessionStorage.getItem(BOOT_SESSION_KEY) === '1'
-    } catch {
-      seen = false
-    }
-
-    if (!seen) {
-      setShowVideoBoot(true)
-    }
-  }, [currentPage])
+    setShowVideoBoot(true)
+  }, [currentPage, bootEligibleForLoad])
 
   const completeBoot = () => {
-    try {
-      sessionStorage.setItem(BOOT_SESSION_KEY, '1')
-    } catch {}
     setShowVideoBoot(false)
+    setBootEligibleForLoad(false)
   }
 
   const navigateTo = (path: string) => {
