@@ -195,60 +195,60 @@ export const claudeCodeTheme: Theme = {
 }
 
 export const futuristicTheme: Theme = {
-  name: 'Neon Grid Magma',
+  name: 'Neon Grid Red',
   colors: {
     background: {
-      primary: '#0a090f',
-      secondary: '#141220',
-      tertiary: '#201b2f',
-      modal: 'rgba(10, 9, 15, 0.96)',
-      card: '#161325'
+      primary: '#12080a',
+      secondary: '#1b0d11',
+      tertiary: '#2a151b',
+      modal: 'rgba(18, 8, 10, 0.96)',
+      card: '#1f0e13'
     },
     text: {
-      primary: '#f6f2ff',
-      secondary: '#d7caee',
-      tertiary: '#b7a7d9',
-      muted: '#8878aa',
-      inverse: '#0e0916'
+      primary: '#fff3ef',
+      secondary: '#f0cec6',
+      tertiary: '#d9a39a',
+      muted: '#ab7870',
+      inverse: '#18090c'
     },
     border: {
-      primary: '#3a2f58',
-      secondary: '#2e2647',
-      focus: '#ff7bd7',
-      hover: '#55457c'
+      primary: '#5d2931',
+      secondary: '#492028',
+      focus: '#ff5f6b',
+      hover: '#753540'
     },
     status: {
-      success: '#53d6a1',
-      error: '#ff688d',
-      warning: '#ffc364',
-      info: '#7ec5ff'
+      success: '#5fd3a0',
+      error: '#ff4d5d',
+      warning: '#ffb55d',
+      info: '#ff887c'
     },
     interactive: {
-      primary: '#ff7bd7',
-      primaryHover: '#dc61ba',
-      secondary: '#231a37',
-      secondaryHover: '#352652',
-      accent: '#74c4ff',
-      accentHover: '#5b9dd1'
+      primary: '#ff4d5d',
+      primaryHover: '#e13e4d',
+      secondary: '#36171f',
+      secondaryHover: '#4d222c',
+      accent: '#ff7a6e',
+      accentHover: '#ea6357'
     },
     terminal: {
-      green: '#53d6a1',
-      blue: '#74c4ff',
-      yellow: '#ffc364',
-      orange: '#ff9b5f',
-      purple: '#c8a0ff',
-      cyan: '#8eefff',
-      red: '#ff688d',
-      white: '#fbf8ff',
-      gray: '#a091bf'
+      green: '#5fd3a0',
+      blue: '#ff9f8d',
+      yellow: '#ffb55d',
+      orange: '#ff8d53',
+      purple: '#ff9eb1',
+      cyan: '#ff8989',
+      red: '#ff4d5d',
+      white: '#fff8f5',
+      gray: '#bf9088'
     },
     syntax: {
-      keyword: '#b88dff',
-      string: '#ffc49a',
-      number: '#8ef4ca',
-      comment: '#8c7aa8',
-      function: '#ffd980',
-      variable: '#edb6ff'
+      keyword: '#ff8f83',
+      string: '#ffc691',
+      number: '#92f1bc',
+      comment: '#b48379',
+      function: '#ffd37f',
+      variable: '#ffaaa0'
     }
   },
   fonts: {
@@ -257,10 +257,10 @@ export const futuristicTheme: Theme = {
     serif: '"Rajdhani", "Instrument Serif", Georgia, serif'
   },
   shadows: {
-    sm: '0 6px 16px rgba(20, 12, 30, 0.35)',
-    md: '0 14px 32px rgba(20, 12, 30, 0.5)',
-    lg: '0 24px 58px rgba(20, 12, 30, 0.62)',
-    glow: '0 0 24px rgba(255, 123, 215, 0.35), 0 0 60px rgba(116, 196, 255, 0.2)'
+    sm: '0 6px 16px rgba(36, 10, 14, 0.35)',
+    md: '0 14px 32px rgba(36, 10, 14, 0.52)',
+    lg: '0 24px 58px rgba(36, 10, 14, 0.64)',
+    glow: '0 0 24px rgba(255, 95, 107, 0.32), 0 0 60px rgba(255, 122, 110, 0.18)'
   },
   ...commonTheme
 }

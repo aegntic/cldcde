@@ -43,8 +43,10 @@ type Page =
   | 'settings'
 
 const R2_PUBLIC_BASE = 'https://pub-5720f0c8abe84850a71c8d81dcd6f928.r2.dev'
-const LANDING_VIDEO = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v5.mp4`
-const LANDING_POSTER = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v5-poster.png`
+const BLUE_LANDING_VIDEO = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v5.mp4`
+const BLUE_LANDING_POSTER = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v5-poster.png`
+const RED_LANDING_VIDEO = `${R2_PUBLIC_BASE}/media/landing/Create_seamless_loop.mp4`
+const RED_LANDING_POSTER = `${R2_PUBLIC_BASE}/media/landing/Create_seamless_loop-poster.png`
 const LANDING_MEDIA_ORIGIN = '50% 60%'
 const LANDING_MEDIA_SCALE = 1.05
 
@@ -109,12 +111,12 @@ const StatusPill = styled(motion.div)<{ status: 'checking' | 'online' | 'offline
   }
 `
 
-const BootOverlay = styled(motion.div)`
+const BootOverlay = styled(motion.div)<{ $poster: string }>`
   position: fixed;
   inset: 0;
   z-index: 1200;
   background: ${({ theme }) => theme.colors.background.primary};
-  background-image: url(${LANDING_POSTER});
+  background-image: url(${({ $poster }) => $poster});
   background-size: cover;
   background-position: center center;
   overflow: hidden;
@@ -175,10 +177,10 @@ const HomeHeroRail = styled(SectionRail)`
   margin-top: calc(-1 * (86px + ${({ theme }) => theme.spacing.xl}));
 `
 
-const HeroBackdrop = styled.div`
+const HeroBackdrop = styled.div<{ $poster: string }>`
   position: absolute;
   inset: 0;
-  background-image: url(${LANDING_POSTER});
+  background-image: url(${({ $poster }) => $poster});
   background-size: cover;
   background-position: center center;
   transform: scale(${LANDING_MEDIA_SCALE});
@@ -552,7 +554,7 @@ const mapPageToPath = (page: Page): string => {
 }
 
 function AppContent() {
-  const { isTransitioning } = useTheme()
+  const { isTransitioning, themeName } = useTheme()
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showProfileSetup, setShowProfileSetup] = useState(false)
   const [connectionStatus, setConnectionStatus] = useState<'checking' | 'online' | 'offline'>('checking')
@@ -562,6 +564,10 @@ function AppContent() {
   const [showVideoBoot, setShowVideoBoot] = useState(false)
   const [bootEligibleForLoad, setBootEligibleForLoad] = useState(() => window.location.pathname === '/')
   const [bootMuted, setBootMuted] = useState(true)
+  const [launchMedia, setLaunchMedia] = useState({
+    video: BLUE_LANDING_VIDEO,
+    poster: BLUE_LANDING_POSTER
+  })
   const [catalog, setCatalog] = useState<MarketplaceItem[]>([])
   const [featured, setFeatured] = useState<MarketplaceItem[]>([])
 
@@ -609,6 +615,21 @@ function AppContent() {
   }, [])
 
   useEffect(() => {
+    if (themeName === 'futuristic') {
+      setLaunchMedia({
+        video: RED_LANDING_VIDEO,
+        poster: RED_LANDING_POSTER
+      })
+      return
+    }
+
+    setLaunchMedia({
+      video: BLUE_LANDING_VIDEO,
+      poster: BLUE_LANDING_POSTER
+    })
+  }, [themeName])
+
+  useEffect(() => {
     if (currentPage !== 'home' || !bootEligibleForLoad) {
       setShowVideoBoot(false)
       return
@@ -619,6 +640,17 @@ function AppContent() {
   const completeBoot = () => {
     setShowVideoBoot(false)
     setBootEligibleForLoad(false)
+  }
+
+  const handleBootVideoError = () => {
+    if (launchMedia.video !== BLUE_LANDING_VIDEO) {
+      setLaunchMedia({
+        video: BLUE_LANDING_VIDEO,
+        poster: BLUE_LANDING_POSTER
+      })
+      return
+    }
+    completeBoot()
   }
 
   const navigateTo = (path: string) => {
@@ -662,21 +694,23 @@ function AppContent() {
       <AnimatePresence>
         {isHomeBootActive && (
           <BootOverlay
+            $poster={launchMedia.poster}
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
             <BootVideo
+              key={launchMedia.video}
               autoPlay
               muted={bootMuted}
               playsInline
               preload="auto"
-              poster={LANDING_POSTER}
+              poster={launchMedia.poster}
               onEnded={completeBoot}
-              onError={completeBoot}
+              onError={handleBootVideoError}
             >
-              <source src={LANDING_VIDEO} type="video/mp4" />
+              <source src={launchMedia.video} type="video/mp4" />
             </BootVideo>
             <BootVeil />
             <BootControls>
@@ -729,7 +763,7 @@ function AppContent() {
           <>
             <HomeHeroRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <HomeHero>
-                <HeroBackdrop />
+                <HeroBackdrop $poster={launchMedia.poster} />
                 <HeroWire />
                 <HeroOverlay />
                 <HeroVideoStage />

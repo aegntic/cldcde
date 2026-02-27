@@ -80,8 +80,8 @@ const Hint = styled.span`
 
 const ThemeToggle: React.FC = () => {
   const { currentTheme, themeName, toggleTheme, isTransitioning } = useTheme()
-  const badge = themeName === 'claudeCode' ? 'NG' : 'NM'
-  const next = themeName === 'claudeCode' ? 'to NM' : 'to NG'
+  const badge = themeName === 'claudeCode' ? 'NG' : 'NR'
+  const next = themeName === 'claudeCode' ? 'to NR' : 'to NG'
 
   return (
     <ToggleContainer
