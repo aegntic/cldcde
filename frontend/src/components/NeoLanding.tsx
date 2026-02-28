@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { Badge, NeonButton } from './common/marketplace'
+import { submitLeadCapture } from '../lib/leads'
 
 interface NeoLandingProps {
   backgroundVideoSrc?: string
@@ -14,6 +15,7 @@ interface NeoLandingProps {
   mcpCount: number
   packCount: number
   totalCount: number
+  authAvailable?: boolean
 }
 
 const LandingRoot = styled.section`
@@ -137,6 +139,63 @@ const Counters = styled.div`
   gap: ${({ theme }) => theme.spacing.xs};
 `
 
+const CapturePanel = styled.form`
+  width: min(760px, 100%);
+  display: grid;
+  gap: 0.72rem;
+  padding: 0.9rem 1rem;
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  border: 1px solid ${({ theme }) => `${theme.colors.border.primary}c0`};
+  background: linear-gradient(180deg, rgba(3, 9, 20, 0.62) 0%, rgba(3, 9, 20, 0.38) 100%);
+  backdrop-filter: blur(8px);
+  box-shadow: ${({ theme }) => theme.shadows.md};
+`
+
+const CaptureLead = styled.div`
+  font-family: ${({ theme }) => theme.fonts.sans};
+  font-size: 0.94rem;
+  color: ${({ theme }) => theme.colors.text.primary};
+  line-height: 1.45;
+`
+
+const CaptureFieldRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.sm};
+  justify-content: center;
+`
+
+const CaptureInput = styled.input`
+  flex: 1 1 320px;
+  min-width: 220px;
+  border: 1px solid ${({ theme }) => theme.colors.border.primary};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background: ${({ theme }) => `${theme.colors.background.secondary}de`};
+  color: ${({ theme }) => theme.colors.text.primary};
+  font-family: ${({ theme }) => theme.fonts.sans};
+  font-size: 0.95rem;
+  padding: 0.68rem 0.82rem;
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.interactive.primary};
+    box-shadow: 0 0 0 1px ${({ theme }) => `${theme.colors.interactive.primary}55`};
+  }
+`
+
+const CaptureMeta = styled.div<{ $kind: 'neutral' | 'error' | 'success' }>`
+  min-height: 1.2rem;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: ${({ theme, $kind }) => {
+    if ($kind === 'error') return theme.colors.status.error
+    if ($kind === 'success') return theme.colors.status.success
+    return theme.colors.text.tertiary
+  }};
+`
+
 const NeoLanding: React.FC<NeoLandingProps> = ({
   backgroundVideoSrc,
   backgroundVideoPoster,
@@ -146,13 +205,31 @@ const NeoLanding: React.FC<NeoLandingProps> = ({
   extensionCount,
   mcpCount,
   packCount,
-  totalCount
+  totalCount,
+  authAvailable = true
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const rootRef = useRef<HTMLElement | null>(null)
   const backgroundVideoRef = useRef<HTMLVideoElement | null>(null)
   const ctaRef = useRef<HTMLDivElement | null>(null)
   const hasBackgroundVideo = Boolean(backgroundVideoSrc)
+  const [leadEmail, setLeadEmail] = useState('')
+  const [leadStatus, setLeadStatus] = useState<{ kind: 'neutral' | 'error' | 'success'; text: string }>({
+    kind: 'neutral',
+    text: authAvailable
+      ? 'Get release drops and launch notes without opening an account.'
+      : 'Account signup is offline right now. Leave your email for launch access and release updates.'
+  })
+  const [isSubmittingLead, setIsSubmittingLead] = useState(false)
+
+  useEffect(() => {
+    setLeadStatus({
+      kind: 'neutral',
+      text: authAvailable
+        ? 'Get release drops and launch notes without opening an account.'
+        : 'Account signup is offline right now. Leave your email for launch access and release updates.'
+    })
+  }, [authAvailable])
 
   useEffect(() => {
     const node = backgroundVideoRef.current
@@ -359,6 +436,29 @@ const NeoLanding: React.FC<NeoLandingProps> = ({
     return () => ctx.revert()
   }, [])
 
+  const handleLeadSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    setIsSubmittingLead(true)
+    setLeadStatus({ kind: 'neutral', text: 'Saving your address…' })
+
+    try {
+      const data = await submitLeadCapture({
+        email: leadEmail,
+        source: 'home-hero',
+        intent: authAvailable ? 'updates' : 'both'
+      })
+      setLeadEmail('')
+      setLeadStatus({ kind: 'success', text: data.message })
+    } catch (error) {
+      setLeadStatus({
+        kind: 'error',
+        text: error instanceof Error ? error.message : 'Email capture failed. Please try again.'
+      })
+    } finally {
+      setIsSubmittingLead(false)
+    }
+  }
+
   return (
     <LandingRoot ref={rootRef}>
       {!hasBackgroundVideo && <AtmosphereLayer />}
@@ -400,6 +500,29 @@ const NeoLanding: React.FC<NeoLandingProps> = ({
           <Badge>{packCount} packs</Badge>
           <Badge>{totalCount} total assets</Badge>
         </Counters>
+
+        <CapturePanel onSubmit={handleLeadSubmit}>
+          <CaptureLead>
+            {authAvailable
+              ? 'Get release drops, new skills, and MCP launches by email.'
+              : 'Registration is temporarily offline. Leave your email and we will send launch access as soon as auth is back.'}
+          </CaptureLead>
+          <CaptureFieldRow>
+            <CaptureInput
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              placeholder="you@domain.com"
+              value={leadEmail}
+              onChange={(event) => setLeadEmail(event.target.value)}
+              required
+            />
+            <NeonButton type="submit" $tone="secondary" whileTap={{ scale: 0.98 }}>
+              {isSubmittingLead ? 'Saving…' : authAvailable ? 'Get Updates' : 'Get Access'}
+            </NeonButton>
+          </CaptureFieldRow>
+          <CaptureMeta $kind={leadStatus.kind}>{leadStatus.text}</CaptureMeta>
+        </CapturePanel>
       </Content>
     </LandingRoot>
   )

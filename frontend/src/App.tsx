@@ -701,6 +701,7 @@ function AppContent() {
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showProfileSetup, setShowProfileSetup] = useState(false)
   const [connectionStatus, setConnectionStatus] = useState<'checking' | 'online' | 'offline'>('checking')
+  const [authAvailable, setAuthAvailable] = useState(false)
   const [user, setUser] = useState<any>(null)
   const [newUser, setNewUser] = useState<any>(null)
   const [currentPage, setCurrentPage] = useState<Page>('home')
@@ -736,9 +737,21 @@ function AppContent() {
     const checkConnection = async () => {
       try {
         const response = await fetch(`${apiOrigin}/health`)
-        setConnectionStatus(response.ok ? 'online' : 'offline')
+        if (!response.ok) {
+          setConnectionStatus('offline')
+          setAuthAvailable(false)
+          return
+        }
+
+        const data = await response.json()
+        const supabaseHealthy = data?.services?.supabase === 'healthy'
+        const hasAnon = Boolean(data?.env?.hasAnon)
+        const hasService = Boolean(data?.env?.hasService)
+        setAuthAvailable(supabaseHealthy && hasAnon && hasService)
+        setConnectionStatus(data?.status === 'healthy' && supabaseHealthy ? 'online' : 'offline')
       } catch {
         setConnectionStatus('offline')
+        setAuthAvailable(false)
       }
     }
 
@@ -893,7 +906,13 @@ function AppContent() {
       <ThemeToggle />
 
       <HeaderVisibility $hidden={isHomeBootActive}>
-        <TerminalHeader user={user} onLoginClick={() => setShowLoginModal(true)} onNavigate={navigateTo} currentPath={mapPageToPath(currentPage)} />
+        <TerminalHeader
+          user={user}
+          authAvailable={authAvailable}
+          onLoginClick={() => setShowLoginModal(true)}
+          onNavigate={navigateTo}
+          currentPath={mapPageToPath(currentPage)}
+        />
       </HeaderVisibility>
 
       <MainContent $hidden={isHomeBootActive} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -917,6 +936,7 @@ function AppContent() {
               mcpCount={mcpCount}
               packCount={packCount}
               totalCount={catalog.length}
+              authAvailable={authAvailable}
             />
 
             <HomeContentShell>
@@ -1080,6 +1100,7 @@ function AppContent() {
           <LoginModal
             onClose={() => setShowLoginModal(false)}
             onLogin={setUser}
+            authAvailable={authAvailable}
             onShowProfileSetup={(nextUser) => {
               setNewUser(nextUser)
               setShowProfileSetup(true)

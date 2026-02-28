@@ -13,6 +13,7 @@ interface TerminalHeaderProps {
   onLoginClick?: () => void
   onNavigate?: (path: string) => void
   currentPath?: string
+  authAvailable?: boolean
 }
 
 const Header = styled(motion.header)`
@@ -147,7 +148,13 @@ const LoginButton = styled(motion.button)`
   cursor: pointer;
 `
 
-const TerminalHeader: React.FC<TerminalHeaderProps> = ({ user, onLoginClick, onNavigate, currentPath = '/' }) => {
+const TerminalHeader: React.FC<TerminalHeaderProps> = ({
+  user,
+  onLoginClick,
+  onNavigate,
+  currentPath = '/',
+  authAvailable = true
+}) => {
   const nav = [
     { label: 'Home', path: '/' },
     { label: 'Marketplace', path: '/extensions' },
@@ -218,7 +225,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ user, onLoginClick, onN
             </>
           ) : (
             <LoginButton type="button" onClick={onLoginClick} whileTap={{ scale: 0.98 }}>
-              Login / Register
+              {authAvailable ? 'Login / Register' : 'Get Access / Updates'}
             </LoginButton>
           )}
         </UserPanel>

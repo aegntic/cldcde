@@ -162,6 +162,32 @@ const normalizePack = (pack: UnknownRecord): MarketplaceItem => {
   }
 }
 
+const normalizeRepoCatalogItem = (item: UnknownRecord): MarketplaceItem => {
+  const name = asString(item.name, 'Repo item')
+  const slug = asString(item.slug, slugify(name || `${item.category || item.kind || 'asset'}-${item.id || 'item'}`))
+
+  return {
+    id: asString(item.id, slug),
+    kind: item.kind === 'mcp' ? 'mcp' : item.kind === 'pack' ? 'pack' : 'extension',
+    name,
+    slug,
+    summary: asString(item.summary || item.description, 'Repo-synced item.'),
+    tags: normalizeTags(item.tags),
+    downloads: asNumber(item.downloads),
+    rating: asNumber(item.rating, 0),
+    verified: item.verified !== false,
+    installCommand: normalizeInstallCommand(item.installCommand || item.install_script, `@aegntic/${slug || 'repo-item'}`),
+    repoUrl: asString(item.repoUrl || item.repository, ''),
+    docsUrl: asString(item.docsUrl || item.documentation || item.docs, ''),
+    tier: item.tier === 'pro' ? 'pro' : 'free',
+    releasedAt: normalizeDate(item.releasedAt || item.updated_at || item.created_at),
+    category: asString(item.category, 'plugin'),
+    platform: normalizePlatform(item.platform),
+    author: asString(item.author, 'AE.LTD'),
+    featured: Boolean(item.featured)
+  }
+}
+
 const fetchJson = async (url: string): Promise<any> => {
   const res = await fetch(url)
   if (!res.ok) {
@@ -185,24 +211,31 @@ const normalizeFeaturedFeed = (raw: any, fallback: MarketplaceItem[]): Marketpla
 }
 
 export const fetchMarketplaceCatalog = async (): Promise<MarketplaceItem[]> => {
-  const [extensionsRaw, mcpRaw, packRaw] = await Promise.allSettled([
-    fetchJson(`${config.api.baseUrl}/extensions`),
-    fetchJson(`${config.api.baseUrl}/mcp`),
+  const [repoRaw, packRaw] = await Promise.allSettled([
+    fetchJson('/static/catalog/repo-index.json'),
     fetchJson('/static/downloads/ae-ltd/latest.json')
   ])
 
+  const repoItems =
+    repoRaw.status === 'fulfilled'
+      ? safeArray(repoRaw.value.items || repoRaw.value.data || repoRaw.value).map((item) => normalizeRepoCatalogItem(item))
+      : []
+
+  const [extensionsRaw, mcpRaw] =
+    repoItems.length > 0
+      ? [null, null]
+      : await Promise.allSettled([fetchJson(`${config.api.baseUrl}/extensions`), fetchJson(`${config.api.baseUrl}/mcp`)])
+
   const extensions =
-    extensionsRaw.status === 'fulfilled'
+    extensionsRaw && extensionsRaw.status === 'fulfilled'
       ? safeArray(extensionsRaw.value.extensions || extensionsRaw.value.data).map((item) =>
           normalizeExtensionLike(item, 'extension', 'extension')
         )
       : []
 
   const mcpServers =
-    mcpRaw.status === 'fulfilled'
-      ? safeArray(mcpRaw.value.mcpServers || mcpRaw.value.data).map((item) =>
-          normalizeExtensionLike(item, 'mcp', 'mcp')
-        )
+    mcpRaw && mcpRaw.status === 'fulfilled'
+      ? safeArray(mcpRaw.value.mcpServers || mcpRaw.value.data).map((item) => normalizeExtensionLike(item, 'mcp', 'mcp'))
       : []
 
   const packs =
@@ -210,7 +243,8 @@ export const fetchMarketplaceCatalog = async (): Promise<MarketplaceItem[]> => {
       ? safeArray(packRaw.value.packs).map((pack) => normalizePack(pack))
       : []
 
-  return [...extensions, ...mcpServers, ...packs]
+  const catalog = repoItems.length > 0 ? [...repoItems, ...packs] : [...extensions, ...mcpServers, ...packs]
+  return catalog.sort((a, b) => new Date(b.releasedAt).getTime() - new Date(a.releasedAt).getTime())
 }
 
 export const fetchMarketplaceFeatured = async (fallback: MarketplaceItem[]): Promise<MarketplaceFeatured> => {

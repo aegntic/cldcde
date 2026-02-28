@@ -37,7 +37,7 @@ const ExtensionBrowser: React.FC<ExtensionBrowserProps> = () => {
     <MarketplaceShell>
       <MarketplaceCatalog
         title="PLUGIN MARKETPLACE"
-        subtitle="Route-first catalog for plugins and bundle assets. Explore, compare, and copy direct install commands."
+        subtitle="Repo-synced catalog for plugins, skills, workflows, prompts, and bundle assets. Explore, compare, and copy direct install commands."
         items={items}
         loading={loading}
       />

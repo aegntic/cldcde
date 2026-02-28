@@ -41,45 +41,44 @@ afterEach(() => {
 })
 
 describe('marketplaceApi', () => {
-  test('normalizes extensions, mcp servers, and packs into one catalog model', async () => {
+  test('prefers the static repo catalog and merges packs into one newest-first model', async () => {
     globalThis.fetch = (async (url: string | URL | Request) => {
       const target = String(url)
 
-      if (target.includes('/extensions')) {
+      if (target.includes('/static/catalog/repo-index.json')) {
         return jsonResponse({
-          extensions: [
+          items: [
             {
-              id: 'ext-1',
+              id: 'plugin:notebooklm-pro',
+              kind: 'extension',
               name: 'NotebookLM Pro',
-              description: 'Research workflow extension',
+              summary: 'Research workflow extension',
+              category: 'plugin',
               tags: ['research', 'rag'],
               downloads: '12',
               rating: '4.8',
               verified: true,
-              installScript: 'npm install -g @aegntic/notebooklm-pro',
-              repository: 'https://github.com/aegntic/notebooklm-pro',
-              category: 'research',
+              installCommand: 'tmp=\"$(mktemp -d)\" && git clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\"',
+              repoUrl: 'https://github.com/aegntic/cldcde/tree/main/plugins/notebooklm-pro',
+              docsUrl: 'https://github.com/aegntic/cldcde/blob/main/plugins/notebooklm-pro/README.md',
               platform: ['macos', 'linux'],
-              author: 'aegntic',
-              updated_at: '2026-02-20T00:00:00.000Z'
-            }
-          ]
-        })
-      }
-
-      if (target.includes('/mcp')) {
-        return jsonResponse({
-          mcpServers: [
+              author: 'AE.LTD',
+              releasedAt: '2026-02-20T00:00:00.000Z'
+            },
             {
-              id: 'mcp-1',
+              id: 'mcp:google-labs',
+              kind: 'mcp',
               name: 'Google Labs MCP',
-              description: 'Labs context bridge',
+              summary: 'Labs context bridge',
+              category: 'mcp',
+              tier: 'pro',
               tags: ['mcp', 'labs'],
               downloads: 9,
               rating: 4.6,
-              install_command: 'npm install -g @aegntic/google-labs-mcp',
-              repository: 'https://github.com/aegntic/google-labs-extension',
-              updated_at: '2026-02-21T00:00:00.000Z'
+              installCommand: 'tmp=\"$(mktemp -d)\" && git clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\"',
+              repoUrl: 'https://github.com/aegntic/cldcde/tree/main/mcp-servers/google-labs',
+              author: 'AE.LTD',
+              releasedAt: '2026-02-21T00:00:00.000Z'
             }
           ]
         })
@@ -117,11 +116,13 @@ describe('marketplaceApi', () => {
     const mcp = catalog.find((item) => item.kind === 'mcp')
     const pack = catalog.find((item) => item.kind === 'pack')
 
-    expect(extension?.id).toBe('ext-1')
+    expect(catalog[0]?.id).toBe('ae-ltd-viral-free')
+    expect(extension?.id).toBe('plugin:notebooklm-pro')
     expect(extension?.tier).toBe('free')
     expect(extension?.verified).toBe(true)
+    expect(extension?.category).toBe('plugin')
 
-    expect(mcp?.id).toBe('mcp-1')
+    expect(mcp?.id).toBe('mcp:google-labs')
     expect(mcp?.tier).toBe('pro')
     expect(mcp?.category).toBe('mcp')
 

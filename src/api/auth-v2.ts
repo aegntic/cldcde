@@ -1,8 +1,14 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
-import { createSupabaseClient } from '../db/supabase'
+import { createSupabaseAnonClient, createSupabaseClient } from '../db/supabase'
 
-const authRoutes = new Hono<{ Bindings: { SUPABASE_URL: string, SUPABASE_ANON_KEY: string } }>()
+const authRoutes = new Hono<{
+  Bindings: {
+    SUPABASE_URL?: string
+    SUPABASE_ANON_KEY?: string
+    SUPABASE_SERVICE_KEY?: string
+  }
+}>()
 
 // Validation schemas
 const registerSchema = z.object({
@@ -18,19 +24,45 @@ const loginSchema = z.object({
   password: z.string().min(1)
 })
 
+const hasAuthEnv = (env: { SUPABASE_URL?: string; SUPABASE_ANON_KEY?: string }) =>
+  Boolean(env.SUPABASE_URL && env.SUPABASE_ANON_KEY)
+
+const getAuthClient = (env: { SUPABASE_URL?: string; SUPABASE_ANON_KEY?: string }) => {
+  if (!hasAuthEnv(env)) {
+    throw new Error('Auth service is temporarily unavailable.')
+  }
+
+  return createSupabaseAnonClient({
+    SUPABASE_URL: env.SUPABASE_URL!,
+    SUPABASE_ANON_KEY: env.SUPABASE_ANON_KEY!
+  })
+}
+
+const getServiceClient = (env: {
+  SUPABASE_URL?: string
+  SUPABASE_SERVICE_KEY?: string
+}) => {
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_KEY) {
+    return null
+  }
+
+  return createSupabaseClient({
+    SUPABASE_URL: env.SUPABASE_URL,
+    SUPABASE_SERVICE_KEY: env.SUPABASE_SERVICE_KEY
+  })
+}
+
 // Register endpoint
 authRoutes.post('/register', async (c) => {
   try {
     const body = await c.req.json()
     const validatedData = registerSchema.parse(body)
-    
-    const supabase = createSupabaseClient({
-      SUPABASE_URL: c.env.SUPABASE_URL,
-      SUPABASE_SERVICE_KEY: c.env.SUPABASE_ANON_KEY
-    })
+
+    const authClient = getAuthClient(c.env)
+    const serviceClient = getServiceClient(c.env)
 
     // Register user with Supabase Auth
-    const { data, error } = await supabase.auth.signUp({
+    const { data, error } = await authClient.auth.signUp({
       email: validatedData.email,
       password: validatedData.password,
       options: {
@@ -46,8 +78,8 @@ authRoutes.post('/register', async (c) => {
     }
 
     // Create profile with mailing list preference
-    if (data.user) {
-      const { error: profileError } = await supabase
+    if (data.user && serviceClient) {
+      const { error: profileError } = await serviceClient
         .from('profiles')
         .insert({
           id: data.user.id,
@@ -64,7 +96,7 @@ authRoutes.post('/register', async (c) => {
       if (validatedData.mailingListOptIn) {
         const consentText = 'User opted in to mailing list during registration. Agreed to receive occasional emails about new features, extensions, and community updates with promise of no spam or third-party data sales.'
         
-        await supabase
+        await serviceClient
           .from('mailing_list_consent')
           .insert({
             user_id: data.user.id,
@@ -90,7 +122,7 @@ authRoutes.post('/register', async (c) => {
     return c.json({ 
       error: 'Registration failed', 
       details: error.message || 'Unknown error'
-    }, 500)
+    }, hasAuthEnv(c.env) ? 500 : 503)
   }
 })
 
@@ -99,13 +131,10 @@ authRoutes.post('/login', async (c) => {
   try {
     const body = await c.req.json()
     const validatedData = loginSchema.parse(body)
-    
-    const supabase = createSupabaseClient({
-      SUPABASE_URL: c.env.SUPABASE_URL,
-      SUPABASE_SERVICE_KEY: c.env.SUPABASE_ANON_KEY
-    })
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const authClient = getAuthClient(c.env)
+
+    const { data, error } = await authClient.auth.signInWithPassword({
       email: validatedData.email,
       password: validatedData.password
     })
@@ -123,78 +152,75 @@ authRoutes.post('/login', async (c) => {
     if (error instanceof z.ZodError) {
       return c.json({ error: error.errors }, 400)
     }
-    return c.json({ error: 'Login failed' }, 500)
+    return c.json({ error: error.message || 'Login failed' }, hasAuthEnv(c.env) ? 500 : 503)
   }
 })
 
 // Get current user
 authRoutes.get('/me', async (c) => {
-  const authHeader = c.req.header('Authorization')
-  
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return c.json({ error: 'No authorization token' }, 401)
-  }
-
-  const token = authHeader.replace('Bearer ', '')
-  
-  const supabase = createSupabaseClient({
-    SUPABASE_URL: c.env.SUPABASE_URL,
-    SUPABASE_SERVICE_KEY: c.env.SUPABASE_ANON_KEY
-  })
-
-  const { data: { user }, error } = await supabase.auth.getUser(token)
-
-  if (error || !user) {
-    return c.json({ error: 'Invalid token' }, 401)
-  }
-
-  // Get profile data
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', user.id)
-    .single()
-
-  return c.json({
-    user: {
-      ...user,
-      profile
+  try {
+    const authHeader = c.req.header('Authorization')
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return c.json({ error: 'No authorization token' }, 401)
     }
-  })
+
+    const token = authHeader.replace('Bearer ', '')
+
+    const authClient = getAuthClient(c.env)
+    const serviceClient = getServiceClient(c.env)
+    const {
+      data: { user },
+      error
+    } = await authClient.auth.getUser(token)
+
+    if (error || !user) {
+      return c.json({ error: 'Invalid token' }, 401)
+    }
+
+    // Get profile data
+    const { data: profile } = serviceClient
+      ? await serviceClient.from('profiles').select('*').eq('id', user.id).single()
+      : { data: null }
+
+    return c.json({
+      user: {
+        ...user,
+        profile
+      }
+    })
+  } catch (error: any) {
+    return c.json({ error: error.message || 'Auth service is temporarily unavailable.' }, 503)
+  }
 })
 
 // Logout endpoint
 authRoutes.post('/logout', async (c) => {
-  const authHeader = c.req.header('Authorization')
-  
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return c.json({ error: 'No authorization token' }, 401)
+  try {
+    const authHeader = c.req.header('Authorization')
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return c.json({ error: 'No authorization token' }, 401)
+    }
+
+    const token = authHeader.replace('Bearer ', '')
+    const authClient = getAuthClient(c.env)
+    await authClient.auth.getUser(token)
+
+    return c.json({ message: 'Logout successful' })
+  } catch (error: any) {
+    return c.json({ error: error.message || 'Auth service is temporarily unavailable.' }, 503)
   }
-
-  const token = authHeader.replace('Bearer ', '')
-  
-  const supabase = createSupabaseClient({
-    SUPABASE_URL: c.env.SUPABASE_URL,
-    SUPABASE_SERVICE_KEY: c.env.SUPABASE_ANON_KEY
-  })
-
-  await supabase.auth.signOut()
-
-  return c.json({ message: 'Logout successful' })
 })
 
 // Request password reset
 authRoutes.post('/forgot-password', async (c) => {
   try {
     const { email } = await c.req.json()
-    
-    const supabase = createSupabaseClient({
-      SUPABASE_URL: c.env.SUPABASE_URL,
-      SUPABASE_SERVICE_KEY: c.env.SUPABASE_ANON_KEY
-    })
+    const authClient = getAuthClient(c.env)
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${c.env.SUPABASE_URL}/auth/reset-password`
+    const { error } = await authClient.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://cldcde.cc/settings?mode=reset-password'
     })
 
     if (error) {
@@ -203,7 +229,8 @@ authRoutes.post('/forgot-password', async (c) => {
 
     return c.json({ message: 'Password reset email sent' })
   } catch (error) {
-    return c.json({ error: 'Failed to send reset email' }, 500)
+    const message = error instanceof Error ? error.message : 'Failed to send reset email'
+    return c.json({ error: message }, hasAuthEnv(c.env) ? 500 : 503)
   }
 })
 

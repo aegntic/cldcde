@@ -12,11 +12,13 @@ import {
   SectionLead,
   TagChip
 } from './common/marketplace'
+import { submitLeadCapture } from '../lib/leads'
 
 interface LoginModalProps {
   onClose: () => void
   onLogin: (user: any) => void
   onShowProfileSetup?: (user: any) => void
+  authAvailable: boolean
 }
 
 const loginSchema = z.object({
@@ -213,11 +215,12 @@ const Spinner = styled.span`
   }
 `
 
-const LoginModal: React.FC<LoginModalProps> = ({ onClose, onLogin, onShowProfileSetup }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ onClose, onLogin, onShowProfileSetup, authAvailable }) => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
+  const [leadEmail, setLeadEmail] = useState('')
 
   const [loginForm, setLoginForm] = useState({
     email: '',
@@ -256,6 +259,30 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, onLogin, onShowProfile
   const clearMessages = () => {
     setError(null)
     setSuccess(null)
+  }
+
+  const handleLeadSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    clearMessages()
+    setIsLoading(true)
+
+    try {
+      const data = await submitLeadCapture({
+        email: leadEmail,
+        source: 'auth-modal',
+        intent: 'both'
+      })
+      setLeadEmail('')
+      setSuccess(data.message)
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message)
+      } else {
+        setError('Email capture failed. Please try again.')
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleLoginSubmit = async (event: React.FormEvent) => {
@@ -378,41 +405,77 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, onLogin, onShowProfile
         </TopRow>
 
         <SectionHeaderAscii
-          text={activeTab === 'login' ? 'LOGIN ACCESS' : 'REGISTER ACCESS'}
+          text={!authAvailable ? 'GET ACCESS UPDATES' : activeTab === 'login' ? 'LOGIN ACCESS' : 'REGISTER ACCESS'}
           size="card"
           level={2}
         />
         <SectionLead>
-          {activeTab === 'login'
+          {!authAvailable
+            ? 'Auth is temporarily offline. Leave your email and we will send launch access and release updates as soon as login is restored.'
+            : activeTab === 'login'
             ? 'Sign in to save favorites, sync preferences, and unlock profile settings.'
             : 'Create an account for marketplace personalization and install workflow tracking.'}
         </SectionLead>
 
-        <TabRow>
-          <FilterPill
-            type="button"
-            $active={activeTab === 'login'}
-            onClick={() => {
-              setActiveTab('login')
-              clearMessages()
-            }}
-          >
-            Login
-          </FilterPill>
-          <FilterPill
-            type="button"
-            $active={activeTab === 'register'}
-            onClick={() => {
-              setActiveTab('register')
-              clearMessages()
-            }}
-          >
-            Register
-          </FilterPill>
-        </TabRow>
+        {authAvailable && (
+          <TabRow>
+            <FilterPill
+              type="button"
+              $active={activeTab === 'login'}
+              onClick={() => {
+                setActiveTab('login')
+                clearMessages()
+              }}
+            >
+              Login
+            </FilterPill>
+            <FilterPill
+              type="button"
+              $active={activeTab === 'register'}
+              onClick={() => {
+                setActiveTab('register')
+                clearMessages()
+              }}
+            >
+              Register
+            </FilterPill>
+          </TabRow>
+        )}
 
         <AnimatePresence mode="wait">
-          {activeTab === 'login' ? (
+          {!authAvailable ? (
+            <motion.div
+              key="lead-capture"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.16 }}
+            >
+              <Form onSubmit={handleLeadSubmit}>
+                <Field>
+                  Email
+                  <Input
+                    id="lead-email"
+                    type="email"
+                    placeholder="you@domain.com"
+                    value={leadEmail}
+                    onChange={(event) => setLeadEmail(event.target.value)}
+                    required
+                  />
+                </Field>
+
+                <FinePrint>
+                  Existing accounts are paused until auth is restored. This email form keeps launch access and release updates moving.
+                </FinePrint>
+
+                <ActionRow>
+                  <NeonButton type="submit" whileTap={{ scale: 0.98 }}>
+                    {isLoading ? <Spinner aria-hidden /> : 'Get Access Updates'}
+                  </NeonButton>
+                </ActionRow>
+              </Form>
+            </motion.div>
+          ) : activeTab === 'login' ? (
             <motion.div
               key="login"
               initial={{ opacity: 0, x: -10 }}

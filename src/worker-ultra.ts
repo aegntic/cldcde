@@ -12,6 +12,7 @@ import githubRoutes from './api/github-oauth'
 import analyticsRoutes from './api/analytics'
 import newsRoutes from './api/news-v2'
 import socialRoutes from './api/social-share'
+import leadsRoutes from './api/leads'
 
 // Ultra-simple Cloudflare Worker with just 2 services!
 export interface Env {
@@ -30,6 +31,9 @@ export interface Env {
   
   // OpenRouter API key for AI services
   OPENROUTER_API_KEY?: string
+
+  // Email capture fallback
+  RESEND_API_KEY?: string
 }
 
 const app = new Hono<{ Bindings: Env }>()
@@ -40,8 +44,15 @@ app.use('*', cors({
     // Allow any Cloudflare Pages deployment, localhost, and the main domain
     const allowed = [
       'https://cldcde.cc',
+      'https://www.cldcde.cc',
       'http://localhost:3000',
-      'http://localhost:5173'
+      'http://localhost:5173',
+      'http://localhost:4173',
+      'http://localhost:4174',
+      'http://127.0.0.1:3000',
+      'http://127.0.0.1:5173',
+      'http://127.0.0.1:4173',
+      'http://127.0.0.1:4174'
     ]
     
     if (!origin || allowed.includes(origin)) return origin
@@ -106,18 +117,22 @@ app.get('/health', async (c) => {
   }
 
   // Check Supabase
-  try {
-    const response = await fetch(`${c.env.SUPABASE_URL}/rest/v1/`, {
-      headers: {
-        'apikey': c.env.SUPABASE_ANON_KEY
-      }
-    })
-    services.supabase = response.ok ? 'healthy' : 'unhealthy'
-  } catch {
+  if (!c.env.SUPABASE_URL || !c.env.SUPABASE_ANON_KEY) {
     services.supabase = 'unhealthy'
+  } else {
+    try {
+      const response = await fetch(`${c.env.SUPABASE_URL}/rest/v1/`, {
+        headers: {
+          apikey: c.env.SUPABASE_ANON_KEY
+        }
+      })
+      services.supabase = response.ok ? 'healthy' : 'unhealthy'
+    } catch {
+      services.supabase = 'unhealthy'
+    }
   }
 
-  const allHealthy = services.worker === 'healthy' && services.cache === 'healthy' && services.supabase === 'healthy'
+  const allHealthy = services.worker === 'healthy' && services.supabase === 'healthy'
 
   return c.json({ 
     status: allHealthy ? 'healthy' : 'degraded',
@@ -150,6 +165,7 @@ app.get('/api', (c) => {
     },
     endpoints: {
       auth: '/api/auth',
+      leads: '/api/leads',
       extensions: '/api/extensions',
       mcp: '/api/mcp',
       users: '/api/users',
@@ -162,6 +178,7 @@ app.get('/api', (c) => {
 
 // API Routes
 app.route('/api/auth', authRoutes)
+app.route('/api/leads', leadsRoutes)
 app.route('/api/extensions', extensionRoutes)
 app.route('/api/mcp', mcpRoutes)
 app.route('/api/search', searchRoutes)

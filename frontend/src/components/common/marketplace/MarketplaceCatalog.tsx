@@ -185,7 +185,7 @@ export const MarketplaceCatalog: React.FC<MarketplaceCatalogProps> = ({
     kind: forceKind || 'all',
     category: 'all',
     tags: [],
-    sort: 'trending',
+    sort: 'newest',
     tier: 'all',
     verifiedOnly: false
   })

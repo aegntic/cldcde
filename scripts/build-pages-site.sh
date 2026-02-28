@@ -28,6 +28,9 @@ if [ -d "$ROOT_DIR/public" ]; then
   cp -R "$ROOT_DIR/public/." "$OUT_DIR/static/"
 fi
 
+# Build repo-synced catalog for plugins, skills, MCP servers, workflows, and prompts.
+bun "$ROOT_DIR/scripts/build-repo-catalog.ts" "$OUT_DIR/static/catalog/repo-index.json"
+
 # SPA fallback for deep links
 cat > "$OUT_DIR/_redirects" <<'REDIRECTS'
 /* /index.html 200
