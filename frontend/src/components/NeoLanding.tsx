@@ -117,6 +117,11 @@ const Content = styled.div`
   gap: clamp(0.75rem, 1.9vw, 1.28rem);
   padding: clamp(5.5rem, 11dvh, 7.6rem) clamp(1rem, 3vw, 2.4rem) clamp(2rem, 7dvh, 3.2rem);
   text-align: center;
+
+  @media (max-width: 640px) {
+    gap: 0.7rem;
+    padding: 6rem 0.9rem max(10.25rem, calc(env(safe-area-inset-bottom) + 9rem));
+  }
 `
 
 const CtaBar = styled.div`
@@ -130,6 +135,24 @@ const CtaBar = styled.div`
   border: 1px solid ${({ theme }) => `${theme.colors.border.primary}c0`};
   background: linear-gradient(180deg, rgba(3, 9, 20, 0.58) 0%, rgba(3, 9, 20, 0.34) 100%);
   backdrop-filter: blur(8px);
+
+  @media (max-width: 640px) {
+    width: min(100%, 360px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+    padding: 0.72rem;
+
+    > *:last-child {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: min(180px, 100%);
+    }
+
+    > * {
+      width: 100%;
+    }
+  }
 `
 
 const Counters = styled.div`
@@ -137,6 +160,11 @@ const Counters = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: ${({ theme }) => theme.spacing.xs};
+
+  @media (max-width: 640px) {
+    max-width: 100%;
+    gap: 0.35rem;
+  }
 `
 
 const CapturePanel = styled.form`
@@ -149,6 +177,12 @@ const CapturePanel = styled.form`
   background: linear-gradient(180deg, rgba(3, 9, 20, 0.62) 0%, rgba(3, 9, 20, 0.38) 100%);
   backdrop-filter: blur(8px);
   box-shadow: ${({ theme }) => theme.shadows.md};
+
+  @media (max-width: 640px) {
+    width: min(100%, 360px);
+    gap: 0.6rem;
+    padding: 0.78rem 0.82rem;
+  }
 `
 
 const CaptureLead = styled.div`
@@ -156,6 +190,11 @@ const CaptureLead = styled.div`
   font-size: 0.94rem;
   color: ${({ theme }) => theme.colors.text.primary};
   line-height: 1.45;
+
+  @media (max-width: 640px) {
+    font-size: 0.84rem;
+    line-height: 1.35;
+  }
 `
 
 const CaptureFieldRow = styled.div`
@@ -163,6 +202,11 @@ const CaptureFieldRow = styled.div`
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing.sm};
   justify-content: center;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
 `
 
 const CaptureInput = styled.input`
@@ -181,6 +225,11 @@ const CaptureInput = styled.input`
     border-color: ${({ theme }) => theme.colors.interactive.primary};
     box-shadow: 0 0 0 1px ${({ theme }) => `${theme.colors.interactive.primary}55`};
   }
+
+  @media (max-width: 640px) {
+    min-width: 0;
+    flex: none;
+  }
 `
 
 const CaptureMeta = styled.div<{ $kind: 'neutral' | 'error' | 'success' }>`
@@ -194,6 +243,12 @@ const CaptureMeta = styled.div<{ $kind: 'neutral' | 'error' | 'success' }>`
     if ($kind === 'success') return theme.colors.status.success
     return theme.colors.text.tertiary
   }};
+
+  @media (max-width: 640px) {
+    display: ${({ $kind }) => ($kind === 'neutral' ? 'none' : 'block')};
+    font-size: 0.66rem;
+    line-height: 1.35;
+  }
 `
 
 const NeoLanding: React.FC<NeoLandingProps> = ({

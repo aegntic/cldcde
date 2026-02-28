@@ -55,6 +55,10 @@ const Overlay = styled(motion.div)`
   backdrop-filter: blur(6px);
   display: grid;
   place-items: center;
+
+  @media (max-width: 640px) {
+    padding: ${({ theme }) => theme.spacing.sm};
+  }
 `
 
 const Modal = styled(MarketplacePanel).attrs({
@@ -69,6 +73,11 @@ const Modal = styled(MarketplacePanel).attrs({
   position: relative;
   display: grid;
   gap: ${({ theme }) => theme.spacing.md};
+
+  @media (max-width: 640px) {
+    max-height: min(88vh, 760px);
+    gap: ${({ theme }) => theme.spacing.sm};
+  }
 `
 
 const TopRow = styled.div`
@@ -186,6 +195,12 @@ const ActionRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing.sm};
+
+  @media (max-width: 640px) {
+    > * {
+      width: 100%;
+    }
+  }
 `
 
 const Msg = styled.div<{ $kind: 'error' | 'success' }>`

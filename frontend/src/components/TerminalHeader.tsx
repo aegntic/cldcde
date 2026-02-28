@@ -39,6 +39,11 @@ const HeaderContent = styled.div`
     grid-template-columns: 1fr;
     gap: 0.7rem;
   }
+
+  @media (max-width: 640px) {
+    padding: 0.62rem 0.8rem;
+    gap: 0.55rem;
+  }
 `
 
 const Logo = styled(motion.a)`
@@ -47,6 +52,10 @@ const Logo = styled(motion.a)`
   gap: 0.62rem;
   text-decoration: none;
   color: ${({ theme }) => theme.colors.text.primary};
+
+  @media (max-width: 640px) {
+    gap: 0.55rem;
+  }
 `
 
 const LogoMark = styled.img`
@@ -71,6 +80,10 @@ const LogoText = styled.span`
   font-family: ${({ theme }) => theme.fonts.sans};
   font-size: 0.98rem;
   letter-spacing: 0.03em;
+
+  @media (max-width: 640px) {
+    font-size: 0.9rem;
+  }
 `
 
 const Subline = styled.span`
@@ -79,6 +92,11 @@ const Subline = styled.span`
   color: ${({ theme }) => theme.colors.text.tertiary};
   text-transform: uppercase;
   letter-spacing: 0.08em;
+
+  @media (max-width: 640px) {
+    font-size: 0.54rem;
+    letter-spacing: 0.05em;
+  }
 `
 
 const NavigationRail = styled.nav`
@@ -87,6 +105,19 @@ const NavigationRail = styled.nav`
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
+
+  @media (max-width: 640px) {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.12rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `
 
 const NavLink = styled(motion.button)<{ $active: boolean }>`
@@ -101,6 +132,12 @@ const NavLink = styled(motion.button)<{ $active: boolean }>`
   letter-spacing: 0.07em;
   padding: 0.33rem 0.68rem;
   cursor: pointer;
+
+  @media (max-width: 640px) {
+    flex: 0 0 auto;
+    font-size: 0.68rem;
+    padding: 0.3rem 0.6rem;
+  }
 `
 
 const UserPanel = styled.div`
@@ -111,6 +148,10 @@ const UserPanel = styled.div`
 
   @media (max-width: 980px) {
     justify-content: flex-start;
+  }
+
+  @media (max-width: 640px) {
+    width: 100%;
   }
 `
 
@@ -146,6 +187,12 @@ const LoginButton = styled(motion.button)`
   letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
+
+  @media (max-width: 640px) {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
 `
 
 const TerminalHeader: React.FC<TerminalHeaderProps> = ({

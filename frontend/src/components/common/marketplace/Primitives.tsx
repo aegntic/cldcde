@@ -23,6 +23,13 @@ export const MarketplaceShell = styled.div`
   padding: calc(86px + ${({ theme }) => theme.spacing.xl}) ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.xl};
   position: relative;
   z-index: 1;
+
+  @media (max-width: 640px) {
+    padding:
+      calc(132px + ${({ theme }) => theme.spacing.lg})
+      ${({ theme }) => theme.spacing.sm}
+      calc(88px + env(safe-area-inset-bottom));
+  }
 `
 
 export const DepthRoot = styled.div`
@@ -94,12 +101,20 @@ export const DepthScene: React.FC = () => {
 export const MarketplacePanel = styled(motion.section)`
   ${panelShell}
   padding: ${({ theme }) => theme.spacing.lg};
+
+  @media (max-width: 640px) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
 `
 
 export const IsoCard = styled(motion.article)`
   ${panelShell}
   padding: ${({ theme }) => theme.spacing.md};
   transform-style: preserve-3d;
+
+  @media (max-width: 640px) {
+    padding: ${({ theme }) => theme.spacing.sm};
+  }
 `
 
 export const SectionRail = styled(motion.section)`
@@ -140,6 +155,11 @@ export const NeonButton = styled(motion.button)<{ $tone?: 'primary' | 'secondary
   padding: 0.56rem 0.86rem;
   cursor: pointer;
 
+  @media (max-width: 640px) {
+    font-size: 0.76rem;
+    padding: 0.56rem 0.72rem;
+  }
+
   &:hover {
     transform: translateY(-1px);
     box-shadow: ${({ theme }) => theme.shadows.glow};
@@ -161,6 +181,11 @@ export const Badge = styled.span<{ $tone?: 'neutral' | 'new' | 'kind' | 'tier' }
     return `${theme.colors.background.secondary}ca`
   }};
   color: ${({ theme }) => theme.colors.text.secondary};
+
+  @media (max-width: 640px) {
+    font-size: 0.62rem;
+    padding: 0.16rem 0.38rem;
+  }
 `
 
 export const TagChip = styled.span`
@@ -171,6 +196,10 @@ export const TagChip = styled.span`
   font-size: 0.72rem;
   color: ${({ theme }) => theme.colors.text.tertiary};
   background: ${({ theme }) => `${theme.colors.background.secondary}ca`};
+
+  @media (max-width: 640px) {
+    font-size: 0.64rem;
+  }
 `
 
 export const FilterPill = styled.button<{ $active: boolean }>`

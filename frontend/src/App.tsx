@@ -98,6 +98,14 @@ const StatusPill = styled(motion.div)<{ status: 'checking' | 'online' | 'offline
   font-size: 0.74rem;
   letter-spacing: 0.04em;
 
+  @media (max-width: 640px) {
+    bottom: ${({ theme }) => theme.spacing.sm};
+    right: ${({ theme }) => theme.spacing.sm};
+    padding: 0.34rem 0.54rem;
+    font-size: 0.62rem;
+    gap: 0.34rem;
+  }
+
   &::before {
     content: '';
     width: 8px;
@@ -188,6 +196,11 @@ const BootControls = styled.div`
     left: 0.5rem;
     right: 0.5rem;
     justify-content: center;
+
+    > * {
+      flex: 1 1 calc(33.333% - 0.4rem);
+      min-width: 92px;
+    }
   }
 `
 
@@ -623,6 +636,10 @@ const FooterSignal = styled.div`
 
 const HomeContentShell = styled(MarketplaceShell)`
   padding-top: ${({ theme }) => theme.spacing.xl};
+
+  @media (max-width: 640px) {
+    padding-top: ${({ theme }) => theme.spacing.lg};
+  }
 `
 
 const HomeSectionTitle = styled.h2`
@@ -640,6 +657,10 @@ const RouteCard = styled(IsoCard)`
   gap: ${({ theme }) => theme.spacing.sm};
   padding: ${({ theme }) => theme.spacing.lg};
   align-content: start;
+
+  @media (max-width: 640px) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
 `
 
 const RouteMetrics = styled.div`

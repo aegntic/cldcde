@@ -27,6 +27,14 @@ const ToggleContainer = styled(motion.button)`
     border-color: ${({ theme }) => theme.colors.interactive.primary};
     box-shadow: ${({ theme }) => theme.shadows.glow};
   }
+
+  @media (max-width: 640px) {
+    min-width: 0;
+    max-width: 152px;
+    height: 42px;
+    padding: 0.3rem 0.72rem 0.3rem 0.4rem;
+    gap: 0.45rem;
+  }
 `
 
 const ModeBadge = styled(motion.span)`
@@ -42,6 +50,12 @@ const ModeBadge = styled(motion.span)`
   letter-spacing: 0.08em;
   color: ${({ theme }) => theme.colors.text.primary};
   background: ${({ theme }) => `${theme.colors.background.primary}cb`};
+
+  @media (max-width: 640px) {
+    width: 26px;
+    height: 26px;
+    font-size: 0.58rem;
+  }
 `
 
 const LabelStack = styled.span`
@@ -58,6 +72,10 @@ const LabelTop = styled.span`
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.text.tertiary};
+
+  @media (max-width: 640px) {
+    display: none;
+  }
 `
 
 const LabelBottom = styled.span`
@@ -67,6 +85,10 @@ const LabelBottom = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 640px) {
+    font-size: 0.76rem;
+  }
 `
 
 const Hint = styled.span`
@@ -76,6 +98,10 @@ const Hint = styled.span`
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.text.tertiary};
+
+  @media (max-width: 640px) {
+    display: none;
+  }
 `
 
 const ThemeToggle: React.FC = () => {
