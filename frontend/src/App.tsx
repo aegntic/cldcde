@@ -10,11 +10,12 @@ import { NewsPage } from './components/NewsPage'
 import { DocsPage } from './components/DocsPage'
 import { SettingsDocsPage } from './components/SettingsDocsPage'
 import { PacksPage } from './components/PacksPage'
+import { NeoLanding } from './components/NeoLanding'
 import { ThemeToggle } from './components/ThemeToggle'
 import { TerminalHeader } from './components/TerminalHeader'
 import { AsciiHeading } from './components/AsciiHeading'
 import { config } from './config'
-import { fetchMarketplaceCatalog, fetchMarketplaceFeatured } from './lib/marketplaceApi'
+import { fetchMarketplaceCatalog } from './lib/marketplaceApi'
 import type { MarketplaceItem } from './types/marketplace'
 import {
   Badge,
@@ -42,11 +43,9 @@ type Page =
   | 'news'
   | 'settings'
 
-const R2_PUBLIC_BASE = 'https://pub-5720f0c8abe84850a71c8d81dcd6f928.r2.dev'
-const BLUE_LANDING_VIDEO = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v5.mp4`
-const BLUE_LANDING_POSTER = `${R2_PUBLIC_BASE}/media/landing/grok-launch-v5-poster.png`
-const RED_LANDING_VIDEO = `${R2_PUBLIC_BASE}/media/landing/Create_seamless_loop.mp4`
-const RED_LANDING_POSTER = `${R2_PUBLIC_BASE}/media/landing/Create_seamless_loop-poster.png`
+const BOOT_VIDEO = '/media/landing/create-seamless-loop-v2.mp4'
+const LANDING_LOOP_VIDEO = '/media/landing/create-seamless-loop-v2-boomerang.mp4'
+const LANDING_POSTER = '/media/landing/create-seamless-loop-v2-poster.jpg'
 const LANDING_MEDIA_ORIGIN = '50% 60%'
 const LANDING_MEDIA_SCALE = 1.05
 
@@ -66,6 +65,12 @@ const MainContent = styled(motion.main)<{ $hidden: boolean }>`
   z-index: 1;
   visibility: ${({ $hidden }) => ($hidden ? 'hidden' : 'visible')};
   pointer-events: ${({ $hidden }) => ($hidden ? 'none' : 'auto')};
+`
+
+const HomeRevealSurface = styled(motion.div)`
+  width: 100%;
+  transform-origin: 50% 0%;
+  will-change: transform, opacity, filter;
 `
 
 const ThemeTransitionOverlay = styled(motion.div)`
@@ -620,6 +625,39 @@ const HomeContentShell = styled(MarketplaceShell)`
   padding-top: ${({ theme }) => theme.spacing.xl};
 `
 
+const HomeSectionTitle = styled.h2`
+  margin: 0;
+  font-family: ${({ theme }) => theme.fonts.sans};
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  line-height: 1.08;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.text.primary};
+`
+
+const RouteCard = styled(IsoCard)`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.spacing.lg};
+  align-content: start;
+`
+
+const RouteMetrics = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.xs};
+`
+
+const ReleaseList = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing.sm};
+`
+
+const ReleaseItem = styled(IsoCard)`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing.sm};
+`
+
 const mapPathToPage = (path: string): Page => {
   switch (path) {
     case '/extensions':
@@ -659,7 +697,7 @@ const mapPageToPath = (page: Page): string => {
 }
 
 function AppContent() {
-  const { isTransitioning, themeName } = useTheme()
+  const { isTransitioning } = useTheme()
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showProfileSetup, setShowProfileSetup] = useState(false)
   const [connectionStatus, setConnectionStatus] = useState<'checking' | 'online' | 'offline'>('checking')
@@ -669,12 +707,21 @@ function AppContent() {
   const [showVideoBoot, setShowVideoBoot] = useState(false)
   const [bootEligibleForLoad, setBootEligibleForLoad] = useState(() => window.location.pathname === '/')
   const [bootMuted, setBootMuted] = useState(true)
-  const [launchMedia, setLaunchMedia] = useState({
-    video: BLUE_LANDING_VIDEO,
-    poster: BLUE_LANDING_POSTER
-  })
+  const bootMedia = useMemo(
+    () => ({
+      video: BOOT_VIDEO,
+      poster: LANDING_POSTER
+    }),
+    []
+  )
+  const landingMedia = useMemo(
+    () => ({
+      video: LANDING_LOOP_VIDEO,
+      poster: LANDING_POSTER
+    }),
+    []
+  )
   const [catalog, setCatalog] = useState<MarketplaceItem[]>([])
-  const [featured, setFeatured] = useState<MarketplaceItem[]>([])
 
   useEffect(() => {
     setCurrentPage(mapPathToPage(window.location.pathname))
@@ -707,9 +754,6 @@ function AppContent() {
         const items = await fetchMarketplaceCatalog()
         if (!mounted) return
         setCatalog(items)
-        const feed = await fetchMarketplaceFeatured(items)
-        if (!mounted) return
-        setFeatured(feed.featured)
       } catch (error) {
         console.warn('Marketplace feed failed:', error)
       }
@@ -718,21 +762,6 @@ function AppContent() {
       mounted = false
     }
   }, [])
-
-  useEffect(() => {
-    if (themeName === 'futuristic') {
-      setLaunchMedia({
-        video: RED_LANDING_VIDEO,
-        poster: RED_LANDING_POSTER
-      })
-      return
-    }
-
-    setLaunchMedia({
-      video: BLUE_LANDING_VIDEO,
-      poster: BLUE_LANDING_POSTER
-    })
-  }, [themeName])
 
   useEffect(() => {
     if (currentPage !== 'home' || !bootEligibleForLoad) {
@@ -748,13 +777,6 @@ function AppContent() {
   }
 
   const handleBootVideoError = () => {
-    if (launchMedia.video !== BLUE_LANDING_VIDEO) {
-      setLaunchMedia({
-        video: BLUE_LANDING_VIDEO,
-        poster: BLUE_LANDING_POSTER
-      })
-      return
-    }
     completeBoot()
   }
 
@@ -767,14 +789,23 @@ function AppContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const featuredItems = useMemo(() => featured.slice(0, 6), [featured])
   const extensionCount = useMemo(() => catalog.filter((item) => item.kind === 'extension').length, [catalog])
   const mcpCount = useMemo(() => catalog.filter((item) => item.kind === 'mcp').length, [catalog])
   const packCount = useMemo(() => catalog.filter((item) => item.kind === 'pack').length, [catalog])
   const spotlightItems = useMemo(() => {
-    if (featuredItems.length > 0) return featuredItems.slice(0, 3)
-    return catalog.slice(0, 3)
-  }, [featuredItems, catalog])
+    const featuredItems = catalog.filter((item) => item.featured)
+    const ranked = featuredItems.length
+      ? featuredItems
+      : [...catalog].sort((a, b) => b.downloads - a.downloads || b.rating - a.rating)
+    return ranked.slice(0, 3)
+  }, [catalog])
+  const latestItems = useMemo(
+    () =>
+      [...catalog]
+        .sort((a, b) => new Date(b.releasedAt).getTime() - new Date(a.releasedAt).getTime())
+        .slice(0, 4),
+    [catalog]
+  )
   const isHomeBootActive = currentPage === 'home' && showVideoBoot
 
   useEffect(() => {
@@ -794,28 +825,28 @@ function AppContent() {
   return (
     <AppContainer>
       <GlobalStyle />
-      <DepthScene />
+      {currentPage !== 'home' && <DepthScene />}
 
       <AnimatePresence>
         {isHomeBootActive && (
           <BootOverlay
-            $poster={launchMedia.poster}
+            $poster={bootMedia.poster}
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
             <BootVideo
-              key={launchMedia.video}
+              key={bootMedia.video}
               autoPlay
               muted={bootMuted}
               playsInline
               preload="auto"
-              poster={launchMedia.poster}
+              poster={bootMedia.poster}
               onEnded={completeBoot}
               onError={handleBootVideoError}
             >
-              <source src={launchMedia.video} type="video/mp4" />
+              <source src={bootMedia.video} type="video/mp4" />
             </BootVideo>
             <BootVeil />
             <BootTopMask />
@@ -867,270 +898,173 @@ function AppContent() {
 
       <MainContent $hidden={isHomeBootActive} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         {currentPage === 'home' && (
-          <>
-            <HomeHeroRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-              <HomeHero>
-                <HeroBackdrop $poster={launchMedia.poster} />
-                <HeroWire />
-                <HeroOverlay />
-                <HeroTopMask />
-                <HeroBottomMask />
-                <HeroCornerMask $side="left" />
-                <HeroCornerMask $side="right" />
-                <HeroVideoStage />
-                <HeroActionLayer>
-                  <HeroActionPanel>
-                    <HeroActionTitle>Build The Future, Block By Block</HeroActionTitle>
-                    <HeroActionLead>
-                      Install curated plugins, MCP servers, and workflow packs with direct commands for Codex, Agent Zero,
-                      ZeroClaw, and ClawReform.
-                    </HeroActionLead>
-                    <HeroActionButtons>
-                      <NeonButton $tone="primary" onClick={() => navigateTo('/extensions')} whileTap={{ scale: 0.98 }}>
-                        Start Creating
-                      </NeonButton>
-                      <NeonButton $tone="secondary" onClick={() => navigateTo('/mcp')} whileTap={{ scale: 0.98 }}>
-                        Explore MCP
-                      </NeonButton>
-                      <NeonButton $tone="ghost" onClick={() => navigateTo('/packs')} whileTap={{ scale: 0.98 }}>
-                        View Packs
-                      </NeonButton>
-                    </HeroActionButtons>
-                  </HeroActionPanel>
-                </HeroActionLayer>
-              </HomeHero>
-            </HomeHeroRail>
+          <HomeRevealSurface
+            initial={false}
+            animate={isHomeBootActive ? { opacity: 0 } : { opacity: 1 }}
+            transition={
+              isHomeBootActive
+                ? { duration: 0.2, ease: 'easeOut' }
+                : { duration: 0.28, ease: 'easeOut' }
+            }
+          >
+            <NeoLanding
+              backgroundVideoSrc={landingMedia.video}
+              backgroundVideoPoster={landingMedia.poster}
+              onOpenExtensions={() => navigateTo('/extensions')}
+              onOpenMcp={() => navigateTo('/mcp')}
+              onOpenPacks={() => navigateTo('/packs')}
+              extensionCount={extensionCount}
+              mcpCount={mcpCount}
+              packCount={packCount}
+              totalCount={catalog.length}
+            />
 
             <HomeContentShell>
-            <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.04 }}>
-              <HomeGrid>
-                <HeroPrimary initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
-                  <Badge $tone="new">Marketplace Live</Badge>
-                  <HeroLogoRow>
-                    <HeroLogoMark
-                      src="/media/branding/glass-character-mark.png"
-                      alt="CLDCDE glass glyph"
-                      loading="eager"
-                      decoding="async"
-                    />
-                    <HeroHeading text="CLDCDE.CC" size="hero" level={1} />
-                  </HeroLogoRow>
-                  <HeroMiniNav>
-                    {['Home', 'Features', 'Pricing', 'Community', 'Contact'].map((label) => (
-                      <span key={label}>{label}</span>
-                    ))}
-                  </HeroMiniNav>
-                  <HeroTagline>Build The Future, Block By Block</HeroTagline>
-                  <HeroLead>
-                    Route-first catalog for plugins, MCP servers, and AE.LTD packs. Every listing includes direct install
-                    commands for Codex, Agent Zero, ZeroClaw, and ClawReform.
-                  </HeroLead>
-                  <HeroActionRow>
-                    <NeonButton $tone="primary" onClick={() => navigateTo('/extensions')} whileTap={{ scale: 0.98 }}>
-                      Start Creating
-                    </NeonButton>
-                    <NeonButton $tone="secondary" onClick={() => navigateTo('/mcp')} whileTap={{ scale: 0.98 }}>
-                      Explore MCP
-                    </NeonButton>
-                    <NeonButton $tone="ghost" onClick={() => navigateTo('/packs')} whileTap={{ scale: 0.98 }}>
-                      View Packs
-                    </NeonButton>
-                  </HeroActionRow>
-                  <HeroMeta>
-                    <Badge>{extensionCount} plugins</Badge>
-                    <Badge>{mcpCount} mcp</Badge>
-                    <Badge>{packCount} packs</Badge>
-                    <Badge>{catalog.length} total assets</Badge>
-                  </HeroMeta>
-                </HeroPrimary>
-
-                <HeroSecondary initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
-                  <SectionHeaderAscii text="THE MODULAR REVOLUTION" size="card" level={2} />
-                  <CardText>
-                    Step confidently through every stage. Build in modular blocks, route installs cleanly, and keep
-                    launch-ready prompts, plugins, and MCP endpoints in one surface.
-                  </CardText>
-                  <IsoCity />
-                  <NeonButton $tone="secondary" onClick={() => navigateTo('/docs')} whileTap={{ scale: 0.98 }}>
-                    Explore The Builder
-                  </NeonButton>
-                </HeroSecondary>
-              </HomeGrid>
-            </SectionRail>
-
-            <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.06 }}>
-              <HomeGrid>
+              <SectionRail initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }}>
                 <FeaturePanel>
-                  <SectionHeaderAscii text="VISUALIZE YOUR SUCCESS" size="section" level={2} />
-                  <HeroLead>
-                    View your signal flow before launch. Every install command, plugin dependency, and MCP bridge is represented in
-                    one operational frame.
-                  </HeroLead>
-                  <FeatureSplit>
-                    <CubeField />
-                    <Stack>
-                      <CardText>
-                        From concept to release, CLDCDE tracks package quality, install targets, and distribution metadata so
-                        execution stays clean.
-                      </CardText>
-                      <MetaRow>
-                        <TagChip>Spec Lock</TagChip>
-                        <TagChip>Flow Lane</TagChip>
-                        <TagChip>Audit Rail</TagChip>
-                      </MetaRow>
-                      <NeonButton onClick={() => navigateTo('/extensions')} whileTap={{ scale: 0.98 }}>
-                        See It In Action
-                      </NeonButton>
-                    </Stack>
-                  </FeatureSplit>
-                </FeaturePanel>
-
-                <FeaturePanel>
-                  <SectionHeaderAscii text="PRICING THAT SCALES WITH YOU" size="section" level={2} />
-                  <PricingGrid>
-                    {[
-                      {
-                        name: 'Starter',
-                        price: '$0 / month',
-                        points: ['Public catalog access', 'Core plugin discovery', 'Community support'],
-                        cta: 'Get Started'
-                      },
-                      {
-                        name: 'Pro',
-                        price: '$29 / month',
-                        points: ['Private pack overlays', 'MCP graph presets', 'Priority release feed'],
-                        cta: 'Launch Now',
-                        highlight: true
-                      },
-                      {
-                        name: 'Enterprise',
-                        price: 'Custom',
-                        points: ['Dedicated support', 'Custom deployment rail', 'Advanced policy controls'],
-                        cta: 'Contact Sales'
-                      }
-                    ].map((plan) => (
-                      <PlanCard key={plan.name} $highlight={plan.highlight} whileHover={{ y: -2 }}>
-                        <CardTitle text={plan.name.toUpperCase()} size="micro" level={3} />
-                        <PlanPrice>{plan.price}</PlanPrice>
-                        <PlanList>
-                          {plan.points.map((point) => (
-                            <li key={point}>{point}</li>
-                          ))}
-                        </PlanList>
-                        <NeonButton
-                          style={{ marginTop: '0.7rem' }}
-                          $tone={plan.highlight ? 'primary' : 'secondary'}
-                          onClick={() => navigateTo('/packs')}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          {plan.cta}
-                        </NeonButton>
-                      </PlanCard>
-                    ))}
-                  </PricingGrid>
-                </FeaturePanel>
-              </HomeGrid>
-            </SectionRail>
-
-            <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
-              <HomeGrid>
-                <FeaturePanel>
-                  <SectionHeaderAscii text="EMPOWER YOUR TEAM" size="section" level={2} />
-                  <FeatureSplit>
-                    <NetworkField />
-                    <Stack>
-                      <CardText>
-                        One shared control surface for creators, engineers, and operators. Ship faster with predictable install paths
-                        and reusable workflows.
-                      </CardText>
-                      <MetaRow>
-                        <TagChip>Codex</TagChip>
-                        <TagChip>Agent Zero</TagChip>
-                        <TagChip>ZeroClaw</TagChip>
-                        <TagChip>ClawReform</TagChip>
-                      </MetaRow>
-                      <HeroActionRow>
-                        <NeonButton $tone="secondary" onClick={() => navigateTo('/docs')} whileTap={{ scale: 0.98 }}>
-                          Read Docs
-                        </NeonButton>
-                        <NeonButton $tone="ghost" onClick={() => navigateTo('/settings')} whileTap={{ scale: 0.98 }}>
-                          Open Settings
-                        </NeonButton>
-                      </HeroActionRow>
-                    </Stack>
-                  </FeatureSplit>
-                </FeaturePanel>
-
-                <FeaturePanel>
-                  <SectionHeaderAscii text="JOIN THE MOVEMENT" size="section" level={2} />
-                  <CardText>
-                    Explore curated releases and pick install-ready stacks. Each listing includes command blocks, source links, and
-                    package metadata.
-                  </CardText>
+                  <Badge $tone="kind">Continue Below</Badge>
+                  <HomeSectionTitle>Plugins, Skills, MCP, And Labs</HomeSectionTitle>
+                  <SectionLead>
+                    Move straight from the launch screen into installable Claude Code plugins, AE.LTD skill packs, MCP
+                    servers, docs, and release notes.
+                  </SectionLead>
                   <FeaturedGrid>
-                    {spotlightItems.map((item) => (
-                      <IsoCard key={item.id} whileHover={{ y: -2 }}>
+                    <RouteCard whileHover={{ y: -4 }}>
+                      <Badge $tone="kind">Plugins</Badge>
+                      <CardText>
+                        Browse install-ready Claude Code plugins with direct commands, source links, and release metadata.
+                      </CardText>
+                      <RouteMetrics>
+                        <TagChip>{extensionCount} listed</TagChip>
+                        <TagChip>Install commands</TagChip>
+                        <TagChip>Direct install</TagChip>
+                      </RouteMetrics>
+                      <NeonButton onClick={() => navigateTo('/extensions')} whileTap={{ scale: 0.98 }}>
+                        Open Extensions
+                      </NeonButton>
+                    </RouteCard>
+
+                    <RouteCard whileHover={{ y: -4 }}>
+                      <Badge $tone="tier">MCP</Badge>
+                      <CardText>
+                        Browse MCP servers with setup notes, source links, and release details.
+                      </CardText>
+                      <RouteMetrics>
+                        <TagChip>{mcpCount} listed</TagChip>
+                        <TagChip>Server list</TagChip>
+                        <TagChip>Setup docs</TagChip>
+                      </RouteMetrics>
+                      <NeonButton $tone="secondary" onClick={() => navigateTo('/mcp')} whileTap={{ scale: 0.98 }}>
+                        Open MCP
+                      </NeonButton>
+                    </RouteCard>
+
+                    <RouteCard whileHover={{ y: -4 }}>
+                      <Badge $tone="new">Packs</Badge>
+                      <CardText>
+                        Download bundled skill packs and launch kits for Codex, Agent Zero, ZeroClaw, and ClawReform.
+                      </CardText>
+                      <RouteMetrics>
+                        <TagChip>{packCount} bundles</TagChip>
+                        <TagChip>Cross-platform</TagChip>
+                        <TagChip>AE.LTD</TagChip>
+                      </RouteMetrics>
+                      <NeonButton $tone="ghost" onClick={() => navigateTo('/packs')} whileTap={{ scale: 0.98 }}>
+                        Open Packs
+                      </NeonButton>
+                    </RouteCard>
+                  </FeaturedGrid>
+                </FeaturePanel>
+              </SectionRail>
+
+              <SectionRail initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }}>
+                <HomeGrid>
+                  <FeaturePanel>
+                    <Badge $tone="new">Featured</Badge>
+                    <HomeSectionTitle>Featured Releases</HomeSectionTitle>
+                    <CardText>
+                      Featured items from the live catalog, surfaced for fast evaluation from the home screen.
+                    </CardText>
+                    <ReleaseList>
+                      {spotlightItems.map((item) => (
+                        <ReleaseItem key={item.id} whileHover={{ y: -3 }}>
+                          <MetaRow>
+                            <Badge $tone="kind">{item.kind}</Badge>
+                            <Badge $tone={item.featured ? 'new' : 'tier'}>{item.featured ? 'featured' : item.tier}</Badge>
+                            {item.verified && <Badge $tone="tier">verified</Badge>}
+                          </MetaRow>
+                          <HomeSectionTitle as="h3" style={{ fontSize: '1.1rem' }}>
+                            {item.name}
+                          </HomeSectionTitle>
+                          <CardText>{item.summary}</CardText>
+                          <RouteMetrics>
+                            {item.tags.slice(0, 3).map((tag) => (
+                              <TagChip key={`${item.id}-${tag}`}>{tag}</TagChip>
+                            ))}
+                          </RouteMetrics>
+                        </ReleaseItem>
+                      ))}
+                    </ReleaseList>
+                  </FeaturePanel>
+
+                  <FeaturePanel>
+                    <Badge $tone="tier">Resources</Badge>
+                    <HomeSectionTitle>Docs, Releases, And Settings</HomeSectionTitle>
+                    <FeatureSplit>
+                      <CubeField />
+                      <Stack>
+                        <CardText>
+                          Documentation, release notes, and account settings stay one click away from the landing screen.
+                        </CardText>
+                        <RouteMetrics>
+                          <TagChip>Docs hub</TagChip>
+                          <TagChip>Release feed</TagChip>
+                          <TagChip>Profile settings</TagChip>
+                        </RouteMetrics>
+                        <MetaRow>
+                          <NeonButton $tone="secondary" onClick={() => navigateTo('/docs')} whileTap={{ scale: 0.98 }}>
+                            Open Docs
+                          </NeonButton>
+                          <NeonButton $tone="ghost" onClick={() => navigateTo('/news')} whileTap={{ scale: 0.98 }}>
+                            Open News
+                          </NeonButton>
+                          <NeonButton $tone="ghost" onClick={() => navigateTo('/settings')} whileTap={{ scale: 0.98 }}>
+                            Open Settings
+                          </NeonButton>
+                        </MetaRow>
+                      </Stack>
+                    </FeatureSplit>
+                  </FeaturePanel>
+                </HomeGrid>
+              </SectionRail>
+
+              <SectionRail initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }}>
+                <FeaturePanel>
+                  <Badge $tone="new">Latest</Badge>
+                  <HomeSectionTitle>Latest Releases</HomeSectionTitle>
+                  <SectionLead>The newest catalog entries, pulled straight into the home page.</SectionLead>
+                  <FeaturedGrid>
+                    {latestItems.map((item) => (
+                      <IsoCard key={item.id} whileHover={{ y: -3 }}>
                         <MetaRow>
                           <Badge $tone="kind">{item.kind}</Badge>
-                          <Badge $tone="new">{item.featured ? 'featured' : 'new'}</Badge>
+                          <Badge $tone="tier">{item.tier}</Badge>
                         </MetaRow>
-                        <CardTitle text={item.name.toUpperCase()} size="micro" level={3} />
+                        <HomeSectionTitle as="h3" style={{ fontSize: '1rem' }}>
+                          {item.name}
+                        </HomeSectionTitle>
                         <CardText>{item.summary}</CardText>
+                        <RouteMetrics>
+                          <TagChip>{item.author}</TagChip>
+                          <TagChip>{item.category}</TagChip>
+                        </RouteMetrics>
                       </IsoCard>
                     ))}
                   </FeaturedGrid>
-                  <HeroActionRow>
-                    <NeonButton onClick={() => navigateTo('/extensions')} whileTap={{ scale: 0.98 }}>
-                      Join The Community
-                    </NeonButton>
-                    <NeonButton $tone="secondary" onClick={() => navigateTo('/docs')} whileTap={{ scale: 0.98 }}>
-                      Browse Docs
-                    </NeonButton>
-                    <NeonButton $tone="ghost" onClick={() => navigateTo('/news')} whileTap={{ scale: 0.98 }}>
-                      Latest News
-                    </NeonButton>
-                    {!user && (
-                      <NeonButton $tone="ghost" onClick={() => setShowLoginModal(true)} whileTap={{ scale: 0.98 }}>
-                        Login / Register
-                      </NeonButton>
-                    )}
-                  </HeroActionRow>
                 </FeaturePanel>
-              </HomeGrid>
-            </SectionRail>
-
-            <SectionRail initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-              <SectionHeaderAscii text="FEATURED RELEASE STRIP" size="section" level={2} />
-              <SectionLead>Curated launch-ready assets based on download traction and featured flags.</SectionLead>
-              <FeaturedGrid>
-                {featuredItems.map((item) => (
-                  <IsoCard key={item.id} whileHover={{ y: -2 }}>
-                    <MetaRow>
-                      <Badge $tone="kind">{item.kind}</Badge>
-                      <Badge $tone="new">{item.featured ? 'featured' : 'new'}</Badge>
-                      <Badge $tone="tier">{item.tier}</Badge>
-                    </MetaRow>
-                    <CardTitle text={item.name.toUpperCase()} size="micro" level={3} />
-                    <CardText>{item.summary}</CardText>
-                    <MetaRow style={{ marginTop: '0.55rem' }}>
-                      {item.tags.slice(0, 3).map((tag) => (
-                        <TagChip key={`${item.id}-${tag}`}>{tag}</TagChip>
-                      ))}
-                    </MetaRow>
-                  </IsoCard>
-                ))}
-              </FeaturedGrid>
-            </SectionRail>
-
-            <SectionRail initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}>
-              <FooterSignal>
-                {['cldcde.cc', 'aegntic.ai', 'ae.ltd', 'clawreform.com', 'github.com/aegntic/cldcde'].map((item) => (
-                  <Badge key={item}>{item}</Badge>
-                ))}
-              </FooterSignal>
-            </SectionRail>
+              </SectionRail>
             </HomeContentShell>
-          </>
+          </HomeRevealSurface>
         )}
 
         {currentPage === 'extensions' && <ExtensionBrowser />}

@@ -191,7 +191,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({ user, onLoginClick, onN
           />
           <LogoStack>
             <LogoText>CLDCDE.CC</LogoText>
-            <Subline>Marketplace Rail :: Plugins + MCP + Packs</Subline>
+            <Subline>Claude Code : : Plugins + Skills + MCP + Labs</Subline>
           </LogoStack>
         </Logo>
 

@@ -105,7 +105,7 @@ const ThemeToggle: React.FC = () => {
         {badge}
       </ModeBadge>
       <LabelStack>
-        <LabelTop>Theme Rail</LabelTop>
+        <LabelTop>Theme</LabelTop>
         <LabelBottom>{currentTheme.name}</LabelBottom>
       </LabelStack>
       <Hint>{next}</Hint>
