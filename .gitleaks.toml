@@ -1,0 +1,17 @@
+[extend]
+# Use the default gitleaks ruleset and extend it below.
+useDefault = true
+
+[allowlist]
+description = "Global allowlists"
+# Allow placeholder values used in documentation and .env.example files.
+regexes = [
+  # Generic placeholder patterns
+  '''your[_-][\w-]+''',
+  '''<[A-Z_]+>''',
+]
+paths = [
+  # Example/template files intentionally contain placeholder secrets
+  '''.env.example''',
+  '''aegntic-hive-mcp/.env.example''',
+]
