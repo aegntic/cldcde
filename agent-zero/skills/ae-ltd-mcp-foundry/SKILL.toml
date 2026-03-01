@@ -1,0 +1,10 @@
+prompts = [
+  "Use AE.LTD MCP Foundry: confirm server context, lock tool contracts first, scaffold or extend handlers, enforce Zod/Pydantic validation, test happy and failure paths, and document tool usage for agent callers."
+]
+
+[skill]
+name = "ae-ltd-mcp-foundry"
+description = "Scaffold and harden MCP servers with strict contracts and validation."
+version = "1.0.0"
+author = "ae.ltd"
+tags = ["ae-ltd", "mcp", "server", "zeroclaw", "clawreform"]

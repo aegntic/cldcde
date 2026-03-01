@@ -1,0 +1,4 @@
+interface:
+  display_name: "AE.LTD Worktree Mesh"
+  short_description: "Parallel git worktrees without chaos"
+  default_prompt: "Use $ae-ltd-worktree-mesh to create and manage parallel worktrees for these tasks safely."

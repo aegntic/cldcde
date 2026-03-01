@@ -1,0 +1,4 @@
+interface:
+  display_name: "AE.LTD Template Switchboard"
+  short_description: "Pick and adapt CLAUDE.md templates"
+  default_prompt: "Use $ae-ltd-claude-template-switchboard to choose the best CLAUDE.md template and tailor it to this repo."

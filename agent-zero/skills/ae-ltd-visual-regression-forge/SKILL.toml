@@ -1,0 +1,10 @@
+prompts = [
+  "Use AE.LTD Visual Regression Forge: define snapshot scope, capture stable baselines, compare at matching viewports, classify diffs by threshold, and map failures to concrete UI fixes."
+]
+
+[skill]
+name = "ae-ltd-visual-regression-forge"
+description = "Baseline-and-diff UI quality gate for confident releases."
+version = "1.0.0"
+author = "ae.ltd"
+tags = ["ae-ltd", "visual-regression", "ui", "testing", "zeroclaw", "clawreform"]
