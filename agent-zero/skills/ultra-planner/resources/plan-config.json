@@ -1,0 +1,18 @@
+{
+  "objective": "Launch new product to 10,000 users",
+  "timeline": "12 months",
+  "budget": "$500,000",
+  "team_size": "5 people",
+  "target_market": "Small business B2B",
+  "growth_model": "viral",
+  "risk_tolerance": "medium",
+  "depth": "comprehensive",
+  "certainty_threshold": "0.95",
+  "evidence_types": ["quantitative", "qualitative", "correlational", "causal"],
+  "fix_strategy": "immediate",
+  "validation_method": "a_b_test",
+  "predictive_accuracy": "85",
+  "automation_level": "full",
+  "scaling_multiplier": "10x",
+  "monetization_model": "subscription"
+}
