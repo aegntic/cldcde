@@ -10,6 +10,7 @@ import {
   IsoCard,
   MarketplacePanel,
   NeonButton,
+  NeonLinkButton,
   SectionHeaderAscii,
   SectionLead,
   SectionRail,
@@ -366,7 +367,7 @@ export const MarketplaceCatalog: React.FC<MarketplaceCatalogProps> = ({
             </FilterRow>
 
             {loading ? (
-              <Empty>Loading marketplace assets...</Empty>
+              <Empty>Loading catalog...</Empty>
             ) : visible.length ? (
               <AssetList>
                 {visible.map((item) => (
@@ -381,7 +382,7 @@ export const MarketplaceCatalog: React.FC<MarketplaceCatalogProps> = ({
                 ))}
               </AssetList>
             ) : (
-              <Empty>No marketplace assets match current filters.</Empty>
+              <Empty>No items match the current filters.</Empty>
             )}
 
             {hiddenCount > 0 && (
@@ -421,8 +422,7 @@ export const MarketplaceCatalog: React.FC<MarketplaceCatalogProps> = ({
                     {copied === selected.id ? 'Copied' : 'Copy Install'}
                   </NeonButton>
                   {selected.repoUrl && (
-                    <NeonButton
-                      as="a"
+                    <NeonLinkButton
                       href={selected.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -431,11 +431,10 @@ export const MarketplaceCatalog: React.FC<MarketplaceCatalogProps> = ({
                       whileHover={{ scale: 1.01 }}
                     >
                       Open Source
-                    </NeonButton>
+                    </NeonLinkButton>
                   )}
                   {(selected.docsUrl || selected.repoUrl) && (
-                    <NeonButton
-                      as="a"
+                    <NeonLinkButton
                       href={selected.docsUrl || selected.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -444,7 +443,7 @@ export const MarketplaceCatalog: React.FC<MarketplaceCatalogProps> = ({
                       whileHover={{ scale: 1.01 }}
                     >
                       View Docs
-                    </NeonButton>
+                    </NeonLinkButton>
                   )}
                 </ActionRow>
               </>

@@ -204,7 +204,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
 }) => {
   const nav = [
     { label: 'Home', path: '/' },
-    { label: 'Marketplace', path: '/extensions' },
+    { label: 'Plugins + Skills', path: '/extensions' },
     { label: 'MCP', path: '/mcp' },
     { label: 'Packs', path: '/packs' },
     { label: 'Docs', path: '/docs' },

@@ -28,8 +28,8 @@ const MCPBrowser: React.FC = () => {
   return (
     <MarketplaceShell>
       <MarketplaceCatalog
-        title="MCP MARKETPLACE"
-        subtitle="Curated model-context server catalog with install-ready commands and source links."
+        title="MCP SERVERS"
+        subtitle="Curated model-context servers with setup notes, install commands, and source links."
         items={items}
         loading={loading}
         forceKind="mcp"

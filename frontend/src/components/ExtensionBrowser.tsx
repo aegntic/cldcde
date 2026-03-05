@@ -21,7 +21,7 @@ const ExtensionBrowser: React.FC<ExtensionBrowserProps> = () => {
       try {
         const catalog = await fetchMarketplaceCatalog()
         if (!mounted) return
-        setItems(catalog.filter((item) => item.kind === 'extension' || item.kind === 'pack'))
+        setItems(catalog.filter((item) => item.kind === 'extension'))
       } catch (error) {
         console.error('Failed to load extension marketplace:', error)
       } finally {
@@ -36,8 +36,8 @@ const ExtensionBrowser: React.FC<ExtensionBrowserProps> = () => {
   return (
     <MarketplaceShell>
       <MarketplaceCatalog
-        title="PLUGIN MARKETPLACE"
-        subtitle="Repo-synced catalog for plugins, skills, workflows, prompts, and bundle assets. Explore, compare, and copy direct install commands."
+        title="PLUGINS + SKILLS"
+        subtitle="Repo-synced catalog for Claude Code plugins and AE.LTD skills, with prompts and workflows alongside the install commands."
         items={items}
         loading={loading}
       />

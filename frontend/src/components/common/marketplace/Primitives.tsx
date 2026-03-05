@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { AsciiHeading } from '../../AsciiHeading'
 
@@ -132,7 +132,7 @@ export const SectionLead = styled.p`
   line-height: 1.6;
 `
 
-export const NeonButton = styled(motion.button)<{ $tone?: 'primary' | 'secondary' | 'ghost' }>`
+const neonButtonStyles = css<{ $tone?: 'primary' | 'secondary' | 'ghost' }>`
   border-radius: ${({ theme }) => theme.borderRadius.md};
   border: 1px solid
     ${({ theme, $tone }) =>
@@ -164,6 +164,18 @@ export const NeonButton = styled(motion.button)<{ $tone?: 'primary' | 'secondary
     transform: translateY(-1px);
     box-shadow: ${({ theme }) => theme.shadows.glow};
   }
+`
+
+export const NeonButton = styled(motion.button)<{ $tone?: 'primary' | 'secondary' | 'ghost' }>`
+  ${neonButtonStyles}
+`
+
+export const NeonLinkButton = styled(motion.a)<{ $tone?: 'primary' | 'secondary' | 'ghost' }>`
+  ${neonButtonStyles}
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 `
 
 export const Badge = styled.span<{ $tone?: 'neutral' | 'new' | 'kind' | 'tier' }>`

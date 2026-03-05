@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import * as THREE from 'three'
 import gsap from 'gsap'
-import { Badge, NeonButton } from './common/marketplace'
-import { submitLeadCapture } from '../lib/leads'
+import { NeonButton } from './common/marketplace'
 
 interface NeoLandingProps {
   backgroundVideoSrc?: string
@@ -11,11 +10,6 @@ interface NeoLandingProps {
   onOpenExtensions: () => void
   onOpenMcp: () => void
   onOpenPacks: () => void
-  extensionCount: number
-  mcpCount: number
-  packCount: number
-  totalCount: number
-  authAvailable?: boolean
 }
 
 const LandingRoot = styled.section`
@@ -124,131 +118,30 @@ const Content = styled.div`
   }
 `
 
-const CtaBar = styled.div`
+const ActionDock = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-  padding: 0.8rem 1rem;
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  border: 1px solid ${({ theme }) => `${theme.colors.border.primary}c0`};
-  background: linear-gradient(180deg, rgba(3, 9, 20, 0.58) 0%, rgba(3, 9, 20, 0.34) 100%);
-  backdrop-filter: blur(8px);
-
-  @media (max-width: 640px) {
-    width: min(100%, 360px);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.55rem;
-    padding: 0.72rem;
-
-    > *:last-child {
-      grid-column: 1 / -1;
-      justify-self: center;
-      width: min(180px, 100%);
-    }
-
-    > * {
-      width: 100%;
-    }
-  }
-`
-
-const Counters = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   gap: ${({ theme }) => theme.spacing.xs};
-
-  @media (max-width: 640px) {
-    max-width: 100%;
-    gap: 0.35rem;
-  }
-`
-
-const CapturePanel = styled.form`
-  width: min(760px, 100%);
-  display: grid;
-  gap: 0.72rem;
-  padding: 0.9rem 1rem;
+  padding: 0.48rem 0.54rem;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  border: 1px solid ${({ theme }) => `${theme.colors.border.primary}c0`};
-  background: linear-gradient(180deg, rgba(3, 9, 20, 0.62) 0%, rgba(3, 9, 20, 0.38) 100%);
-  backdrop-filter: blur(8px);
-  box-shadow: ${({ theme }) => theme.shadows.md};
+  border: 1px solid ${({ theme }) => `${theme.colors.border.primary}9f`};
+  background: rgba(3, 9, 20, 0.22);
+  backdrop-filter: blur(4px);
+  box-shadow: ${({ theme }) => theme.shadows.sm};
 
   @media (max-width: 640px) {
     width: min(100%, 360px);
-    gap: 0.6rem;
-    padding: 0.78rem 0.82rem;
   }
 `
 
-const CaptureLead = styled.div`
-  font-family: ${({ theme }) => theme.fonts.sans};
-  font-size: 0.94rem;
-  color: ${({ theme }) => theme.colors.text.primary};
-  line-height: 1.45;
-
-  @media (max-width: 640px) {
-    font-size: 0.84rem;
-    line-height: 1.35;
-  }
-`
-
-const CaptureFieldRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing.sm};
-  justify-content: center;
-
-  @media (max-width: 640px) {
-    flex-direction: column;
-    align-items: stretch;
-  }
-`
-
-const CaptureInput = styled.input`
-  flex: 1 1 320px;
-  min-width: 220px;
-  border: 1px solid ${({ theme }) => theme.colors.border.primary};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  background: ${({ theme }) => `${theme.colors.background.secondary}de`};
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-family: ${({ theme }) => theme.fonts.sans};
-  font-size: 0.95rem;
-  padding: 0.68rem 0.82rem;
-
-  &:focus {
-    outline: none;
-    border-color: ${({ theme }) => theme.colors.interactive.primary};
-    box-shadow: 0 0 0 1px ${({ theme }) => `${theme.colors.interactive.primary}55`};
-  }
-
-  @media (max-width: 640px) {
-    min-width: 0;
-    flex: none;
-  }
-`
-
-const CaptureMeta = styled.div<{ $kind: 'neutral' | 'error' | 'success' }>`
-  min-height: 1.2rem;
+const DockLabel = styled.div`
   font-family: ${({ theme }) => theme.fonts.mono};
-  font-size: 0.74rem;
-  letter-spacing: 0.04em;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: ${({ theme, $kind }) => {
-    if ($kind === 'error') return theme.colors.status.error
-    if ($kind === 'success') return theme.colors.status.success
-    return theme.colors.text.tertiary
-  }};
-
-  @media (max-width: 640px) {
-    display: ${({ $kind }) => ($kind === 'neutral' ? 'none' : 'block')};
-    font-size: 0.66rem;
-    line-height: 1.35;
-  }
+  color: ${({ theme }) => theme.colors.text.tertiary};
 `
 
 const NeoLanding: React.FC<NeoLandingProps> = ({
@@ -256,35 +149,13 @@ const NeoLanding: React.FC<NeoLandingProps> = ({
   backgroundVideoPoster,
   onOpenExtensions,
   onOpenMcp,
-  onOpenPacks,
-  extensionCount,
-  mcpCount,
-  packCount,
-  totalCount,
-  authAvailable = true
+  onOpenPacks
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const rootRef = useRef<HTMLElement | null>(null)
   const backgroundVideoRef = useRef<HTMLVideoElement | null>(null)
-  const ctaRef = useRef<HTMLDivElement | null>(null)
+  const dockRef = useRef<HTMLDivElement | null>(null)
   const hasBackgroundVideo = Boolean(backgroundVideoSrc)
-  const [leadEmail, setLeadEmail] = useState('')
-  const [leadStatus, setLeadStatus] = useState<{ kind: 'neutral' | 'error' | 'success'; text: string }>({
-    kind: 'neutral',
-    text: authAvailable
-      ? 'Get release drops and launch notes without opening an account.'
-      : 'Account signup is offline right now. Leave your email for launch access and release updates.'
-  })
-  const [isSubmittingLead, setIsSubmittingLead] = useState(false)
-
-  useEffect(() => {
-    setLeadStatus({
-      kind: 'neutral',
-      text: authAvailable
-        ? 'Get release drops and launch notes without opening an account.'
-        : 'Account signup is offline right now. Leave your email for launch access and release updates.'
-    })
-  }, [authAvailable])
 
   useEffect(() => {
     const node = backgroundVideoRef.current
@@ -479,9 +350,9 @@ const NeoLanding: React.FC<NeoLandingProps> = ({
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      if (ctaRef.current) {
+      if (dockRef.current) {
         gsap.fromTo(
-          ctaRef.current,
+          dockRef.current,
           { opacity: 0, y: 56, scale: 0.96 },
           { opacity: 1, y: 0, scale: 1, duration: 1.05, ease: 'power4.out', delay: 0.28 }
         )
@@ -490,29 +361,6 @@ const NeoLanding: React.FC<NeoLandingProps> = ({
 
     return () => ctx.revert()
   }, [])
-
-  const handleLeadSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
-    setIsSubmittingLead(true)
-    setLeadStatus({ kind: 'neutral', text: 'Saving your address…' })
-
-    try {
-      const data = await submitLeadCapture({
-        email: leadEmail,
-        source: 'home-hero',
-        intent: authAvailable ? 'updates' : 'both'
-      })
-      setLeadEmail('')
-      setLeadStatus({ kind: 'success', text: data.message })
-    } catch (error) {
-      setLeadStatus({
-        kind: 'error',
-        text: error instanceof Error ? error.message : 'Email capture failed. Please try again.'
-      })
-    } finally {
-      setIsSubmittingLead(false)
-    }
-  }
 
   return (
     <LandingRoot ref={rootRef}>
@@ -537,9 +385,10 @@ const NeoLanding: React.FC<NeoLandingProps> = ({
       {!hasBackgroundVideo && <BottomMask />}
 
       <Content>
-        <CtaBar ref={ctaRef}>
+        <ActionDock ref={dockRef}>
+          <DockLabel>Jump To</DockLabel>
           <NeonButton $tone="primary" onClick={onOpenExtensions} whileTap={{ scale: 0.98 }}>
-            Start Creating
+            Plugins + Skills
           </NeonButton>
           <NeonButton $tone="secondary" onClick={onOpenMcp} whileTap={{ scale: 0.98 }}>
             Explore MCP
@@ -547,37 +396,7 @@ const NeoLanding: React.FC<NeoLandingProps> = ({
           <NeonButton $tone="ghost" onClick={onOpenPacks} whileTap={{ scale: 0.98 }}>
             View Packs
           </NeonButton>
-        </CtaBar>
-
-        <Counters>
-          <Badge>{extensionCount} plugins</Badge>
-          <Badge>{mcpCount} mcp</Badge>
-          <Badge>{packCount} packs</Badge>
-          <Badge>{totalCount} total assets</Badge>
-        </Counters>
-
-        <CapturePanel onSubmit={handleLeadSubmit}>
-          <CaptureLead>
-            {authAvailable
-              ? 'Get release drops, new skills, and MCP launches by email.'
-              : 'Registration is temporarily offline. Leave your email and we will send launch access as soon as auth is back.'}
-          </CaptureLead>
-          <CaptureFieldRow>
-            <CaptureInput
-              type="email"
-              inputMode="email"
-              autoComplete="email"
-              placeholder="you@domain.com"
-              value={leadEmail}
-              onChange={(event) => setLeadEmail(event.target.value)}
-              required
-            />
-            <NeonButton type="submit" $tone="secondary" whileTap={{ scale: 0.98 }}>
-              {isSubmittingLead ? 'Saving…' : authAvailable ? 'Get Updates' : 'Get Access'}
-            </NeonButton>
-          </CaptureFieldRow>
-          <CaptureMeta $kind={leadStatus.kind}>{leadStatus.text}</CaptureMeta>
-        </CapturePanel>
+        </ActionDock>
       </Content>
     </LandingRoot>
   )

@@ -823,6 +823,8 @@ function AppContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const pluginCount = useMemo(() => catalog.filter((item) => item.category === 'plugin').length, [catalog])
+  const skillCount = useMemo(() => catalog.filter((item) => item.category === 'skill').length, [catalog])
   const extensionCount = useMemo(() => catalog.filter((item) => item.kind === 'extension').length, [catalog])
   const mcpCount = useMemo(() => catalog.filter((item) => item.kind === 'mcp').length, [catalog])
   const packCount = useMemo(() => catalog.filter((item) => item.kind === 'pack').length, [catalog])
@@ -953,43 +955,33 @@ function AppContent() {
               onOpenExtensions={() => navigateTo('/extensions')}
               onOpenMcp={() => navigateTo('/mcp')}
               onOpenPacks={() => navigateTo('/packs')}
-              extensionCount={extensionCount}
-              mcpCount={mcpCount}
-              packCount={packCount}
-              totalCount={catalog.length}
-              authAvailable={authAvailable}
             />
 
             <HomeContentShell>
               <SectionRail initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }}>
                 <FeaturePanel>
-                  <Badge $tone="kind">Continue Below</Badge>
-                  <HomeSectionTitle>Plugins, Skills, MCP, And Labs</HomeSectionTitle>
-                  <SectionLead>
-                    Move straight from the launch screen into installable Claude Code plugins, AE.LTD skill packs, MCP
-                    servers, docs, and release notes.
-                  </SectionLead>
+                  <Badge $tone="kind">Choose A Path</Badge>
+                  <HomeSectionTitle>Start With Plugins + Skills</HomeSectionTitle>
+                  <SectionLead>CLDCDE is organized around installable plugin and skill assets first, then MCP, packs, and docs.</SectionLead>
                   <FeaturedGrid>
                     <RouteCard whileHover={{ y: -4 }}>
-                      <Badge $tone="kind">Plugins</Badge>
+                      <Badge $tone="kind">Plugins + Skills</Badge>
                       <CardText>
-                        Browse install-ready Claude Code plugins with direct commands, source links, and release metadata.
+                        Browse Claude Code plugins and AE.LTD skills with direct install commands and source links.
                       </CardText>
                       <RouteMetrics>
-                        <TagChip>{extensionCount} listed</TagChip>
-                        <TagChip>Install commands</TagChip>
-                        <TagChip>Direct install</TagChip>
+                        <TagChip>{pluginCount} plugins</TagChip>
+                        <TagChip>{skillCount} skills</TagChip>
+                        <TagChip>{extensionCount} total assets</TagChip>
                       </RouteMetrics>
                       <NeonButton onClick={() => navigateTo('/extensions')} whileTap={{ scale: 0.98 }}>
-                        Open Extensions
+                        Browse Plugins + Skills
                       </NeonButton>
                     </RouteCard>
 
                     <RouteCard whileHover={{ y: -4 }}>
                       <Badge $tone="tier">MCP</Badge>
-                      <CardText>
-                        Browse MCP servers with setup notes, source links, and release details.
-                      </CardText>
+                      <CardText>Open MCP servers with setup notes, install commands, and compatibility tags.</CardText>
                       <RouteMetrics>
                         <TagChip>{mcpCount} listed</TagChip>
                         <TagChip>Server list</TagChip>
@@ -1002,9 +994,7 @@ function AppContent() {
 
                     <RouteCard whileHover={{ y: -4 }}>
                       <Badge $tone="new">Packs</Badge>
-                      <CardText>
-                        Download bundled skill packs and launch kits for Codex, Agent Zero, ZeroClaw, and ClawReform.
-                      </CardText>
+                      <CardText>Install curated bundles when you want a full stack instead of one-by-one assets.</CardText>
                       <RouteMetrics>
                         <TagChip>{packCount} bundles</TagChip>
                         <TagChip>Cross-platform</TagChip>
@@ -1021,17 +1011,15 @@ function AppContent() {
               <SectionRail initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }}>
                 <HomeGrid>
                   <FeaturePanel>
-                    <Badge $tone="new">Featured</Badge>
-                    <HomeSectionTitle>Featured Releases</HomeSectionTitle>
-                    <CardText>
-                      Featured items from the live catalog, surfaced for fast evaluation from the home screen.
-                    </CardText>
+                    <Badge $tone="new">New This Week</Badge>
+                    <HomeSectionTitle>Recent Drops</HomeSectionTitle>
+                    <CardText>Latest plugin, skill, MCP, and pack updates sorted by commit recency.</CardText>
                     <ReleaseList>
-                      {spotlightItems.map((item) => (
+                      {latestItems.map((item) => (
                         <ReleaseItem key={item.id} whileHover={{ y: -3 }}>
                           <MetaRow>
                             <Badge $tone="kind">{item.kind}</Badge>
-                            <Badge $tone={item.featured ? 'new' : 'tier'}>{item.featured ? 'featured' : item.tier}</Badge>
+                            <Badge $tone="tier">{item.tier}</Badge>
                             {item.verified && <Badge $tone="tier">verified</Badge>}
                           </MetaRow>
                           <HomeSectionTitle as="h3" style={{ fontSize: '1.1rem' }}>
@@ -1049,14 +1037,12 @@ function AppContent() {
                   </FeaturePanel>
 
                   <FeaturePanel>
-                    <Badge $tone="tier">Resources</Badge>
-                    <HomeSectionTitle>Docs, Releases, And Settings</HomeSectionTitle>
+                    <Badge $tone="tier">Need Help</Badge>
+                    <HomeSectionTitle>Docs + News + Settings</HomeSectionTitle>
                     <FeatureSplit>
                       <CubeField />
                       <Stack>
-                        <CardText>
-                          Documentation, release notes, and account settings stay one click away from the landing screen.
-                        </CardText>
+                        <CardText>If you are unsure what to install, start in docs. Use news for changes and settings for account controls.</CardText>
                         <RouteMetrics>
                           <TagChip>Docs hub</TagChip>
                           <TagChip>Release feed</TagChip>
@@ -1077,32 +1063,6 @@ function AppContent() {
                     </FeatureSplit>
                   </FeaturePanel>
                 </HomeGrid>
-              </SectionRail>
-
-              <SectionRail initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }}>
-                <FeaturePanel>
-                  <Badge $tone="new">Latest</Badge>
-                  <HomeSectionTitle>Latest Releases</HomeSectionTitle>
-                  <SectionLead>The newest catalog entries, pulled straight into the home page.</SectionLead>
-                  <FeaturedGrid>
-                    {latestItems.map((item) => (
-                      <IsoCard key={item.id} whileHover={{ y: -3 }}>
-                        <MetaRow>
-                          <Badge $tone="kind">{item.kind}</Badge>
-                          <Badge $tone="tier">{item.tier}</Badge>
-                        </MetaRow>
-                        <HomeSectionTitle as="h3" style={{ fontSize: '1rem' }}>
-                          {item.name}
-                        </HomeSectionTitle>
-                        <CardText>{item.summary}</CardText>
-                        <RouteMetrics>
-                          <TagChip>{item.author}</TagChip>
-                          <TagChip>{item.category}</TagChip>
-                        </RouteMetrics>
-                      </IsoCard>
-                    ))}
-                  </FeaturedGrid>
-                </FeaturePanel>
               </SectionRail>
             </HomeContentShell>
           </HomeRevealSurface>
