@@ -1,0 +1,8 @@
+{
+  "name": "openfang-expert",
+  "version": "1.0.0",
+  "description": "Expert agent for safe OpenFang development with full architecture knowledge and live GitHub integration",
+  "author": "Agent Zero",
+  "tags": ["openfang", "rust", "development", "expert", "architecture"],
+  "requires": ["rust", "cargo"]
+}
