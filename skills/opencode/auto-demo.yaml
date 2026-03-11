@@ -1,0 +1,51 @@
+---
+name: auto-demo
+description: |
+  Multiplatform automatic demo generation and recording system - creates interactive 
+  code walkthroughs, presentations, and demonstrations. Originally inspired by 
+  Cursor AI autoDemo feature.
+
+triggers:
+  - /auto-demo
+  - /demo
+
+commands:
+  start:
+    description: Start recording a demo session
+    usage: /auto-demo start [--name="demo-name"] [--format=walkthrough|presentation|video]
+
+  stop:
+    description: Stop recording and export
+    usage: /auto-demo stop [--export=html|pdf|video|reveal]
+
+  generate:
+    description: Generate demo from existing code
+    usage: /auto-demo generate <file-or-directory> [--style=tutorial|overview|deep-dive]
+
+  walkthrough:
+    description: Create interactive walkthrough
+    usage: /auto-demo walkthrough <task-description> [--interactive] [--narrate]
+
+  export:
+    description: Export existing demo
+    usage: /auto-demo export <demo-id> --format=<format> --output=<path>
+
+configuration:
+  recording:
+    auto_start: false
+    capture_terminal: true
+    capture_browser: true
+    filter_actions:
+      - file_save
+      - command_execute
+      - test_run
+      - git_commit
+  export:
+    default_format: html
+    video_fps: 30
+  platforms:
+    opencode:
+      api: true
+
+notes: |
+  Adapted for opencode. Recording features require platform-specific integration.

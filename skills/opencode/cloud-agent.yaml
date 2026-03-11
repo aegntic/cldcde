@@ -1,0 +1,60 @@
+---
+name: cloud-agent
+description: |
+  Cloud Agents with Computer Use - Run agents in isolated sandboxes that record
+  themselves interacting with software they build. Creates merge-ready PRs with
+  demo video artifacts.
+
+triggers:
+  - /cloud-agent
+  - /cloud
+  - /sandbox-agent
+
+commands:
+  start:
+    description: Start a cloud agent in an isolated sandbox
+    usage: /cloud-agent start <task> [--repo=<url>] [--branch=<name>]
+    examples:
+      - /cloud-agent start Build a REST API --repo=https://github.com/owner/repo
+      - /cloud-agent start Fix the login bug --branch=bugfix/login
+
+  parallel:
+    description: Run multiple cloud agents in parallel (up to 8)
+    usage: /cloud-agent parallel "<task1>" "<task2>" "<task3>"
+
+  status:
+    description: Check status of running cloud agents
+    usage: /cloud-agent status [agent-id]
+
+  stop:
+    description: Stop a running agent and collect artifacts
+    usage: /cloud-agent stop [agent-id]
+
+  pr:
+    description: Create a PR with demo video and screenshots
+    usage: /cloud-agent pr --title="<title>" --description="<desc>"
+
+configuration:
+  sandbox:
+    type: docker
+    resources:
+      cpu: 2
+      memory: 4g
+      disk: 10g
+
+  recording:
+    enabled: true
+    captureBrowser: true
+    captureTerminal: true
+    fps: 30
+    quality: high
+
+  artifacts:
+    video: true
+    screenshots: true
+    logs: true
+
+notes: |
+  This skill is adapted from Claude Code's cloud-agent skill for use with opencode.
+  Note: Sandbox execution requires docker/e2b infrastructure which may need to be
+  configured separately in opencode's environment.

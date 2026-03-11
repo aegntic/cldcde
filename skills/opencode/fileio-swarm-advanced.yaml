@@ -1,0 +1,50 @@
+---
+name: fileio-swarm-advanced
+description: |
+  Advanced File I/O and shared state management for multi-agent swarm operations
+  with atomic operations, conflict resolution, and concurrent access control.
+
+triggers:
+  - /fileio-swarm
+  - /swarm-file
+  - /shared-state
+
+commands:
+  create-state:
+    description: Create shared state file
+    usage: fileio-swarm create-state <name> <data>
+
+  get-state:
+    description: Get shared state
+    usage: fileio-swarm get-state <name>
+
+  update-state:
+    description: Atomically update shared state
+    usage: fileio-swarm update-state <name> <updater>
+
+  lock:
+    description: Acquire exclusive lock on file
+    usage: fileio-swarm lock <filepath>
+
+  progress:
+    description: Track progress across agents
+    usage: fileio-swarm progress <name> --total=<n> --agents=<list>
+
+  resolve-conflict:
+    description: Resolve file conflicts
+    usage: fileio-swarm resolve-conflict <file> --strategy=<merge|timestamp|manual>
+
+configuration:
+  workspace: ./swarm-data
+  lockTimeout: 30000
+  maxRetries: 3
+  backupEnabled: true
+
+dependencies:
+  - fs-extra
+  - lockfile
+  - crypto
+
+notes: |
+  Adapted for opencode. Requires Node.js 16+ and Python 3.8+.
+  This skill is not built into opencode - copied from Claude Code skills.

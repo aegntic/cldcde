@@ -1,0 +1,50 @@
+---
+name: bd-management
+description: |
+  Optimizes Beads workflow activation, parallel processing, and task management.
+  Use when working with Beads issues, managing dependencies, or optimizing 
+  development workflows in projects with complex task dependencies.
+
+triggers:
+  - /bd-management
+  - /beads
+  - /beads-workflow
+
+commands:
+  ready:
+    description: Check available work and activate optimal workflow
+    usage: bd ready
+
+  sync:
+    description: Sync Beads with git, optionally parallel
+    usage: bd sync [--parallel]
+
+  blocked:
+    description: Analyze blocking issues and dependencies
+    usage: bd blocked
+
+  optimize:
+    description: Optimize task dependencies
+    usage: bd optimize
+
+  stats:
+    description: Show workflow statistics
+    usage: bd stats
+
+  init:
+    description: Initialize Beads in project
+    usage: bd init
+
+  resolve:
+    description: Resolve dependencies
+    usage: bd resolve [--auto|--manual]
+
+configuration:
+  parallel_threshold: 4
+  dependency_analysis: true
+  auto_optimize: true
+  sync_frequency: commit
+
+notes: |
+  Adapted for opencode. Requires Beads workflow system (bd) to be installed.
+  This skill is not built into opencode - copied from Claude Code skills.
