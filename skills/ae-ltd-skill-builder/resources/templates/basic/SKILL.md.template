@@ -1,0 +1,29 @@
+---
+name: "{{SKILL_NAME}}"
+description: "{{SKILL_DESCRIPTION}}"
+---
+
+# {{SKILL_DISPLAY_NAME}}
+
+## What This Skill Does
+{{SKILL_WHAT}}
+
+## Quick Start
+```bash
+# Basic usage command
+```
+
+## Step-by-Step Guide
+
+### Step 1: Setup
+[Setup instructions]
+
+### Step 2: Usage
+[Usage instructions]
+
+### Step 3: Verify
+[Verification steps]
+
+## Troubleshooting
+- **Issue**: [Problem description]
+  - **Solution**: [Fix description]

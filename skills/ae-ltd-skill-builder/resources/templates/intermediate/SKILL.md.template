@@ -1,0 +1,77 @@
+---
+name: "{{SKILL_NAME}}"
+description: "{{SKILL_DESCRIPTION}}"
+---
+
+# {{SKILL_DISPLAY_NAME}}
+
+## Prerequisites
+- Requirement 1
+- Requirement 2
+
+## What This Skill Does
+1. Primary function
+2. Secondary function
+3. Key benefit
+
+## Quick Start
+```bash
+# Most common use case (80% of users)
+```
+
+---
+
+## Step-by-Step Guide
+
+### Step 1: Initial Setup
+```bash
+# Setup commands
+```
+
+Expected output:
+```
+Success message
+```
+
+### Step 2: Configuration
+- Configuration option 1
+- Configuration option 2
+
+### Step 3: Execution
+- Run the main command
+- Verify results
+
+---
+
+## Advanced Options
+
+### Option 1: Custom Configuration
+```bash
+# Advanced usage
+```
+
+### Option 2: Integration
+```bash
+# Integration steps
+```
+
+---
+
+## Troubleshooting
+
+### Issue: Common Problem
+**Symptoms**: What you see
+**Cause**: Why it happens
+**Solution**: How to fix
+```bash
+# Fix command
+```
+
+### Issue: Another Problem
+**Solution**: Steps to resolve
+
+---
+
+## Related Skills
+- [Related Skill 1](../related-skill-1/)
+- [Related Skill 2](../related-skill-2/)

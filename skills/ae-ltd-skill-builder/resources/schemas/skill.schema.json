@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://claude.ai/schemas/skill.schema.json",
+  "title": "Claude Skill Schema",
+  "description": "Schema for validating Claude Code skill files",
+  "type": "object",
+  "required": ["name", "description"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "Human-friendly display name for the skill",
+      "examples": ["API Documentation Generator", "React Component Builder"]
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1024,
+      "description": "What the skill does and when to use it",
+      "examples": ["Generate OpenAPI 3.0 documentation from Express.js routes. Use when creating API docs or documenting endpoints."]
+    }
+  },
+  "additionalProperties": false
+}

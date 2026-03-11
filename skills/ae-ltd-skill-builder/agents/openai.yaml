@@ -1,0 +1,4 @@
+interface:
+  display_name: "AE.LTD Skill Builder"
+  short_description: "Factory for Claude Code skills"
+  default_prompt: "Use $ae-ltd-skill-builder to create, validate, or fix Claude Code skills with proper structure and frontmatter."

@@ -1,0 +1,10 @@
+prompts = [
+  "Use AE.LTD Skill Builder: create skills with create-skill.sh, validate with validate-skill.sh, fix naming with fix-skill.sh, lint quality with lint-skill.sh. Always ensure name matches directory slug and description includes trigger conditions."
+]
+
+[skill]
+name = "ae-ltd-skill-builder"
+description = "Factory for creating, validating, and managing Claude Code skills with proper structure and tooling."
+version = "2.0.0"
+author = "ae.ltd"
+tags = ["ae-ltd", "skills", "factory", "scaffolding", "validation", "claude-code"]

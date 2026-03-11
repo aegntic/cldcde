@@ -1,0 +1,157 @@
+---
+name: "{{SKILL_NAME}}"
+description: "{{SKILL_DESCRIPTION}}"
+---
+
+# {{SKILL_DISPLAY_NAME}}
+
+## Overview
+{{SKILL_OVERVIEW}}
+
+## Prerequisites
+- Technology 1 (version X+)
+- Technology 2 (version Y+)
+- Required credentials or API keys
+
+## What This Skill Does
+1. **Core Feature**: Description
+2. **Integration**: Description
+3. **Automation**: Description
+
+---
+
+## Quick Start (60 seconds)
+
+### Installation
+```bash
+# Install dependencies
+```
+
+### First Use
+```bash
+# Quick start command
+```
+
+Expected output:
+```
+✓ Setup complete
+✓ Configuration validated
+→ Ready to use
+```
+
+---
+
+## Configuration
+
+### Basic Configuration
+Edit `config.json`:
+```json
+{
+  "mode": "production",
+  "features": ["feature1", "feature2"]
+}
+```
+
+### Advanced Configuration
+See [Configuration Guide](docs/CONFIGURATION.md)
+
+---
+
+## Step-by-Step Guide
+
+### 1. Initial Setup
+[Detailed setup steps]
+
+### 2. Core Workflow
+[Main procedures and workflow]
+
+### 3. Integration
+[Integration with other tools/systems]
+
+---
+
+## Advanced Features
+
+### Feature 1: Custom Templates
+```bash
+# Custom template usage
+```
+
+### Feature 2: Batch Processing
+```bash
+# Batch processing commands
+```
+
+### Feature 3: CI/CD Integration
+See [CI/CD Guide](docs/CICD.md)
+
+---
+
+## Scripts Reference
+
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `setup.sh` | Initial setup | `./scripts/setup.sh` |
+| `run.sh` | Execute main function | `./scripts/run.sh` |
+| `validate.sh` | Validate output | `./scripts/validate.sh` |
+| `deploy.sh` | Deploy to environment | `./scripts/deploy.sh [env]` |
+
+---
+
+## Resources
+
+### Templates
+- `resources/templates/basic.template` - Basic template
+- `resources/templates/advanced.template` - Advanced template
+
+### Examples
+- `resources/examples/basic/` - Simple example
+- `resources/examples/advanced/` - Complex example
+- `resources/examples/integration/` - Integration example
+
+### Schemas
+- `resources/schemas/config.schema.json` - Configuration schema
+- `resources/schemas/output.schema.json` - Output validation
+
+---
+
+## Troubleshooting
+
+### Issue: Installation Failed
+**Symptoms**: Error during setup
+**Cause**: Missing dependencies
+**Solution**:
+```bash
+# Install prerequisites
+npm install -g required-package
+./scripts/setup.sh --force
+```
+
+### Issue: Configuration Errors
+**Symptoms**: Invalid configuration
+**Solution**: See [Troubleshooting Guide](docs/TROUBLESHOOTING.md)
+
+### Issue: Performance Issues
+**Symptoms**: Slow execution
+**Solution**: Check resource allocation and optimize configuration
+
+---
+
+## API Reference
+Complete API documentation: [API_REFERENCE.md](docs/API_REFERENCE.md)
+
+## Related Skills
+- [Related Skill 1](../related-skill-1/)
+- [Related Skill 2](../related-skill-2/)
+
+## Resources
+- [Official Documentation](https://example.com/docs)
+- [GitHub Repository](https://github.com/example/repo)
+- [Community Forum](https://forum.example.com)
+
+---
+
+**Created**: {{DATE}}
+**Version**: 1.0.0
+**Category**: Advanced
+**Difficulty**: Intermediate
