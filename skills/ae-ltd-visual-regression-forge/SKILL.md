@@ -5,9 +5,21 @@ description: Use when UI changes must be proven safe across breakpoints using ba
 
 # AE.LTD Visual Regression Forge
 
-Niche gem source: `visual-regression` plugin from `awesome-claude-code-toolkit`.
+## What This Skill Does
 
-Use this skill when shipping UI updates that need objective visual validation.
+Proves UI changes are safe across breakpoints using baseline and diff workflows. Visual quality gate for release confidence. Niche gem source: `visual-regression` plugin from `awesome-claude-code-toolkit`.
+
+1. Define snapshot scope (pages, viewports)
+2. Capture clean baselines with network idle
+3. Run pixel diffs against threshold
+4. Convert failures into actionable fixes
+
+## Quick Start
+
+```
+User: "Did my CSS change break anything?"
+→ Define scope → Capture baseline → Run diff → Report pass/fail
+```
 
 ## Workflow
 

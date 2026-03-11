@@ -5,7 +5,14 @@ description: Create new Claude Code Skills with proper YAML frontmatter, progres
 
 # AE.LTD Skill Builder
 
+## What This Skill Does
+
 Production-ready skill factory for Claude Code. Creates skills that Claude can autonomously discover and use across all surfaces (Claude.ai, Claude Code, SDK, API).
+
+1. Scaffold new skills with proper structure
+2. Validate and fix existing skills
+3. Generate templates (basic, intermediate, advanced)
+4. Automate lifecycle with hooks
 
 ## Prerequisites
 

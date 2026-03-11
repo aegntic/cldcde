@@ -5,9 +5,21 @@ description: Use when unit tests look green but confidence is low and mutation t
 
 # AE.LTD Mutation Gate
 
-Niche gem source: `mutation-tester` plugin from `awesome-claude-code-toolkit`.
+## What This Skill Does
 
-Use this skill to measure test quality beyond line coverage.
+Measures test quality beyond line coverage using mutation testing. Exposes weak assertions and generates actionable test hardening recommendations. Niche gem source: `mutation-tester` plugin from `awesome-claude-code-toolkit`.
+
+1. Detect appropriate mutation tool (Stryker/mutmut/PIT)
+2. Run targeted mutation tests on critical modules
+3. Convert survived mutants into hardened tests
+4. Track mutation score to threshold (target: 80%+)
+
+## Quick Start
+
+```
+User: "My tests pass but I'm not confident"
+→ Detect stack → Run mutations → Report survivors → Harden tests
+```
 
 ## Workflow
 

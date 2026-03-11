@@ -5,9 +5,21 @@ description: Use when coding decisions depend on current library/framework APIs 
 
 # AE.LTD Context7 Radar
 
-Niche gem source: `context7-docs` plugin from `awesome-claude-code-toolkit`.
+## What This Skill Does
 
-Use this skill when stale API memory could cause implementation errors.
+Grounds coding decisions in version-accurate documentation before implementation. Eliminates stale API memory errors. Niche gem source: `context7-docs` plugin from `awesome-claude-code-toolkit`.
+
+1. Resolve exact dependency version from lockfile
+2. Pull targeted docs via Context7
+3. Extract implementation-critical constraints
+4. Apply verified API patterns in code
+
+## Quick Start
+
+```
+User: "I need to use React 18's useTransition"
+→ Resolve version → Pull docs → Extract constraints → Implement
+```
 
 ## Workflow
 

@@ -5,9 +5,21 @@ description: Use when converting plain-language automation goals into production
 
 # AE.LTD n8n Orbit
 
-Niche gem source: `n8n-workflow` plugin from `awesome-claude-code-toolkit`.
+## What This Skill Does
 
-Use this skill when a user wants rapid, reliable workflow automation output.
+Converts plain-language automation goals into production-ready n8n workflow JSON with retries, error paths, and credential-safe placeholders. Niche gem source: `n8n-workflow` plugin from `awesome-claude-code-toolkit`.
+
+1. Parse business intent into trigger/transform/action
+2. Design deterministic node graph with error branches
+3. Generate n8n JSON with reliability controls
+4. Deliver operator handoff with import steps
+
+## Quick Start
+
+```
+User: "When a GitHub PR is merged, post to Slack and update Jira"
+→ Parse intent → Design nodes → Generate JSON → Add error handling
+```
 
 ## Workflow
 

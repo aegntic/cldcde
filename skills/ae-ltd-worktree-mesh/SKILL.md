@@ -5,9 +5,20 @@ description: Use when parallel branches are needed for feature work, hotfixes, o
 
 # AE.LTD Worktree Mesh
 
-Niche gem source: `create-worktrees` plugin from `awesome-claude-code-toolkit`.
+## What This Skill Does
 
-Use this skill when multiple tasks need isolated branches in parallel.
+Manages parallel Git worktrees for isolated feature work, hotfixes, and review fixes without context switching. Niche gem source: `create-worktrees` plugin from `awesome-claude-code-toolkit`.
+
+1. Create isolated worktrees for parallel tasks
+2. Map branch ownership across worktrees
+3. Clean up merged/obsolete worktrees safely
+
+## Quick Start
+
+```
+User: "I need to work on two features in parallel"
+→ git worktree list → git worktree add ../repo-feature -b feature main
+```
 
 ## Workflow
 

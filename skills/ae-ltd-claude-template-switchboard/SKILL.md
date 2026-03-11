@@ -5,9 +5,21 @@ description: Use when creating or upgrading CLAUDE.md instructions and selecting
 
 # AE.LTD Claude Template Switchboard
 
-Niche gem source: CLAUDE.md templates in `awesome-claude-code-toolkit/templates/claude-md`.
+## What This Skill Does
 
-Use this skill when a repo needs a better CLAUDE.md baseline.
+Routes and customizes CLAUDE.md templates based on repo profile, architecture, and team constraints. Niche gem source: CLAUDE.md templates in `awesome-claude-code-toolkit/templates/claude-md`.
+
+1. Classify repo profile (team size, architecture, compliance)
+2. Select appropriate template baseline
+3. Inject repo-specific truths
+4. Remove template noise and validate executability
+
+## Quick Start
+
+```
+User: "Help me set up CLAUDE.md for this monorepo"
+→ Classify profile → Pick template → Inject truths → Validate
+```
 
 ## Template Routing
 

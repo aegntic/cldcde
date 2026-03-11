@@ -5,9 +5,21 @@ description: Use when scaffolding or extending MCP servers, adding tools/resourc
 
 # AE.LTD MCP Foundry
 
-Niche gem source: `model-context-protocol` plugin from `awesome-claude-code-toolkit`.
+## What This Skill Does
 
-Use this skill when the user needs a new MCP server or a safe extension to an existing one.
+Scaffolds and hardens MCP (Model Context Protocol) servers with strict contracts and validation. Niche gem source: `model-context-protocol` plugin from `awesome-claude-code-toolkit`.
+
+1. Scaffold new MCP servers with proper structure
+2. Add tools, resources, and prompts to existing servers
+3. Validate input/output with Zod (TS) or Pydantic (Python)
+4. Test happy-path and failure-path scenarios
+
+## Quick Start
+
+```
+User: "Create an MCP server for file operations"
+→ Confirm context → Lock contracts → Scaffold → Validate → Test → Document
+```
 
 ## Workflow
 
