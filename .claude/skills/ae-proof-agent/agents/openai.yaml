@@ -1,0 +1,8 @@
+version: 1
+interface:
+  display_name: AE Proof Agent
+  short_description: Diligence-grade proof-agent product and technical planning
+  default_prompt: >-
+    Use the ae-proof-agent bundle to analyze Cursor and Omnara, separate verified
+    facts from inferences, and produce a PRD, technical spec, red-team review,
+    or final leadership memo for the ae.ltd proof-agent concept.
