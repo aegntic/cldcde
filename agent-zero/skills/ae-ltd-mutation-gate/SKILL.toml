@@ -1,0 +1,10 @@
+prompts = [
+  "Use AE.LTD Mutation Gate: pick the correct mutation tool for stack, start with critical modules, measure mutation score and survivors, then propose exact missing assertions and tests until threshold is met."
+]
+
+[skill]
+name = "ae-ltd-mutation-gate"
+description = "Run targeted mutation testing and convert survivors into concrete tests."
+version = "1.0.0"
+author = "ae.ltd"
+tags = ["ae-ltd", "testing", "mutation", "quality", "zeroclaw", "clawreform"]

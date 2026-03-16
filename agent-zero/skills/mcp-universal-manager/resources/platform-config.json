@@ -1,0 +1,38 @@
+{
+  "platforms": {
+    "claude-code": {
+      "config_path": "~/.config/claude/claude_desktop_config.json",
+      "enabled": true,
+      "auto_discovery": true
+    },
+    "factory-droid": {
+      "config_path": "~/.factory/droids/",
+      "repo_scan": true,
+      "enabled": true
+    },
+    "antigravity": {
+      "config_path": "~/.antigravity/scripts/",
+      "enabled": true
+    },
+    "gemini": {
+      "config_path": "~/Library/Application Support/Google/Chrome/Profile 1/Extensions/",
+      "enabled": false
+    }
+  },
+  "custom_locations": [
+    "/opt/mcp-servers/",
+    "~/projects/mcp/",
+    "~/development/mcp-tools/"
+  ],
+  "health_check_interval": "60s",
+  "performance_threshold": {
+    "response_time": "2000ms",
+    "success_rate": "95%",
+    "memory_usage": "512MB"
+  },
+  "alert_settings": {
+    "email": "admin@company.com",
+    "slack_webhook": "https://hooks.slack.com/...",
+    "severity_threshold": "medium"
+  }
+}
