@@ -1,0 +1,51 @@
+{
+  "brand": "AE.LTD",
+  "affiliations": [
+    "cldcde.cc",
+    "aegntic.ai",
+    "ae.ltd",
+    "clawreform.com"
+  ],
+  "version": "1.1.0",
+  "generated_at": "2026-02-24T11:36:43.583980+00:00",
+  "packs": [
+    {
+      "id": "ae-ltd-viral-free",
+      "name": "AE.LTD Viral Free",
+      "tier": "free",
+      "tagline": "Cross-platform launch kit with niche plugin gems and MCP-ready workflows.",
+      "upgrade_url": "https://ae.ltd/pro",
+      "counts": {
+        "skills": 5,
+        "mcps": 3,
+        "plugins": 7,
+        "workflow_docs": 47,
+        "prompt_docs": 26
+      },
+      "downloads": {
+        "zip": "/static/downloads/ae-ltd/ae-ltd-viral-free-v1.1.0.zip",
+        "tar_gz": "/static/downloads/ae-ltd/ae-ltd-viral-free-v1.1.0.tar.gz",
+        "manifest": "/static/downloads/ae-ltd/ae-ltd-viral-free-v1.1.0-manifest.json"
+      }
+    },
+    {
+      "id": "ae-ltd-creator-pro",
+      "name": "AE.LTD Creator Pro",
+      "tier": "pro",
+      "tagline": "Full ecosystem pack with advanced MCP graph + premium automation playbooks.",
+      "upgrade_url": "https://ae.ltd/pro",
+      "counts": {
+        "skills": 7,
+        "mcps": 4,
+        "plugins": 24,
+        "workflow_docs": 47,
+        "prompt_docs": 26
+      },
+      "downloads": {
+        "zip": "/static/downloads/ae-ltd/ae-ltd-creator-pro-v1.1.0.zip",
+        "tar_gz": "/static/downloads/ae-ltd/ae-ltd-creator-pro-v1.1.0.tar.gz",
+        "manifest": "/static/downloads/ae-ltd/ae-ltd-creator-pro-v1.1.0-manifest.json"
+      }
+    }
+  ]
+}

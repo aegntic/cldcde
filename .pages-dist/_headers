@@ -1,0 +1,17 @@
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.js
+  Cache-Control: no-store
+
+/static/index.js
+  Cache-Control: no-store
+
+/media/*
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/static/media/*
+  Cache-Control: public, max-age=3600, must-revalidate

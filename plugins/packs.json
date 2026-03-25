@@ -1,0 +1,123 @@
+{
+  "version": "1.0.0",
+  "packs": {
+    "starter": {
+      "name": "Claude Code Starter Pack",
+      "price": 29,
+      "currency": "usd",
+      "interval": "month",
+      "description": "Essential code quality tools for individual developers",
+      "plugins": [
+        "debt-sentinel",
+        "spec-lock"
+      ],
+      "features": [
+        "Real-time anti-pattern detection",
+        "Documentation sync monitoring",
+        "Session debt reports",
+        "Community support"
+      ],
+      "limits": {
+        "projects": 3,
+        "team_members": 1
+      }
+    },
+    "pro": {
+      "name": "Claude Code Pro Pack",
+      "price": 99,
+      "currency": "usd",
+      "interval": "month",
+      "description": "Complete quality assurance suite for professional teams",
+      "plugins": [
+        "debt-sentinel",
+        "spec-lock",
+        "red-team-tribunal",
+        "compound-engineering",
+        "visual-regression"
+      ],
+      "features": [
+        "Everything in Starter",
+        "Multi-agent adversarial code review",
+        "Automated CI/CD pipeline integration",
+        "Visual regression testing",
+        "Quality metrics dashboard",
+        "Priority support"
+      ],
+      "limits": {
+        "projects": 10,
+        "team_members": 5
+      }
+    },
+    "enterprise": {
+      "name": "Claude Code Enterprise Pack",
+      "price": 299,
+      "currency": "usd",
+      "interval": "month",
+      "description": "Full platform access for scaling organizations",
+      "plugins": [
+        "debt-sentinel",
+        "spec-lock",
+        "red-team-tribunal",
+        "compound-engineering",
+        "visual-regression",
+        "mutation-tester",
+        "website-gen-automation",
+        "viral-automation-suite",
+        "youtube-creator-pro",
+        "cloud-agents"
+      ],
+      "features": [
+        "Everything in Pro",
+        "Mutation testing",
+        "Website generation automation",
+        "Viral content automation",
+        "YouTube creator tools",
+        "Cloud agent deployment",
+        "Custom plugin development",
+        "Dedicated success manager",
+        "SLA guarantee"
+      ],
+      "limits": {
+        "projects": "unlimited",
+        "team_members": "unlimited"
+      }
+    }
+  },
+  "individual_plugins": {
+    "debt-sentinel": {
+      "price": 19,
+      "name": "Debt Sentinel",
+      "description": "Architectural pattern enforcer"
+    },
+    "red-team-tribunal": {
+      "price": 49,
+      "name": "Red Team Tribunal",
+      "description": "Multi-agent adversarial code review"
+    },
+    "compound-engineering": {
+      "price": 39,
+      "name": "Compound Engineering",
+      "description": "Unified workflow orchestration"
+    },
+    "viral-automation-suite": {
+      "price": 79,
+      "name": "Viral Automation Suite",
+      "description": "Self-propagating growth systems"
+    },
+    "youtube-creator-pro": {
+      "price": 59,
+      "name": "YouTube Creator Pro",
+      "description": "AI-powered video content creation"
+    },
+    "cloud-agents": {
+      "price": 99,
+      "name": "Cloud Agents",
+      "description": "Deploy AI agents to cloud infrastructure"
+    }
+  },
+  "stripe_products": {
+    "starter": "prod_starter_pack",
+    "pro": "prod_pro_pack",
+    "enterprise": "prod_enterprise_pack"
+  }
+}

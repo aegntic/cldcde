@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mocha Tests</title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script type="importmap"> { "imports": {
+        "chai": "http://localhost:8000/node_modules/chai/chai.js",
+        "environment-safe-chai": "http://localhost:8000/node_modules/environment-safe-chai/environment-safe-chai.js",
+        "sift": "http://localhost:8000/node_modules/sift/es5m/index.js",
+        "module": "/node_modules/browser-or-node/src/index.js",
+        "browser-or-node": "/node_modules/browser-or-node/src/index.js"
+    } } </script>
+    <script type="module" src="test.mjs"></script>
+    <script type="module">
+      mocha.run();
+    </script>
+  </body>
+</html>

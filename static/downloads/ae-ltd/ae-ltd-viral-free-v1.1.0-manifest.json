@@ -1,0 +1,28 @@
+{
+  "id": "ae-ltd-viral-free",
+  "name": "AE.LTD Viral Free",
+  "tier": "free",
+  "tagline": "Cross-platform launch kit with niche plugin gems and MCP-ready workflows.",
+  "version": "1.1.0",
+  "built_at": "2026-02-24T11:36:43.092511+00:00",
+  "upgrade_url": "https://ae.ltd/pro",
+  "counts": {
+    "skills": 5,
+    "mcps": 3,
+    "plugins": 7,
+    "workflow_docs": 47,
+    "prompt_docs": 26
+  },
+  "install": {
+    "shell": "install/install.sh",
+    "powershell": "install/install.ps1",
+    "python": "install/install.py"
+  },
+  "catalog": {
+    "skills": "catalog/skills.json",
+    "mcps": "catalog/mcps.json",
+    "plugins": "catalog/plugins.json",
+    "workflows": "catalog/workflows.json",
+    "prompts": "catalog/prompts.json"
+  }
+}

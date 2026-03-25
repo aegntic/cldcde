@@ -1,0 +1,1773 @@
+{
+  "generatedAt": "2026-03-25T21:03:12.199Z",
+  "repoUrl": "https://github.com/aegntic/cldcde",
+  "items": [
+    {
+      "id": "prompt:.claude/skills/ae-proof-agent/prompts/01-DISCOVERY.md",
+      "kind": "extension",
+      "name": "Prompt 1: Discovery Brief",
+      "slug": "prompt-claude-skills-ae-proof-agent-prompts-01-discovery-md",
+      "summary": "Read:",
+      "tags": [
+        "prompt",
+        "cldcde"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/.claude/skills/ae-proof-agent/prompts/01-DISCOVERY.md\" -o \"$target/01-DISCOVERY.md\" && \\\necho \"[OK] Installed prompt 01-DISCOVERY.md to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/01-DISCOVERY.md",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/01-DISCOVERY.md",
+      "tier": "free",
+      "releasedAt": "2026-03-14T04:46:21+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "CLDCDE",
+      "featured": true,
+      "sourcePath": ".claude/skills/ae-proof-agent/prompts/01-DISCOVERY.md"
+    },
+    {
+      "id": "prompt:.claude/skills/ae-proof-agent/prompts/02-PRD.md",
+      "kind": "extension",
+      "name": "Prompt 2: PRD Pass",
+      "slug": "prompt-claude-skills-ae-proof-agent-prompts-02-prd-md",
+      "summary": "Read:",
+      "tags": [
+        "prompt",
+        "cldcde"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/.claude/skills/ae-proof-agent/prompts/02-PRD.md\" -o \"$target/02-PRD.md\" && \\\necho \"[OK] Installed prompt 02-PRD.md to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/02-PRD.md",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/02-PRD.md",
+      "tier": "free",
+      "releasedAt": "2026-03-14T04:46:21+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "CLDCDE",
+      "featured": true,
+      "sourcePath": ".claude/skills/ae-proof-agent/prompts/02-PRD.md"
+    },
+    {
+      "id": "prompt:.claude/skills/ae-proof-agent/prompts/03-TECHSPEC.md",
+      "kind": "extension",
+      "name": "Prompt 3: Technical Spec Pass",
+      "slug": "prompt-claude-skills-ae-proof-agent-prompts-03-techspec-md",
+      "summary": "Read:",
+      "tags": [
+        "prompt",
+        "cldcde"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/.claude/skills/ae-proof-agent/prompts/03-TECHSPEC.md\" -o \"$target/03-TECHSPEC.md\" && \\\necho \"[OK] Installed prompt 03-TECHSPEC.md to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/03-TECHSPEC.md",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/03-TECHSPEC.md",
+      "tier": "free",
+      "releasedAt": "2026-03-14T04:46:21+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "CLDCDE",
+      "featured": true,
+      "sourcePath": ".claude/skills/ae-proof-agent/prompts/03-TECHSPEC.md"
+    },
+    {
+      "id": "prompt:.claude/skills/ae-proof-agent/prompts/04-REDTEAM.md",
+      "kind": "extension",
+      "name": "Prompt 4: Red-Team Review",
+      "slug": "prompt-claude-skills-ae-proof-agent-prompts-04-redteam-md",
+      "summary": "Read:",
+      "tags": [
+        "prompt",
+        "cldcde"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/.claude/skills/ae-proof-agent/prompts/04-REDTEAM.md\" -o \"$target/04-REDTEAM.md\" && \\\necho \"[OK] Installed prompt 04-REDTEAM.md to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/04-REDTEAM.md",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/04-REDTEAM.md",
+      "tier": "free",
+      "releasedAt": "2026-03-14T04:46:21+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "CLDCDE",
+      "featured": true,
+      "sourcePath": ".claude/skills/ae-proof-agent/prompts/04-REDTEAM.md"
+    },
+    {
+      "id": "prompt:.claude/skills/ae-proof-agent/prompts/05-SYNTHESIS.md",
+      "kind": "extension",
+      "name": "Prompt 5: Final Synthesis",
+      "slug": "prompt-claude-skills-ae-proof-agent-prompts-05-synthesis-md",
+      "summary": "Read:",
+      "tags": [
+        "prompt",
+        "cldcde"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/.claude/skills/ae-proof-agent/prompts/05-SYNTHESIS.md\" -o \"$target/05-SYNTHESIS.md\" && \\\necho \"[OK] Installed prompt 05-SYNTHESIS.md to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/05-SYNTHESIS.md",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/05-SYNTHESIS.md",
+      "tier": "free",
+      "releasedAt": "2026-03-14T04:46:21+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "CLDCDE",
+      "featured": true,
+      "sourcePath": ".claude/skills/ae-proof-agent/prompts/05-SYNTHESIS.md"
+    },
+    {
+      "id": "prompt:.claude/skills/ae-proof-agent/prompts/00-SYSTEM.md",
+      "kind": "extension",
+      "name": "System Prompt",
+      "slug": "prompt-claude-skills-ae-proof-agent-prompts-00-system-md",
+      "summary": "You are operating as a diligence-grade product and technical analyst.",
+      "tags": [
+        "prompt",
+        "cldcde"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/.claude/skills/ae-proof-agent/prompts/00-SYSTEM.md\" -o \"$target/00-SYSTEM.md\" && \\\necho \"[OK] Installed prompt 00-SYSTEM.md to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/00-SYSTEM.md",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/.claude/skills/ae-proof-agent/prompts/00-SYSTEM.md",
+      "tier": "free",
+      "releasedAt": "2026-03-14T04:46:21+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "CLDCDE",
+      "featured": true,
+      "sourcePath": ".claude/skills/ae-proof-agent/prompts/00-SYSTEM.md"
+    },
+    {
+      "id": "skill:ae-ltd-claude-template-switchboard",
+      "kind": "extension",
+      "name": "ae-ltd-claude-template-switchboard",
+      "slug": "skill-ae-ltd-claude-template-switchboard",
+      "summary": "Select and adapt the right CLAUDE.md template for repo context.",
+      "tags": [
+        "skill",
+        "ae-ltd",
+        "claude-md",
+        "template",
+        "documentation",
+        "zeroclaw",
+        "clawreform",
+        "ae-ltd-claude-template-switchboard"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p ~/.codex/skills ~/.zeroclaw/workspace/skills ~/.clawreform/workspace/skills && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-claude-template-switchboard\" ~/.codex/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-claude-template-switchboard\" ~/.zeroclaw/workspace/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-claude-template-switchboard\" ~/.clawreform/workspace/skills/ && \\\necho \"[OK] Installed skills/ae-ltd-claude-template-switchboard\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/skills/ae-ltd-claude-template-switchboard",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-claude-template-switchboard/SKILL.md",
+      "tier": "free",
+      "releasedAt": "2026-03-12T04:22:45+11:00",
+      "category": "skill",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "ae.ltd",
+      "featured": false,
+      "sourcePath": "skills/ae-ltd-claude-template-switchboard"
+    },
+    {
+      "id": "skill:ae-ltd-context7-radar",
+      "kind": "extension",
+      "name": "ae-ltd-context7-radar",
+      "slug": "skill-ae-ltd-context7-radar",
+      "summary": "Ground implementation in version-accurate docs before coding.",
+      "tags": [
+        "skill",
+        "ae-ltd",
+        "context7",
+        "docs",
+        "api",
+        "zeroclaw",
+        "clawreform",
+        "ae-ltd-context7-radar"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p ~/.codex/skills ~/.zeroclaw/workspace/skills ~/.clawreform/workspace/skills && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-context7-radar\" ~/.codex/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-context7-radar\" ~/.zeroclaw/workspace/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-context7-radar\" ~/.clawreform/workspace/skills/ && \\\necho \"[OK] Installed skills/ae-ltd-context7-radar\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/skills/ae-ltd-context7-radar",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-context7-radar/SKILL.md",
+      "tier": "free",
+      "releasedAt": "2026-03-12T04:22:45+11:00",
+      "category": "skill",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "ae.ltd",
+      "featured": false,
+      "sourcePath": "skills/ae-ltd-context7-radar"
+    },
+    {
+      "id": "skill:ae-ltd-mcp-foundry",
+      "kind": "extension",
+      "name": "ae-ltd-mcp-foundry",
+      "slug": "skill-ae-ltd-mcp-foundry",
+      "summary": "Scaffold and harden MCP servers with strict contracts and validation.",
+      "tags": [
+        "skill",
+        "ae-ltd",
+        "mcp",
+        "server",
+        "zeroclaw",
+        "clawreform",
+        "ae-ltd-mcp-foundry"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p ~/.codex/skills ~/.zeroclaw/workspace/skills ~/.clawreform/workspace/skills && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-mcp-foundry\" ~/.codex/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-mcp-foundry\" ~/.zeroclaw/workspace/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-mcp-foundry\" ~/.clawreform/workspace/skills/ && \\\necho \"[OK] Installed skills/ae-ltd-mcp-foundry\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/skills/ae-ltd-mcp-foundry",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-mcp-foundry/SKILL.md",
+      "tier": "free",
+      "releasedAt": "2026-03-12T04:22:45+11:00",
+      "category": "skill",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "ae.ltd",
+      "featured": false,
+      "sourcePath": "skills/ae-ltd-mcp-foundry"
+    },
+    {
+      "id": "skill:ae-ltd-mutation-gate",
+      "kind": "extension",
+      "name": "ae-ltd-mutation-gate",
+      "slug": "skill-ae-ltd-mutation-gate",
+      "summary": "Run targeted mutation testing and convert survivors into concrete tests.",
+      "tags": [
+        "skill",
+        "ae-ltd",
+        "testing",
+        "mutation",
+        "quality",
+        "zeroclaw",
+        "clawreform",
+        "ae-ltd-mutation-gate"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p ~/.codex/skills ~/.zeroclaw/workspace/skills ~/.clawreform/workspace/skills && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-mutation-gate\" ~/.codex/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-mutation-gate\" ~/.zeroclaw/workspace/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-mutation-gate\" ~/.clawreform/workspace/skills/ && \\\necho \"[OK] Installed skills/ae-ltd-mutation-gate\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/skills/ae-ltd-mutation-gate",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-mutation-gate/SKILL.md",
+      "tier": "free",
+      "releasedAt": "2026-03-12T04:22:45+11:00",
+      "category": "skill",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "ae.ltd",
+      "featured": false,
+      "sourcePath": "skills/ae-ltd-mutation-gate"
+    },
+    {
+      "id": "skill:ae-ltd-n8n-orbit",
+      "kind": "extension",
+      "name": "ae-ltd-n8n-orbit",
+      "slug": "skill-ae-ltd-n8n-orbit",
+      "summary": "Generate production-ready n8n workflows from natural language goals.",
+      "tags": [
+        "skill",
+        "ae-ltd",
+        "n8n",
+        "workflow",
+        "automation",
+        "zeroclaw",
+        "clawreform",
+        "ae-ltd-n8n-orbit"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p ~/.codex/skills ~/.zeroclaw/workspace/skills ~/.clawreform/workspace/skills && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-n8n-orbit\" ~/.codex/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-n8n-orbit\" ~/.zeroclaw/workspace/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-n8n-orbit\" ~/.clawreform/workspace/skills/ && \\\necho \"[OK] Installed skills/ae-ltd-n8n-orbit\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/skills/ae-ltd-n8n-orbit",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-n8n-orbit/SKILL.md",
+      "tier": "free",
+      "releasedAt": "2026-03-12T04:22:45+11:00",
+      "category": "skill",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "ae.ltd",
+      "featured": false,
+      "sourcePath": "skills/ae-ltd-n8n-orbit"
+    },
+    {
+      "id": "skill:ae-ltd-skill-builder",
+      "kind": "extension",
+      "name": "ae-ltd-skill-builder",
+      "slug": "skill-ae-ltd-skill-builder",
+      "summary": "Factory for creating, validating, and managing Claude Code skills with proper structure and tooling.",
+      "tags": [
+        "skill",
+        "ae-ltd",
+        "skills",
+        "factory",
+        "scaffolding",
+        "validation",
+        "claude-code",
+        "ae-ltd-skill-builder"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p ~/.codex/skills ~/.zeroclaw/workspace/skills ~/.clawreform/workspace/skills && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-skill-builder\" ~/.codex/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-skill-builder\" ~/.zeroclaw/workspace/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-skill-builder\" ~/.clawreform/workspace/skills/ && \\\necho \"[OK] Installed skills/ae-ltd-skill-builder\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/skills/ae-ltd-skill-builder",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-skill-builder/SKILL.md",
+      "tier": "free",
+      "releasedAt": "2026-03-12T04:22:45+11:00",
+      "category": "skill",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "ae.ltd",
+      "featured": false,
+      "sourcePath": "skills/ae-ltd-skill-builder"
+    },
+    {
+      "id": "skill:ae-ltd-visual-regression-forge",
+      "kind": "extension",
+      "name": "ae-ltd-visual-regression-forge",
+      "slug": "skill-ae-ltd-visual-regression-forge",
+      "summary": "Baseline-and-diff UI quality gate for confident releases.",
+      "tags": [
+        "skill",
+        "ae-ltd",
+        "visual-regression",
+        "ui",
+        "testing",
+        "zeroclaw",
+        "clawreform",
+        "ae-ltd-visual-regression-forge"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p ~/.codex/skills ~/.zeroclaw/workspace/skills ~/.clawreform/workspace/skills && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-visual-regression-forge\" ~/.codex/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-visual-regression-forge\" ~/.zeroclaw/workspace/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-visual-regression-forge\" ~/.clawreform/workspace/skills/ && \\\necho \"[OK] Installed skills/ae-ltd-visual-regression-forge\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/skills/ae-ltd-visual-regression-forge",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-visual-regression-forge/SKILL.md",
+      "tier": "free",
+      "releasedAt": "2026-03-12T04:22:45+11:00",
+      "category": "skill",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "ae.ltd",
+      "featured": false,
+      "sourcePath": "skills/ae-ltd-visual-regression-forge"
+    },
+    {
+      "id": "skill:ae-ltd-worktree-mesh",
+      "kind": "extension",
+      "name": "ae-ltd-worktree-mesh",
+      "slug": "skill-ae-ltd-worktree-mesh",
+      "summary": "Manage parallel git worktrees safely for isolated task execution.",
+      "tags": [
+        "skill",
+        "ae-ltd",
+        "git",
+        "worktree",
+        "parallel",
+        "zeroclaw",
+        "clawreform",
+        "ae-ltd-worktree-mesh"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p ~/.codex/skills ~/.zeroclaw/workspace/skills ~/.clawreform/workspace/skills && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-worktree-mesh\" ~/.codex/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-worktree-mesh\" ~/.zeroclaw/workspace/skills/ && \\\ncp -R \"$tmp/cldcde/skills/ae-ltd-worktree-mesh\" ~/.clawreform/workspace/skills/ && \\\necho \"[OK] Installed skills/ae-ltd-worktree-mesh\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/skills/ae-ltd-worktree-mesh",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-worktree-mesh/SKILL.md",
+      "tier": "free",
+      "releasedAt": "2026-03-12T04:22:45+11:00",
+      "category": "skill",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "ae.ltd",
+      "featured": false,
+      "sourcePath": "skills/ae-ltd-worktree-mesh"
+    },
+    {
+      "id": "prompt:skills/ae-ltd-skill-builder/prompts/examples.md",
+      "kind": "extension",
+      "name": "Example Prompts for Skill Builder",
+      "slug": "prompt-skills-ae-ltd-skill-builder-prompts-examples-md",
+      "summary": "These examples demonstrate how to interact with the Skill Builder skill.",
+      "tags": [
+        "prompt",
+        "cldcde"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/skills/ae-ltd-skill-builder/prompts/examples.md\" -o \"$target/examples.md\" && \\\necho \"[OK] Installed prompt examples.md to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-skill-builder/prompts/examples.md",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-skill-builder/prompts/examples.md",
+      "tier": "free",
+      "releasedAt": "2026-03-12T02:12:20+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "CLDCDE",
+      "featured": false,
+      "sourcePath": "skills/ae-ltd-skill-builder/prompts/examples.md"
+    },
+    {
+      "id": "prompt:skills/ae-ltd-skill-builder/prompts/system.md",
+      "kind": "extension",
+      "name": "System Prompt Extensions for Skill Builder",
+      "slug": "prompt-skills-ae-ltd-skill-builder-prompts-system-md",
+      "summary": "When this skill is active, extend Claude's system context with:",
+      "tags": [
+        "prompt",
+        "cldcde"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/skills/ae-ltd-skill-builder/prompts/system.md\" -o \"$target/system.md\" && \\\necho \"[OK] Installed prompt system.md to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-skill-builder/prompts/system.md",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/skills/ae-ltd-skill-builder/prompts/system.md",
+      "tier": "free",
+      "releasedAt": "2026-03-12T02:12:20+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "CLDCDE",
+      "featured": false,
+      "sourcePath": "skills/ae-ltd-skill-builder/prompts/system.md"
+    },
+    {
+      "id": "workflow:deploy.yml",
+      "kind": "extension",
+      "name": "CLDCDE CI and Deploy",
+      "slug": "workflow-deploy-yml",
+      "summary": "GitHub workflow for pull_request:. Ships repo changes through the CLDCDE automation path.",
+      "tags": [
+        "workflow",
+        "github-actions",
+        "automation"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "mkdir -p .github/workflows && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/.github/workflows/deploy.yml\" -o \".github/workflows/deploy.yml\" && \\\necho \"[OK] Installed workflow deploy.yml\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/.github/workflows/deploy.yml",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/.github/workflows/deploy.yml",
+      "tier": "free",
+      "releasedAt": "2026-02-28T18:23:56+11:00",
+      "category": "workflow",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "GitHub Actions",
+      "featured": false,
+      "sourcePath": ".github/workflows/deploy.yml"
+    },
+    {
+      "id": "plugin:cloud-agents",
+      "kind": "extension",
+      "name": "Cloud Aegnts With Computer Use",
+      "slug": "plugin-cloud-agents",
+      "summary": "Run AI aegnts in isolated sandboxes that record themselves interacting with software they build. Features automatic video recording, browser automation, artifact generation, and merge-ready PRs.",
+      "tags": [
+        "plugin",
+        "cloud-aegnts",
+        "computer-use",
+        "sandbox",
+        "video-recording",
+        "browser-automation",
+        "artifacts",
+        "cursor-inspired",
+        "cldcde",
+        "aegntic",
+        "ai",
+        "autonomous",
+        "agents",
+        "multi-agent",
+        "demo",
+        "video-generation",
+        "recording",
+        "claude-code",
+        "agent-zero",
+        "opencode",
+        "openclaw",
+        "cursor",
+        "multiplatform",
+        "e2b",
+        "docker",
+        "global",
+        "cloud-agents"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/cloud-agents\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/cloud-agents\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/cloud-agents",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/plugins/cloud-agents/README.md",
+      "tier": "free",
+      "releasedAt": "2026-02-27T15:12:09+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.ltd",
+      "featured": false,
+      "sourcePath": "plugins/cloud-agents"
+    },
+    {
+      "id": "prompt:mcp-servers/obsidian-elite-rag/prompts/ai-collaboration.md",
+      "kind": "extension",
+      "name": "AI Collaboration Prompts",
+      "slug": "prompt-mcp-servers-obsidian-elite-rag-prompts-ai-collaboration-md",
+      "summary": "Each collaboration prompt includes context, objectives, and expected outcomes to guide effective AI-assisted work and learning.",
+      "tags": [
+        "prompt",
+        "obsidian-elite-rag"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/obsidian-elite-rag/prompts/ai-collaboration.md\" -o \"$target/ai-collaboration.md\" && \\\necho \"[OK] Installed prompt ai-collaboration.md to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/obsidian-elite-rag/prompts/ai-collaboration.md",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/obsidian-elite-rag/prompts/ai-collaboration.md",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Obsidian Elite Rag",
+      "featured": false,
+      "sourcePath": "mcp-servers/obsidian-elite-rag/prompts/ai-collaboration.md"
+    },
+    {
+      "id": "plugin:context7-docs",
+      "kind": "extension",
+      "name": "Context7 Docs",
+      "slug": "plugin-context7-docs",
+      "summary": "Fetch up-to-date library documentation via Context7 for accurate coding",
+      "tags": [
+        "plugin",
+        "Fetch Docs",
+        "context7-docs"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/context7-docs\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/context7-docs\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/context7-docs",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/context7-docs",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/context7-docs"
+    },
+    {
+      "id": "prompt:mcp-servers/quick-data/src/mcp_server/prompts/correlation_investigation_prompt.py",
+      "kind": "extension",
+      "name": "Correlation Investigation Prompt",
+      "slug": "prompt-mcp-servers-quick-data-src-mcp-server-prompts-correlation-investigation-prompt-py",
+      "summary": "Correlation investigation prompt implementation.",
+      "tags": [
+        "prompt",
+        "quick-data"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/quick-data/src/mcp_server/prompts/correlation_investigation_prompt.py\" -o \"$target/correlation_investigation_prompt.py\" && \\\necho \"[OK] Installed prompt correlation_investigation_prompt.py to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/correlation_investigation_prompt.py",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/correlation_investigation_prompt.py",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Quick Data",
+      "featured": false,
+      "sourcePath": "mcp-servers/quick-data/src/mcp_server/prompts/correlation_investigation_prompt.py"
+    },
+    {
+      "id": "plugin:create-worktrees",
+      "kind": "extension",
+      "name": "Create Worktrees",
+      "slug": "plugin-create-worktrees",
+      "summary": "Git worktree management for parallel development workflows",
+      "tags": [
+        "plugin",
+        "Worktree Create",
+        "Worktree Clean",
+        "create-worktrees"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/create-worktrees\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/create-worktrees\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/create-worktrees",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/create-worktrees",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/create-worktrees"
+    },
+    {
+      "id": "prompt:mcp-servers/quick-data/src/mcp_server/prompts/dashboard_design_consultation_prompt.py",
+      "kind": "extension",
+      "name": "Dashboard Design Consultation Prompt",
+      "slug": "prompt-mcp-servers-quick-data-src-mcp-server-prompts-dashboard-design-consultation-prompt-py",
+      "summary": "Dashboard design consultation prompt implementation.",
+      "tags": [
+        "prompt",
+        "quick-data"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/quick-data/src/mcp_server/prompts/dashboard_design_consultation_prompt.py\" -o \"$target/dashboard_design_consultation_prompt.py\" && \\\necho \"[OK] Installed prompt dashboard_design_consultation_prompt.py to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/dashboard_design_consultation_prompt.py",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/dashboard_design_consultation_prompt.py",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Quick Data",
+      "featured": false,
+      "sourcePath": "mcp-servers/quick-data/src/mcp_server/prompts/dashboard_design_consultation_prompt.py"
+    },
+    {
+      "id": "prompt:mcp-servers/quick-data/src/mcp_server/prompts/data_quality_assessment_prompt.py",
+      "kind": "extension",
+      "name": "Data Quality Assessment Prompt",
+      "slug": "prompt-mcp-servers-quick-data-src-mcp-server-prompts-data-quality-assessment-prompt-py",
+      "summary": "Data quality assessment prompt implementation.",
+      "tags": [
+        "prompt",
+        "quick-data"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/quick-data/src/mcp_server/prompts/data_quality_assessment_prompt.py\" -o \"$target/data_quality_assessment_prompt.py\" && \\\necho \"[OK] Installed prompt data_quality_assessment_prompt.py to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/data_quality_assessment_prompt.py",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/data_quality_assessment_prompt.py",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Quick Data",
+      "featured": false,
+      "sourcePath": "mcp-servers/quick-data/src/mcp_server/prompts/data_quality_assessment_prompt.py"
+    },
+    {
+      "id": "prompt:mcp-servers/quick-data/src/mcp_server/prompts/dataset_first_look_prompt.py",
+      "kind": "extension",
+      "name": "Dataset First Look Prompt",
+      "slug": "prompt-mcp-servers-quick-data-src-mcp-server-prompts-dataset-first-look-prompt-py",
+      "summary": "Dataset first look prompt implementation.",
+      "tags": [
+        "prompt",
+        "quick-data"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/quick-data/src/mcp_server/prompts/dataset_first_look_prompt.py\" -o \"$target/dataset_first_look_prompt.py\" && \\\necho \"[OK] Installed prompt dataset_first_look_prompt.py to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/dataset_first_look_prompt.py",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/dataset_first_look_prompt.py",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Quick Data",
+      "featured": false,
+      "sourcePath": "mcp-servers/quick-data/src/mcp_server/prompts/dataset_first_look_prompt.py"
+    },
+    {
+      "id": "prompt:mcp-servers/quick-data/src/mcp_server/prompts/find_datasources_prompt.py",
+      "kind": "extension",
+      "name": "Find Datasources Prompt",
+      "slug": "prompt-mcp-servers-quick-data-src-mcp-server-prompts-find-datasources-prompt-py",
+      "summary": "Find data sources prompt implementation.",
+      "tags": [
+        "prompt",
+        "quick-data"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/quick-data/src/mcp_server/prompts/find_datasources_prompt.py\" -o \"$target/find_datasources_prompt.py\" && \\\necho \"[OK] Installed prompt find_datasources_prompt.py to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/find_datasources_prompt.py",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/find_datasources_prompt.py",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Quick Data",
+      "featured": false,
+      "sourcePath": "mcp-servers/quick-data/src/mcp_server/prompts/find_datasources_prompt.py"
+    },
+    {
+      "id": "prompt:mcp-servers/quick-data/src/mcp_server/prompts/insight_generation_workshop_prompt.py",
+      "kind": "extension",
+      "name": "Insight Generation Workshop Prompt",
+      "slug": "prompt-mcp-servers-quick-data-src-mcp-server-prompts-insight-generation-workshop-prompt-py",
+      "summary": "Insight generation workshop prompt implementation.",
+      "tags": [
+        "prompt",
+        "quick-data"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/quick-data/src/mcp_server/prompts/insight_generation_workshop_prompt.py\" -o \"$target/insight_generation_workshop_prompt.py\" && \\\necho \"[OK] Installed prompt insight_generation_workshop_prompt.py to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/insight_generation_workshop_prompt.py",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/insight_generation_workshop_prompt.py",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Quick Data",
+      "featured": false,
+      "sourcePath": "mcp-servers/quick-data/src/mcp_server/prompts/insight_generation_workshop_prompt.py"
+    },
+    {
+      "id": "prompt:mcp-servers/quick-data/src/mcp_server/prompts/list_mcp_assets_prompt.py",
+      "kind": "extension",
+      "name": "List Mcp Assets Prompt",
+      "slug": "prompt-mcp-servers-quick-data-src-mcp-server-prompts-list-mcp-assets-prompt-py",
+      "summary": "List MCP assets prompt implementation.",
+      "tags": [
+        "prompt",
+        "quick-data"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/quick-data/src/mcp_server/prompts/list_mcp_assets_prompt.py\" -o \"$target/list_mcp_assets_prompt.py\" && \\\necho \"[OK] Installed prompt list_mcp_assets_prompt.py to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/list_mcp_assets_prompt.py",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/list_mcp_assets_prompt.py",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Quick Data",
+      "featured": false,
+      "sourcePath": "mcp-servers/quick-data/src/mcp_server/prompts/list_mcp_assets_prompt.py"
+    },
+    {
+      "id": "plugin:mutation-tester",
+      "kind": "extension",
+      "name": "Mutation Tester",
+      "slug": "plugin-mutation-tester",
+      "summary": "Mutation testing to measure test suite quality",
+      "tags": [
+        "plugin",
+        "Mutate",
+        "mutation-tester"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/mutation-tester\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/mutation-tester\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/mutation-tester",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/mutation-tester",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/mutation-tester"
+    },
+    {
+      "id": "plugin:n8n-workflow",
+      "kind": "extension",
+      "name": "N8n Workflow",
+      "slug": "plugin-n8n-workflow",
+      "summary": "Generate n8n automation workflows from natural language descriptions",
+      "tags": [
+        "plugin",
+        "Create Workflow",
+        "n8n-workflow"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/n8n-workflow\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/n8n-workflow\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/n8n-workflow",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/n8n-workflow",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/n8n-workflow"
+    },
+    {
+      "id": "mcp:obsidian-elite-rag",
+      "kind": "mcp",
+      "name": "Obsidian Elite Rag",
+      "slug": "mcp-obsidian-elite-rag",
+      "summary": "Elite Obsidian RAG System - Second Brain with Claude Code Integration",
+      "tags": [
+        "mcp",
+        "obsidian",
+        "rag",
+        "knowledge-management",
+        "claude",
+        "ai",
+        "second-brain",
+        "obsidian-elite-rag"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}\" && \\\ncp -R \"$tmp/cldcde/mcp-servers/obsidian-elite-rag\" \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/\" && \\\ncd \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/obsidian-elite-rag\" && \\\nif [ -f package.json ]; then npm install; elif [ -f pyproject.toml ]; then (command -v uv >/dev/null 2>&1 && uv sync) || python3 -m pip install -e .; elif [ -f requirements.txt ]; then python3 -m pip install -r requirements.txt; fi && \\\necho \"[OK] Installed mcp-servers/obsidian-elite-rag to ${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/mcp-servers/obsidian-elite-rag",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/obsidian-elite-rag/README.md",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "mcp",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Elite Knowledge Systems",
+      "featured": false,
+      "sourcePath": "mcp-servers/obsidian-elite-rag"
+    },
+    {
+      "id": "prompt:mcp-servers/quick-data/src/mcp_server/prompts/pattern_discovery_session_prompt.py",
+      "kind": "extension",
+      "name": "Pattern Discovery Session Prompt",
+      "slug": "prompt-mcp-servers-quick-data-src-mcp-server-prompts-pattern-discovery-session-prompt-py",
+      "summary": "Pattern discovery session prompt implementation.",
+      "tags": [
+        "prompt",
+        "quick-data"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/quick-data/src/mcp_server/prompts/pattern_discovery_session_prompt.py\" -o \"$target/pattern_discovery_session_prompt.py\" && \\\necho \"[OK] Installed prompt pattern_discovery_session_prompt.py to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/pattern_discovery_session_prompt.py",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/pattern_discovery_session_prompt.py",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Quick Data",
+      "featured": false,
+      "sourcePath": "mcp-servers/quick-data/src/mcp_server/prompts/pattern_discovery_session_prompt.py"
+    },
+    {
+      "id": "mcp:quick-data",
+      "kind": "mcp",
+      "name": "Quick Data Mcp",
+      "slug": "mcp-quick-data",
+      "summary": "Add your description here",
+      "tags": [
+        "mcp",
+        "quick-data"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}\" && \\\ncp -R \"$tmp/cldcde/mcp-servers/quick-data\" \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/\" && \\\ncd \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/quick-data\" && \\\nif [ -f package.json ]; then npm install; elif [ -f pyproject.toml ]; then (command -v uv >/dev/null 2>&1 && uv sync) || python3 -m pip install -e .; elif [ -f requirements.txt ]; then python3 -m pip install -r requirements.txt; fi && \\\necho \"[OK] Installed mcp-servers/quick-data to ${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/mcp-servers/quick-data",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/README.md",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "mcp",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "mcp-servers/quick-data"
+    },
+    {
+      "id": "prompt:mcp-servers/obsidian-elite-rag/prompts/retrieval-optimization.md",
+      "kind": "extension",
+      "name": "Retrieval Optimization Prompts",
+      "slug": "prompt-mcp-servers-obsidian-elite-rag-prompts-retrieval-optimization-md",
+      "summary": "00-Core/           # Foundational knowledge 01-Projects/       # Active work 02-Research/       # Learning areas 03-Workflows/      # Reusable processes 04-AI-Paired/      # AI interactions 05-Resources/      # External references",
+      "tags": [
+        "prompt",
+        "obsidian-elite-rag"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/obsidian-elite-rag/prompts/retrieval-optimization.md\" -o \"$target/retrieval-optimization.md\" && \\\necho \"[OK] Installed prompt retrieval-optimization.md to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/obsidian-elite-rag/prompts/retrieval-optimization.md",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/obsidian-elite-rag/prompts/retrieval-optimization.md",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Obsidian Elite Rag",
+      "featured": false,
+      "sourcePath": "mcp-servers/obsidian-elite-rag/prompts/retrieval-optimization.md"
+    },
+    {
+      "id": "prompt:mcp-servers/quick-data/src/mcp_server/prompts/segmentation_workshop_prompt.py",
+      "kind": "extension",
+      "name": "Segmentation Workshop Prompt",
+      "slug": "prompt-mcp-servers-quick-data-src-mcp-server-prompts-segmentation-workshop-prompt-py",
+      "summary": "Segmentation workshop prompt implementation.",
+      "tags": [
+        "prompt",
+        "quick-data"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/quick-data/src/mcp_server/prompts/segmentation_workshop_prompt.py\" -o \"$target/segmentation_workshop_prompt.py\" && \\\necho \"[OK] Installed prompt segmentation_workshop_prompt.py to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/segmentation_workshop_prompt.py",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/quick-data/src/mcp_server/prompts/segmentation_workshop_prompt.py",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Quick Data",
+      "featured": false,
+      "sourcePath": "mcp-servers/quick-data/src/mcp_server/prompts/segmentation_workshop_prompt.py"
+    },
+    {
+      "id": "prompt:mcp-servers/obsidian-elite-rag/prompts/vault-analysis.md",
+      "kind": "extension",
+      "name": "Vault Analysis Prompts",
+      "slug": "prompt-mcp-servers-obsidian-elite-rag-prompts-vault-analysis-md",
+      "summary": "Each analysis prompt provides specific scope, criteria, and expected outputs to guide comprehensive vault assessment and improvement.",
+      "tags": [
+        "prompt",
+        "obsidian-elite-rag"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "target=\"${AE_PROMPT_DIR:-$HOME/.claude/prompts}\" && \\\nmkdir -p \"$target\" && \\\ncurl -fsSL \"https://raw.githubusercontent.com/aegntic/cldcde/main/mcp-servers/obsidian-elite-rag/prompts/vault-analysis.md\" -o \"$target/vault-analysis.md\" && \\\necho \"[OK] Installed prompt vault-analysis.md to $target\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/obsidian-elite-rag/prompts/vault-analysis.md",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/mcp-servers/obsidian-elite-rag/prompts/vault-analysis.md",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "prompt",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "Obsidian Elite Rag",
+      "featured": false,
+      "sourcePath": "mcp-servers/obsidian-elite-rag/prompts/vault-analysis.md"
+    },
+    {
+      "id": "plugin:visual-regression",
+      "kind": "extension",
+      "name": "Visual Regression",
+      "slug": "plugin-visual-regression",
+      "summary": "Visual regression testing with screenshot comparison",
+      "tags": [
+        "plugin",
+        "Capture Baseline",
+        "Compare",
+        "visual-regression"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/visual-regression\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/visual-regression\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/visual-regression",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/visual-regression",
+      "tier": "free",
+      "releasedAt": "2026-02-24T22:37:35+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/visual-regression"
+    },
+    {
+      "id": "plugin:compound-engineering",
+      "kind": "extension",
+      "name": "Compound Engineering Plugin",
+      "slug": "plugin-compound-engineering",
+      "summary": "The Compound Engineering Plugin coordinates Debt-Sentinel, Red Team Tribunal, and Spec-Lock into unified, multi-stage workflows. It provides orchestration, metrics tracking, and quality gates for comprehensive code quality management.",
+      "tags": [
+        "plugin",
+        "compound-engineering"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/compound-engineering\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/compound-engineering\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/compound-engineering",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/plugins/compound-engineering/README.md",
+      "tier": "free",
+      "releasedAt": "2026-02-13T21:14:48+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/compound-engineering"
+    },
+    {
+      "id": "plugin:debt-sentinel",
+      "kind": "extension",
+      "name": "Debt Sentinel Plugin",
+      "slug": "plugin-debt-sentinel",
+      "summary": "The Tech-Debt Sentinel is a hook-based architectural enforcer that prevents \"vibe coding\" slop by blocking anti-patterns before they enter the codebase.",
+      "tags": [
+        "plugin",
+        "debt-sentinel"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/debt-sentinel\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/debt-sentinel\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/debt-sentinel",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/plugins/debt-sentinel/README.md",
+      "tier": "free",
+      "releasedAt": "2026-02-13T21:14:48+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/debt-sentinel"
+    },
+    {
+      "id": "plugin:red-team-tribunal",
+      "kind": "extension",
+      "name": "Red Team Tribunal Skill",
+      "slug": "plugin-red-team-tribunal",
+      "summary": "The Red Team Tribunal utilizes Opus 4.6 Agent Teams to create an adversarial review loop that prevents \"confident mistakes\" through multi-agent consensus.",
+      "tags": [
+        "plugin",
+        "red-team-tribunal"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/red-team-tribunal\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/red-team-tribunal\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/red-team-tribunal",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/plugins/red-team-tribunal/README.md",
+      "tier": "free",
+      "releasedAt": "2026-02-13T21:14:48+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/red-team-tribunal"
+    },
+    {
+      "id": "plugin:spec-lock",
+      "kind": "extension",
+      "name": "Spec Lock Plugin",
+      "slug": "plugin-spec-lock",
+      "summary": "The Living Spec Synchronizer prevents documentation rot by maintaining bi-directional sync between code and specifications. It treats documentation as executable code that must stay in sync with implementation.",
+      "tags": [
+        "plugin",
+        "spec-lock"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/spec-lock\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/spec-lock\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/spec-lock",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/plugins/spec-lock/README.md",
+      "tier": "free",
+      "releasedAt": "2026-02-13T21:14:48+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/spec-lock"
+    },
+    {
+      "id": "plugin:agent-zero-brain",
+      "kind": "extension",
+      "name": "Agent Zero Brain",
+      "slug": "plugin-agent-zero-brain",
+      "summary": "Repo-synced item. Add a README or metadata file for a richer listing.",
+      "tags": [
+        "plugin",
+        "agent-zero-brain"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/agent-zero-brain\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/agent-zero-brain\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/agent-zero-brain",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/agent-zero-brain",
+      "tier": "free",
+      "releasedAt": "2026-02-13T18:21:16+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/agent-zero-brain"
+    },
+    {
+      "id": "plugin:google-labs-extension",
+      "kind": "extension",
+      "name": "Google Labs Extension",
+      "slug": "plugin-google-labs-extension",
+      "summary": "Google Suite Labs Extension - Access Stitch, Whisk, Flow, and all Google experimental AI tools with OAuth authentication and browser automation",
+      "tags": [
+        "plugin",
+        "google-labs",
+        "stitch",
+        "whisk",
+        "flow",
+        "google-ai",
+        "experimental",
+        "browser-automation",
+        "oauth",
+        "google-labs-extension"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/google-labs-extension\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/google-labs-extension\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/google-labs-extension",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/plugins/google-labs-extension/README.md",
+      "tier": "free",
+      "releasedAt": "2026-02-13T18:21:16+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "@aegntic",
+      "featured": false,
+      "sourcePath": "plugins/google-labs-extension"
+    },
+    {
+      "id": "mcp:graphiti-mcp",
+      "kind": "mcp",
+      "name": "Graphiti Mcp",
+      "slug": "mcp-graphiti-mcp",
+      "summary": "Repo-synced item. Add a README or metadata file for a richer listing.",
+      "tags": [
+        "mcp",
+        "graphiti-mcp"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}\" && \\\ncp -R \"$tmp/cldcde/mcp-servers/graphiti-mcp\" \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/\" && \\\ncd \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/graphiti-mcp\" && \\\nif [ -f package.json ]; then npm install; elif [ -f pyproject.toml ]; then (command -v uv >/dev/null 2>&1 && uv sync) || python3 -m pip install -e .; elif [ -f requirements.txt ]; then python3 -m pip install -r requirements.txt; fi && \\\necho \"[OK] Installed mcp-servers/graphiti-mcp to ${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/mcp-servers/graphiti-mcp",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/mcp-servers/graphiti-mcp",
+      "tier": "free",
+      "releasedAt": "2026-02-13T18:21:16+11:00",
+      "category": "mcp",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "mcp-servers/graphiti-mcp"
+    },
+    {
+      "id": "plugin:notebooklm-pro",
+      "kind": "extension",
+      "name": "Notebooklm Pro",
+      "slug": "plugin-notebooklm-pro",
+      "summary": "NotebookLM Pro - Advanced conversational research and document analysis with session-based RAG, Gemini integration, and multi-source synthesis",
+      "tags": [
+        "plugin",
+        "notebooklm",
+        "research",
+        "rag",
+        "documents",
+        "gemini",
+        "ai-research",
+        "conversation",
+        "synthesis",
+        "knowledge-base",
+        "notebooklm-pro"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/notebooklm-pro\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/notebooklm-pro\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/notebooklm-pro",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/plugins/notebooklm-pro/README.md",
+      "tier": "pro",
+      "releasedAt": "2026-02-13T18:21:16+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "@aegntic",
+      "featured": false,
+      "sourcePath": "plugins/notebooklm-pro"
+    },
+    {
+      "id": "plugin:prologue-plugin",
+      "kind": "extension",
+      "name": "Prologue Plugin",
+      "slug": "plugin-prologue-plugin",
+      "summary": "Cross-platform interactive menu system for the @aegntic ecosystem. Works with Claude Code, Factory Droid, Antigravity, Gemini, and standalone CLI.",
+      "tags": [
+        "plugin",
+        "prologue",
+        "aegntic",
+        "cli",
+        "menu",
+        "interactive",
+        "claude-code",
+        "factory-droid",
+        "antigravity",
+        "gemini",
+        "ai-agent",
+        "Prologue Interactive",
+        "Prologue List",
+        "Prologue Install",
+        "prologue-plugin"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/prologue-plugin\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/prologue-plugin\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/prologue-plugin",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/plugins/prologue-plugin/README.md",
+      "tier": "free",
+      "releasedAt": "2026-02-13T18:21:16+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "@aegntic",
+      "featured": false,
+      "sourcePath": "plugins/prologue-plugin"
+    },
+    {
+      "id": "plugin:d3mo-video-generator",
+      "kind": "extension",
+      "name": "D3mo Video Generator",
+      "slug": "plugin-d3mo-video-generator",
+      "summary": "Professional video production system using Remotion and advanced animation techniques for demos, tutorials, and marketing content by ae.ltd",
+      "tags": [
+        "plugin",
+        "d3mo-video-generator"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/d3mo-video-generator\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/d3mo-video-generator\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/d3mo-video-generator",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/d3mo-video-generator",
+      "tier": "free",
+      "releasedAt": "2025-11-19T09:21:45+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/d3mo-video-generator"
+    },
+    {
+      "id": "plugin:fartnode-orchestrator-suite",
+      "kind": "extension",
+      "name": "Fartnode Orchestrator Suite",
+      "slug": "plugin-fartnode-orchestrator-suite",
+      "summary": "Master multi-agent orchestration system that deploys and manages specialized subagents for comprehensive viral automation ecosystems by ae.ltd",
+      "tags": [
+        "plugin",
+        "fartnode-orchestrator-suite"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/fartnode-orchestrator-suite\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/fartnode-orchestrator-suite\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/fartnode-orchestrator-suite",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/fartnode-orchestrator-suite",
+      "tier": "free",
+      "releasedAt": "2025-11-19T09:21:45+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/fartnode-orchestrator-suite"
+    },
+    {
+      "id": "plugin:hyperliquid-risk-monitor",
+      "kind": "extension",
+      "name": "Hyperliquid Risk Monitor",
+      "slug": "plugin-hyperliquid-risk-monitor",
+      "summary": "Mission-critical real-time risk monitoring system with automated alerts, circuit breakers, and emergency shutdown for live Hyperliquid trading by ae.ltd",
+      "tags": [
+        "plugin",
+        "hyperliquid-risk-monitor"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/hyperliquid-risk-monitor\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/hyperliquid-risk-monitor\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/hyperliquid-risk-monitor",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/hyperliquid-risk-monitor",
+      "tier": "free",
+      "releasedAt": "2025-11-19T09:21:45+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/hyperliquid-risk-monitor"
+    },
+    {
+      "id": "plugin:remote-visual-debugger",
+      "kind": "extension",
+      "name": "Remote Visual Debugger",
+      "slug": "plugin-remote-visual-debugger",
+      "summary": "Comprehensive remote visual debugging toolkit for browser applications, React development, and web performance analysis by ae.ltd",
+      "tags": [
+        "plugin",
+        "remote-visual-debugger"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/remote-visual-debugger\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/remote-visual-debugger\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/remote-visual-debugger",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/remote-visual-debugger",
+      "tier": "free",
+      "releasedAt": "2025-11-19T09:21:45+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/remote-visual-debugger"
+    },
+    {
+      "id": "plugin:website-gen-automation",
+      "kind": "extension",
+      "name": "Website Gen Automation",
+      "slug": "plugin-website-gen-automation",
+      "summary": "Intelligent website generation and distribution workflow with animation studio integration, SEO optimization, and human-like AI content distribution by ae.ltd",
+      "tags": [
+        "plugin",
+        "website-gen-automation"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/website-gen-automation\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/website-gen-automation\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/website-gen-automation",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/website-gen-automation",
+      "tier": "free",
+      "releasedAt": "2025-11-19T09:21:45+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/website-gen-automation"
+    },
+    {
+      "id": "plugin:emergent-capability-suite",
+      "kind": "extension",
+      "name": "Emergent Capability Suite",
+      "slug": "plugin-emergent-capability-suite",
+      "summary": "Advanced meta-skill ecosystem that evolves new capabilities through intelligent skill synthesis and pattern recognition by ae.ltd",
+      "tags": [
+        "plugin",
+        "emergent-capability-suite"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/emergent-capability-suite\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/emergent-capability-suite\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/emergent-capability-suite",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/emergent-capability-suite",
+      "tier": "free",
+      "releasedAt": "2025-11-19T09:07:00+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/emergent-capability-suite"
+    },
+    {
+      "id": "plugin:sota-template-suite",
+      "kind": "extension",
+      "name": "Sota Template Suite",
+      "slug": "plugin-sota-template-suite",
+      "summary": "State-of-the-Art Template System with real performance optimization, AI-enhanced generation, and professional-grade developer tools by ae.ltd",
+      "tags": [
+        "plugin",
+        "sota-template-suite"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/sota-template-suite\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/sota-template-suite\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/sota-template-suite",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/sota-template-suite",
+      "tier": "free",
+      "releasedAt": "2025-11-19T09:07:00+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/sota-template-suite"
+    },
+    {
+      "id": "plugin:viral-automation-suite",
+      "kind": "extension",
+      "name": "Viral Automation Suite",
+      "slug": "plugin-viral-automation-suite",
+      "summary": "Comprehensive viral marketing and automation ecosystem with multi-agent coordination by ae.ltd",
+      "tags": [
+        "plugin",
+        "viral-automation-suite"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/viral-automation-suite\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/viral-automation-suite\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/viral-automation-suite",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/viral-automation-suite",
+      "tier": "free",
+      "releasedAt": "2025-11-19T09:07:00+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.LTD",
+      "featured": false,
+      "sourcePath": "plugins/viral-automation-suite"
+    },
+    {
+      "id": "plugin:obs-studio-control",
+      "kind": "extension",
+      "name": "Obs Studio Control",
+      "slug": "plugin-obs-studio-control",
+      "summary": "Professional OBS Studio Control and Stream Management Plugin",
+      "tags": [
+        "plugin",
+        "obs",
+        "streaming",
+        "twitch",
+        "youtube",
+        "control",
+        "automation",
+        "cldcde",
+        "obs-studio-control"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/obs-studio-control\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/obs-studio-control\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/obs-studio-control",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/plugins/obs-studio-control/README.md",
+      "tier": "free",
+      "releasedAt": "2025-11-19T08:47:39+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AEGNTIC AI Ecosystems",
+      "featured": false,
+      "sourcePath": "plugins/obs-studio-control"
+    },
+    {
+      "id": "plugin:youtube-creator",
+      "kind": "extension",
+      "name": "Youtube Creator",
+      "slug": "plugin-youtube-creator",
+      "summary": "YouTube Channel Management and Video Upload Plugin",
+      "tags": [
+        "plugin",
+        "youtube",
+        "video",
+        "upload",
+        "analytics",
+        "api",
+        "creator",
+        "cldcde",
+        "youtube-creator"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/youtube-creator\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/youtube-creator\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/youtube-creator",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/plugins/youtube-creator/README.md",
+      "tier": "free",
+      "releasedAt": "2025-11-19T08:47:39+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AEGNTIC AI Ecosystems",
+      "featured": false,
+      "sourcePath": "plugins/youtube-creator"
+    },
+    {
+      "id": "plugin:youtube-creator-pro",
+      "kind": "extension",
+      "name": "Youtube Creator Pro",
+      "slug": "plugin-youtube-creator-pro",
+      "summary": "Advanced YouTube Creator Plugin with AI-Powered Workflows",
+      "tags": [
+        "plugin",
+        "youtube",
+        "ai",
+        "analytics",
+        "automation",
+        "optimization",
+        "creator-pro",
+        "cldcde",
+        "youtube-creator-pro"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/youtube-creator-pro\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/youtube-creator-pro\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/youtube-creator-pro",
+      "docsUrl": "https://github.com/aegntic/cldcde/blob/main/plugins/youtube-creator-pro/README.md",
+      "tier": "pro",
+      "releasedAt": "2025-11-19T08:47:39+11:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AEGNTIC AI Ecosystems",
+      "featured": false,
+      "sourcePath": "plugins/youtube-creator-pro"
+    },
+    {
+      "id": "mcp:ai-memory-server",
+      "kind": "mcp",
+      "name": "Ai Memory Mcp Server",
+      "slug": "mcp-ai-memory-server",
+      "summary": "MCP server for accessing ChatGPT, Grok, and Gemini conversations and memory",
+      "tags": [
+        "mcp",
+        "claude",
+        "chatgpt",
+        "grok",
+        "gemini",
+        "ai",
+        "memory",
+        "ai-memory-server"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}\" && \\\ncp -R \"$tmp/cldcde/mcp-servers/ai-memory-server\" \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/\" && \\\ncd \"${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/ai-memory-server\" && \\\nif [ -f package.json ]; then npm install; elif [ -f pyproject.toml ]; then (command -v uv >/dev/null 2>&1 && uv sync) || python3 -m pip install -e .; elif [ -f requirements.txt ]; then python3 -m pip install -r requirements.txt; fi && \\\necho \"[OK] Installed mcp-servers/ai-memory-server to ${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/mcp-servers/ai-memory-server",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/mcp-servers/ai-memory-server",
+      "tier": "free",
+      "releasedAt": "2025-07-11T06:54:30+10:00",
+      "category": "mcp",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "aegntic",
+      "featured": false,
+      "sourcePath": "mcp-servers/ai-memory-server"
+    }
+  ]
+}

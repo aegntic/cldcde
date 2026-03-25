@@ -1,0 +1,37 @@
+{
+  "name": "ascii-art-utf",
+  "description":"Write terminal strings in UTF typefaces",
+  "main": "utf.js",
+  "author": "Abbey Hawk Sparrow <@khrome> (http://patternweaver.com)",
+  "contributors": [],
+  "bugs": {
+    "url": "https://github.com/khrome/ascii-art-utf/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/khrome/ascii-art-utf.git"
+  },
+  "keywords": [
+    "ascii",
+    "UTF",
+    "font",
+    "ansi",
+    "terminal",
+    "text",
+    "command-line",
+    "xterm",
+    "shell",
+    "formatting",
+    "tty",
+    "str",
+    "string",
+    "cli",
+    "console",
+    "terminal"
+  ],
+  "version": "0.0.1",
+  "dependencies": {
+    "ascii-art-ansi": "^1.1.1"
+  }
+}
