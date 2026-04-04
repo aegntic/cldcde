@@ -1,0 +1,432 @@
+{
+  "id": "showcase-builder-bundle",
+  "name": "Showcase Builder Bundle - Ultimate Tool Showcase Platform",
+  "version": "1.0.0",
+  "type": "skill-bundle",
+
+  "description": {
+    "short": "Complete toolkit for building awesome tool showcase websites with e-commerce integration",
+    "core": "Build stunning portfolio/showcase sites for your tools with payments, docs, and 3D visuals",
+    "pro": "Advanced automation, AI-powered development, and enterprise features"
+  },
+
+  "author": {
+    "name": "ae.ltd",
+    "email": "hello@aegntic.ai",
+    "website": "https://cldcde.cc"
+  },
+
+  "repository": "https://github.com/cldcde/showcase-builder-bundle",
+  "license": "MIT",
+  "homepage": "https://cldcde.cc/showcase-builder",
+
+  "categories": ["web-development", "e-commerce", "showcase", "automation"],
+  "keywords": [
+    "portfolio",
+    "showcase",
+    "e-commerce",
+    "stripe",
+    "lemon-squeezy",
+    "paypal",
+    "next.js",
+    "3d",
+    "documentation",
+    "automation"
+  ],
+
+  "bundle_includes": [
+    "frontend-design",
+    "frontend-designer",
+    "paypal-integration",
+    "stripe-integration",
+    "lemon-squeezy-integration",
+    "documentation-generator",
+    "analytics-pro",
+    "3d-showcase-components",
+    "payment-dashboard",
+    "automated-deployment"
+  ],
+
+  "skills": [
+    {
+      "id": "frontend-design",
+      "name": "Frontend Design (Official Anthropic)",
+      "version": "1.0.0",
+      "description": "Official Anthropic skill for creating distinctive, production-grade frontend interfaces",
+      "icon": "🎨",
+      "category": "design",
+      "source": "https://github.com/anthropics/claude-code/blob/main/plugins/frontend-design/skills/frontend-design/SKILL.md",
+      "features": [
+        "Avoids generic AI aesthetics",
+        "Production-grade code quality",
+        "Framework-agnostic patterns",
+        "Modern CSS best practices"
+      ]
+    },
+    {
+      "id": "frontend-designer",
+      "name": "Frontend Designer Skill",
+      "version": "1.0.0",
+      "description": "Accessible, responsive components with modern CSS",
+      "icon": "🖌️",
+      "category": "design",
+      "source": "https://claude-plugins.dev/skills/@jamesrochabrun/skills/frontend-designer",
+      "features": [
+        "Accessibility-first design",
+        "Responsive components",
+        "Modern CSS architecture",
+        "Component library"
+      ]
+    },
+    {
+      "id": "paypal-integration",
+      "name": "PayPal Integration",
+      "version": "1.0.0",
+      "description": "Complete PayPal payment integration for e-commerce",
+      "icon": "💳",
+      "category": "payments",
+      "source": "https://mcpmarket.com/zh/tools/skills/paypal-integration",
+      "features": [
+        "Express Checkout",
+        "Recurring billing",
+        "IPN webhook handling",
+        "Secure refund workflows"
+      ]
+    },
+    {
+      "id": "stripe-integration",
+      "name": "Stripe Integration",
+      "version": "1.0.0",
+      "description": "Stripe payment gateway integration with subscriptions",
+      "icon": "💜",
+      "category": "payments",
+      "source": "community",
+      "features": [
+        "One-time payments",
+        "Subscription management",
+        "Webhook signature verification",
+        "Test payment flows",
+        "Checkout sessions"
+      ]
+    },
+    {
+      "id": "lemon-squeezy-integration",
+      "name": "Lemon Squeezy Integration",
+      "version": "1.0.0",
+      "description": "Lemon Squeezy merchant of record integration",
+      "icon": "🍋",
+      "category": "payments",
+      "source": "community",
+      "features": [
+        "Merchant of record (tax handling)",
+        "License key generation",
+        "Subscription + one-time payments",
+        "Webhook handlers",
+        "Customer portal"
+      ]
+    },
+    {
+      "id": "documentation-generator",
+      "name": "Documentation Generator",
+      "version": "1.0.0",
+      "description": "Auto-generate documentation from README files",
+      "icon": "📚",
+      "category": "documentation",
+      "source": "custom",
+      "features": [
+        "README to docs conversion",
+        "API reference generation",
+        "Interactive code examples",
+        "Video tutorial embedding",
+        "Changelog auto-sync"
+      ]
+    },
+    {
+      "id": "analytics-pro",
+      "name": "Analytics Pro",
+      "version": "1.0.0",
+      "description": "Privacy-friendly analytics integration",
+      "icon": "📊",
+      "category": "analytics",
+      "source": "custom",
+      "features": [
+        "Plausible integration",
+        "Fathom integration",
+        "Custom event tracking",
+        "User behavior analytics",
+        "Privacy-focused"
+      ]
+    },
+    {
+      "id": "3d-showcase-components",
+      "name": "3D Showcase Components",
+      "version": "1.0.0",
+      "description": "Interactive 3D components using Spline",
+      "icon": "🎲",
+      "category": "visual",
+      "source": "custom",
+      "features": [
+        "3D interactive cards",
+        "Rotating product displays",
+        "Depth-based animations",
+        "Performance optimized",
+        "Mobile responsive"
+      ]
+    },
+    {
+      "id": "payment-dashboard",
+      "name": "Payment Dashboard",
+      "version": "1.0.0",
+      "description": "Customer dashboard for license and subscription management",
+      "icon": "🔐",
+      "category": "dashboard",
+      "source": "custom",
+      "features": [
+        "License key management",
+        "Download links for purchases",
+        "Subscription management",
+        "Support ticket system",
+        "User profile"
+      ]
+    },
+    {
+      "id": "automated-deployment",
+      "name": "Automated Deployment",
+      "version": "1.0.0",
+      "description": "Cloudflare Pages + Workers deployment automation",
+      "icon": "🚀",
+      "category": "deployment",
+      "source": "custom",
+      "features": [
+        "Cloudflare Pages integration",
+        "Workers API deployment",
+        "Automatic previews",
+        "Environment management",
+        "CI/CD pipelines"
+      ]
+    }
+  ],
+
+  "tech_stack": {
+    "frontend": {
+      "framework": "Next.js 15",
+      "ui": "React 19",
+      "styling": "Tailwind CSS v4",
+      "animations": "Framer Motion",
+      "3d": "Spline",
+      "language": "TypeScript"
+    },
+    "backend": {
+      "cms": "Supabase",
+      "api": "Cloudflare Workers",
+      "database": "PostgreSQL (Supabase)"
+    },
+    "payments": {
+      "primary": "Stripe",
+      "secondary": "Lemon Squeezy",
+      "tertiary": "PayPal"
+    },
+    "analytics": {
+      "primary": "Plausible",
+      "fallback": "Fathom"
+    },
+    "deployment": {
+      "hosting": "Cloudflare Pages",
+      "edge": "Cloudflare Workers",
+      "cdn": "Cloudflare CDN"
+    }
+  },
+
+  "features": [
+    {
+      "id": "bespoke_ui_design",
+      "name": "Bespoke UI Design",
+      "tier": "core",
+      "description": "Unique, memorable design that avoids generic AI aesthetics",
+      "icon": "🎨",
+      "category": "design",
+      "skills_used": ["frontend-design", "frontend-designer"]
+    },
+    {
+      "id": "3d_interactive_showcase",
+      "name": "3D Interactive Showcase",
+      "tier": "core",
+      "description": "Interactive 3D cards for tool displays with rotation and depth",
+      "icon": "🎲",
+      "category": "visual",
+      "skills_used": ["3d-showcase-components"],
+      "dependencies": ["spline-professional"]
+    },
+    {
+      "id": "multi_payment_provider",
+      "name": "Multi-Payment Provider Support",
+      "tier": "core",
+      "description": "Stripe, Lemon Squeezy, and PayPal integration for maximum flexibility",
+      "icon": "💳",
+      "category": "payments",
+      "skills_used": ["stripe-integration", "lemon-squeezy-integration", "paypal-integration"]
+    },
+    {
+      "id": "auto_documentation",
+      "name": "Auto-Generated Documentation",
+      "tier": "core",
+      "description": "Documentation automatically generated from GitHub README files",
+      "icon": "📚",
+      "category": "documentation",
+      "skills_used": ["documentation-generator"],
+      "dependencies": ["github-workflow-automation"]
+    },
+    {
+      "id": "customer_dashboard",
+      "name": "Customer Dashboard",
+      "tier": "pro",
+      "description": "Full dashboard for buyers to manage licenses and subscriptions",
+      "icon": "🔐",
+      "category": "dashboard",
+      "skills_used": ["payment-dashboard"],
+      "pro_benefits": [
+        "License key generation",
+        "Subscription management",
+        "Download management",
+        "Support tickets"
+      ]
+    },
+    {
+      "id": "privacy_analytics",
+      "name": "Privacy-Focused Analytics",
+      "tier": "pro",
+      "description": "GDPR-compliant analytics with Plausible/Fathom",
+      "icon": "📊",
+      "category": "analytics",
+      "skills_used": ["analytics-pro"],
+      "pro_benefits": [
+        "No cookies required",
+        "GDPR compliant",
+        "Custom events",
+        "Funnel analysis"
+      ]
+    },
+    {
+      "id": "automated_deployment",
+      "name": "Automated Deployment",
+      "tier": "pro",
+      "description": "One-click deployment to Cloudflare with CI/CD",
+      "icon": "🚀",
+      "category": "deployment",
+      "skills_used": ["automated-deployment"],
+      "pro_benefits": [
+        "Automatic previews",
+        "Rollback capabilities",
+        "Environment management",
+        "Zero-downtime deployments"
+      ]
+    },
+    {
+      "id": "ralph_integration",
+      "name": "Ralph Autonomous Development",
+      "tier": "pro",
+      "description": "Build your entire site overnight using Ralph loops",
+      "icon": "🔄",
+      "category": "automation",
+      "skills_used": ["ralph"],
+      "pro_benefits": [
+        "Overnight development",
+        "Intelligent exit detection",
+        "Multi-phase projects",
+        "Self-correcting loops"
+      ]
+    }
+  ],
+
+  "installation": {
+    "method": "bundle",
+    "requirements": [
+      "Node.js 18+",
+      "Bun runtime (recommended)",
+      "Cloudflare account",
+      "Supabase project",
+      "GitHub account"
+    ],
+    "setup_time": "30 minutes",
+    "auto_install": true
+  },
+
+  "quick_start": {
+    "step_1": "Install the bundle: /plugin install showcase-builder-bundle",
+    "step_2": "Initialize project: /showcase-init",
+    "step_3": "Configure payments: /showcase-config-payments",
+    "step_4": "Run Ralph loop: /ralph-loop 'Build Phase 1' --max-iterations 50",
+    "step_5": "Deploy: /showcase-deploy"
+  },
+
+  "use_cases": [
+    {
+      "title": "Open Source Tool Showcase",
+      "tier": "core",
+      "description": "Beautiful portfolio for your open source projects",
+      "features": ["3D cards", "GitHub integration", "Auto docs", "Community stats"]
+    },
+    {
+      "title": "Digital Product Sales",
+      "tier": "pro",
+      "description": "Sell licenses and subscriptions for your tools",
+      "features": ["Multi-payment", "License keys", "Customer dashboard", "Download management"]
+    },
+    {
+      "title": "SaaS Landing Page",
+      "tier": "pro",
+      "description": "Complete SaaS product showcase with pricing",
+      "features": ["Subscription tiers", "Feature comparison", "Testimonials", "Analytics"]
+    },
+    {
+      "title": "Agency Portfolio",
+      "tier": "both",
+      "description": "Showcase client work and services",
+      "features": ["Case studies", "Service pricing", "Contact forms", "Lead tracking"]
+    }
+  ],
+
+  "pricing": {
+    "model": "open_source",
+    "tiers": {
+      "community": {
+        "price": "Free",
+        "features": ["All core features", "Community support", "Self-hosted"],
+        "limit": "Unlimited"
+      },
+      "pro": {
+        "price": "Free (Open Source)",
+        "features": ["All features", "Priority support", "Cloud deployment"],
+        "limit": "Unlimited",
+        "note": "100% open source, contributions welcome"
+      }
+    }
+  },
+
+  "support": {
+    "channels": ["github_issues", "community_discord", "docs"],
+    "response_time": "community_best_effort",
+    "documentation": "https://cldcde.cc/showcase-builder/docs"
+  },
+
+  "roadmap": {
+    "q1_2025": [
+      "Additional payment gateways",
+      "Template marketplace",
+      "AI-powered copywriting",
+      "A/B testing integration"
+    ],
+    "q2_2025": [
+      "Multi-language support",
+      "Advanced analytics dashboard",
+      "Community features",
+      "Plugin marketplace"
+    ]
+  },
+
+  "contributing": {
+    "welcome": true,
+    "guidelines": "https://github.com/cldcde/showcase-builder-bundle/blob/main/CONTRIBUTING.md",
+    "license": "MIT"
+  }
+}

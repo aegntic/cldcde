@@ -1,0 +1,1 @@
+../../.claude-plugin/showcase-builder-bundle/skills/lemon-squeezy-integration.md

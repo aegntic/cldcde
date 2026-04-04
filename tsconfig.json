@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["DOM", "DOM.Iterable", "ES6"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2022"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -15,13 +19,21 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["bun-types"],
+    "types": [],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/components/*": ["./frontend/src/components/*"],
-      "@/hooks/*": ["./frontend/src/hooks/*"],
-      "@/utils/*": ["./src/utils/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@/components/*": [
+        "./frontend/src/components/*"
+      ],
+      "@/hooks/*": [
+        "./frontend/src/hooks/*"
+      ],
+      "@/utils/*": [
+        "./src/utils/*"
+      ]
     }
   },
   "include": [

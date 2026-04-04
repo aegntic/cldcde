@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
-import { createSupabaseClient } from '../db/supabase'
+import { createSupabaseClient } from '../lib/supabase'
 import type { Env } from '../worker-ultra'
 
 const usersRoutes = new Hono<{ Bindings: Env }>()

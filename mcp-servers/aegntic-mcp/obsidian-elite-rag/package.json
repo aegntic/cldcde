@@ -39,7 +39,8 @@
     "dotenv": "^16.3.1",
     "chokidar": "^3.5.3",
     "natural": "^6.5.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "ruvector": "^0.1.35"
   },
   "devDependencies": {
     "concurrently": "^8.2.0",

@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Monochrome Noir Palette */
+    --noir-black: #000000;
+    --noir-near-black: #0A0A0A;
+    --noir-charcoal: #1A1A1A;
+    --noir-platinum: #C0C0C0;
+    --noir-silver: #E5E5E5;
+    --noir-white: #FFFFFF;
+
+    /* Gold Accents */
+    --gold-base: #B8860B;
+    --gold-light: #D4A017;
+    --gold-dark: #8B6914;
+    --gold-dim: #6B4E0A;
+
+    /* Typography */
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Spacing */
+    --section-spacing: 8rem;
+    --container-max: 1200px;
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * {
+    @apply border-noir-platinum;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-noir-black text-noir-platinum font-body;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  /* Wireframe Elements */
+  .wireframe-element {
+    @apply relative border border-noir-platinum/30 bg-noir-near-black/50;
+    @apply transition-all duration-300;
+    box-shadow: 0 4px 24px rgba(192, 192, 192, 0.1);
+  }
+
+  .wireframe-element:hover {
+    @apply scale-150 -translate-y-5 z-50;
+    @apply border-noir-platinum;
+    box-shadow: 0 20px 60px rgba(192, 192, 192, 0.2);
+    filter: grayscale(0%);
+  }
+
+  .wireframe-element:active {
+    animation: implode 0.3s ease-in forwards;
+  }
+
+  @keyframes implode {
+    to {
+      transform: scale(0);
+      opacity: 0;
+    }
+  }
+
+  /* Technical Labels */
+  .tech-label {
+    @apply font-mono text-xs tracking-widest uppercase;
+    @apply text-noir-platinum/80;
+  }
+
+  .label-wireframe {
+    @apply tech-label block mb-2;
+  }
+
+  /* Typography */
+  .heading-section {
+    @apply font-display text-5xl md:text-6xl lg:text-7xl;
+    @apply text-noir-white mb-8 tracking-tight;
+  }
+
+  .heading-card {
+    @apply font-display text-2xl md:text-3xl;
+    @apply text-noir-white mb-4;
+  }
+
+  .body-large {
+    @apply text-lg md:text-xl text-noir-platinum/90;
+    @apply leading-relaxed max-w-3xl;
+  }
+
+  .body-base {
+    @apply text-base text-noir-platinum/80;
+    @apply leading-relaxed;
+  }
+
+  .body-small {
+    @apply text-sm text-noir-platinum/70;
+    @apply leading-relaxed;
+  }
+
+  /* Buttons */
+  .button-noir {
+    @apply wireframe-element px-6 py-3;
+    @apply font-mono text-sm tracking-wider uppercase;
+    @apply text-noir-white hover:bg-noir-charcoal;
+    @apply inline-block cursor-pointer;
+  }
+
+  .button-noir::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-0.5;
+    @apply bg-gold-base;
+    @apply transition-all duration-300;
+  }
+
+  .button-noir:hover::after {
+    @apply w-full h-1;
+  }
+
+  /* Inputs */
+  .input-noir {
+    @apply wireframe-element w-full px-4 py-3;
+    @apply bg-noir-black text-noir-white;
+    @apply placeholder:text-noir-platinum/50;
+    @apply focus:outline-none focus:border-gold-base;
+    @apply transition-all duration-300;
+  }
+
+  /* Diagram Container */
+  .diagram-container {
+    @apply w-full h-auto;
+    @apply text-noir-platinum;
+  }
+
+  .diagram-part {
+    @apply absolute transition-all duration-500;
+    @apply opacity-0 hover:opacity-100;
+  }
+
+  .diagram-inner {
+    @apply fill-none stroke-gold-base stroke-2;
+  }
+}
+
+@layer utilities {
+  .text-shadow-subtle {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(184, 134, 11, 0.3);
+  }
+}

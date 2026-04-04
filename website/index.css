@@ -1,0 +1,771 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   LUXURY THEME: GOLD RUSH / SILVER MIST
+   CSS Custom Properties for theme switching
+   ============================================ */
+
+/* Default: Gold Rush (Dark Mode) */
+:root {
+  /* Backgrounds */
+  --luxury-bg: #0A0A0A;
+  --luxury-surface: #121212;
+  --luxury-elevated: #1A1A1A;
+  --luxury-overlay: rgba(0, 0, 0, 0.8);
+
+  /* Primary: Champagne Gold */
+  --luxury-primary: #D4AF37;
+  --luxury-primary-hover: #E5C158;
+  --luxury-primary-dim: rgba(212, 175, 55, 0.1);
+  --luxury-primary-glow: rgba(212, 175, 55, 0.4);
+
+  /* Secondary: Rose Gold */
+  --luxury-secondary: #B76E79;
+  --luxury-secondary-hover: #C98A94;
+
+  /* Accent: Cream */
+  --luxury-accent: #FFFDD0;
+  --luxury-accent-subtle: #F5F5DC;
+
+  /* Text */
+  --luxury-text: #F5F5F5;
+  --luxury-text-secondary: #9A9A9A;
+  --luxury-text-muted: #6A6A6A;
+  --luxury-text-inverse: #0A0A0A;
+
+  /* Borders */
+  --luxury-border: #2D2D23;
+  --luxury-border-subtle: #1F1F1A;
+  --luxury-border-accent: rgba(212, 175, 55, 0.3);
+
+  /* Effects */
+  --luxury-gradient: linear-gradient(135deg, #D4AF37 0%, #FFFDD0 50%, #D4AF37 100%);
+  --luxury-metallic: linear-gradient(180deg, #D4AF37 0%, #8A7023 50%, #D4AF37 100%);
+  --luxury-glow: 0 0 20px rgba(212, 175, 55, 0.3);
+  --luxury-emboss: 1px 1px 2px rgba(0, 0, 0, 0.5), 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+/* Silver Mist (Light Mode) - Light grey with dark text */
+.luxury-silver,
+:root.light {
+  /* Backgrounds - Light to mid grey */
+  --luxury-bg: #E8E8E8;
+  --luxury-surface: #F0F0F0;
+  --luxury-elevated: #DEDEDE;
+  --luxury-overlay: rgba(232, 232, 232, 0.95);
+
+  /* Primary: Dark Slate */
+  --luxury-primary: #404040;
+  --luxury-primary-hover: #2A2A2A;
+  --luxury-primary-dim: rgba(64, 64, 64, 0.1);
+  --luxury-primary-glow: rgba(64, 64, 64, 0.3);
+
+  /* Secondary: Charcoal */
+  --luxury-secondary: #505050;
+  --luxury-secondary-hover: #3A3A3A;
+
+  /* Accent: Subtle silver */
+  --luxury-accent: #D0D0D0;
+  --luxury-accent-subtle: #C8C8C8;
+
+  /* Text - Dark grey to black */
+  --luxury-text: #1A1A1A;
+  --luxury-text-secondary: #404040;
+  --luxury-text-muted: #606060;
+  --luxury-text-inverse: #F5F5F5;
+
+  /* Borders */
+  --luxury-border: #BFBFBF;
+  --luxury-border-subtle: #D0D0D0;
+  --luxury-border-accent: rgba(64, 64, 64, 0.2);
+
+  /* Effects */
+  --luxury-gradient: linear-gradient(135deg, #909090 0%, #D0D0D0 50%, #808080 100%);
+  --luxury-metallic: linear-gradient(180deg, #C0C0C0 0%, #909090 50%, #C0C0C0 100%);
+  --luxury-glow: 0 0 15px rgba(64, 64, 64, 0.2);
+  --luxury-emboss: 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 6px rgba(128, 128, 128, 0.1);
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+@layer base {
+  body {
+    @apply bg-cyber-dark text-gray-200 overflow-x-hidden;
+  }
+
+  /* Luxury theme body */
+  body.luxury-theme {
+    background-color: var(--luxury-bg);
+    color: var(--luxury-text);
+  }
+}
+
+/* Custom scrollbar for cyberpunk feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border: 1px solid #00f3ff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00f3ff;
+}
+
+/* Luxury scrollbar */
+.luxury-gold ::-webkit-scrollbar-thumb {
+  background: #2D2D23;
+  border: 1px solid #D4AF37;
+}
+
+.luxury-gold ::-webkit-scrollbar-thumb:hover {
+  background: #D4AF37;
+}
+
+.luxury-silver ::-webkit-scrollbar-track {
+  background: #F5F5F5;
+}
+
+.luxury-silver ::-webkit-scrollbar-thumb {
+  background: #C0C0C0;
+  border: 1px solid #A8A9AD;
+}
+
+.luxury-silver ::-webkit-scrollbar-thumb:hover {
+  background: #A8A9AD;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(0, 243, 255, 0.3);
+  color: #fff;
+}
+
+.luxury-gold ::selection {
+  background: rgba(212, 175, 55, 0.3);
+  color: #fff;
+}
+
+.luxury-silver ::selection {
+  background: rgba(113, 112, 110, 0.3);
+  color: #1A1A1A;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-neon {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes luxury-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: var(--luxury-glow);
+  }
+
+  50% {
+    opacity: 0.9;
+    box-shadow: 0 0 30px var(--luxury-primary-glow);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.15s ease-out;
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-pulse-neon {
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.animate-luxury-pulse {
+  animation: luxury-pulse 2s ease-in-out infinite;
+}
+
+/* Electric blue breathing glow */
+@keyframes glow-breathe {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 4px rgba(0, 243, 255, 0.3));
+    opacity: 1;
+  }
+
+  50% {
+    filter: drop-shadow(0 0 12px rgba(0, 243, 255, 0.6));
+    opacity: 0.9;
+  }
+}
+
+.animate-glow-breathe {
+  animation: glow-breathe 2.5s ease-in-out infinite;
+}
+
+/* Slow pulse for ASCII logo */
+.animate-pulse-slow {
+  animation: pulse-neon 3s ease-in-out infinite;
+}
+
+/* ============================================
+   TEXT SHADOWS
+   ============================================ */
+
+.text-shadow-neon {
+  text-shadow: 0 0 10px rgba(255, 94, 0, 0.5), 0 0 20px rgba(255, 94, 0, 0.3);
+}
+
+.text-shadow-blue {
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.3);
+}
+
+.text-shadow-gold {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+.text-shadow-silver {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 8px rgba(192, 192, 192, 0.3);
+}
+
+/* ============================================
+   ORIGINAL CYBERPUNK THEME: LIQUID GLASS & OBSIDIAN
+   ============================================ */
+
+.bg-grid-pattern {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+}
+
+.liquid-glass {
+  background: rgba(8, 8, 8, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+    inset 0 0 20px rgba(0, 0, 0, 0.5),
+    0 25px 50px -12px rgba(0, 0, 0, 0.9);
+}
+
+.obsidian {
+  background: linear-gradient(145deg, #0f0f0f, #050505);
+  box-shadow:
+    5px 5px 15px #020202,
+    -5px -5px 15px #1a1a1a;
+  border: 1px solid #1a1a1a;
+}
+
+.obsidian:hover {
+  background: linear-gradient(145deg, #151515, #0a0a0a);
+  transform: translateY(-2px);
+  box-shadow:
+    8px 8px 20px #020202,
+    -8px -8px 20px #1a1a1a;
+}
+
+.obsidian-pressed {
+  background: #050505;
+  box-shadow:
+    inset 5px 5px 10px #020202,
+    inset -5px -5px 10px #121212;
+  border: 1px solid #111;
+}
+
+.neon-border-glow {
+  box-shadow: 0 0 5px theme('colors.cyber.neon'), inset 0 0 10px theme('colors.cyber.dim');
+  border-color: theme('colors.cyber.neon');
+}
+
+/* ============================================
+   LUXURY THEME: PREMIUM EFFECTS
+   ============================================ */
+
+/* Luxury Glass (Dark Mode) */
+.luxury-glass {
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid var(--luxury-border);
+  box-shadow:
+    inset 0 1px 0 0 rgba(212, 175, 55, 0.1),
+    0 20px 40px -12px rgba(0, 0, 0, 0.8);
+}
+
+.luxury-silver .luxury-glass {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--luxury-border);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
+    0 20px 40px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* Luxury Card */
+.luxury-card {
+  background: var(--luxury-surface);
+  border: 1px solid var(--luxury-border);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.luxury-card:hover {
+  border-color: var(--luxury-border-accent);
+  box-shadow: var(--luxury-glow);
+  transform: translateY(-2px);
+}
+
+/* Metallic Gradient Button */
+.luxury-btn-primary {
+  background: var(--luxury-gradient);
+  background-size: 200% auto;
+  color: var(--luxury-text-inverse);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.luxury-btn-primary:hover {
+  background-position: right center;
+  box-shadow: var(--luxury-glow);
+  transform: translateY(-1px);
+}
+
+/* Outline Button */
+.luxury-btn-outline {
+  background: transparent;
+  color: var(--luxury-primary);
+  border: 2px solid var(--luxury-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.luxury-btn-outline:hover {
+  background: var(--luxury-primary-dim);
+  box-shadow: var(--luxury-glow);
+}
+
+/* Luxury Shimmer Effect */
+.luxury-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.luxury-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent);
+  animation: shimmer 3s infinite;
+}
+
+.luxury-silver .luxury-shimmer::after {
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent);
+}
+
+/* Luxury Input */
+.luxury-input {
+  background: var(--luxury-surface);
+  border: 1px solid var(--luxury-border);
+  color: var(--luxury-text);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.luxury-input:focus {
+  outline: none;
+  border-color: var(--luxury-primary);
+  box-shadow: 0 0 0 3px var(--luxury-primary-dim);
+}
+
+.luxury-input::placeholder {
+  color: var(--luxury-text-muted);
+}
+
+/* Luxury Badge */
+.luxury-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  background: var(--luxury-primary-dim);
+  color: var(--luxury-primary);
+  border: 1px solid var(--luxury-border-accent);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Luxury Divider */
+.luxury-divider {
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent,
+      var(--luxury-border-accent),
+      transparent);
+}
+
+/* Embossed Text */
+.luxury-embossed {
+  text-shadow: var(--luxury-emboss);
+}
+
+/* Luxury Grid Pattern */
+.luxury-grid-pattern {
+  background-image:
+    linear-gradient(var(--luxury-border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--luxury-border-subtle) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+}
+
+/* Luxury Frosted Panel (Light Mode) */
+.luxury-silver .luxury-frost {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 212, 212, 0.5);
+}
+
+/* Premium Gradient Text */
+.luxury-gradient-text {
+  background: var(--luxury-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ASCII Hero Title - Silver Gradient with Purple Glow */
+.ascii-hero-title {
+  font-family: 'Courier New', Courier, 'Lucida Console', Monaco, monospace !important;
+  background: linear-gradient(180deg,
+      #FFFFFF 0%,
+      #E8E8E8 20%,
+      #C0C0C0 50%,
+      #A8A9AD 80%,
+      #808080 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(2px 2px 0px #000000) drop-shadow(3px 3px 1px rgba(0, 0, 0, 0.5));
+  text-shadow: none;
+  position: relative;
+  letter-spacing: 0 !important;
+}
+
+.ascii-hero-title::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: blur(15px);
+  opacity: 0.6;
+  text-shadow:
+    0 0 20px rgba(138, 43, 226, 0.5),
+    0 0 40px rgba(138, 43, 226, 0.3),
+    0 0 60px rgba(147, 112, 219, 0.2);
+}
+
+/* Wrapper for ASCII title glow effect */
+.ascii-hero-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.ascii-hero-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(ellipse at center,
+      rgba(138, 43, 226, 0.15) 0%,
+      rgba(147, 112, 219, 0.08) 40%,
+      transparent 70%);
+  filter: blur(20px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ============================================
+   ASCII LOGO - Silver with subtle glow
+   ============================================ */
+
+.ascii-logo-silver {
+  font-family: 'Courier New', Courier, 'Lucida Console', Monaco, monospace !important;
+  background: linear-gradient(180deg,
+      #FFFFFF 0%,
+      #E0E0E0 30%,
+      #B8B8B8 60%,
+      #909090 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.3));
+  text-shadow: none;
+}
+
+/* ============================================
+   ANSI Shadow Text - For product titles/headings
+   ============================================ */
+
+.ansi-shadow-text {
+  font-family: 'Courier New', Courier, 'Lucida Console', Monaco, monospace !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg,
+      #FFFFFF 0%,
+      #E8E8E8 25%,
+      #C8C8C8 50%,
+      #A0A0A0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.5)) drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.3));
+  text-shadow: none;
+}
+
+/* Smaller variant for product cards */
+.ansi-shadow-text-sm {
+  font-family: 'Courier New', Courier, 'Lucida Console', Monaco, monospace !important;
+  font-weight: 600;
+  font-size: 0.9em;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg,
+      #FFFFFF 0%,
+      #D0D0D0 50%,
+      #909090 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.4));
+  text-shadow: none;
+}
+
+/* ============================================
+   POLISHED BLACK BUTTONS - Shiny Silver Edges
+   ============================================ */
+
+/* Base polished button */
+.btn-polished {
+  position: relative;
+  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+  border: 1px solid #3d3d3d;
+  border-radius: 6px;
+  padding: 0.625rem 1.25rem;
+  color: #e0e0e0;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  box-shadow:
+    /* Inner highlight - top edge */
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    /* Inner shadow - bottom */
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.3),
+    /* Outer silver glow */
+    0 0 0 1px rgba(192, 192, 192, 0.1),
+    /* Soft shadow */
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.btn-polished::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.02) 100%);
+  pointer-events: none;
+  border-radius: 5px 5px 0 0;
+}
+
+.btn-polished:hover {
+  background: linear-gradient(145deg, #252525, #121212);
+  border-color: #505050;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(192, 192, 192, 0.2),
+    0 0 15px rgba(192, 192, 192, 0.1),
+    0 6px 16px rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px);
+}
+
+.btn-polished:active {
+  transform: translateY(0);
+  background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(192, 192, 192, 0.1);
+}
+
+/* Primary variant - Silver accent */
+.btn-polished-primary {
+  border-color: #606060;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(192, 192, 192, 0.15),
+    0 0 8px rgba(192, 192, 192, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.btn-polished-primary:hover {
+  border-color: #808080;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(192, 192, 192, 0.25),
+    0 0 20px rgba(192, 192, 192, 0.15),
+    0 6px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* ANSI text inside polished buttons */
+.btn-polished .btn-text {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  background: linear-gradient(180deg, #fff 0%, #c0c0c0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.5));
+}
+
+/* Icon inside polished buttons */
+.btn-polished svg {
+  color: #a0a0a0;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.3));
+  transition: color 0.2s ease;
+}
+
+.btn-polished:hover svg {
+  color: #d0d0d0;
+}
+
+/* Small variant */
+.btn-polished-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.6rem;
+}
+
+/* Large variant */
+.btn-polished-lg {
+  padding: 0.875rem 1.75rem;
+  font-size: 0.8rem;
+}

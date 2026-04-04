@@ -1,0 +1,287 @@
+{
+  "id": "smart-connections-cldcde",
+  "name": "Smart Connections - CLDCDE Edition",
+  "version": "2.0.0",
+  "type": "extension",
+
+  "description": {
+    "short": "Intelligent note connections and knowledge graph visualization",
+    "core": "Zero-setup semantic search and connections for your notes",
+    "pro": "Advanced graph visualization and connection algorithms"
+  },
+
+  "author": {
+    "name": "ae.ltd",
+    "email": "research@aegntic.ai",
+    "website": "https://cldcde.cc"
+  },
+
+  "repository": "https://github.com/cldcde/smart-connections",
+  "license": "MIT",
+  "homepage": "https://cldcde.cc/plugins/smart-connections",
+
+  "categories": ["productivity", "ai", "knowledge-management"],
+  "keywords": [
+    "semantic-search",
+    "knowledge-graph",
+    "connections",
+    "obsidian",
+    "notes",
+    "ai",
+    "embeddings"
+  ],
+
+  "tiers": {
+    "core": {
+      "enabled": true,
+      "auto_activate": true,
+      "authentication_required": false,
+      "features": [
+        "zero_setup_embeddings",
+        "real_time_connections",
+        "semantic_search",
+        "mobile_compatible",
+        "walk_random_connections"
+      ],
+      "rate_limit": "1000/hour",
+      "support": "community"
+    },
+    "pro": {
+      "enabled": true,
+      "activation_method": "signup_review",
+      "authentication_required": true,
+      "features": [
+        "graph_visualization",
+        "inline_connections",
+        "footer_view",
+        "bases_functions",
+        "algorithm_control"
+      ],
+      "rate_limit": "10000/hour",
+      "support": "priority",
+      "review_criteria": {
+        "minimum_days_active": 7,
+        "minimum_contributions": 0,
+        "auto_approve": false,
+        "review_time_hours": 48
+      }
+    }
+  },
+
+  "features": [
+    {
+      "id": "zero_setup_embeddings",
+      "name": "Zero-Setup Embeddings",
+      "tier": "core",
+      "description": "Local embeddings work automatically without configuration",
+      "icon": "⚡",
+      "category": "essential",
+      "dependencies": []
+    },
+    {
+      "id": "real_time_connections",
+      "name": "Real-Time Connections",
+      "tier": "core",
+      "description": "See connections update as you write and edit notes",
+      "icon": "🔗",
+      "category": "essential",
+      "dependencies": ["zero_setup_embeddings"]
+    },
+    {
+      "id": "semantic_search",
+      "name": "Semantic Search",
+      "tier": "core",
+      "description": "Find related notes using semantic similarity in lookup view",
+      "icon": "🔍",
+      "category": "search",
+      "dependencies": ["zero_setup_embeddings"]
+    },
+    {
+      "id": "mobile_compatible",
+      "name": "Mobile Compatible",
+      "tier": "core",
+      "description": "Full functionality on mobile devices",
+      "icon": "📱",
+      "category": "accessibility",
+      "dependencies": []
+    },
+    {
+      "id": "walk_random_connections",
+      "name": "Walk Random Connections",
+      "tier": "core",
+      "description": "Discover unexpected connections through random walks",
+      "icon": "🎲",
+      "category": "discovery",
+      "dependencies": ["semantic_search"]
+    },
+    {
+      "id": "graph_visualization",
+      "name": "Graph Visualization",
+      "tier": "pro",
+      "description": "Interactive network graph showing all connections",
+      "icon": "🕸️",
+      "category": "visualization",
+      "dependencies": ["real_time_connections"],
+      "pro_benefits": [
+        "Force-directed layout",
+        "Filter by connection strength",
+        "Cluster detection",
+        "Export to image/PDF"
+      ]
+    },
+    {
+      "id": "inline_connections",
+      "name": "Inline Connections",
+      "tier": "pro",
+      "description": "See related notes directly in context as you read",
+      "icon": "📝",
+      "category": "productivity",
+      "dependencies": ["real_time_connections"],
+      "pro_benefits": [
+        "Adjustable position",
+        "Threshold control",
+        "Custom styling",
+        "Quick preview on hover"
+      ]
+    },
+    {
+      "id": "footer_view",
+      "name": "Footer Connections View",
+      "tier": "pro",
+      "description": "Optimized connections panel perfect for mobile use",
+      "icon": "🦶",
+      "category": "mobile",
+      "dependencies": ["graph_visualization"],
+      "pro_benefits": [
+        "Mobile-optimized layout",
+        "One-tap access",
+        "Configurable panels",
+        "Offline support"
+      ]
+    },
+    {
+      "id": "bases_functions",
+      "name": "Bases Connection Functions",
+      "tier": "pro",
+      "description": "Score and list connections for advanced analysis",
+      "icon": "📊",
+      "category": "analytics",
+      "dependencies": ["semantic_search"],
+      "pro_benefits": [
+        "Connection scoring",
+        "Bulk operations",
+        "CSV export",
+        "Custom metrics"
+      ]
+    },
+    {
+      "id": "algorithm_control",
+      "name": "Algorithm Control",
+      "tier": "pro",
+      "description": "Fine-tune connection algorithms for your use case",
+      "icon": "⚙️",
+      "category": "advanced",
+      "dependencies": ["zero_setup_embeddings"],
+      "pro_benefits": [
+        "Custom embedding models",
+        "Weight adjustment",
+        "Similarity thresholds",
+        "Time decay factors"
+      ]
+    }
+  ],
+
+  "comparison_table": {
+    "Zero-Setup Embeddings": { "core": true, "pro": true, "description": "Works out of the box" },
+    "Real-Time Connections": { "core": true, "pro": true, "description": "Updates as you type" },
+    "Semantic Search": { "core": true, "pro": true, "description": "Find related notes" },
+    "Mobile Compatible": { "core": true, "pro": true, "description": "Full mobile support" },
+    "Walk Connections": { "core": true, "pro": true, "description": "Random discovery" },
+    "Graph Visualization": { "core": false, "pro": true, "description": "Interactive network graph" },
+    "Inline Connections": { "core": false, "pro": true, "description": "See in context" },
+    "Footer View": { "core": false, "pro": true, "description": "Mobile-optimized panel" },
+    "Bases Functions": { "core": false, "pro": true, "description": "Score and list" },
+    "Algorithm Control": { "core": false, "pro": true, "description": "Fine-tune behavior" }
+  },
+
+  "access": {
+    "authentication": "optional_for_core",
+    "pro_activation": "signup_review",
+    "grace_period_days": 30,
+    "rate_limits": {
+      "core": "1000/hour",
+      "pro": "10000/hour"
+    }
+  },
+
+  "installation": {
+    "core": {
+      "method": "automatic",
+      "requirements": [],
+      "setup_time": "0 minutes"
+    },
+    "pro": {
+      "method": "request_review",
+      "requirements": ["7_days_active", "community_member"],
+      "setup_time": "24-48 hours"
+    }
+  },
+
+  "use_cases": [
+    {
+      "title": "Academic Research",
+      "tier": "both",
+      "description": "Connect research papers and notes semantically",
+      "pro_benefits": ["Graph visualization for citation networks", "Custom algorithms for domain-specific terms"]
+    },
+    {
+      "title": "Personal Knowledge Base",
+      "tier": "both",
+      "description": "Build a second brain with automatic connections",
+      "pro_benefits": ["Inline connections for context", "Footer view for quick access"]
+    },
+    {
+      "title": "Content Creation",
+      "tier": "both",
+      "description": "Find related ideas while writing",
+      "pro_benefits": ["Real-time graph updates", "Algorithm tuning for creative work"]
+    }
+  ],
+
+  "performance_metrics": {
+    "core": {
+      "embedding_speed": "1000 notes/minute",
+      "search_latency": "<100ms",
+      "memory_usage": "<500MB"
+    },
+    "pro": {
+      "graph_render_time": "<2s for 10K nodes",
+      "inline_update_speed": "real-time",
+      "algorithm_tuning": "customizable"
+    }
+  },
+
+  "support": {
+    "core": {
+      "channels": ["community_discord", "github_issues", "docs"],
+      "response_time": "community_best_effort"
+    },
+    "pro": {
+      "channels": ["priority_discord", "email_support", "video_calls"],
+      "response_time": "24_hours"
+    }
+  },
+
+  "roadmap": {
+    "core_q1_2025": [
+      "Improved embedding models",
+      "Faster search indexing",
+      "Better mobile UI"
+    ],
+    "pro_q1_2025": [
+      "Collaborative graphs",
+      "Graph sharing",
+      "Custom theme support"
+    ]
+  }
+}
