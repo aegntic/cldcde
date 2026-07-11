@@ -1,0 +1,97 @@
+{
+  "name": "@aegntic/cldcde-wie",
+  "version": "1.0.0",
+  "description": "AEGNTIC Website Intelligence Engine (WIE): Analyzes a reference website and produces an original, reusable, production-ready template ecosystem with design tokens, motion DNA, component/section libraries, placeholder catalogs, CMS schemas, and manifests.",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "wie": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    },
+    "./engine": {
+      "import": "./src/engine.ts",
+      "types": "./src/engine.ts"
+    },
+    "./types": {
+      "import": "./src/types.ts",
+      "types": "./src/types.ts"
+    }
+  },
+  "scripts": {
+    "analyze": "tsx src/cli.ts",
+    "test": "node --import tsx --test test/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "cldcde",
+    "aegntic",
+    "wie",
+    "website-intelligence",
+    "template-engine",
+    "design-tokens",
+    "motion-dna",
+    "component-library",
+    "section-library",
+    "cms-schema",
+    "placeholder-catalog",
+    "accessibility",
+    "performance",
+    "seo",
+    "benchmark"
+  ],
+  "author": "AE.ltd <research@aegntic.ai>",
+  "contributors": [
+    "Mattae Cooper <mattae@aegntic.ai>",
+    "aegntic.ai Research Team"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aegntic/cldcde.git",
+    "directory": "plugins/wie"
+  },
+  "bugs": {
+    "url": "https://github.com/aegntic/cldcde/issues"
+  },
+  "homepage": "https://github.com/aegntic/cldcde/tree/main/plugins/wie#readme",
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.22.4",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "cldcde": {
+    "pluginType": "core",
+    "category": "intelligence",
+    "global": true,
+    "provides": [
+      "website-analysis",
+      "template-generation",
+      "design-token-extraction",
+      "motion-dna",
+      "component-library",
+      "section-library",
+      "cms-schema-generation",
+      "placeholder-catalog",
+      "accessibility-audit",
+      "performance-audit",
+      "seo-audit",
+      "benchmark-scoring"
+    ],
+    "compatibleWith": [
+      "claude-code",
+      "agent-zero",
+      "opencode"
+    ],
+    "minClaudeCodeVersion": "1.0.0"
+  }
+}

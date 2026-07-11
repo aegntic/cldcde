@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Test output
+wie-output/
+
+# OS files
+.DS_Store
+Thumbs.db

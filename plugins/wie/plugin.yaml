@@ -1,0 +1,205 @@
+# CLDCDE Website Intelligence Engine (WIE) Plugin
+# 15-agent pipeline that analyzes a reference website and produces
+# an original, reusable, production-ready template ecosystem.
+# (c) 2025 AE.ltd - Research: aegntic.ai - Led by Mattae Cooper
+
+id: wie
+name: Website Intelligence Engine
+version: 1.0.0
+author: AE.ltd
+contributors:
+  - Mattae Cooper (Lead Researcher)
+  - aegntic.ai Research Team
+description: |
+  Analyzes a reference website and produces an original, reusable,
+  production-ready template ecosystem with design tokens, motion DNA,
+  component/section libraries, placeholder catalogs, CMS schemas, and manifests.
+
+  Core principle: Analyze, don't copy. The engine extracts systems, not
+  copyrighted creative assets. Expressive content is replaced with semantic
+  placeholders. The output is reusable components, sections, motion presets,
+  design tokens, and manifests.
+
+category: intelligence
+tags:
+  - website-intelligence
+  - template-engine
+  - design-tokens
+  - motion-dna
+  - component-library
+  - section-library
+  - cms-schema
+  - placeholder-catalog
+  - accessibility
+  - performance
+  - seo
+  - benchmark
+
+platforms:
+  - claude-code
+  - agent-zero
+  - opencode
+
+minClaudeCodeVersion: 1.0.0
+
+features:
+  - id: discovery-agent
+    name: Discovery Agent
+    description: Crawls the reference site and builds a complete page graph
+
+  - id: ia-agent
+    name: Information Architecture Agent
+    description: Analyzes page hierarchy, navigation, and page DNA
+
+  - id: motion-dna-agent
+    name: Motion DNA Agent
+    description: Extracts reusable MotionPresets from WAAPI, reveals, rotators, marquees
+
+  - id: design-system-agent
+    name: Design System Agent
+    description: Infers design tokens (colors, spacing, typography, radius, shadows)
+
+  - id: component-agent
+    name: Component Agent
+    description: Builds component library with props, slots, variants, ARIA profiles
+
+  - id: section-agent
+    name: Section Agent
+    description: Transforms sections into SectionDNA with archetype classification
+
+  - id: placeholder-agent
+    name: Placeholder Agent
+    description: Generates semantic placeholders with purpose, tone, a11y/SEO guidance
+
+  - id: media-agent
+    name: Media Agent
+    description: Asset intelligence with upload zones, responsive variants, compression
+
+  - id: accessibility-agent
+    name: Accessibility Agent
+    description: WCAG evaluation with per-section scoring and issue detection
+
+  - id: performance-agent
+    name: Performance Agent
+    description: CWV estimates, bundle sizing, per-section performance costs
+
+  - id: seo-agent
+    name: SEO Agent
+    description: Meta tag evaluation, structured data checks, per-page analysis
+
+  - id: cms-agent
+    name: CMS Agent
+    description: Multi-platform schema generation (Payload, Sanity, Strapi, Contentful, JSON, Markdown)
+
+  - id: builder-agent
+    name: Builder Agent
+    description: Builder specification with features, panels, and AI capabilities
+
+  - id: timeline-agent
+    name: Experience Timeline Agent
+    description: User journey with what/why/motion/intent/CTA/narrative
+
+  - id: integrator-agent
+    name: Final Integrator
+    description: Assembles TemplateManifest, compatibility graph, responsive matrix
+
+  - id: qa-gate
+    name: QA Gate
+    description: Regeneration gate validating manifest across 7 check categories
+
+  - id: benchmark
+    name: Benchmark Scoring
+    description: Scores across performance, a11y, SEO, animation density, complexity, bundle
+
+  - id: pattern-recognition
+    name: Pattern Recognition
+    description: 10 section archetypes (Editorial Hero, Startup Hero, Agency Hero, etc.)
+
+agents:
+  - discovery
+  - ia
+  - motion
+  - design-system
+  - component
+  - section
+  - placeholder
+  - media
+  - accessibility
+  - performance
+  - seo
+  - cms
+  - builder
+  - timeline
+  - integrator
+
+outputFiles:
+  - manifest.json
+  - sections.json
+  - components.json
+  - motions.json
+  - pages.json
+  - tokens.json
+  - placeholders.json
+  - compatibility.json
+  - media.json
+  - cms.json
+  - timeline.json
+  - accessibility.json
+  - performance.json
+  - seo.json
+  - benchmark.json
+  - site-graph.json
+  - builder-spec.json
+  - themes.json
+  - patterns.json
+  - qa.json
+  - folder-architecture.json
+  - executive-summary.md
+
+installation:
+  npm:
+    package: "@aegntic/cldcde-wie"
+    global: true
+  manual:
+    - Run: npx tsx src/cli.ts <URL> --output <dir>
+
+configuration:
+  maxPages: 50
+  maxDepth: 3
+  themes:
+    - editorial
+    - minimal
+    - corporate
+    - glass
+  cmsPlatforms:
+    - payload
+    - sanity
+    - strapi
+    - contentful
+    - json
+    - markdown
+
+examples:
+  - title: Zero-shot Analysis
+    code: |
+      npx tsx src/cli.ts https://example.com --output ./wie-output
+
+  - title: Programmatic Usage
+    code: |
+      import { runWIE } from '@aegntic/cldcde-wie';
+      const result = await runWIE({ url: 'https://example.com' });
+
+documentation:
+  readme: README.md
+
+links:
+  homepage: https://github.com/aegntic/cldcde/tree/main/plugins/wie
+  issues: https://github.com/aegntic/cldcde/issues
+  npm: https://npm.im/@aegntic/cldcde-wie
+  aegntic: https://aegntic.ai
+
+license: MIT
+
+copyright: |
+  (c) 2025 AE.ltd (Advanced Enterprises Limited)
+  Research: aegntic.ai - Led by Mattae Cooper
