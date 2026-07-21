@@ -1,0 +1,4 @@
+interface:
+  display_name: "AE.LTD Visual Regression Forge"
+  short_description: "UI baseline + diff gate"
+  default_prompt: "Use $ae-ltd-visual-regression-forge to validate this UI change across viewports before release."

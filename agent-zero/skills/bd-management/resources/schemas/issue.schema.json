@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Beads Issue",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9-]+$",
+      "description": "Unique issue identifier"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "description": "Issue title"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Detailed issue description"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["bug", "feature", "task", "epic", "chore"],
+      "description": "Issue type"
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Issue priority (1-5)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["open", "in_progress", "blocked", "closed"],
+      "description": "Current issue status"
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Issue labels"
+    },
+    "deps": {
+      "type": "object",
+      "properties": {
+        "blocks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Issues this issue blocks"
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Related issues"
+        },
+        "parent-child": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Parent-child relationships"
+        },
+        "discovered-from": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Issues discovered during work"
+        }
+      },
+      "description": "Dependency relationships"
+    },
+    "assignee": {
+      "type": "string",
+      "description": "Issue assignee"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Issue creation timestamp"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Issue update timestamp"
+    }
+  },
+  "required": ["id", "title", "type", "status"]
+}

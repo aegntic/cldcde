@@ -1,0 +1,14 @@
+{
+  "problem_description": "System performance degradation requiring analysis",
+  "scope": "Application and infrastructure components",
+  "timeline": "Last 24 hours",
+  "severity": "medium",
+  "business_impact": "Users experiencing slow response times",
+  "data_sources": ["logs", "metrics", "traces", "code"],
+  "constraints": ["time", "budget", "access", "expertise"],
+  "depth": "comprehensive",
+  "certainty_threshold": "0.95",
+  "evidence_types": ["quantitative", "qualitative", "correlational", "causal"],
+  "fix_strategy": "immediate",
+  "validation_method": "before_after"
+}

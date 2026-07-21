@@ -1,0 +1,60 @@
+{
+  "name": "Logo Reveal Animation",
+  "description": "Professional logo reveal animation with camera movement and lighting effects",
+  "type": "animation_template",
+  "duration": 30,
+  "frame_rate": 30,
+  "settings": {
+    "camera_animation": {
+      "type": "arc",
+      "start_position": [0, -10, 2],
+      "end_position": [0, -3, 1],
+      "keyframes": [
+        {"frame": 1, "position": [0, -10, 2], "focus": [0, 0, 0]},
+        {"frame": 15, "position": [0, -5, 1.5], "focus": [0, 0, 0]},
+        {"frame": 30, "position": [0, -3, 1], "focus": [0, 0, 0]}
+      ]
+    },
+    "lighting": {
+      "setup": "three_point",
+      "key_light": {
+        "position": [5, -5, 5],
+        "energy": 1000,
+        "color": [1.0, 1.0, 1.0]
+      },
+      "fill_light": {
+        "position": [-3, -5, 3],
+        "energy": 500,
+        "color": [0.9, 0.9, 1.0]
+      },
+      "back_light": {
+        "position": [0, 5, 3],
+        "energy": 300,
+        "color": [1.0, 1.0, 1.0]
+      }
+    },
+    "logo_animation": {
+      "type": "rotate_spin",
+      "rotation_x": 0.3,
+      "rotation_y": 0.7,
+      "rotation_z": 1.0,
+      "ease_in": true,
+      "ease_out": true
+    },
+    "materials": {
+      "type": "procedural",
+      "base_color": [0.2, 0.4, 0.8],
+      "metallic": 0.3,
+      "roughness": 0.2,
+      "specular": 0.5
+    }
+  },
+  "render_settings": {
+    "engine": "cycles",
+    "samples": 128,
+    "resolution_x": 1920,
+    "resolution_y": 1080,
+    "use_denoising": true,
+    "color_space": "sRGB"
+  }
+}

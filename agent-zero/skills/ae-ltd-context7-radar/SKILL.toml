@@ -1,0 +1,10 @@
+prompts = [
+  "Use AE.LTD Context7 Radar: identify exact library versions, pull only relevant docs through Context7, extract signatures/deprecations, implement from verified APIs, and cite source/version in output."
+]
+
+[skill]
+name = "ae-ltd-context7-radar"
+description = "Ground implementation in version-accurate docs before coding."
+version = "1.0.0"
+author = "ae.ltd"
+tags = ["ae-ltd", "context7", "docs", "api", "zeroclaw", "clawreform"]

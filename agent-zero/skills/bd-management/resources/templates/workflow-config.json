@@ -1,0 +1,10 @@
+{
+  "parallel_threshold": 4,
+  "dependency_analysis": true,
+  "auto_optimize": true,
+  "sync_frequency": "commit",
+  "max_parallel_tasks": 8,
+  "timeout_seconds": 300,
+  "retry_attempts": 3,
+  "logging_level": "info"
+}

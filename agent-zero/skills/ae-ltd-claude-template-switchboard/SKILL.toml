@@ -1,0 +1,10 @@
+prompts = [
+  "Use AE.LTD Claude Template Switchboard: classify repo profile, choose one baseline template, inject real commands and constraints, remove template noise, and verify every path and command is executable."
+]
+
+[skill]
+name = "ae-ltd-claude-template-switchboard"
+description = "Select and adapt the right CLAUDE.md template for repo context."
+version = "1.0.0"
+author = "ae.ltd"
+tags = ["ae-ltd", "claude-md", "template", "documentation", "zeroclaw", "clawreform"]

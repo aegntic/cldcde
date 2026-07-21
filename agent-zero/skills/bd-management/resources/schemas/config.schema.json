@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Beads Workflow Configuration",
+  "type": "object",
+  "properties": {
+    "parallel_threshold": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20,
+      "description": "Minimum number of tasks required for parallel execution"
+    },
+    "dependency_analysis": {
+      "type": "boolean",
+      "description": "Enable automatic dependency analysis"
+    },
+    "auto_optimize": {
+      "type": "boolean",
+      "description": "Enable automatic workflow optimization"
+    },
+    "sync_frequency": {
+      "type": "string",
+      "enum": ["commit", "push", "manual"],
+      "description": "Frequency of Beads-git synchronization"
+    },
+    "max_parallel_tasks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 32,
+      "description": "Maximum number of parallel tasks"
+    },
+    "timeout_seconds": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 3600,
+      "description": "Task execution timeout in seconds"
+    },
+    "retry_attempts": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10,
+      "description": "Number of retry attempts for failed tasks"
+    },
+    "logging_level": {
+      "type": "string",
+      "enum": ["debug", "info", "warning", "error"],
+      "description": "Logging verbosity level"
+    }
+  },
+  "required": ["parallel_threshold", "dependency_analysis", "auto_optimize", "sync_frequency", "max_parallel_tasks", "timeout_seconds", "retry_attempts", "logging_level"]
+}

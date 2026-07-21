@@ -1,0 +1,4 @@
+interface:
+  display_name: "AE.LTD Mutation Gate"
+  short_description: "Harden tests with mutation analysis"
+  default_prompt: "Use $ae-ltd-mutation-gate to run mutation testing on this module and propose exact missing tests."

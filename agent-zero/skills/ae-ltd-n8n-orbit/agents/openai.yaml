@@ -1,0 +1,4 @@
+interface:
+  display_name: "AE.LTD n8n Orbit"
+  short_description: "Production n8n workflow generation"
+  default_prompt: "Use $ae-ltd-n8n-orbit to convert this automation idea into reliable n8n JSON plus setup instructions."

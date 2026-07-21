@@ -1,0 +1,10 @@
+prompts = [
+  "Use AE.LTD n8n Orbit: parse intent into trigger/transform/action, generate production-safe n8n JSON with retries and error branches, keep credentials external, and provide clean import/setup instructions."
+]
+
+[skill]
+name = "ae-ltd-n8n-orbit"
+description = "Generate production-ready n8n workflows from natural language goals."
+version = "1.0.0"
+author = "ae.ltd"
+tags = ["ae-ltd", "n8n", "workflow", "automation", "zeroclaw", "clawreform"]

@@ -1,0 +1,4 @@
+interface:
+  display_name: "AE.LTD Context7 Radar"
+  short_description: "Version-accurate API grounding"
+  default_prompt: "Use $ae-ltd-context7-radar before implementation so we code against current docs, not memory."

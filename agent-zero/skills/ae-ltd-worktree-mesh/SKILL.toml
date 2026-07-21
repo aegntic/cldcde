@@ -1,0 +1,10 @@
+prompts = [
+  "Use AE.LTD Worktree Mesh: inspect existing worktrees, create isolated task branches, avoid secret duplication, keep one purpose per worktree, and clean only merged or safe worktrees with prune."
+]
+
+[skill]
+name = "ae-ltd-worktree-mesh"
+description = "Manage parallel git worktrees safely for isolated task execution."
+version = "1.0.0"
+author = "ae.ltd"
+tags = ["ae-ltd", "git", "worktree", "parallel", "zeroclaw", "clawreform"]
