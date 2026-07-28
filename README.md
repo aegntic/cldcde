@@ -384,6 +384,17 @@ git push origin feature/amazing-feature
 - 🔌 **MCP Servers**: Community registry on cldcde.cc
 - 🛠️ **Developer Tools**: Extension marketplace on cldcde.cc
 
+## 🔒 Security & Secrets Management
+
+Never commit real secrets to this repository. Follow these guidelines:
+
+- Copy `.env.example` to `.env` and fill in **your own** values locally. The `.env` file is git-ignored.
+- Store production secrets in **GitHub Actions Secrets** (Settings → Secrets and variables → Actions) or Cloudflare's secrets store (`wrangler secret put`).
+- Account-specific URLs (e.g. Cloudflare dashboard links containing account IDs) must not appear in documentation — use the base URL instead.
+- Run `pre-commit install` after cloning to enable local secret-scanning hooks (see [SECURITY.md](SECURITY.md)).
+
+See [SECURITY.md](SECURITY.md) for vulnerability reporting and full guidance.
+
 ## 📄 License
 
 MIT License - See [LICENSE](LICENSE) file for details.

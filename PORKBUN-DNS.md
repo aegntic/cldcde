@@ -14,7 +14,7 @@ You have two options:
 This gives you full Cloudflare features including DDoS protection, caching, and analytics.
 
 1. In Cloudflare, add your domain:
-   - Go to https://dash.cloudflare.com/548a933e3812ca9cd840b787ca7e1eb1
+   - Go to https://dash.cloudflare.com/ (log in and select your account)
    - Click "Add a Site"
    - Enter `cldcde.cc`
    - Choose the Free plan
