@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Quick Data Mcp — CLDCDE</title><meta name="description" content="Add your description here"><link rel="canonical" href="https://cldcde.cc/mcp/mcp-quick-data"></head><body><h1>Quick Data Mcp</h1><p>Add your description here</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}" && \
+cp -R "$tmp/cldcde/mcp-servers/quick-data" "${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/" && \
+cd "${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/quick-data" && \
+if [ -f package.json ]; then npm install; elif [ -f pyproject.toml ]; then (command -v uv >/dev/null 2>&1 && uv sync) || python3 -m pip install -e .; elif [ -f requirements.txt ]; then python3 -m pip install -r requirements.txt; fi && \
+echo "[OK] Installed mcp-servers/quick-data to ${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

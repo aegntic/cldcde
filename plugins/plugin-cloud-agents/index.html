@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Cloud Aegnts With Computer Use — CLDCDE</title><meta name="description" content="Run AI aegnts in isolated sandboxes that record themselves interacting with software they build. Features automatic video recording, browser automation, artifact generation, and merge-ready PRs."><link rel="canonical" href="https://cldcde.cc/plugins/plugin-cloud-agents"></head><body><h1>Cloud Aegnts With Computer Use</h1><p>Run AI aegnts in isolated sandboxes that record themselves interacting with software they build. Features automatic video recording, browser automation, artifact generation, and merge-ready PRs.</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/cloud-agents" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/cloud-agents"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

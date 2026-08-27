@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Agent Zero Brain — CLDCDE</title><meta name="description" content="Repo-synced item. Add a README or metadata file for a richer listing."><link rel="canonical" href="https://cldcde.cc/plugins/plugin-agent-zero-brain"></head><body><h1>Agent Zero Brain</h1><p>Repo-synced item. Add a README or metadata file for a richer listing.</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/agent-zero-brain" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/agent-zero-brain"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Youtube Creator — CLDCDE</title><meta name="description" content="YouTube Channel Management and Video Upload Plugin"><link rel="canonical" href="https://cldcde.cc/plugins/plugin-youtube-creator"></head><body><h1>Youtube Creator</h1><p>YouTube Channel Management and Video Upload Plugin</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/youtube-creator" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/youtube-creator"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

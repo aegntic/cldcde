@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Context7 Docs — CLDCDE</title><meta name="description" content="Fetch up-to-date library documentation via Context7 for accurate coding"><link rel="canonical" href="https://cldcde.cc/plugins/plugin-context7-docs"></head><body><h1>Context7 Docs</h1><p>Fetch up-to-date library documentation via Context7 for accurate coding</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/context7-docs" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/context7-docs"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

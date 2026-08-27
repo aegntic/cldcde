@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Mutation Tester — CLDCDE</title><meta name="description" content="Mutation testing to measure test suite quality"><link rel="canonical" href="https://cldcde.cc/plugins/plugin-mutation-tester"></head><body><h1>Mutation Tester</h1><p>Mutation testing to measure test suite quality</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/mutation-tester" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/mutation-tester"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

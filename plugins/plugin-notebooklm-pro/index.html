@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Notebooklm Pro — CLDCDE</title><meta name="description" content="NotebookLM Pro - Advanced conversational research and document analysis with session-based RAG, Gemini integration, and multi-source synthesis"><link rel="canonical" href="https://cldcde.cc/plugins/plugin-notebooklm-pro"></head><body><h1>Notebooklm Pro</h1><p>NotebookLM Pro - Advanced conversational research and document analysis with session-based RAG, Gemini integration, and multi-source synthesis</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/notebooklm-pro" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/notebooklm-pro"</pre><p>Tier: pro</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

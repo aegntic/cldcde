@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CLDCDE ghost">
+  <rect width="64" height="64" fill="#050505"/>
+  <g fill="none" stroke="#FF3B1F" stroke-width="1.6" stroke-linejoin="round">
+    <path d="M18 28 L32 18 L50 26 L50 40 L36 50 L18 42 Z"/>
+    <path d="M18 28 L18 42"/>
+    <path d="M32 18 L36 50"/>
+    <rect x="22" y="30" width="4" height="8" fill="#050505"/>
+    <rect x="30" y="28" width="4" height="8" fill="#050505"/>
+    <path d="M18 42 L22 46 L28 44 L32 48 L36 46"/>
+  </g>
+</svg>

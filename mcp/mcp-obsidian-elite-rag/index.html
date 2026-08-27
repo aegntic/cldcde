@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Obsidian Elite Rag — CLDCDE</title><meta name="description" content="Elite Obsidian RAG System - Second Brain with Claude Code Integration"><link rel="canonical" href="https://cldcde.cc/mcp/mcp-obsidian-elite-rag"></head><body><h1>Obsidian Elite Rag</h1><p>Elite Obsidian RAG System - Second Brain with Claude Code Integration</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}" && \
+cp -R "$tmp/cldcde/mcp-servers/obsidian-elite-rag" "${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/" && \
+cd "${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}/obsidian-elite-rag" && \
+if [ -f package.json ]; then npm install; elif [ -f pyproject.toml ]; then (command -v uv >/dev/null 2>&1 && uv sync) || python3 -m pip install -e .; elif [ -f requirements.txt ]; then python3 -m pip install -r requirements.txt; fi && \
+echo "[OK] Installed mcp-servers/obsidian-elite-rag to ${AE_MCP_DIR:-$HOME/.ae-ltd/mcp-servers}"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

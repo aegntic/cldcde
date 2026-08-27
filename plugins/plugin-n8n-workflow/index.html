@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>N8n Workflow — CLDCDE</title><meta name="description" content="Generate n8n automation workflows from natural language descriptions"><link rel="canonical" href="https://cldcde.cc/plugins/plugin-n8n-workflow"></head><body><h1>N8n Workflow</h1><p>Generate n8n automation workflows from natural language descriptions</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/n8n-workflow" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/n8n-workflow"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

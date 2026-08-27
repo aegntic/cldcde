@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>ae-ltd-worktree-mesh — CLDCDE</title><meta name="description" content="Manage parallel git worktrees safely for isolated task execution."><link rel="canonical" href="https://cldcde.cc/plugins/skill-ae-ltd-worktree-mesh"></head><body><h1>ae-ltd-worktree-mesh</h1><p>Manage parallel git worktrees safely for isolated task execution.</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p ~/.codex/skills ~/.zeroclaw/workspace/skills ~/.clawreform/workspace/skills && \
+cp -R "$tmp/cldcde/skills/ae-ltd-worktree-mesh" ~/.codex/skills/ && \
+cp -R "$tmp/cldcde/skills/ae-ltd-worktree-mesh" ~/.zeroclaw/workspace/skills/ && \
+cp -R "$tmp/cldcde/skills/ae-ltd-worktree-mesh" ~/.clawreform/workspace/skills/ && \
+echo "[OK] Installed skills/ae-ltd-worktree-mesh"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

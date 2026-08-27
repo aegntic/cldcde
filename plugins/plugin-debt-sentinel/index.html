@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Debt Sentinel Plugin — CLDCDE</title><meta name="description" content="The Tech-Debt Sentinel is a hook-based architectural enforcer that prevents &quot;vibe coding&quot; slop by blocking anti-patterns before they enter the codebase."><link rel="canonical" href="https://cldcde.cc/plugins/plugin-debt-sentinel"></head><body><h1>Debt Sentinel Plugin</h1><p>The Tech-Debt Sentinel is a hook-based architectural enforcer that prevents "vibe coding" slop by blocking anti-patterns before they enter the codebase.</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/debt-sentinel" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/debt-sentinel"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

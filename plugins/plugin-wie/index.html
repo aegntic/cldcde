@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Website Intelligence Engine — CLDCDE</title><meta name="description" content="Analyzes a reference website and produces an original, reusable, production-ready template ecosystem with design tokens, motion DNA, component/section libraries, placeholder catalogs, CMS schemas, and manifests."><link rel="canonical" href="https://cldcde.cc/plugins/plugin-wie"></head><body><h1>Website Intelligence Engine</h1><p>Analyzes a reference website and produces an original, reusable, production-ready template ecosystem with design tokens, motion DNA, component/section libraries, placeholder catalogs, CMS schemas, and manifests.</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/wie" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/wie"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

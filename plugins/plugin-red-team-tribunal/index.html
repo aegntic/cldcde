@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Red Team Tribunal Skill — CLDCDE</title><meta name="description" content="The Red Team Tribunal utilizes Opus 4.6 Agent Teams to create an adversarial review loop that prevents &quot;confident mistakes&quot; through multi-agent consensus."><link rel="canonical" href="https://cldcde.cc/plugins/plugin-red-team-tribunal"></head><body><h1>Red Team Tribunal Skill</h1><p>The Red Team Tribunal utilizes Opus 4.6 Agent Teams to create an adversarial review loop that prevents "confident mistakes" through multi-agent consensus.</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/red-team-tribunal" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/red-team-tribunal"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

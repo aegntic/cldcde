@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>ae-ltd-claude-template-switchboard — CLDCDE</title><meta name="description" content="Select and adapt the right CLAUDE.md template for repo context."><link rel="canonical" href="https://cldcde.cc/plugins/skill-ae-ltd-claude-template-switchboard"></head><body><h1>ae-ltd-claude-template-switchboard</h1><p>Select and adapt the right CLAUDE.md template for repo context.</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p ~/.codex/skills ~/.zeroclaw/workspace/skills ~/.clawreform/workspace/skills && \
+cp -R "$tmp/cldcde/skills/ae-ltd-claude-template-switchboard" ~/.codex/skills/ && \
+cp -R "$tmp/cldcde/skills/ae-ltd-claude-template-switchboard" ~/.zeroclaw/workspace/skills/ && \
+cp -R "$tmp/cldcde/skills/ae-ltd-claude-template-switchboard" ~/.clawreform/workspace/skills/ && \
+echo "[OK] Installed skills/ae-ltd-claude-template-switchboard"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

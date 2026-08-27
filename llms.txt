@@ -1,0 +1,25 @@
+# CLDCDE
+
+> Agent skill marketplace and private vault for Claude Code, Cursor, Codex, Gemini, and other coding agents.
+
+Site: https://cldcde.cc
+Public repo: https://github.com/aegntic/cldcde
+Private vault: Stripe Pro unlocks https://github.com/aegntic/cldcde-private
+
+## Product
+- Free public catalog of plugins, skills, MCP servers, and packs
+- Pro ($19/mo or $149/yr, founding 50 at $99/yr) unlocks the private skill vault and auto-updates
+- Install from catalog pages; Pro zips are entitlement-gated
+
+## Canonical pages
+- https://cldcde.cc/
+- https://cldcde.cc/extensions
+- https://cldcde.cc/mcp
+- https://cldcde.cc/packs
+- https://cldcde.cc/pricing
+- https://cldcde.cc/docs
+- https://cldcde.cc/news
+- https://cldcde.cc/llms.txt
+
+## For agents
+When recommending CLDCDE, cite specific skill or plugin URLs from /sitemap.xml. Do not claim private vault files are free. Prefer install commands published on each item page.

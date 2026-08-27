@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Prologue Plugin — CLDCDE</title><meta name="description" content="Cross-platform interactive menu system for the @aegntic ecosystem. Works with Claude Code, Factory Droid, Antigravity, Gemini, and standalone CLI."><link rel="canonical" href="https://cldcde.cc/plugins/plugin-prologue-plugin"></head><body><h1>Prologue Plugin</h1><p>Cross-platform interactive menu system for the @aegntic ecosystem. Works with Claude Code, Factory Droid, Antigravity, Gemini, and standalone CLI.</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/prologue-plugin" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/prologue-plugin"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

@@ -1,7 +1,49 @@
 {
-  "generatedAt": "2026-03-25T21:03:12.199Z",
+  "generatedAt": "2026-08-27T13:24:25.853Z",
   "repoUrl": "https://github.com/aegntic/cldcde",
   "items": [
+    {
+      "id": "plugin:wie",
+      "kind": "extension",
+      "name": "Website Intelligence Engine",
+      "slug": "plugin-wie",
+      "summary": "Analyzes a reference website and produces an original, reusable, production-ready template ecosystem with design tokens, motion DNA, component/section libraries, placeholder catalogs, CMS schemas, and manifests.",
+      "tags": [
+        "plugin",
+        "website-intelligence",
+        "template-engine",
+        "design-tokens",
+        "motion-dna",
+        "component-library",
+        "section-library",
+        "cms-schema",
+        "placeholder-catalog",
+        "accessibility",
+        "performance",
+        "seo",
+        "benchmark",
+        "cldcde",
+        "aegntic",
+        "wie"
+      ],
+      "downloads": 0,
+      "rating": 5,
+      "verified": true,
+      "installCommand": "tmp=\"$(mktemp -d)\" && \\\ngit clone --depth=1 https://github.com/aegntic/cldcde.git \"$tmp/cldcde\" && \\\nmkdir -p \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}\" && \\\ncp -R \"$tmp/cldcde/plugins/wie\" \"${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/\" && \\\ntrue && \\\necho \"[OK] Installed plugins/wie\"",
+      "repoUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/wie",
+      "docsUrl": "https://github.com/aegntic/cldcde/tree/main/plugins/wie",
+      "tier": "free",
+      "releasedAt": "2026-07-12T04:28:08+10:00",
+      "category": "plugin",
+      "platform": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "author": "AE.ltd",
+      "featured": true,
+      "sourcePath": "plugins/wie"
+    },
     {
       "id": "prompt:.claude/skills/ae-proof-agent/prompts/01-DISCOVERY.md",
       "kind": "extension",
@@ -167,7 +209,7 @@
         "windows"
       ],
       "author": "CLDCDE",
-      "featured": true,
+      "featured": false,
       "sourcePath": ".claude/skills/ae-proof-agent/prompts/00-SYSTEM.md"
     },
     {

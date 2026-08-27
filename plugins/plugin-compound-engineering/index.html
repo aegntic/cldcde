@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Compound Engineering Plugin — CLDCDE</title><meta name="description" content="The Compound Engineering Plugin coordinates Debt-Sentinel, Red Team Tribunal, and Spec-Lock into unified, multi-stage workflows. It provides orchestration, metrics tracking, and quality gates for comprehensive code quality management."><link rel="canonical" href="https://cldcde.cc/plugins/plugin-compound-engineering"></head><body><h1>Compound Engineering Plugin</h1><p>The Compound Engineering Plugin coordinates Debt-Sentinel, Red Team Tribunal, and Spec-Lock into unified, multi-stage workflows. It provides orchestration, metrics tracking, and quality gates for comprehensive code quality management.</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/compound-engineering" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/compound-engineering"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

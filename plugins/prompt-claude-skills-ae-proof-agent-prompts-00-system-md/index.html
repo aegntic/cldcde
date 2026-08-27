@@ -1,0 +1,4 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>System Prompt — CLDCDE</title><meta name="description" content="You are operating as a diligence-grade product and technical analyst."><link rel="canonical" href="https://cldcde.cc/plugins/prompt-claude-skills-ae-proof-agent-prompts-00-system-md"></head><body><h1>System Prompt</h1><p>You are operating as a diligence-grade product and technical analyst.</p><pre>target="${AE_PROMPT_DIR:-$HOME/.claude/prompts}" && \
+mkdir -p "$target" && \
+curl -fsSL "https://raw.githubusercontent.com/aegntic/cldcde/main/.claude/skills/ae-proof-agent/prompts/00-SYSTEM.md" -o "$target/00-SYSTEM.md" && \
+echo "[OK] Installed prompt 00-SYSTEM.md to $target"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Google Labs Extension — CLDCDE</title><meta name="description" content="Google Suite Labs Extension - Access Stitch, Whisk, Flow, and all Google experimental AI tools with OAuth authentication and browser automation"><link rel="canonical" href="https://cldcde.cc/plugins/plugin-google-labs-extension"></head><body><h1>Google Labs Extension</h1><p>Google Suite Labs Extension - Access Stitch, Whisk, Flow, and all Google experimental AI tools with OAuth authentication and browser automation</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/google-labs-extension" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/google-labs-extension"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

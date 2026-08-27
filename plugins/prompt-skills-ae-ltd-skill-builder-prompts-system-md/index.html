@@ -1,0 +1,4 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>System Prompt Extensions for Skill Builder — CLDCDE</title><meta name="description" content="When this skill is active, extend Claude's system context with:"><link rel="canonical" href="https://cldcde.cc/plugins/prompt-skills-ae-ltd-skill-builder-prompts-system-md"></head><body><h1>System Prompt Extensions for Skill Builder</h1><p>When this skill is active, extend Claude's system context with:</p><pre>target="${AE_PROMPT_DIR:-$HOME/.claude/prompts}" && \
+mkdir -p "$target" && \
+curl -fsSL "https://raw.githubusercontent.com/aegntic/cldcde/main/skills/ae-ltd-skill-builder/prompts/system.md" -o "$target/system.md" && \
+echo "[OK] Installed prompt system.md to $target"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

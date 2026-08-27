@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Create Worktrees — CLDCDE</title><meta name="description" content="Git worktree management for parallel development workflows"><link rel="canonical" href="https://cldcde.cc/plugins/plugin-create-worktrees"></head><body><h1>Create Worktrees</h1><p>Git worktree management for parallel development workflows</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/create-worktrees" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/create-worktrees"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>

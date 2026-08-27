@@ -3,8 +3,8 @@
   "short_name": "CLDCDE",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#070f16",
-  "theme_color": "#0b1f32",
+  "background_color": "#050505",
+  "theme_color": "#FF3B1F",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

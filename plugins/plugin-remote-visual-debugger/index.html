@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Remote Visual Debugger — CLDCDE</title><meta name="description" content="Comprehensive remote visual debugging toolkit for browser applications, React development, and web performance analysis by ae.ltd"><link rel="canonical" href="https://cldcde.cc/plugins/plugin-remote-visual-debugger"></head><body><h1>Remote Visual Debugger</h1><p>Comprehensive remote visual debugging toolkit for browser applications, React development, and web performance analysis by ae.ltd</p><pre>tmp="$(mktemp -d)" && \
+git clone --depth=1 https://github.com/aegntic/cldcde.git "$tmp/cldcde" && \
+mkdir -p "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}" && \
+cp -R "$tmp/cldcde/plugins/remote-visual-debugger" "${AE_PLUGIN_DIR:-$HOME/.claude/plugins}/" && \
+true && \
+echo "[OK] Installed plugins/remote-visual-debugger"</pre><p>Tier: free</p><p><a href="https://cldcde.cc">Back to CLDCDE</a></p></body></html>
