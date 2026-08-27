@@ -207,6 +207,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
     { label: 'Plugins + Skills', path: '/extensions' },
     { label: 'MCP', path: '/mcp' },
     { label: 'Packs', path: '/packs' },
+    { label: 'Pricing', path: '/pricing' },
     { label: 'Docs', path: '/docs' },
     { label: 'News', path: '/news' },
     { label: 'Settings', path: '/settings' },
@@ -238,14 +239,14 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
           whileTap={{ scale: 0.99 }}
         >
           <LogoMark
-            src="/media/branding/glass-character-mark.png"
-            alt="CLDCDE glass glyph"
+            src="/media/branding/ghost-mark.png"
+            alt="CLDCDE voxel ghost"
             loading="eager"
             decoding="async"
           />
           <LogoStack>
             <LogoText>CLDCDE.CC</LogoText>
-            <Subline>Claude Code : : Plugins + Skills + MCP + Labs</Subline>
+            <Subline>Public catalog + private vault</Subline>
           </LogoStack>
         </Logo>
 

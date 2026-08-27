@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /llms.txt
+Disallow: /api/
+Disallow: /account
+Disallow: /settings
+
+Sitemap: https://cldcde.cc/sitemap.xml

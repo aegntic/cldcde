@@ -124,60 +124,60 @@ const commonTheme = {
 }
 
 export const claudeCodeTheme: Theme = {
-  name: 'Neon Grid Blue',
+  name: 'Voxel Ember',
   colors: {
     background: {
-      primary: '#040b16',
-      secondary: '#091427',
-      tertiary: '#0f1f3a',
-      modal: 'rgba(4, 11, 22, 0.95)',
-      card: '#081625'
+      primary: '#050505',
+      secondary: '#0c0707',
+      tertiary: '#160909',
+      modal: 'rgba(5, 5, 5, 0.96)',
+      card: '#140808'
     },
     text: {
-      primary: '#e7f7ff',
-      secondary: '#b7cfe8',
-      tertiary: '#89aac8',
-      muted: '#617f9d',
-      inverse: '#020a13'
+      primary: '#fff3ef',
+      secondary: '#f0cec6',
+      tertiary: '#d9a39a',
+      muted: '#ab7870',
+      inverse: '#120606'
     },
     border: {
-      primary: '#214264',
-      secondary: '#1a334f',
-      focus: '#63dfff',
-      hover: '#2d5886'
+      primary: '#5d2931',
+      secondary: '#3a1a1f',
+      focus: '#FF3B1F',
+      hover: '#7A2418'
     },
     status: {
-      success: '#35d29c',
-      error: '#ff5b7a',
-      warning: '#ffbe55',
-      info: '#58d6ff'
+      success: '#5fd3a0',
+      error: '#ff4d5d',
+      warning: '#ffb55d',
+      info: '#FF6A4A'
     },
     interactive: {
-      primary: '#33d7ff',
-      primaryHover: '#23bddf',
-      secondary: '#132944',
-      secondaryHover: '#1c3b5f',
-      accent: '#4df4c2',
-      accentHover: '#35d2a5'
+      primary: '#FF3B1F',
+      primaryHover: '#C41E12',
+      secondary: '#2a1216',
+      secondaryHover: '#3d1a20',
+      accent: '#FFB199',
+      accentHover: '#FF6A4A'
     },
     terminal: {
-      green: '#4df4c2',
-      blue: '#58d6ff',
-      yellow: '#ffbe55',
-      orange: '#ff9a4a',
-      purple: '#8eb3ff',
-      cyan: '#46f4ff',
-      red: '#ff5b7a',
-      white: '#f5fbff',
-      gray: '#83a3bf'
+      green: '#5fd3a0',
+      blue: '#FFB199',
+      yellow: '#ffb55d',
+      orange: '#FF6A4A',
+      purple: '#ff9eb1',
+      cyan: '#FFB199',
+      red: '#FF3B1F',
+      white: '#fff8f5',
+      gray: '#bf9088'
     },
     syntax: {
-      keyword: '#74d5ff',
-      string: '#ffbe77',
-      number: '#80f0bc',
-      comment: '#7192b2',
-      function: '#ffe47b',
-      variable: '#92c6ff'
+      keyword: '#FF6A4A',
+      string: '#ffc691',
+      number: '#92f1bc',
+      comment: '#b48379',
+      function: '#ffd37f',
+      variable: '#FFB199'
     }
   },
   fonts: {
@@ -186,10 +186,10 @@ export const claudeCodeTheme: Theme = {
     serif: '"Rajdhani", "Instrument Serif", Georgia, serif'
   },
   shadows: {
-    sm: '0 6px 16px rgba(0, 22, 46, 0.35)',
-    md: '0 14px 32px rgba(0, 19, 40, 0.48)',
-    lg: '0 24px 58px rgba(0, 16, 35, 0.58)',
-    glow: '0 0 24px rgba(88, 214, 255, 0.35), 0 0 60px rgba(77, 244, 194, 0.2)'
+    sm: '0 6px 16px rgba(8, 0, 0, 0.45)',
+    md: '0 14px 32px rgba(8, 0, 0, 0.58)',
+    lg: '0 24px 58px rgba(8, 0, 0, 0.7)',
+    glow: '0 0 24px rgba(255, 59, 31, 0.38), 0 0 60px rgba(196, 30, 18, 0.22)'
   },
   ...commonTheme
 }

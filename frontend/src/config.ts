@@ -15,7 +15,7 @@ export const config = {
   // App Configuration
   app: {
     name: 'cldcde.cc',
-    tagline: 'Claude Code Extensions Hub',
-    description: 'The unofficial community hub for Claude Code extensions and MCP servers'
+    tagline: 'Public catalog. Private vault.',
+    description: 'Agent skill marketplace for Claude Code, Cursor, Codex, and other coding agents. Free public catalog, Stripe-gated Pro vault.'
   }
 }

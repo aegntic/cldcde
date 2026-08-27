@@ -1,5 +1,9 @@
 # Porkbun DNS Configuration for cldcde.cc
 
+## Current status (2026-08-27)
+
+Cloudflare already fronts `cldcde.cc` (nameservers are Cloudflare). The apex still serves Porkbun parking HTML (`x-service: pixie-default`). This is an **origin/record** problem, not a nameserver problem. Attach `cldcde.cc` and `www.cldcde.cc` to Pages project `cldcde`, and `api.cldcde.cc` to worker `cldcde-api`. Do not claim live until `curl -sL https://cldcde.cc` no longer contains `Parked at Porkbun`.
+
 ## Step 1: Log into Porkbun
 Go to https://porkbun.com and log into your account
 

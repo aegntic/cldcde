@@ -15,7 +15,7 @@ pass() {
 
 [ -d "$OUT_DIR" ] || fail "Missing Pages output directory: $OUT_DIR. Run 'bun run site:build' first."
 
-for file in index.html index.js _redirects _headers; do
+for file in index.html index.js _redirects _headers llms.txt robots.txt sitemap.xml media/landing/cldcde-preloader.mp4 media/landing/cldcde-preloader-poster.jpg; do
   [ -f "$OUT_DIR/$file" ] || fail "Missing required file: $OUT_DIR/$file"
 done
 

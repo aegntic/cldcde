@@ -10,7 +10,11 @@ import { NewsPage } from './components/NewsPage'
 import { DocsPage } from './components/DocsPage'
 import { SettingsDocsPage } from './components/SettingsDocsPage'
 import { PacksPage } from './components/PacksPage'
+import { PricingPage } from './components/PricingPage'
+import { AccountPage } from './components/AccountPage'
+import { Preloader } from './components/Preloader'
 import { NeoLanding } from './components/NeoLanding'
+import { BOOT_POSTER } from './lib/brandMedia'
 import { ThemeToggle } from './components/ThemeToggle'
 import { TerminalHeader } from './components/TerminalHeader'
 import { AsciiHeading } from './components/AsciiHeading'
@@ -39,15 +43,15 @@ type Page =
   | 'extensions'
   | 'mcp'
   | 'packs'
+  | 'pricing'
+  | 'account'
   | 'docs'
   | 'news'
   | 'settings'
 
-const BOOT_VIDEO = '/media/landing/create-seamless-loop-v2.mp4'
-const LANDING_LOOP_VIDEO = '/media/landing/create-seamless-loop-v2-boomerang.mp4'
-const LANDING_POSTER = '/media/landing/create-seamless-loop-v2-poster.jpg'
-const LANDING_MEDIA_ORIGIN = '50% 60%'
-const LANDING_MEDIA_SCALE = 1.05
+const LANDING_POSTER = BOOT_POSTER
+const LANDING_MEDIA_ORIGIN = '50% 42%'
+const LANDING_MEDIA_SCALE = 1
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -121,86 +125,6 @@ const StatusPill = styled(motion.div)<{ status: 'checking' | 'online' | 'offline
       if (status === 'offline') return `0 0 10px ${theme.colors.status.error}`
       return `0 0 10px ${theme.colors.status.info}`
     }};
-  }
-`
-
-const BootOverlay = styled(motion.div)<{ $poster: string }>`
-  position: fixed;
-  inset: 0;
-  z-index: 1200;
-  background: ${({ theme }) => theme.colors.background.primary};
-  background-image: url(${({ $poster }) => $poster});
-  background-size: cover;
-  background-position: center center;
-  overflow: hidden;
-`
-
-const BootVideo = styled.video`
-  position: absolute;
-  inset: 0;
-  width: 100vw;
-  height: 100dvh;
-  object-fit: cover;
-  object-position: center center;
-  transform: scale(${LANDING_MEDIA_SCALE});
-  transform-origin: ${LANDING_MEDIA_ORIGIN};
-  image-rendering: auto;
-`
-
-const BootVeil = styled.div`
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 52% 30%, rgba(5, 16, 30, 0.04) 0%, rgba(5, 16, 30, 0.24) 75%),
-    linear-gradient(180deg, rgba(3, 9, 20, 0.16) 0%, rgba(3, 9, 20, 0.24) 100%);
-`
-
-const BootTopMask = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: clamp(66px, 14dvh, 130px);
-  background: linear-gradient(180deg, rgba(3, 9, 20, 0.86) 0%, rgba(3, 9, 20, 0.2) 78%, transparent 100%);
-  z-index: 1;
-  pointer-events: none;
-`
-
-const BootBottomMask = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: clamp(72px, 18dvh, 180px);
-  background: linear-gradient(180deg, transparent 0%, rgba(3, 9, 20, 0.26) 34%, rgba(3, 9, 20, 0.86) 100%);
-  z-index: 1;
-  pointer-events: none;
-`
-
-const BootControls = styled.div`
-  position: absolute;
-  right: clamp(0.7rem, 2vw, 1.2rem);
-  bottom: clamp(0.7rem, 2vw, 1.2rem);
-  z-index: 2;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: ${({ theme }) => theme.spacing.sm};
-  padding: 0.5rem;
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  border: 1px solid ${({ theme }) => `${theme.colors.border.primary}aa`};
-  background: rgba(3, 9, 20, 0.38);
-  backdrop-filter: blur(5px);
-
-  @media (max-width: 700px) {
-    left: 0.5rem;
-    right: 0.5rem;
-    justify-content: center;
-
-    > * {
-      flex: 1 1 calc(33.333% - 0.4rem);
-      min-width: 92px;
-    }
   }
 `
 
@@ -687,6 +611,10 @@ const mapPathToPage = (path: string): Page => {
       return 'mcp'
     case '/packs':
       return 'packs'
+    case '/pricing':
+      return 'pricing'
+    case '/account':
+      return 'account'
     case '/docs':
       return 'docs'
     case '/news':
@@ -706,6 +634,10 @@ const mapPageToPath = (page: Page): string => {
       return '/mcp'
     case 'packs':
       return '/packs'
+    case 'pricing':
+      return '/pricing'
+    case 'account':
+      return '/account'
     case 'docs':
       return '/docs'
     case 'news':
@@ -729,16 +661,8 @@ function AppContent() {
   const [showVideoBoot, setShowVideoBoot] = useState(false)
   const [bootEligibleForLoad, setBootEligibleForLoad] = useState(() => window.location.pathname === '/')
   const [bootMuted, setBootMuted] = useState(true)
-  const bootMedia = useMemo(
-    () => ({
-      video: BOOT_VIDEO,
-      poster: LANDING_POSTER
-    }),
-    []
-  )
   const landingMedia = useMemo(
     () => ({
-      video: LANDING_LOOP_VIDEO,
       poster: LANDING_POSTER
     }),
     []
@@ -810,10 +734,6 @@ function AppContent() {
     setBootEligibleForLoad(false)
   }
 
-  const handleBootVideoError = () => {
-    completeBoot()
-  }
-
   const navigateTo = (path: string) => {
     const targetPage = mapPathToPage(path)
     setCurrentPage(targetPage)
@@ -865,40 +785,12 @@ function AppContent() {
 
       <AnimatePresence>
         {isHomeBootActive && (
-          <BootOverlay
-            $poster={bootMedia.poster}
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <BootVideo
-              key={bootMedia.video}
-              autoPlay
-              muted={bootMuted}
-              playsInline
-              preload="auto"
-              poster={bootMedia.poster}
-              onEnded={completeBoot}
-              onError={handleBootVideoError}
-            >
-              <source src={bootMedia.video} type="video/mp4" />
-            </BootVideo>
-            <BootVeil />
-            <BootTopMask />
-            <BootBottomMask />
-            <BootControls>
-              <NeonButton onClick={completeBoot} whileTap={{ scale: 0.98 }}>
-                Enter
-              </NeonButton>
-              <NeonButton $tone="secondary" onClick={() => setBootMuted((prev) => !prev)} whileTap={{ scale: 0.98 }}>
-                {bootMuted ? 'Unmute' : 'Mute'}
-              </NeonButton>
-              <NeonButton $tone="ghost" onClick={completeBoot} whileTap={{ scale: 0.98 }}>
-                Skip
-              </NeonButton>
-            </BootControls>
-          </BootOverlay>
+          <Preloader
+            poster={LANDING_POSTER}
+            muted={bootMuted}
+            onToggleMute={() => setBootMuted((prev) => !prev)}
+            onComplete={completeBoot}
+          />
         )}
       </AnimatePresence>
 
@@ -950,19 +842,21 @@ function AppContent() {
             }
           >
             <NeoLanding
-              backgroundVideoSrc={landingMedia.video}
               backgroundVideoPoster={landingMedia.poster}
               onOpenExtensions={() => navigateTo('/extensions')}
               onOpenMcp={() => navigateTo('/mcp')}
               onOpenPacks={() => navigateTo('/packs')}
+              onOpenPricing={() => navigateTo('/pricing')}
             />
 
             <HomeContentShell>
               <SectionRail initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }}>
                 <FeaturePanel>
                   <Badge $tone="kind">Choose A Path</Badge>
-                  <HomeSectionTitle>Start With Plugins + Skills</HomeSectionTitle>
-                  <SectionLead>CLDCDE is organized around installable plugin and skill assets first, then MCP, packs, and docs.</SectionLead>
+                  <HomeSectionTitle>Public catalog. Private vault.</HomeSectionTitle>
+                  <SectionLead>
+                    Free plugins, skills, and MCP servers stay on GitHub. Pro unlocks the private vault and keeps it current.
+                  </SectionLead>
                   <FeaturedGrid>
                     <RouteCard whileHover={{ y: -4 }}>
                       <Badge $tone="kind">Plugins + Skills</Badge>
@@ -1073,6 +967,8 @@ function AppContent() {
         {currentPage === 'news' && <NewsPage />}
         {currentPage === 'docs' && <DocsPage />}
         {currentPage === 'packs' && <PacksPage />}
+        {currentPage === 'pricing' && <PricingPage />}
+        {currentPage === 'account' && <AccountPage />}
         {currentPage === 'settings' && <SettingsDocsPage user={user} onUpdateUser={setUser} onLoginClick={() => setShowLoginModal(true)} />}
       </MainContent>
 

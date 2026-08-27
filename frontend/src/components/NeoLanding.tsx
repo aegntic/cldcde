@@ -10,6 +10,7 @@ interface NeoLandingProps {
   onOpenExtensions: () => void
   onOpenMcp: () => void
   onOpenPacks: () => void
+  onOpenPricing?: () => void
 }
 
 const LandingRoot = styled.section`
@@ -149,7 +150,8 @@ const NeoLanding: React.FC<NeoLandingProps> = ({
   backgroundVideoPoster,
   onOpenExtensions,
   onOpenMcp,
-  onOpenPacks
+  onOpenPacks,
+  onOpenPricing
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const rootRef = useRef<HTMLElement | null>(null)
@@ -396,6 +398,11 @@ const NeoLanding: React.FC<NeoLandingProps> = ({
           <NeonButton $tone="ghost" onClick={onOpenPacks} whileTap={{ scale: 0.98 }}>
             View Packs
           </NeonButton>
+          {onOpenPricing && (
+            <NeonButton $tone="secondary" onClick={onOpenPricing} whileTap={{ scale: 0.98 }}>
+              Pro
+            </NeonButton>
+          )}
         </ActionDock>
       </Content>
     </LandingRoot>

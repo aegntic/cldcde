@@ -13,6 +13,8 @@ import analyticsRoutes from './api/analytics'
 import newsRoutes from './api/news-v2'
 import socialRoutes from './api/social-share'
 import leadsRoutes from './api/leads'
+import { billingRoutes } from './api/billing'
+import { downloadRoutes, entitlementRoutes, updateRoutes } from './api/entitlements'
 
 // Ultra-simple Cloudflare Worker with just 2 services!
 export interface Env {
@@ -34,6 +36,13 @@ export interface Env {
 
   // Email capture fallback
   RESEND_API_KEY?: string
+
+  STRIPE_SECRET_KEY?: string
+  STRIPE_WEBHOOK_SECRET?: string
+  STRIPE_PRICE_PRO_MONTHLY?: string
+  STRIPE_PRICE_PRO_YEARLY?: string
+  STRIPE_PRICE_FOUNDING_YEARLY?: string
+  APP_ORIGIN?: string
 }
 
 const app = new Hono<{ Bindings: Env }>()
@@ -171,7 +180,9 @@ app.get('/api', (c) => {
       users: '/api/users',
       forums: '/api/forums',
       news: '/api/news',
-      search: '/api/search'
+      search: '/api/search',
+      billing: '/api/billing',
+      entitlements: '/api/entitlements'
     }
   })
 })
@@ -189,6 +200,10 @@ app.route('/api/github', githubRoutes)
 app.route('/api/analytics', analyticsRoutes)
 app.route('/api/news', newsRoutes)
 app.route('/api/social', socialRoutes)
+app.route('/api/billing', billingRoutes)
+app.route('/api/entitlements', entitlementRoutes)
+app.route('/api/downloads', downloadRoutes)
+app.route('/api/updates', updateRoutes)
 
 // Beautiful ASCII art for the home page
 const asciiArt = `
