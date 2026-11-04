@@ -1,0 +1,10 @@
+prompts = [
+  "Use i-have-adhd to make responses action-first and easier to follow."
+]
+
+[skill]
+name = "i-have-adhd"
+description = "Shape responses to be action-first and ADHD-friendly."
+version = "1.0.0"
+author = "Ayoub Ghriss"
+tags = ["adhd", "output-style", "productivity", "formatting"]

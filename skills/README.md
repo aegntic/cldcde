@@ -13,6 +13,10 @@ These skills are curated for Codex, Agent Zero, ZeroClaw, and ClawReform compati
 
 - `compounding-operating-system` - Analyze decisions for leverage, survivability, and long-term compounding
 
+## Communication
+
+- `i-have-adhd` - [ADHD-friendly, action-first responses](https://github.com/ayghri/i-have-adhd)
+
 ## Development Tools
 
 - `ae-ltd-skill-builder` - Factory for creating, validating, and managing Claude Code skills with complete tooling (scripts, hooks, prompts, templates)
