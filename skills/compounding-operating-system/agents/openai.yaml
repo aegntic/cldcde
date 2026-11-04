@@ -1,0 +1,4 @@
+interface:
+  display_name: "Compounding Operating System"
+  short_description: "Strategic decisions that compound"
+  default_prompt: "Use $compounding-operating-system to analyze this decision and recommend the highest-leverage next step."

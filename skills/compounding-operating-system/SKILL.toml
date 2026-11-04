@@ -1,0 +1,10 @@
+prompts = [
+  "Use the Compounding Operating System to analyze this strategic decision, challenge assumptions, and identify the highest-leverage next step."
+]
+
+[skill]
+name = "compounding-operating-system"
+description = "Analyze strategic decisions for long-term compounding, leverage, and survivability."
+version = "1.0.0"
+author = "ae.ltd"
+tags = ["strategy", "decision-making", "compounding", "leverage"]
