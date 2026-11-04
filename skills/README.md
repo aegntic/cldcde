@@ -9,6 +9,10 @@ These skills are curated for Codex, Agent Zero, ZeroClaw, and ClawReform compati
 - `ae-ltd-mutation-gate` - Mutation testing workflows
 - `ae-ltd-claude-template-switchboard` - Template management
 
+## Strategic Thinking
+
+- `compounding-operating-system` - Analyze decisions for leverage, survivability, and long-term compounding
+
 ## Development Tools
 
 - `ae-ltd-skill-builder` - Factory for creating, validating, and managing Claude Code skills with complete tooling (scripts, hooks, prompts, templates)
