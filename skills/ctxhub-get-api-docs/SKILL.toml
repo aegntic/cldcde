@@ -1,0 +1,10 @@
+prompts = [
+  "Use ctxhub-get-api-docs: before writing any code against a third-party API, SDK, or library, run ctxhub search to find the doc, ctxhub get --lang <lang> to fetch it, then code from the fetched content. Annotate discovered gotchas with ctxhub annotate and rate docs with ctxhub feedback."
+]
+
+[skill]
+name = "ctxhub-get-api-docs"
+description = "Fetch current, versioned API/SDK docs with the ctxhub (Context Hub) CLI before coding against external services. Includes Z.ai GLM coverage via the internal source."
+version = "1.0.0"
+author = "ae.ltd"
+tags = ["ae-ltd", "ctxhub", "chub", "context-hub", "docs", "api", "claude-code"]
